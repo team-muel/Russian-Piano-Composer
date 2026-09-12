@@ -67,6 +67,22 @@ class PianoMedium(StrEnum):
 
 
 @dataclass(frozen=True, slots=True)
+class LicenseClaim:
+    """
+    Evidence record of an observed upstream license claim.
+    """
+    source_type: str
+    value: str
+    source_url: str | None = None
+
+    def __post_init__(self) -> None:
+        if not self.source_type:
+            raise ValueError("LicenseClaim source_type cannot be empty.")
+        if not self.value:
+            raise ValueError("LicenseClaim value cannot be empty.")
+
+
+@dataclass(frozen=True, slots=True)
 class CorpusSource:
     """
     Immutable metadata record for a registered corpus source.
@@ -81,12 +97,16 @@ class CorpusSource:
     repertoire_scope: str
     license: str
     verified_at: str
+    license_claims: tuple[LicenseClaim, ...] = ()
+    is_non_commercial: bool = True
     composer_authority_ids: dict[str, str] = field(default_factory=dict)
     piano_medium: PianoMedium = PianoMedium.SOLO_PIANO
     coverage_notes: str | None = None
     is_complete_for_claimed_scope: bool = False
+    representative_of_full_composer_output: bool = False
     work_count: int | None = None
     piece_count: int | None = None
+    source_file_count: int | None = None
     source_commit: str | None = None
     source_documentation: str | None = None
     doi: str | None = None

@@ -11,49 +11,34 @@ Every registered corpus entry must explicitly declare a `role`:
 
 | Role | Meaning | Generative Pipeline Eligible |
 | :--- | :--- | :--- |
-| `GENERATIVE_RUSSIAN` | Target Russian late-Romantic / early-modern solo piano repertoire | **YES** (if rights verified) |
+| `GENERATIVE_RUSSIAN` | Target Russian late-Romantic / early-modern solo piano repertoire | **YES** (if `rights_status == VERIFIED` and `rights_review_required == false`) |
 | `CONTROL_NON_RUSSIAN` | Non-Russian evaluation data for style discrimination & controls | **NO** (Strictly excluded) |
 | `PROVISIONAL` | Repertoire under study; pending rights or scope verification | **NO** |
 | `EXCLUDED` | Documented source deliberately excluded from research pipeline | **NO** |
 
+## License Evidence & NonCommercial Tracking
+To prevent licensing ambiguity, each registered `CorpusSource` records multi-source evidence via `license_claims`:
+
+- `source_type`: Upstream metadata file (`README`, `LICENSE`, `CITATION_CFF`, `ZENODO`).
+- `value`: License string observed in that specific file (e.g., `CC BY-NC-SA 4.0`, `CC-BY-NC-SA-4.0`).
+- `source_url`: URL to the upstream metadata file.
+- `is_non_commercial`: Boolean flag explicitly indicating whether NonCommercial restrictions apply.
+
+Where upstream files express conflicting license strings (e.g. `CC BY-NC-SA 4.0` in `README` vs `CC-BY-NC-4.0` in `CITATION.cff`), `rights_status` is set to `REVIEW_REQUIRED` and `rights_review_required` is set to `true`. This causes `generative_eligible` to fail closed (`False`).
+
+## File Counts vs. Musical Work Counts
+- `source_file_count`: Total count of source files in the dataset (e.g. 24 score files for Rachmaninoff Op. 42 due to split movement files).
+- `piece_count`: Count of distinct musical movements/pieces (e.g. 20 variations for Rachmaninoff Op. 42).
+- `work_count`: Count of overall opus/work cycles (e.g. 1 work cycle for Rachmaninoff Op. 42).
+- `representative_of_full_composer_output`: Explicit flag indicating whether dataset represents composer's full piano output.
+
 ## Fail-Closed Principles
 1. **No Defaulting**: Missing or unknown roles raise immediate validation errors. An unknown source NEVER defaults to `GENERATIVE_RUSSIAN`.
-2. **Unique Identifiers**: `corpus_id` must be non-empty, lowercase ASCII, and unique across the manifest.
-3. **Strict Top-Level Key Validation**: Unknown top-level keys in `corpus_manifest.yaml` trigger validation failures.
-
-## Fields Reference
-
-| Field | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `corpus_id` | `str` | Yes | Unique lowercase ASCII identifier (e.g. `dcml_medtner_tales`) |
-| `title` | `str` | Yes | Human-readable dataset title |
-| `role` | `enum` | Yes | One of `GENERATIVE_RUSSIAN`, `CONTROL_NON_RUSSIAN`, `PROVISIONAL`, `EXCLUDED` |
-| `composer` | `str` | Yes | Primary composer name |
-| `composer_authority_ids` | `dict` | No | Authority IDs (`viaf`, `wikidata`, `musicbrainz`) |
-| `piano_medium` | `enum` | Yes | `SOLO_PIANO`, `PIANO_FOUR_HANDS`, `TWO_PIANOS`, `CONCERTO_ORCHESTRA`, etc. |
-| `repertoire_scope` | `str` | Yes | Explicit description of exact works contained |
-| `coverage_notes` | `str` | No | Additional notes on completeness or missing pieces |
-| `is_complete_for_claimed_scope` | `bool` | Yes | Whether dataset complete for declared scope |
-| `work_count` | `int` | No | Number of distinct opus/work cycles |
-| `piece_count` | `int` | No | Number of distinct movement/piece files |
-| `source_provider` | `str` | Yes | Institution/organization publishing dataset |
-| `source_repository` | `str` | Yes | URL to source repository or archive |
-| `source_version` | `str` | Yes | Pinned release tag or version string |
-| `source_commit` | `str` | No | Pinned Git commit SHA |
-| `source_documentation` | `str` | No | URL to upstream README or documentation |
-| `doi` | `str` | No | Persistent DOI identifier |
-| `citation` | `str` | No | Recommended academic citation string |
-| `license` | `str` | Yes | License identifier (e.g. `CC-BY-4.0`, `Public Domain`) |
-| `license_url` | `str` | No | URL to official license terms |
-| `rights_notes` | `str` | No | Specific notes on usage terms |
-| `rights_status` | `enum` | Yes | `VERIFIED`, `REVIEW_REQUIRED`, `UNKNOWN`, `INCOMPATIBLE` |
-| `rights_review_required` | `bool` | Yes | Flag indicating pending legal review |
-| `provenance_status` | `enum` | Yes | `VERIFIED_SOURCE`, `PARTIALLY_VERIFIED`, `UNVERIFIED` |
-| `formats_available` | `list` | Yes | List of `MUSESCORE_MSCX`, `MUSICXML`, `TSV_NOTES`, `MIDI`, etc. |
-| `retrieval_method` | `str` | Yes | Method string (e.g. `git_clone`) |
-| `verified_at` | `str` | Yes | ISO 8601 verification date (`YYYY-MM-DD`) |
+2. **Rights Gate**: Pending rights review (`rights_review_required: true`) blocks acquisition and generative pipeline eligibility.
+3. **Unique Identifiers**: `corpus_id` must be non-empty, lowercase ASCII, and unique across the manifest.
+4. **Strict Top-Level Key Validation**: Unknown top-level keys in `corpus_manifest.yaml` trigger validation failures.
 
 ## Logical Manifest Hash
 The logical manifest hash is computed deterministically:
 $$\text{Hash} = \text{SHA256}(\text{CanonicalJSON}(\text{ManifestData}))$$
-This fingerprint is recorded in experiment lineage to detect dataset definition changes regardless of YAML formatting/whitespace modifications.
+This fingerprint is a full 64-character lowercase hexadecimal string recorded in experiment lineage to detect dataset definition changes regardless of YAML formatting/whitespace modifications.

@@ -13,6 +13,7 @@ from russian_piano_composer.domain.corpus import (
     CorpusFormat,
     CorpusRole,
     CorpusSource,
+    LicenseClaim,
     PianoMedium,
     ProvenanceStatus,
     RightsStatus,
@@ -81,13 +82,21 @@ class CorpusManifest:
 
     def compute_manifest_hash(self) -> str:
         """
-        Computes a deterministic SHA-256 fingerprint of the logical manifest.
+        Computes a deterministic 64-character SHA-256 fingerprint of the logical manifest.
         Insensitive to YAML whitespace or formatting changes.
         """
         sorted_sources = sorted(self.sources, key=lambda s: s.corpus_id)
         canonical_data: list[dict[str, Any]] = []
 
         for s in sorted_sources:
+            claims_data = [
+                {
+                    "source_type": claim.source_type,
+                    "value": claim.value,
+                    "source_url": claim.source_url,
+                }
+                for claim in sorted(s.license_claims, key=lambda c: (c.source_type, c.value))
+            ]
             entry: dict[str, Any] = {
                 "corpus_id": s.corpus_id,
                 "title": s.title,
@@ -98,13 +107,17 @@ class CorpusManifest:
                 "source_version": s.source_version,
                 "repertoire_scope": s.repertoire_scope,
                 "license": s.license,
+                "license_claims": claims_data,
+                "is_non_commercial": s.is_non_commercial,
                 "verified_at": s.verified_at,
                 "composer_authority_ids": s.composer_authority_ids,
                 "piano_medium": s.piano_medium.value,
                 "coverage_notes": s.coverage_notes,
                 "is_complete_for_claimed_scope": s.is_complete_for_claimed_scope,
+                "representative_of_full_composer_output": s.representative_of_full_composer_output,
                 "work_count": s.work_count,
                 "piece_count": s.piece_count,
+                "source_file_count": s.source_file_count,
                 "source_commit": s.source_commit,
                 "source_documentation": s.source_documentation,
                 "doi": s.doi,
@@ -125,14 +138,13 @@ class CorpusManifest:
             "sources": canonical_data,
         }
         canonical_json = json.dumps(payload, sort_keys=True, separators=(",", ":"))
-        return hashlib.sha256(canonical_json.encode("utf-8")).hexdigest()
+        return hashlib.sha256(canonical_json.encode()).hexdigest()
 
 
 def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
     if not isinstance(raw, dict):
         raise ValueError(f"Corpus source entry must be a dictionary, got {type(raw).__name__}.")
 
-    # Validate required string/enum fields
     try:
         role = CorpusRole(raw["role"])
     except (KeyError, ValueError) as e:
@@ -161,6 +173,19 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
         except ValueError as e:
             raise ValueError(f"Invalid CorpusFormat {fmt_str!r} in source {raw.get('corpus_id')!r}: {e}") from e
 
+    raw_claims: Sequence[dict[str, Any]] = raw.get("license_claims", ())
+    license_claims: list[LicenseClaim] = []
+    for c in raw_claims:
+        if not isinstance(c, dict) or "source_type" not in c or "value" not in c:
+            raise ValueError(f"Invalid LicenseClaim dictionary in source {raw.get('corpus_id')!r}: {c!r}")
+        license_claims.append(
+            LicenseClaim(
+                source_type=c["source_type"],
+                value=c["value"],
+                source_url=c.get("source_url"),
+            )
+        )
+
     return CorpusSource(
         corpus_id=raw["corpus_id"],
         title=raw["title"],
@@ -172,12 +197,16 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
         repertoire_scope=raw["repertoire_scope"],
         license=raw["license"],
         verified_at=str(raw["verified_at"]),
+        license_claims=tuple(license_claims),
+        is_non_commercial=bool(raw.get("is_non_commercial", True)),
         composer_authority_ids=dict(raw.get("composer_authority_ids", {})),
         piano_medium=piano_medium,
         coverage_notes=raw.get("coverage_notes"),
         is_complete_for_claimed_scope=bool(raw.get("is_complete_for_claimed_scope", False)),
+        representative_of_full_composer_output=bool(raw.get("representative_of_full_composer_output", False)),
         work_count=raw.get("work_count"),
         piece_count=raw.get("piece_count"),
+        source_file_count=raw.get("source_file_count"),
         source_commit=raw.get("source_commit"),
         source_documentation=raw.get("source_documentation"),
         doi=raw.get("doi"),

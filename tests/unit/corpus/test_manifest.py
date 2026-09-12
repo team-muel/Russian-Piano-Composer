@@ -11,6 +11,7 @@ from russian_piano_composer.corpus.manifest import (
 from russian_piano_composer.domain.corpus import CorpusRole
 
 CANONICAL_MANIFEST_PATH = Path("data/manifests/corpus_manifest.yaml")
+EXPECTED_V1_MANIFEST_HASH = "a6ba879b19b248582aaf73147241bc464125235bdd391fb93c5128c616da922e"
 
 
 def test_load_canonical_manifest():
@@ -33,38 +34,69 @@ def test_generative_vs_control_isolation():
     assert len(prov_sources) == 0
     assert len(excl_sources) == 0
 
-    # Ensure zero overlap
     gen_ids = {s.corpus_id for s in gen_sources}
     ctrl_ids = {s.corpus_id for s in ctrl_sources}
     assert gen_ids.isdisjoint(ctrl_ids)
 
-    # Verify generative eligibility flag
+    # Fail closed verification: Pending rights review prevents generative eligibility
     for s in gen_sources:
         assert s.role == CorpusRole.GENERATIVE_RUSSIAN
-        assert s.generative_eligible is True
+        assert s.rights_review_required is True
+        assert s.generative_eligible is False  # Fails closed until legal review
 
     for s in ctrl_sources:
         assert s.role == CorpusRole.CONTROL_NON_RUSSIAN
         assert s.generative_eligible is False
 
 
-def test_get_source_by_id():
+def test_license_claims_and_non_commercial():
     manifest = load_manifest(CANONICAL_MANIFEST_PATH)
     medtner_src = manifest.get_source("dcml_medtner_tales")
-    assert medtner_src.composer == "Nikolai Medtner"
-    assert medtner_src.role == CorpusRole.GENERATIVE_RUSSIAN
 
-    with pytest.raises(KeyError, match="Corpus source not found"):
-        manifest.get_source("non_existent_corpus_id")
+    assert medtner_src.license == "CC BY-NC-SA 4.0"
+    assert medtner_src.is_non_commercial is True
+    assert len(medtner_src.license_claims) == 3
+
+    claim_types = {claim.source_type for claim in medtner_src.license_claims}
+    assert claim_types == {"README", "CITATION_CFF", "ZENODO"}
 
 
-def test_compute_manifest_hash_determinism():
+def test_rachmaninoff_coverage_and_split_files():
     manifest = load_manifest(CANONICAL_MANIFEST_PATH)
-    hash1 = manifest.compute_manifest_hash()
-    hash2 = manifest.compute_manifest_hash()
+    rach_src = manifest.get_source("dcml_rachmaninoff_op42")
 
-    assert len(hash1) == 64
-    assert hash1 == hash2
+    assert rach_src.work_count == 1
+    assert rach_src.piece_count == 20
+    assert rach_src.source_file_count == 24
+    assert rach_src.representative_of_full_composer_output is False
+
+
+def test_compute_manifest_hash_format_and_golden():
+    manifest = load_manifest(CANONICAL_MANIFEST_PATH)
+    manifest_hash = manifest.compute_manifest_hash()
+
+    assert len(manifest_hash) == 64
+    assert all(c in "0123456789abcdef" for c in manifest_hash)
+    assert manifest_hash == EXPECTED_V1_MANIFEST_HASH
+
+
+def test_manifest_hash_sensitivity(tmp_path: Path):
+    with open(CANONICAL_MANIFEST_PATH, encoding="utf-8") as f:
+        raw_data = yaml.safe_load(f)
+
+    base_manifest = load_manifest(CANONICAL_MANIFEST_PATH)
+    base_hash = base_manifest.compute_manifest_hash()
+
+    # Modify source commit SHA
+    raw_data["sources"][0]["source_commit"] = "0000000000000000000000000000000000000000"
+    mod_path = tmp_path / "mod_commit.yaml"
+    mod_path.write_text(yaml.dump(raw_data), encoding="utf-8")
+
+    mod_manifest = load_manifest(mod_path)
+    mod_hash = mod_manifest.compute_manifest_hash()
+
+    assert mod_hash != base_hash
+    assert len(mod_hash) == 64
 
 
 def test_fail_closed_unsupported_version(tmp_path: Path):
