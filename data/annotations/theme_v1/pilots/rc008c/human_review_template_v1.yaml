@@ -1,0 +1,545 @@
+human_review_schema_version: 1
+protocol_version: 1
+pilot_candidate_annotation_hash: 1b7c3255e19465d3f9c79a69cb350afa447edf1b31260dd4f6fa420c86f0163c
+human_review_packet_hash: b9f7d33ca1830d8576217606bd721a03c6ce3edadd18b6330f73e585bbf7a435
+role_blind: true
+ai_verdict_blind: true
+reviewer_provenance:
+  reviewer_id: null
+  reviewer_type: HUMAN
+  review_completed_at: null
+  declaration: null
+piece_evaluations:
+- piece_id: dcml_liszt_annees:160.05_Orage
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_medtner_tales:op34n03
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_medtner_tales:op42n02
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_medtner_tales:op26n03
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_chopin_mazurkas:BI60-1op06-1
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_tchaikovsky_seasons:op37a11
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_tchaikovsky_seasons:op37a09
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_chopin_mazurkas:BI93-2op67-3
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_schumann_kinderszenen:n08
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_rachmaninoff_op42:op42_09
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_rachmaninoff_op42:op42_14
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_rachmaninoff_op42:op42_03
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_tchaikovsky_seasons:op37a01
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_chopin_mazurkas:BI157-2op59-2
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_schumann_kinderszenen:n06
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+- piece_id: dcml_schumann_kinderszenen:n09
+  missing_thematic_statement: null
+  missing_theme_measure_range: null
+  notes: null
+candidate_decisions:
+- review_id: H001
+  candidate_id: ann_dcml_liszt_annees:160.05_Orage_69b15b48a3ba
+  piece_id: dcml_liszt_annees:160.05_Orage
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H002
+  candidate_id: ann_dcml_medtner_tales:op34n03_1d492f06dcef
+  piece_id: dcml_medtner_tales:op34n03
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H003
+  candidate_id: ann_dcml_medtner_tales:op42n02_9af25fe94ab0
+  piece_id: dcml_medtner_tales:op42n02
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 12
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H004
+  candidate_id: ann_dcml_medtner_tales:op26n03_f8a866291297
+  piece_id: dcml_medtner_tales:op26n03
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 8
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H005
+  candidate_id: ann_dcml_chopin_mazurkas:BI60-1op06-1_874948be7636
+  piece_id: dcml_chopin_mazurkas:BI60-1op06-1
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H006
+  candidate_id: ann_dcml_tchaikovsky_seasons:op37a11_e48e6294d48a
+  piece_id: dcml_tchaikovsky_seasons:op37a11
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 12
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H007
+  candidate_id: ann_dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)_6e58cdbfa8d1
+  piece_id: dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 10
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H008
+  candidate_id: ann_dcml_tchaikovsky_seasons:op37a09_5861dcb19f5e
+  piece_id: dcml_tchaikovsky_seasons:op37a09
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H009
+  candidate_id: ann_dcml_chopin_mazurkas:BI93-2op67-3_0be15be49ee4
+  piece_id: dcml_chopin_mazurkas:BI93-2op67-3
+  span_start:
+    measure_index: 16
+    offset: '0'
+  span_end:
+    measure_index: 24
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H010
+  candidate_id: ann_dcml_schumann_kinderszenen:n08_b933fc7e3696
+  piece_id: dcml_schumann_kinderszenen:n08
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 8
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H011
+  candidate_id: ann_dcml_rachmaninoff_op42:op42_09_9d6956cf2016
+  piece_id: dcml_rachmaninoff_op42:op42_09
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H012
+  candidate_id: ann_dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell_3e2fa15766db
+  piece_id: dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 12
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H013
+  candidate_id: ann_dcml_rachmaninoff_op42:op42_14_2850a0bf77b4
+  piece_id: dcml_rachmaninoff_op42:op42_14
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H014
+  candidate_id: ann_dcml_rachmaninoff_op42:op42_03_a32fae359609
+  piece_id: dcml_rachmaninoff_op42:op42_03
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H015
+  candidate_id: ann_dcml_tchaikovsky_seasons:op37a01_5531c09d0685
+  piece_id: dcml_tchaikovsky_seasons:op37a01
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H016
+  candidate_id: ann_dcml_liszt_annees:160.05_Orage_bb8d57609d91
+  piece_id: dcml_liszt_annees:160.05_Orage
+  span_start:
+    measure_index: 32
+    offset: '0'
+  span_end:
+    measure_index: 48
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H017
+  candidate_id: ann_dcml_chopin_mazurkas:BI157-2op59-2_2d0c6fb69fb1
+  piece_id: dcml_chopin_mazurkas:BI157-2op59-2
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 16
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H018
+  candidate_id: ann_dcml_chopin_mazurkas:BI93-2op67-3_20311a17eaa4
+  piece_id: dcml_chopin_mazurkas:BI93-2op67-3
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 8
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H019
+  candidate_id: ann_dcml_schumann_kinderszenen:n06_b048ff32dfb3
+  piece_id: dcml_schumann_kinderszenen:n06
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 8
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
+- review_id: H020
+  candidate_id: ann_dcml_schumann_kinderszenen:n09_60642d4f7e79
+  piece_id: dcml_schumann_kinderszenen:n09
+  span_start:
+    measure_index: 0
+    offset: '0'
+  span_end:
+    measure_index: 8
+    offset: '0'
+  decision:
+    is_thematic_statement: null
+    start_boundary: null
+    revised_start_measure: null
+    revised_start_offset: null
+    end_boundary: null
+    revised_end_measure: null
+    revised_end_offset: null
+    theme_role: null
+    confidence: null
+    notes: null
+  diagnostics:
+    opening_bias_question: null
+    full_span_question: null
