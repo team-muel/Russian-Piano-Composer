@@ -153,6 +153,13 @@ class CanonicalScore:
                 f"piece_id must be '{expected_piece_id}', got '{self.piece_id}'"
             )
 
+        if not self.measures:
+            raise ValueError(f"CanonicalScore '{self.piece_id}' must contain at least 1 measure.")
+        if not self.events:
+            raise ValueError(f"CanonicalScore '{self.piece_id}' must contain at least 1 event.")
+        if not any(e.event_kind == EventKind.NOTE for e in self.events):
+            raise ValueError(f"CanonicalScore '{self.piece_id}' must contain at least 1 NOTE event.")
+
         # Validate measure contiguity
         for idx, m in enumerate(self.measures):
             if m.piece_id != self.piece_id:

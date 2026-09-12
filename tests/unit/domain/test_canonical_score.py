@@ -227,3 +227,68 @@ def test_canonical_score_unsorted_events_raises() -> None:
             measures=(m0,),
             events=(e_later, e_earlier),
         )
+
+
+def test_canonical_score_empty_measures_or_events_raises() -> None:
+    ts = TimeSignature(4, 4)
+    m0 = CanonicalMeasure(
+        piece_id="dcml_medtner_tales:op34n02",
+        measure_index=0,
+        source_measure_label="1",
+        global_onset=Fraction(0, 1),
+        actual_duration=Fraction(1, 1),
+        time_signature=ts,
+        expected_duration=Fraction(1, 1),
+    )
+    p = SpelledPitch(letter=PitchLetter.C, alteration=0, octave=4)
+    e1 = CanonicalScoreEvent(
+        piece_id="dcml_medtner_tales:op34n02",
+        event_id="evt_0",
+        event_index=0,
+        event_kind=EventKind.NOTE,
+        measure_index=0,
+        source_measure_label="1",
+        staff=1,
+        voice=1,
+        global_onset=Fraction(0, 1),
+        offset_in_measure=Fraction(0, 1),
+        duration=Fraction(1, 4),
+        pitch=p,
+        midi=60,
+    )
+
+    with pytest.raises(ValueError, match="must contain at least 1 measure"):
+        CanonicalScore(
+            piece_id="dcml_medtner_tales:op34n02",
+            corpus_id="dcml_medtner_tales",
+            corpus_role=CorpusRole.GENERATIVE_RUSSIAN,
+            score_entry_id="op34n02",
+            composer="Nikolai Medtner",
+            title="Fairy Tale Op. 34 No. 2",
+            source_repository="DCMLab/medtner_tales",
+            source_commit="1d2e58ba8d329463829e45e75900af43be4256bf",
+            source_relative_path="MS3/op34n02.mscx",
+            source_sha256="1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+            manifest_hash="cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212",
+            parser_version="2.4.0",
+            measures=(),
+            events=(e1,),
+        )
+
+    with pytest.raises(ValueError, match="must contain at least 1 event"):
+        CanonicalScore(
+            piece_id="dcml_medtner_tales:op34n02",
+            corpus_id="dcml_medtner_tales",
+            corpus_role=CorpusRole.GENERATIVE_RUSSIAN,
+            score_entry_id="op34n02",
+            composer="Nikolai Medtner",
+            title="Fairy Tale Op. 34 No. 2",
+            source_repository="DCMLab/medtner_tales",
+            source_commit="1d2e58ba8d329463829e45e75900af43be4256bf",
+            source_relative_path="MS3/op34n02.mscx",
+            source_sha256="1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef",
+            manifest_hash="cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212",
+            parser_version="2.4.0",
+            measures=(m0,),
+            events=(),
+        )
