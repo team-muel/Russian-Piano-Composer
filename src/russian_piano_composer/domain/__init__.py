@@ -18,13 +18,26 @@ from .dna import ThemeDNA
 from .events import ThemeEvent
 from .pianist import PianistProfile
 from .result import GenerationResult
+from .score import (
+    CANONICAL_SCORE_SCHEMA_VERSION,
+    CanonicalMeasure,
+    CanonicalScore,
+    CanonicalScoreEvent,
+    EventKind,
+    TieState,
+)
 from .scores import ThemeScores
 from .theme import ScoredTheme, Theme
 
 __all__ = [
+    "CANONICAL_SCORE_SCHEMA_VERSION",
+    "CanonicalMeasure",
+    "CanonicalScore",
+    "CanonicalScoreEvent",
     "CorpusFormat",
     "CorpusRole",
     "CorpusSource",
+    "EventKind",
     "GenerationResult",
     "LicenseClaim",
     "PianistProfile",
@@ -39,4 +52,6 @@ __all__ = [
     "ThemeDNA",
     "ThemeEvent",
     "ThemeScores",
+    "TieState",
 ]
+

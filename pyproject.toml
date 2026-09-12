@@ -76,6 +76,8 @@ packages = ["russian_piano_composer"]
 module = [
     "music21.*",
     "ms3.*",
+    "pandas.*",
+    "pyarrow.*",
     "sklearn.*",
     "networkx.*",
     "scipy.*",
