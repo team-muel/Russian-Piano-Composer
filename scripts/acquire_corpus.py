@@ -8,13 +8,12 @@ Usage:
 """
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from russian_piano_composer.corpus.acquisition import (
     EXPECTED_MANIFEST_HASH,
     acquire_corpus_source,
-    acquire_all_corpora,
 )
 from russian_piano_composer.corpus.manifest import load_manifest
 

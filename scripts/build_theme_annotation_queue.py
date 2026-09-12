@@ -8,8 +8,8 @@ from pathlib import Path
 
 from russian_piano_composer.corpus.manifest import load_manifest
 from russian_piano_composer.corpus.theme_annotations import load_theme_annotation_manifest
-from russian_piano_composer.domain.corpus import CorpusRole
 from russian_piano_composer.domain.annotations import PieceReviewStatus
+from russian_piano_composer.domain.corpus import CorpusRole
 
 
 def build_parser() -> argparse.ArgumentParser:

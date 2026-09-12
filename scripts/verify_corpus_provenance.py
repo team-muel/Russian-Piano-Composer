@@ -6,11 +6,9 @@ Supports offline validation against local inventory and optional remote verifica
 """
 import argparse
 import json
-import re
 import sys
 import urllib.request
 from pathlib import Path
-from typing import Any
 
 import yaml
 
@@ -127,7 +125,7 @@ def verify_remote_provenance(inventory_path: Path) -> int:
         repo = entry["repository"]
         commit = entry["commit"]
         expected_count = entry["score_entry_count"]
-        print(f"Checking remote repository {repo} at commit {commit}...")
+        print(f"Checking remote repository {repo} at commit {commit} (expected entries: {expected_count})...")
         try:
             url = f"https://api.github.com/repos/{repo}/commits/{commit}"
             req = urllib.request.Request(url, headers={"User-Agent": "RussianPianoComposer/1.0"})

@@ -1,0 +1,135 @@
+pilot_id: rc008b_pilot_v1
+selection_version: 1
+corpus_manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+canonical_schema_version: 1
+parent_annotation_hash: cb7ac0b2142eeb4f524ceb043a051e471f1f0e85cd539b9d947c154c6431bbac
+selection_algorithm: length_stratified_25_50_75_percentile_measure_count
+selected_piece_ids:
+- dcml_chopin_mazurkas:BI93-2op67-3
+- dcml_chopin_mazurkas:BI60-1op06-1
+- dcml_chopin_mazurkas:BI157-2op59-2
+- dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
+- dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
+- dcml_liszt_annees:160.05_Orage
+- dcml_medtner_tales:op42n02
+- dcml_medtner_tales:op26n03
+- dcml_medtner_tales:op34n03
+- dcml_rachmaninoff_op42:op42_03
+- dcml_rachmaninoff_op42:op42_14
+- dcml_rachmaninoff_op42:op42_09
+- dcml_schumann_kinderszenen:n09
+- dcml_schumann_kinderszenen:n06
+- dcml_schumann_kinderszenen:n08
+- dcml_tchaikovsky_seasons:op37a11
+- dcml_tchaikovsky_seasons:op37a09
+- dcml_tchaikovsky_seasons:op37a01
+pieces:
+- corpus_id: dcml_chopin_mazurkas
+  score_entry_id: BI93-2op67-3
+  piece_id: dcml_chopin_mazurkas:BI93-2op67-3
+  canonical_piece_hash: 9a678949753c5a8cdb4cb06621a14519569beafb6accba72b36d9daf3fe9aa77
+  measure_count: 57
+  selection_stratum: SHORT
+- corpus_id: dcml_chopin_mazurkas
+  score_entry_id: BI60-1op06-1
+  piece_id: dcml_chopin_mazurkas:BI60-1op06-1
+  canonical_piece_hash: 757c7db77dcf8feeba28eebc6ae9a14ca4751cf1743c19fb2e15a35b5553e3e3
+  measure_count: 75
+  selection_stratum: MEDIUM
+- corpus_id: dcml_chopin_mazurkas
+  score_entry_id: BI157-2op59-2
+  piece_id: dcml_chopin_mazurkas:BI157-2op59-2
+  canonical_piece_hash: 3bee570a87460fd65de3edbd56b250b8879a977230bd06ae7ff5ef0479160e85
+  measure_count: 111
+  selection_stratum: LONG
+- corpus_id: dcml_liszt_annees
+  score_entry_id: 160.08_Le_Mal_du_Pays_(Heimweh)
+  piece_id: dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
+  canonical_piece_hash: 9186bb227e8a706792a5bbeda7207c44eac30ad8349433e438c48c34275d7cb7
+  measure_count: 70
+  selection_stratum: SHORT
+- corpus_id: dcml_liszt_annees
+  score_entry_id: 160.01_Chapelle_de_Guillaume_Tell
+  piece_id: dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
+  canonical_piece_hash: 367fa738719f20483165e6f8d3ecfa6aa7c32dc7832e31204bf217818f8f12ba
+  measure_count: 97
+  selection_stratum: MEDIUM
+- corpus_id: dcml_liszt_annees
+  score_entry_id: 160.05_Orage
+  piece_id: dcml_liszt_annees:160.05_Orage
+  canonical_piece_hash: 97eca44318e067e3ad57076e1954cacdd2e1ff67957ade4672b2b0100161f758
+  measure_count: 163
+  selection_stratum: LONG
+- corpus_id: dcml_medtner_tales
+  score_entry_id: op42n02
+  piece_id: dcml_medtner_tales:op42n02
+  canonical_piece_hash: 8085aafb9ea33f4a20ad214336b7e631d44db225bb761230e46a727ec44e6359
+  measure_count: 67
+  selection_stratum: SHORT
+- corpus_id: dcml_medtner_tales
+  score_entry_id: op26n03
+  piece_id: dcml_medtner_tales:op26n03
+  canonical_piece_hash: 232c055f9a7d14717b0e92412c80fde2d35273050c5f06e838c5bf3641d729d9
+  measure_count: 81
+  selection_stratum: MEDIUM
+- corpus_id: dcml_medtner_tales
+  score_entry_id: op34n03
+  piece_id: dcml_medtner_tales:op34n03
+  canonical_piece_hash: 4baa65820fd5fd8b72cd989ee74c4a28872b71f8c42fae4cada93ae060d29095
+  measure_count: 144
+  selection_stratum: LONG
+- corpus_id: dcml_rachmaninoff_op42
+  score_entry_id: op42_03
+  piece_id: dcml_rachmaninoff_op42:op42_03
+  canonical_piece_hash: d59166505ed7d510c2f68d8d041e96d94d83484b7ab1b7ba95bd4e4630dc3a47
+  measure_count: 16
+  selection_stratum: SHORT
+- corpus_id: dcml_rachmaninoff_op42
+  score_entry_id: op42_14
+  piece_id: dcml_rachmaninoff_op42:op42_14
+  canonical_piece_hash: b51f18d510c1b04541f5e52c275329270206e57f8c324ea9d4dfd3fb38f64f36
+  measure_count: 16
+  selection_stratum: MEDIUM
+- corpus_id: dcml_rachmaninoff_op42
+  score_entry_id: op42_09
+  piece_id: dcml_rachmaninoff_op42:op42_09
+  canonical_piece_hash: d4330b90b4e8f91c0166801ae1680ddd5c2ceed192c26c41346e9108704b11a4
+  measure_count: 19
+  selection_stratum: LONG
+- corpus_id: dcml_schumann_kinderszenen
+  score_entry_id: n09
+  piece_id: dcml_schumann_kinderszenen:n09
+  canonical_piece_hash: cd8cfe11d37091653775caac3fcd00de65b6ac7d88b5e651098459406b69d9da
+  measure_count: 24
+  selection_stratum: SHORT
+- corpus_id: dcml_schumann_kinderszenen
+  score_entry_id: n06
+  piece_id: dcml_schumann_kinderszenen:n06
+  canonical_piece_hash: b30a5730e7a044a614ffa11142783ff51e68f2911dfdf3d49c49ff3ac4df2d53
+  measure_count: 27
+  selection_stratum: MEDIUM
+- corpus_id: dcml_schumann_kinderszenen
+  score_entry_id: n08
+  piece_id: dcml_schumann_kinderszenen:n08
+  canonical_piece_hash: 7955b062f0fe1218f434c7c897e5f74e4c1950133a21341d3c901975cf3fdf49
+  measure_count: 34
+  selection_stratum: LONG
+- corpus_id: dcml_tchaikovsky_seasons
+  score_entry_id: op37a11
+  piece_id: dcml_tchaikovsky_seasons:op37a11
+  canonical_piece_hash: d07b4e2e83f2162f3e5efbeaaaae250fe3c06fbda2eb70f023ce3402003d1d4c
+  measure_count: 83
+  selection_stratum: SHORT
+- corpus_id: dcml_tchaikovsky_seasons
+  score_entry_id: op37a09
+  piece_id: dcml_tchaikovsky_seasons:op37a09
+  canonical_piece_hash: ddc2be6984907ff565ab9f58a320bc46d63d3142699d473e724526ae56dc7e0a
+  measure_count: 90
+  selection_stratum: MEDIUM
+- corpus_id: dcml_tchaikovsky_seasons
+  score_entry_id: op37a01
+  piece_id: dcml_tchaikovsky_seasons:op37a01
+  canonical_piece_hash: f5e57cf5df480aed059efea44621690c8eb8789955401f5264493d1b10153536
+  measure_count: 103
+  selection_stratum: LONG
+pilot_selection_hash: d7d718e0ae44256ced833944c396cb216fc5ec1b252cf7effd13e9f99a78b936

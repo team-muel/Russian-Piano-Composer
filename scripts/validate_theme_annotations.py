@@ -6,6 +6,10 @@ import io
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from scripts.build_theme_pilot import load_canonical_score_from_parquet
+
 from russian_piano_composer.corpus.manifest import load_manifest
 from russian_piano_composer.corpus.theme_annotations import (
     load_theme_annotation_manifest,
@@ -71,9 +75,25 @@ def main() -> int:
     print(f"Total Annotations:           {len(annotation_set.annotations)}")
     print("-" * 70)
 
+    canonical_scores = {}
+    if annotation_set.annotations:
+        interim_base = Path("data/interim/canonical") / expected_manifest_hash
+        needed_pieces = {ann.piece_id for ann in annotation_set.annotations}
+        for src in corpus_manifest.sources:
+            corpus_dir = interim_base / src.corpus_id
+            if not corpus_dir.exists():
+                continue
+            for entry_id in src.score_entry_ids:
+                piece_id = f"{src.corpus_id}:{entry_id}"
+                if piece_id in needed_pieces:
+                    try:
+                        canonical_scores[piece_id] = load_canonical_score_from_parquet(corpus_dir, piece_id)
+                    except Exception as e:
+                        print(f"Warning: Failed loading canonical score for {piece_id}: {e}")
+
     try:
-        validated = validate_theme_annotation_set(annotation_set, {}, expected_manifest_hash)
-        print(f"Validation SUCCESS: {len(validated)} annotations verified cleanly.")
+        validated = validate_theme_annotation_set(annotation_set, canonical_scores, expected_manifest_hash)
+        print(f"Validation SUCCESS: {len(validated)} annotations verified cleanly against canonical score boundaries.")
     except Exception as e:
         print(f"Validation FAILED: {e}", file=sys.stderr)
         return 1

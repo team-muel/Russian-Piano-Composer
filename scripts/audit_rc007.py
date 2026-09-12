@@ -4,18 +4,15 @@ Data Integrity Audit Script for RC-007A Acceptance.
 Programmatically recomputes and verifies all scientific invariants across the six corpora.
 """
 
-from fractions import Fraction
-import os
-from pathlib import Path
 import subprocess
 import sys
 import tempfile
-
-import pandas as pd
-import pyarrow  # Ensure direct pyarrow import check
-import yaml
+from pathlib import Path
 
 import ms3
+import pandas as pd
+import pyarrow  # Ensure direct pyarrow import check
+
 from russian_piano_composer.corpus.acquisition import (
     EXPECTED_MANIFEST_HASH,
     acquire_corpus_source,
@@ -104,7 +101,6 @@ def audit_rc007() -> int:
     total_pitch_checks = 0
     pitch_mismatches = 0
     empty_piece_failures = 0
-    missing_entry_failures = 0
 
     for src in manifest.sources:
         c_dir = interim_base / src.corpus_id

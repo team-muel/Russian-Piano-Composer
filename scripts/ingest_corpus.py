@@ -7,8 +7,8 @@ Usage:
 """
 
 import argparse
-from pathlib import Path
 import sys
+from pathlib import Path
 
 from russian_piano_composer.corpus.ingestion import (
     EXPECTED_MANIFEST_HASH,
