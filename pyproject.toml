@@ -1,0 +1,99 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "russian-piano-composer"
+version = "0.1.0"
+description = "Interpretable symbolic composition system for autonomous Russian late-Romantic piano music generation."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+license = { text = "TBD" }
+
+dependencies = [
+    "numpy>=1.26,<2.0",
+    "scipy>=1.12",
+    "pandas>=2.2",
+    "polars>=0.20",
+    "music21>=9.1",
+    "networkx>=3.2",
+    "scikit-learn>=1.4",
+    "pydantic>=2.6",
+    "pyyaml>=6.0",
+    "orjson>=3.9",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "hypothesis>=6.98",
+    "ruff>=0.3",
+    "mypy>=1.8",
+    "ms3>=2.5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/russian_piano_composer"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "N",    # pep8-naming
+    "UP",   # pyupgrade
+    "B",    # flake8-bugbear
+    "SIM",  # flake8-simplify
+    "TCH",  # flake8-type-checking
+    "RUF",  # ruff-specific
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["russian_piano_composer"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+check_untyped_defs = true
+mypy_path = "src"
+packages = ["russian_piano_composer"]
+
+[[tool.mypy.overrides]]
+module = [
+    "music21.*",
+    "ms3.*",
+    "sklearn.*",
+    "networkx.*",
+    "scipy.*",
+    "polars.*",
+    "orjson.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = [
+    "-v",
+    "--strict-markers",
+    "--tb=short",
+]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+    "regression: marks tests as regression tests",
+    "property: marks tests as property-based tests",
+]
