@@ -34,6 +34,10 @@ This provenance must be kept explicit at all times.
 - Every experiment must record: git commit hash, dataset version/hash, configuration hash, random seed, model artifact version, baseline definition
 - Results must be reproducible from these parameters
 
+### Deterministic Randomness Enforcement
+- Production stochastic logic must receive a `RandomContext` or a local RNG derived from `RandomContext`
+- No uncontrolled global random state (`random.random()`, `random.choice()`, `np.random.seed()`, etc.) is permitted in generation, search, or sampling modules
+
 ### Data Leakage Prevention
 - Never use random event-level or theme-level train/test splitting when material from the same composition could appear in both sets
 - Primary split unit: piece_id
