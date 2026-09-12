@@ -1,0 +1,197 @@
+# RC-008B Pilot Theme Candidate Specifications Data Artifact
+# Decoupled candidate boundary definitions for 18 pilot pieces.
+
+candidate_specs:
+  - piece_id: dcml_chopin_mazurkas:BI93-2op67-3
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 8, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS, CADENTIAL_ARTICULATION]
+        rationale: Clear opening 8-bar period in F major; antecedent/consequent structure with cadential closure at m.8.
+      - span:
+          start: {measure_index: 16, offset: '0'}
+          end: {measure_index: 24, offset: '0'}
+        role: SECONDARY_THEME
+        confidence: 2
+        evidence_tags: [RECURRENCE, TEXTURAL_ARTICULATION]
+        rationale: Contrasting 8-bar secondary thematic section with distinct rhythmic motive.
+
+  - piece_id: dcml_chopin_mazurkas:BI60-1op06-1
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: Opening 16-bar primary thematic section; characteristic dotted mazurka rhythm in bass and melody.
+
+  - piece_id: dcml_chopin_mazurkas:BI157-2op59-2
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS, CADENTIAL_ARTICULATION]
+        rationale: Main 16-bar theme statement with rich chromatic inner-voice motion.
+
+  - piece_id: dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 10, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 2
+        evidence_tags: [INITIAL_PRESENTATION, TEXTURAL_ARTICULATION]
+        rationale: Opening nostalgic thematic phrase with sparse harmonic texture and expressive pauses.
+
+  - piece_id: dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 12, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, CADENTIAL_ARTICULATION]
+        rationale: Hymn-like opening fanfare/theme statement in C major (12 bars duration).
+
+  - piece_id: dcml_liszt_annees:160.05_Orage
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, DEVELOPMENTAL_REUSE]
+        rationale: Virtuosic octaves opening storm motto/theme (16 bars).
+      - span:
+          start: {measure_index: 32, offset: '0'}
+          end: {measure_index: 48, offset: '0'}
+        role: SECONDARY_THEME
+        confidence: 2
+        evidence_tags: [RECURRENCE, TEXTURAL_ARTICULATION]
+        rationale: Secondary octave theme statement in relative major.
+
+  - piece_id: dcml_medtner_tales:op42n02
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 12, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: Opening 12-bar tale theme in C minor with cross-rhythmic accompaniment.
+
+  - piece_id: dcml_medtner_tales:op26n03
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 8, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, CADENTIAL_ARTICULATION]
+        rationale: Opening 8-bar period theme in G minor.
+
+  - piece_id: dcml_medtner_tales:op34n03
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, DEVELOPMENTAL_REUSE]
+        rationale: Main narrative theme in A minor with imitative contrapuntal inner voices.
+
+  - piece_id: dcml_rachmaninoff_op42:op42_03
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: Complete 16-bar variation statement of Corelli theme motive.
+
+  - piece_id: dcml_rachmaninoff_op42:op42_14
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: Adagio variation theme in Db major (16 bars).
+
+  - piece_id: dcml_rachmaninoff_op42:op42_09
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 2
+        evidence_tags: [INITIAL_PRESENTATION, CADENTIAL_ARTICULATION]
+        rationale: Main 16-bar thematic core preceding 3-bar cadential extension.
+
+  - piece_id: dcml_schumann_kinderszenen:n09
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 8, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: Opening 8-bar syncopated rhythm theme in C major.
+
+  - piece_id: dcml_schumann_kinderszenen:n06
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 8, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, CADENTIAL_ARTICULATION]
+        rationale: Opening 8-bar chordal thematic statement in A major.
+
+  - piece_id: dcml_schumann_kinderszenen:n08
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 8, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: Opening 8-bar lyrical theme in F major.
+
+  - piece_id: dcml_tchaikovsky_seasons:op37a11
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 12, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: Troika opening 12-bar melismata theme in E major.
+
+  - piece_id: dcml_tchaikovsky_seasons:op37a09
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, CADENTIAL_ARTICULATION]
+        rationale: The Hunt opening 16-bar horn-call theme in G major.
+
+  - piece_id: dcml_tchaikovsky_seasons:op37a01
+    candidates:
+      - span:
+          start: {measure_index: 0, offset: '0'}
+          end: {measure_index: 16, offset: '0'}
+        role: PRIMARY_THEME
+        confidence: 3
+        evidence_tags: [INITIAL_PRESENTATION, PHRASE_COMPLETENESS]
+        rationale: By the Hearth opening 16-bar cantabile theme in A major.

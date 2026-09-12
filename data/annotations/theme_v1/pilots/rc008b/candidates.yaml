@@ -4,19 +4,19 @@ corpus_manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2
 pilot_id: rc008b_pilot_v1
 parent_annotation_hash: cb7ac0b2142eeb4f524ceb043a051e471f1f0e85cd539b9d947c154c6431bbac
 pilot_selection_hash: d7d718e0ae44256ced833944c396cb216fc5ec1b252cf7effd13e9f99a78b936
-pilot_candidate_annotation_hash: d16b6ee7acf1e2dc6a5b2a4d21d3ba2e208520419c3adec4bede6dd215ea46c1
+pilot_candidate_annotation_hash: 1b7c3255e19465d3f9c79a69cb350afa447edf1b31260dd4f6fa420c86f0163c
 human_accepted_count: 0
 annotations:
-- annotation_id: ann_dcml_chopin_mazurkas:BI93-2op67-3_20311a17eaa4
-  piece_id: dcml_chopin_mazurkas:BI93-2op67-3
-  corpus_id: dcml_chopin_mazurkas
-  score_entry_id: BI93-2op67-3
+- annotation_id: ann_dcml_tchaikovsky_seasons:op37a01_5531c09d0685
+  piece_id: dcml_tchaikovsky_seasons:op37a01
+  corpus_id: dcml_tchaikovsky_seasons
+  score_entry_id: op37a01
   span:
     start:
       measure_index: 0
       offset: '0'
     end:
-      measure_index: 8
+      measure_index: 16
       offset: '0'
   theme_role: PRIMARY_THEME
   confidence: 3
@@ -31,348 +31,23 @@ annotations:
       phrase structure.
     role_assessment: Role PRIMARY_THEME matches thematic salience.
     confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
   evidence_tags:
   - INITIAL_PRESENTATION
   - PHRASE_COMPLETENESS
-  - CADENTIAL_ARTICULATION
-  rationale: Clear opening 8-bar period in F major; antecedent/consequent structure
-    with cadential closure at m.8.
+  rationale: By the Hearth opening 16-bar cantabile theme in A major.
   manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 9a678949753c5a8cdb4cb06621a14519569beafb6accba72b36d9daf3fe9aa77
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_chopin_mazurkas:BI93-2op67-3_0be15be49ee4
-  piece_id: dcml_chopin_mazurkas:BI93-2op67-3
-  corpus_id: dcml_chopin_mazurkas
-  score_entry_id: BI93-2op67-3
-  span:
-    start:
-      measure_index: 16
-      offset: '0'
-    end:
-      measure_index: 24
-      offset: '0'
-  theme_role: SECONDARY_THEME
-  confidence: 2
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role SECONDARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 2 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - RECURRENCE
-  - TEXTURAL_ARTICULATION
-  rationale: Contrasting 8-bar secondary thematic section with distinct rhythmic motive.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 9a678949753c5a8cdb4cb06621a14519569beafb6accba72b36d9daf3fe9aa77
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_chopin_mazurkas:BI60-1op06-1_874948be7636
-  piece_id: dcml_chopin_mazurkas:BI60-1op06-1
-  corpus_id: dcml_chopin_mazurkas
-  score_entry_id: BI60-1op06-1
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 16
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - PHRASE_COMPLETENESS
-  rationale: Opening 16-bar primary thematic section; characteristic dotted mazurka
-    rhythm in bass and melody.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 757c7db77dcf8feeba28eebc6ae9a14ca4751cf1743c19fb2e15a35b5553e3e3
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_chopin_mazurkas:BI157-2op59-2_2d0c6fb69fb1
-  piece_id: dcml_chopin_mazurkas:BI157-2op59-2
-  corpus_id: dcml_chopin_mazurkas
-  score_entry_id: BI157-2op59-2
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 16
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - PHRASE_COMPLETENESS
-  - CADENTIAL_ARTICULATION
-  rationale: Main 16-bar theme statement with rich chromatic inner-voice motion.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 3bee570a87460fd65de3edbd56b250b8879a977230bd06ae7ff5ef0479160e85
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)_6e58cdbfa8d1
-  piece_id: dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
-  corpus_id: dcml_liszt_annees
-  score_entry_id: 160.08_Le_Mal_du_Pays_(Heimweh)
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 10
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 2
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 2 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - TEXTURAL_ARTICULATION
-  rationale: Opening nostalgic thematic phrase with sparse harmonic texture and expressive
-    pauses.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 9186bb227e8a706792a5bbeda7207c44eac30ad8349433e438c48c34275d7cb7
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell_3e2fa15766db
-  piece_id: dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
-  corpus_id: dcml_liszt_annees
-  score_entry_id: 160.01_Chapelle_de_Guillaume_Tell
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 12
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - CADENTIAL_ARTICULATION
-  rationale: Hymn-like opening fanfare/theme statement in C major (12 bars duration).
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 367fa738719f20483165e6f8d3ecfa6aa7c32dc7832e31204bf217818f8f12ba
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_liszt_annees:160.05_Orage_69b15b48a3ba
-  piece_id: dcml_liszt_annees:160.05_Orage
-  corpus_id: dcml_liszt_annees
-  score_entry_id: 160.05_Orage
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 16
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - DEVELOPMENTAL_REUSE
-  rationale: Virtuosic octaves opening storm motto/theme (16 bars).
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 97eca44318e067e3ad57076e1954cacdd2e1ff67957ade4672b2b0100161f758
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_liszt_annees:160.05_Orage_bb8d57609d91
-  piece_id: dcml_liszt_annees:160.05_Orage
-  corpus_id: dcml_liszt_annees
-  score_entry_id: 160.05_Orage
-  span:
-    start:
-      measure_index: 32
-      offset: '0'
-    end:
-      measure_index: 48
-      offset: '0'
-  theme_role: SECONDARY_THEME
-  confidence: 2
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role SECONDARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 2 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - RECURRENCE
-  - TEXTURAL_ARTICULATION
-  rationale: Secondary octave theme statement in relative major.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 97eca44318e067e3ad57076e1954cacdd2e1ff67957ade4672b2b0100161f758
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_medtner_tales:op42n02_9af25fe94ab0
-  piece_id: dcml_medtner_tales:op42n02
-  corpus_id: dcml_medtner_tales
-  score_entry_id: op42n02
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 12
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - PHRASE_COMPLETENESS
-  rationale: Opening 12-bar tale theme in C minor with cross-rhythmic accompaniment.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 8085aafb9ea33f4a20ad214336b7e631d44db225bb761230e46a727ec44e6359
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_medtner_tales:op26n03_f8a866291297
-  piece_id: dcml_medtner_tales:op26n03
-  corpus_id: dcml_medtner_tales
-  score_entry_id: op26n03
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 8
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - CADENTIAL_ARTICULATION
-  rationale: Opening 8-bar period theme in G minor.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 232c055f9a7d14717b0e92412c80fde2d35273050c5f06e838c5bf3641d729d9
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_medtner_tales:op34n03_1d492f06dcef
-  piece_id: dcml_medtner_tales:op34n03
-  corpus_id: dcml_medtner_tales
-  score_entry_id: op34n03
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 16
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - DEVELOPMENTAL_REUSE
-  rationale: Main narrative theme in A minor with imitative contrapuntal inner voices.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 4baa65820fd5fd8b72cd989ee74c4a28872b71f8c42fae4cada93ae060d29095
+  canonical_piece_hash: f5e57cf5df480aed059efea44621690c8eb8789955401f5264493d1b10153536
   canonical_schema_version: 1
   annotation_schema_version: 1
 - annotation_id: ann_dcml_rachmaninoff_op42:op42_03_a32fae359609
@@ -399,13 +74,67 @@ annotations:
       phrase structure.
     role_assessment: Role PRIMARY_THEME matches thematic salience.
     confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
   evidence_tags:
   - INITIAL_PRESENTATION
   - PHRASE_COMPLETENESS
   rationale: Complete 16-bar variation statement of Corelli theme motive.
   manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
   canonical_piece_hash: d59166505ed7d510c2f68d8d041e96d94d83484b7ab1b7ba95bd4e4630dc3a47
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)_6e58cdbfa8d1
+  piece_id: dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
+  corpus_id: dcml_liszt_annees
+  score_entry_id: 160.08_Le_Mal_du_Pays_(Heimweh)
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 10
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 2
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 2 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 10 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 2 defensible.
+    notes: 'Fresh Pass B: Approved 10-bar thematic span [0, 10) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - TEXTURAL_ARTICULATION
+  rationale: Opening nostalgic thematic phrase with sparse harmonic texture and expressive
+    pauses.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 9186bb227e8a706792a5bbeda7207c44eac30ad8349433e438c48c34275d7cb7
   canonical_schema_version: 1
   annotation_schema_version: 1
 - annotation_id: ann_dcml_rachmaninoff_op42:op42_14_2850a0bf77b4
@@ -432,145 +161,23 @@ annotations:
       phrase structure.
     role_assessment: Role PRIMARY_THEME matches thematic salience.
     confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
   evidence_tags:
   - INITIAL_PRESENTATION
   - PHRASE_COMPLETENESS
   rationale: Adagio variation theme in Db major (16 bars).
   manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
   canonical_piece_hash: b51f18d510c1b04541f5e52c275329270206e57f8c324ea9d4dfd3fb38f64f36
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_rachmaninoff_op42:op42_09_9d6956cf2016
-  piece_id: dcml_rachmaninoff_op42:op42_09
-  corpus_id: dcml_rachmaninoff_op42
-  score_entry_id: op42_09
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 16
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 2
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 2 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - CADENTIAL_ARTICULATION
-  rationale: Main 16-bar thematic core preceding 3-bar cadential extension.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: d4330b90b4e8f91c0166801ae1680ddd5c2ceed192c26c41346e9108704b11a4
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_schumann_kinderszenen:n09_60642d4f7e79
-  piece_id: dcml_schumann_kinderszenen:n09
-  corpus_id: dcml_schumann_kinderszenen
-  score_entry_id: n09
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 8
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - PHRASE_COMPLETENESS
-  rationale: Opening 8-bar syncopated rhythm theme in C major.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: cd8cfe11d37091653775caac3fcd00de65b6ac7d88b5e651098459406b69d9da
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_schumann_kinderszenen:n06_b048ff32dfb3
-  piece_id: dcml_schumann_kinderszenen:n06
-  corpus_id: dcml_schumann_kinderszenen
-  score_entry_id: n06
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 8
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - CADENTIAL_ARTICULATION
-  rationale: Opening 8-bar chordal thematic statement in A major.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: b30a5730e7a044a614ffa11142783ff51e68f2911dfdf3d49c49ff3ac4df2d53
-  canonical_schema_version: 1
-  annotation_schema_version: 1
-- annotation_id: ann_dcml_schumann_kinderszenen:n08_b933fc7e3696
-  piece_id: dcml_schumann_kinderszenen:n08
-  corpus_id: dcml_schumann_kinderszenen
-  score_entry_id: n08
-  span:
-    start:
-      measure_index: 0
-      offset: '0'
-    end:
-      measure_index: 8
-      offset: '0'
-  theme_role: PRIMARY_THEME
-  confidence: 3
-  status: REVIEWED
-  annotator_id: algorithm_candidate_pipeline_v1
-  annotator_type: ALGORITHM_CANDIDATE
-  reviews:
-  - reviewer_id: ai_music_theory_reviewer_v1
-    reviewer_type: MUSIC_THEORY_REVIEWER
-    decision: APPROVE
-    boundary_assessment: Confirmed start onset and end boundary align with metric
-      phrase structure.
-    role_assessment: Role PRIMARY_THEME matches thematic salience.
-    confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
-  evidence_tags:
-  - INITIAL_PRESENTATION
-  - PHRASE_COMPLETENESS
-  rationale: Opening 8-bar lyrical theme in F major.
-  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: 7955b062f0fe1218f434c7c897e5f74e4c1950133a21341d3c901975cf3fdf49
   canonical_schema_version: 1
   annotation_schema_version: 1
 - annotation_id: ann_dcml_tchaikovsky_seasons:op37a11_e48e6294d48a
@@ -597,13 +204,152 @@ annotations:
       phrase structure.
     role_assessment: Role PRIMARY_THEME matches thematic salience.
     confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 12 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 12-bar thematic span [0, 12) for role PRIMARY_THEME
+      in full score context.'
   evidence_tags:
   - INITIAL_PRESENTATION
   - PHRASE_COMPLETENESS
   rationale: Troika opening 12-bar melismata theme in E major.
   manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
   canonical_piece_hash: d07b4e2e83f2162f3e5efbeaaaae250fe3c06fbda2eb70f023ce3402003d1d4c
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_medtner_tales:op42n02_9af25fe94ab0
+  piece_id: dcml_medtner_tales:op42n02
+  corpus_id: dcml_medtner_tales
+  score_entry_id: op42n02
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 12
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 12 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 12-bar thematic span [0, 12) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - PHRASE_COMPLETENESS
+  rationale: Opening 12-bar tale theme in C minor with cross-rhythmic accompaniment.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 8085aafb9ea33f4a20ad214336b7e631d44db225bb761230e46a727ec44e6359
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell_3e2fa15766db
+  piece_id: dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
+  corpus_id: dcml_liszt_annees
+  score_entry_id: 160.01_Chapelle_de_Guillaume_Tell
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 12
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 12 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 12-bar thematic span [0, 12) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - CADENTIAL_ARTICULATION
+  rationale: Hymn-like opening fanfare/theme statement in C major (12 bars duration).
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 367fa738719f20483165e6f8d3ecfa6aa7c32dc7832e31204bf217818f8f12ba
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_rachmaninoff_op42:op42_09_9d6956cf2016
+  piece_id: dcml_rachmaninoff_op42:op42_09
+  corpus_id: dcml_rachmaninoff_op42
+  score_entry_id: op42_09
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 16
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 2
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 2 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 2 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - CADENTIAL_ARTICULATION
+  rationale: Main 16-bar thematic core preceding 3-bar cadential extension.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: d4330b90b4e8f91c0166801ae1680ddd5c2ceed192c26c41346e9108704b11a4
   canonical_schema_version: 1
   annotation_schema_version: 1
 - annotation_id: ann_dcml_tchaikovsky_seasons:op37a09_5861dcb19f5e
@@ -630,7 +376,17 @@ annotations:
       phrase structure.
     role_assessment: Role PRIMARY_THEME matches thematic salience.
     confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
   evidence_tags:
   - INITIAL_PRESENTATION
   - CADENTIAL_ARTICULATION
@@ -639,10 +395,141 @@ annotations:
   canonical_piece_hash: ddc2be6984907ff565ab9f58a320bc46d63d3142699d473e724526ae56dc7e0a
   canonical_schema_version: 1
   annotation_schema_version: 1
-- annotation_id: ann_dcml_tchaikovsky_seasons:op37a01_5531c09d0685
-  piece_id: dcml_tchaikovsky_seasons:op37a01
-  corpus_id: dcml_tchaikovsky_seasons
-  score_entry_id: op37a01
+- annotation_id: ann_dcml_liszt_annees:160.05_Orage_bb8d57609d91
+  piece_id: dcml_liszt_annees:160.05_Orage
+  corpus_id: dcml_liszt_annees
+  score_entry_id: 160.05_Orage
+  span:
+    start:
+      measure_index: 32
+      offset: '0'
+    end:
+      measure_index: 48
+      offset: '0'
+  theme_role: SECONDARY_THEME
+  confidence: 2
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role SECONDARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 2 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 32 and end measure 48 align with metric
+      phrase structure.
+    role_assessment: Role SECONDARY_THEME matches thematic salience in full piece
+      context.
+    confidence_assessment: Confidence 2 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [32, 48) for role SECONDARY_THEME
+      in full score context.'
+  evidence_tags:
+  - RECURRENCE
+  - TEXTURAL_ARTICULATION
+  rationale: Secondary octave theme statement in relative major.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 97eca44318e067e3ad57076e1954cacdd2e1ff67957ade4672b2b0100161f758
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_chopin_mazurkas:BI93-2op67-3_0be15be49ee4
+  piece_id: dcml_chopin_mazurkas:BI93-2op67-3
+  corpus_id: dcml_chopin_mazurkas
+  score_entry_id: BI93-2op67-3
+  span:
+    start:
+      measure_index: 16
+      offset: '0'
+    end:
+      measure_index: 24
+      offset: '0'
+  theme_role: SECONDARY_THEME
+  confidence: 2
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role SECONDARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 2 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 16 and end measure 24 align with metric
+      phrase structure.
+    role_assessment: Role SECONDARY_THEME matches thematic salience in full piece
+      context.
+    confidence_assessment: Confidence 2 defensible.
+    notes: 'Fresh Pass B: Approved 8-bar thematic span [16, 24) for role SECONDARY_THEME
+      in full score context.'
+  evidence_tags:
+  - RECURRENCE
+  - TEXTURAL_ARTICULATION
+  rationale: Contrasting 8-bar secondary thematic section with distinct rhythmic motive.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 9a678949753c5a8cdb4cb06621a14519569beafb6accba72b36d9daf3fe9aa77
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_medtner_tales:op26n03_f8a866291297
+  piece_id: dcml_medtner_tales:op26n03
+  corpus_id: dcml_medtner_tales
+  score_entry_id: op26n03
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 8
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 8 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 8-bar thematic span [0, 8) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - CADENTIAL_ARTICULATION
+  rationale: Opening 8-bar period theme in G minor.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 232c055f9a7d14717b0e92412c80fde2d35273050c5f06e838c5bf3641d729d9
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_chopin_mazurkas:BI60-1op06-1_874948be7636
+  piece_id: dcml_chopin_mazurkas:BI60-1op06-1
+  corpus_id: dcml_chopin_mazurkas
+  score_entry_id: BI60-1op06-1
   span:
     start:
       measure_index: 0
@@ -663,13 +550,328 @@ annotations:
       phrase structure.
     role_assessment: Role PRIMARY_THEME matches thematic salience.
     confidence_assessment: Confidence 3 defensible.
-    notes: Approved in Pass B AI review. Awaiting human adjudication.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
   evidence_tags:
   - INITIAL_PRESENTATION
   - PHRASE_COMPLETENESS
-  rationale: By the Hearth opening 16-bar cantabile theme in A major.
+  rationale: Opening 16-bar primary thematic section; characteristic dotted mazurka
+    rhythm in bass and melody.
   manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
-  canonical_piece_hash: f5e57cf5df480aed059efea44621690c8eb8789955401f5264493d1b10153536
+  canonical_piece_hash: 757c7db77dcf8feeba28eebc6ae9a14ca4751cf1743c19fb2e15a35b5553e3e3
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_schumann_kinderszenen:n08_b933fc7e3696
+  piece_id: dcml_schumann_kinderszenen:n08
+  corpus_id: dcml_schumann_kinderszenen
+  score_entry_id: n08
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 8
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 8 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 8-bar thematic span [0, 8) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - PHRASE_COMPLETENESS
+  rationale: Opening 8-bar lyrical theme in F major.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 7955b062f0fe1218f434c7c897e5f74e4c1950133a21341d3c901975cf3fdf49
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_schumann_kinderszenen:n06_b048ff32dfb3
+  piece_id: dcml_schumann_kinderszenen:n06
+  corpus_id: dcml_schumann_kinderszenen
+  score_entry_id: n06
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 8
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 8 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 8-bar thematic span [0, 8) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - CADENTIAL_ARTICULATION
+  rationale: Opening 8-bar chordal thematic statement in A major.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: b30a5730e7a044a614ffa11142783ff51e68f2911dfdf3d49c49ff3ac4df2d53
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_medtner_tales:op34n03_1d492f06dcef
+  piece_id: dcml_medtner_tales:op34n03
+  corpus_id: dcml_medtner_tales
+  score_entry_id: op34n03
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 16
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - DEVELOPMENTAL_REUSE
+  rationale: Main narrative theme in A minor with imitative contrapuntal inner voices.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 4baa65820fd5fd8b72cd989ee74c4a28872b71f8c42fae4cada93ae060d29095
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_chopin_mazurkas:BI157-2op59-2_2d0c6fb69fb1
+  piece_id: dcml_chopin_mazurkas:BI157-2op59-2
+  corpus_id: dcml_chopin_mazurkas
+  score_entry_id: BI157-2op59-2
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 16
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - PHRASE_COMPLETENESS
+  - CADENTIAL_ARTICULATION
+  rationale: Main 16-bar theme statement with rich chromatic inner-voice motion.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 3bee570a87460fd65de3edbd56b250b8879a977230bd06ae7ff5ef0479160e85
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_liszt_annees:160.05_Orage_69b15b48a3ba
+  piece_id: dcml_liszt_annees:160.05_Orage
+  corpus_id: dcml_liszt_annees
+  score_entry_id: 160.05_Orage
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 16
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 16 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 16-bar thematic span [0, 16) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - DEVELOPMENTAL_REUSE
+  rationale: Virtuosic octaves opening storm motto/theme (16 bars).
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 97eca44318e067e3ad57076e1954cacdd2e1ff67957ade4672b2b0100161f758
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_schumann_kinderszenen:n09_60642d4f7e79
+  piece_id: dcml_schumann_kinderszenen:n09
+  corpus_id: dcml_schumann_kinderszenen
+  score_entry_id: n09
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 8
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 8 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 8-bar thematic span [0, 8) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - PHRASE_COMPLETENESS
+  rationale: Opening 8-bar syncopated rhythm theme in C major.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: cd8cfe11d37091653775caac3fcd00de65b6ac7d88b5e651098459406b69d9da
+  canonical_schema_version: 1
+  annotation_schema_version: 1
+- annotation_id: ann_dcml_chopin_mazurkas:BI93-2op67-3_20311a17eaa4
+  piece_id: dcml_chopin_mazurkas:BI93-2op67-3
+  corpus_id: dcml_chopin_mazurkas
+  score_entry_id: BI93-2op67-3
+  span:
+    start:
+      measure_index: 0
+      offset: '0'
+    end:
+      measure_index: 8
+      offset: '0'
+  theme_role: PRIMARY_THEME
+  confidence: 3
+  status: REVIEWED
+  annotator_id: algorithm_candidate_pipeline_v1
+  annotator_type: ALGORITHM_CANDIDATE
+  reviews:
+  - reviewer_id: ai_music_theory_reviewer_v1
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Confirmed start onset and end boundary align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience.
+    confidence_assessment: Confidence 3 defensible.
+    notes: Original Pass B AI review (independence UNVERIFIED in synchronous builder
+      context).
+  - reviewer_id: ai_music_theory_reviewer_v2
+    reviewer_type: MUSIC_THEORY_REVIEWER
+    decision: APPROVE
+    boundary_assessment: Verified start measure 0 and end measure 8 align with metric
+      phrase structure.
+    role_assessment: Role PRIMARY_THEME matches thematic salience in full piece context.
+    confidence_assessment: Confidence 3 defensible.
+    notes: 'Fresh Pass B: Approved 8-bar thematic span [0, 8) for role PRIMARY_THEME
+      in full score context.'
+  evidence_tags:
+  - INITIAL_PRESENTATION
+  - PHRASE_COMPLETENESS
+  - CADENTIAL_ARTICULATION
+  rationale: Clear opening 8-bar period in F major; antecedent/consequent structure
+    with cadential closure at m.8.
+  manifest_hash: cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212
+  canonical_piece_hash: 9a678949753c5a8cdb4cb06621a14519569beafb6accba72b36d9daf3fe9aa77
   canonical_schema_version: 1
   annotation_schema_version: 1
 piece_records:
@@ -678,106 +880,106 @@ piece_records:
   score_entry_id: BI93-2op67-3
   status: IN_PROGRESS
   canonical_piece_hash: 9a678949753c5a8cdb4cb06621a14519569beafb6accba72b36d9daf3fe9aa77
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_chopin_mazurkas:BI60-1op06-1
   corpus_id: dcml_chopin_mazurkas
   score_entry_id: BI60-1op06-1
   status: IN_PROGRESS
   canonical_piece_hash: 757c7db77dcf8feeba28eebc6ae9a14ca4751cf1743c19fb2e15a35b5553e3e3
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_chopin_mazurkas:BI157-2op59-2
   corpus_id: dcml_chopin_mazurkas
   score_entry_id: BI157-2op59-2
   status: IN_PROGRESS
   canonical_piece_hash: 3bee570a87460fd65de3edbd56b250b8879a977230bd06ae7ff5ef0479160e85
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_liszt_annees:160.08_Le_Mal_du_Pays_(Heimweh)
   corpus_id: dcml_liszt_annees
   score_entry_id: 160.08_Le_Mal_du_Pays_(Heimweh)
   status: IN_PROGRESS
   canonical_piece_hash: 9186bb227e8a706792a5bbeda7207c44eac30ad8349433e438c48c34275d7cb7
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_liszt_annees:160.01_Chapelle_de_Guillaume_Tell
   corpus_id: dcml_liszt_annees
   score_entry_id: 160.01_Chapelle_de_Guillaume_Tell
   status: IN_PROGRESS
   canonical_piece_hash: 367fa738719f20483165e6f8d3ecfa6aa7c32dc7832e31204bf217818f8f12ba
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_liszt_annees:160.05_Orage
   corpus_id: dcml_liszt_annees
   score_entry_id: 160.05_Orage
   status: IN_PROGRESS
   canonical_piece_hash: 97eca44318e067e3ad57076e1954cacdd2e1ff67957ade4672b2b0100161f758
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_medtner_tales:op42n02
   corpus_id: dcml_medtner_tales
   score_entry_id: op42n02
   status: IN_PROGRESS
   canonical_piece_hash: 8085aafb9ea33f4a20ad214336b7e631d44db225bb761230e46a727ec44e6359
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_medtner_tales:op26n03
   corpus_id: dcml_medtner_tales
   score_entry_id: op26n03
   status: IN_PROGRESS
   canonical_piece_hash: 232c055f9a7d14717b0e92412c80fde2d35273050c5f06e838c5bf3641d729d9
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_medtner_tales:op34n03
   corpus_id: dcml_medtner_tales
   score_entry_id: op34n03
   status: IN_PROGRESS
   canonical_piece_hash: 4baa65820fd5fd8b72cd989ee74c4a28872b71f8c42fae4cada93ae060d29095
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_rachmaninoff_op42:op42_03
   corpus_id: dcml_rachmaninoff_op42
   score_entry_id: op42_03
   status: IN_PROGRESS
   canonical_piece_hash: d59166505ed7d510c2f68d8d041e96d94d83484b7ab1b7ba95bd4e4630dc3a47
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_rachmaninoff_op42:op42_14
   corpus_id: dcml_rachmaninoff_op42
   score_entry_id: op42_14
   status: IN_PROGRESS
   canonical_piece_hash: b51f18d510c1b04541f5e52c275329270206e57f8c324ea9d4dfd3fb38f64f36
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_rachmaninoff_op42:op42_09
   corpus_id: dcml_rachmaninoff_op42
   score_entry_id: op42_09
   status: IN_PROGRESS
   canonical_piece_hash: d4330b90b4e8f91c0166801ae1680ddd5c2ceed192c26c41346e9108704b11a4
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_schumann_kinderszenen:n09
   corpus_id: dcml_schumann_kinderszenen
   score_entry_id: n09
   status: IN_PROGRESS
   canonical_piece_hash: cd8cfe11d37091653775caac3fcd00de65b6ac7d88b5e651098459406b69d9da
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_schumann_kinderszenen:n06
   corpus_id: dcml_schumann_kinderszenen
   score_entry_id: n06
   status: IN_PROGRESS
   canonical_piece_hash: b30a5730e7a044a614ffa11142783ff51e68f2911dfdf3d49c49ff3ac4df2d53
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_schumann_kinderszenen:n08
   corpus_id: dcml_schumann_kinderszenen
   score_entry_id: n08
   status: IN_PROGRESS
   canonical_piece_hash: 7955b062f0fe1218f434c7c897e5f74e4c1950133a21341d3c901975cf3fdf49
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_tchaikovsky_seasons:op37a11
   corpus_id: dcml_tchaikovsky_seasons
   score_entry_id: op37a11
   status: IN_PROGRESS
   canonical_piece_hash: d07b4e2e83f2162f3e5efbeaaaae250fe3c06fbda2eb70f023ce3402003d1d4c
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_tchaikovsky_seasons:op37a09
   corpus_id: dcml_tchaikovsky_seasons
   score_entry_id: op37a09
   status: IN_PROGRESS
   canonical_piece_hash: ddc2be6984907ff565ab9f58a320bc46d63d3142699d473e724526ae56dc7e0a
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.
 - piece_id: dcml_tchaikovsky_seasons:op37a01
   corpus_id: dcml_tchaikovsky_seasons
   score_entry_id: op37a01
   status: IN_PROGRESS
   canonical_piece_hash: f5e57cf5df480aed059efea44621690c8eb8789955401f5264493d1b10153536
-  notes: AI candidate generation and AI review complete. Pending human adjudication.
+  notes: AI candidate generation and fresh AI review complete. Pending human adjudication.

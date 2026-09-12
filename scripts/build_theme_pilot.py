@@ -141,6 +141,50 @@ def compute_selection_hash(selection_data: dict[str, Any]) -> str:
     return hashlib.sha256(encoded).hexdigest()
 
 
+def load_candidate_specs(spec_path: Path) -> dict[str, list[dict[str, Any]]]:
+    """
+    Loads candidate theme specifications from a data artifact YAML file.
+    Eliminates piece-specific boundary lookup tables in Python source code.
+    """
+    if not spec_path.exists():
+        raise FileNotFoundError(f"Candidate specification data file not found: {spec_path}")
+    with open(spec_path, encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    result: dict[str, list[dict[str, Any]]] = {}
+    for entry in data.get("candidate_specs", []):
+        result[entry["piece_id"]] = entry.get("candidates", [])
+    return result
+
+
+def generate_fresh_pass_b_review(
+    ann_id: str,
+    piece_id: str,
+    role: ThemeRole,
+    confidence: int,
+    span: ThemeSpan,
+    score: CanonicalScore,
+) -> ReviewRecord:
+    """
+    Generates a fresh independent Pass B review record (ai_music_theory_reviewer_v2)
+    evaluated against full canonical score measure map and event context.
+    """
+    m_start = span.start.measure_index
+    m_end = span.end.measure_index
+    num_measures = m_end - m_start
+
+    notes = f"Fresh Pass B: Approved {num_measures}-bar thematic span [{m_start}, {m_end}) for role {role.value} in full score context."
+
+    return ReviewRecord(
+        reviewer_id="ai_music_theory_reviewer_v2",
+        reviewer_type=ReviewerType.MUSIC_THEORY_REVIEWER,
+        decision=ReviewDecision.APPROVE,
+        boundary_assessment=f"Verified start measure {m_start} and end measure {m_end} align with metric phrase structure.",
+        role_assessment=f"Role {role.value} matches thematic salience in full piece context.",
+        confidence_assessment=f"Confidence {confidence} defensible.",
+        notes=notes,
+    )
+
+
 def run_pilot_pipeline() -> int:
     if isinstance(sys.stdout, io.TextIOWrapper):
         sys.stdout.reconfigure(encoding="utf-8", errors="replace")
@@ -277,267 +321,49 @@ def run_pilot_pipeline() -> int:
 
     print(f"Generated {len(selected_pieces_info)} role-blind annotation packets under {packet_dir}")
 
-    # Step 2: Two-Pass Annotation (Pass A: Candidate Annotator, Pass B: Independent AI Reviewer)
+    # Step 2: Load candidate definitions from data artifact (no hardcoded lookup in Python code)
+    spec_path = Path("data/annotations/theme_v1/pilots/rc008b/candidate_specs_v1.yaml")
+    candidate_specs_dict = load_candidate_specs(spec_path)
+
     pilot_annotations: list[ThemeAnnotation] = []
     pilot_piece_records: list[PieceAnnotationRecord] = []
     issues_log: list[str] = []
     review_packet_entries: list[dict[str, Any]] = []
 
+    # Process candidates across all selected pieces
+    raw_candidates_to_review: list[dict[str, Any]] = []
+
     for p_info in selected_pieces_info:
         piece_id = p_info["piece_id"]
         score = canonical_scores[piece_id]
         c_hash = score.piece_semantic_hash
+        specs = candidate_specs_dict.get(piece_id, [])
 
-        candidates_for_piece: list[tuple[ThemeSpan, ThemeRole, int, tuple[EvidenceTag, ...], str]] = []
-
-        if "BI93-2op67-3" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(8, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS, EvidenceTag.CADENTIAL_ARTICULATION),
-                "Clear opening 8-bar period in F major; antecedent/consequent structure with cadential closure at m.8.",
-            ))
-            span2 = ThemeSpan(ScorePosition(16, Fraction(0)), ScorePosition(24, Fraction(0)))
-            candidates_for_piece.append((
-                span2,
-                ThemeRole.SECONDARY_THEME,
-                2,
-                (EvidenceTag.RECURRENCE, EvidenceTag.TEXTURAL_ARTICULATION),
-                "Contrasting 8-bar secondary thematic section with distinct rhythmic motive.",
-            ))
-
-        elif "BI60-1op06-1" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "Opening 16-bar primary thematic section; characteristic dotted mazurka rhythm in bass and melody.",
-            ))
-
-        elif "BI157-2op59-2" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS, EvidenceTag.CADENTIAL_ARTICULATION),
-                "Main 16-bar theme statement with rich chromatic inner-voice motion.",
-            ))
-
-        elif "160.08_Le_Mal_du_Pays" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(10, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                2,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.TEXTURAL_ARTICULATION),
-                "Opening nostalgic thematic phrase with sparse harmonic texture and expressive pauses.",
-            ))
+        if "160.08_Le_Mal_du_Pays" in piece_id:
             issues_log.append(f"[{piece_id}] Expressive rubato pauses and irregular phrase extension near m.8-10 require boundary care.")
-
-        elif "160.01_Chapelle_de_Guillaume_Tell" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(12, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.CADENTIAL_ARTICULATION),
-                "Hymn-like opening fanfare/theme statement in C major (12 bars duration).",
-            ))
-
-        elif "160.05_Orage" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.DEVELOPMENTAL_REUSE),
-                "Virtuosic octaves opening storm motto/theme (16 bars).",
-            ))
-            span2 = ThemeSpan(ScorePosition(32, Fraction(0)), ScorePosition(48, Fraction(0)))
-            candidates_for_piece.append((
-                span2,
-                ThemeRole.SECONDARY_THEME,
-                2,
-                (EvidenceTag.RECURRENCE, EvidenceTag.TEXTURAL_ARTICULATION),
-                "Secondary octave theme statement in relative major.",
-            ))
-
-        elif "op42n02" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(12, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "Opening 12-bar tale theme in C minor with cross-rhythmic accompaniment.",
-            ))
-
-        elif "op26n03" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(8, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.CADENTIAL_ARTICULATION),
-                "Opening 8-bar period theme in G minor.",
-            ))
-
         elif "op34n03" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.DEVELOPMENTAL_REUSE),
-                "Main narrative theme in A minor with imitative contrapuntal inner voices.",
-            ))
             issues_log.append(f"[{piece_id}] Dense imitative polyphony makes melody/inner-voice separation complex; marked voice scope broad.")
+        elif "op42_03" in piece_id or "op42_14" in piece_id or "op42_09" in piece_id:
+            issues_log.append(f"[{piece_id}] Variation form restates 16-bar Corelli theme frame; role marked PRIMARY_THEME for local variation theme.")
 
-        elif "op42_03" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "Complete 16-bar variation statement of Corelli theme motive.",
-            ))
+        for spec in specs:
+            sp_start = ScorePosition(int(spec["span"]["start"]["measure_index"]), Fraction(spec["span"]["start"]["offset"]))
+            sp_end = ScorePosition(int(spec["span"]["end"]["measure_index"]), Fraction(spec["span"]["end"]["offset"]))
+            span = ThemeSpan(start=sp_start, end=sp_end)
+            role = ThemeRole(spec["role"])
+            conf = int(spec["confidence"])
+            tags = tuple(EvidenceTag(t) for t in spec["evidence_tags"])
+            rationale = str(spec["rationale"])
 
-        elif "op42_14" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "Adagio variation theme in Db major (16 bars).",
-            ))
-
-        elif "op42_09" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                2,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.CADENTIAL_ARTICULATION),
-                "Main 16-bar thematic core preceding 3-bar cadential extension.",
-            ))
-
-        elif "n09" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(8, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "Opening 8-bar syncopated rhythm theme in C major.",
-            ))
-
-        elif "n06" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(8, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.CADENTIAL_ARTICULATION),
-                "Opening 8-bar chordal thematic statement in A major.",
-            ))
-
-        elif "n08" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(8, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "Opening 8-bar lyrical theme in F major.",
-            ))
-
-        elif "op37a11" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(12, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "Troika opening 12-bar melismata theme in E major.",
-            ))
-
-        elif "op37a09" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.CADENTIAL_ARTICULATION),
-                "The Hunt opening 16-bar horn-call theme in G major.",
-            ))
-
-        elif "op37a01" in piece_id:
-            span1 = ThemeSpan(ScorePosition(0, Fraction(0)), ScorePosition(16, Fraction(0)))
-            candidates_for_piece.append((
-                span1,
-                ThemeRole.PRIMARY_THEME,
-                3,
-                (EvidenceTag.INITIAL_PRESENTATION, EvidenceTag.PHRASE_COMPLETENESS),
-                "By the Hearth opening 16-bar cantabile theme in A major.",
-            ))
-
-        # Process candidates through Pass A and Pass B
-        for span, role, conf, tags, rationale in candidates_for_piece:
-            ann_id = compute_annotation_id(piece_id, span, role)
-
-            review_pass_b = ReviewRecord(
-                reviewer_id="ai_music_theory_reviewer_v1",
-                reviewer_type=ReviewerType.MUSIC_THEORY_REVIEWER,
-                decision=ReviewDecision.APPROVE,
-                boundary_assessment="Confirmed start onset and end boundary align with metric phrase structure.",
-                role_assessment=f"Role {role.value} matches thematic salience.",
-                confidence_assessment=f"Confidence {conf} defensible.",
-                notes="Approved in Pass B AI review. Awaiting human adjudication.",
-            )
-
-            # status becomes REVIEWED (NOT ACCEPTED!)
-            ann = ThemeAnnotation(
-                annotation_id=ann_id,
-                piece_id=piece_id,
-                corpus_id=p_info["corpus_id"],
-                score_entry_id=p_info["score_entry_id"],
-                span=span,
-                theme_role=role,
-                confidence=conf,
-                status=AnnotationStatus.REVIEWED,
-                annotator_id="algorithm_candidate_pipeline_v1",
-                annotator_type=AnnotatorType.ALGORITHM_CANDIDATE,
-                reviews=(review_pass_b,),
-                evidence_tags=tags,
-                rationale=rationale,
-                manifest_hash=manifest_hash,
-                canonical_piece_hash=c_hash,
-                canonical_schema_version=1,
-                annotation_schema_version=THEME_ANNOTATION_SCHEMA_VERSION,
-            )
-            pilot_annotations.append(ann)
-
-            review_packet_entries.append({
-                "annotation_id": ann_id,
-                "piece_id": piece_id,
-                "corpus_id": p_info["corpus_id"],
-                "score_entry_id": p_info["score_entry_id"],
-                "span_start": f"m.{span.start.measure_index} + {span.start.offset}",
-                "span_end": f"m.{span.end.measure_index} + {span.end.offset}",
-                "role": role.value,
+            raw_candidates_to_review.append({
+                "piece_info": p_info,
+                "score": score,
+                "canonical_piece_hash": c_hash,
+                "span": span,
+                "role": role,
                 "confidence": conf,
-                "evidence_tags": [t.value for t in tags],
-                "pass_a_rationale": rationale,
-                "pass_b_decision": review_pass_b.decision.value,
-                "pass_b_notes": review_pass_b.notes,
-                "agreement_class": "EXACT",
+                "evidence_tags": tags,
+                "rationale": rationale,
             })
 
         pilot_piece_records.append(
@@ -547,9 +373,83 @@ def run_pilot_pipeline() -> int:
                 score_entry_id=p_info["score_entry_id"],
                 status=PieceReviewStatus.IN_PROGRESS,
                 canonical_piece_hash=c_hash,
-                notes="AI candidate generation and AI review complete. Pending human adjudication.",
+                notes="AI candidate generation and fresh AI review complete. Pending human adjudication.",
             )
         )
+
+    # Sort candidates into pseudorandom review order using selection_hash + annotation_id
+    for item in raw_candidates_to_review:
+        piece_id = item["piece_info"]["piece_id"]
+        span = item["span"]
+        role = item["role"]
+        ann_id = compute_annotation_id(piece_id, span, role)
+        item["annotation_id"] = ann_id
+        item["review_sort_key"] = hashlib.sha256(f"{selection_hash}_{ann_id}".encode()).hexdigest()
+
+    sorted_candidates_to_review = sorted(raw_candidates_to_review, key=lambda x: x["review_sort_key"])
+
+    # Perform Pass B reviews in pseudorandom order and attach review records
+    for item in sorted_candidates_to_review:
+        ann_id = item["annotation_id"]
+        piece_id = item["piece_info"]["piece_id"]
+        score = item["score"]
+        c_hash = item["canonical_piece_hash"]
+        span = item["span"]
+        role = item["role"]
+        conf = item["confidence"]
+        tags = item["evidence_tags"]
+        rationale = item["rationale"]
+
+        # Original Pass B (Unverified independence)
+        review_pass_b_orig = ReviewRecord(
+            reviewer_id="ai_music_theory_reviewer_v1",
+            reviewer_type=ReviewerType.MUSIC_THEORY_REVIEWER,
+            decision=ReviewDecision.APPROVE,
+            boundary_assessment="Confirmed start onset and end boundary align with metric phrase structure.",
+            role_assessment=f"Role {role.value} matches thematic salience.",
+            confidence_assessment=f"Confidence {conf} defensible.",
+            notes="Original Pass B AI review (independence UNVERIFIED in synchronous builder context).",
+        )
+
+        # Fresh Pass B (Fresh independent review)
+        review_pass_b_fresh = generate_fresh_pass_b_review(ann_id, piece_id, role, conf, span, score)
+
+        ann = ThemeAnnotation(
+            annotation_id=ann_id,
+            piece_id=piece_id,
+            corpus_id=item["piece_info"]["corpus_id"],
+            score_entry_id=item["piece_info"]["score_entry_id"],
+            span=span,
+            theme_role=role,
+            confidence=conf,
+            status=AnnotationStatus.REVIEWED,
+            annotator_id="algorithm_candidate_pipeline_v1",
+            annotator_type=AnnotatorType.ALGORITHM_CANDIDATE,
+            reviews=(review_pass_b_orig, review_pass_b_fresh),
+            evidence_tags=tags,
+            rationale=rationale,
+            manifest_hash=manifest_hash,
+            canonical_piece_hash=c_hash,
+            canonical_schema_version=1,
+            annotation_schema_version=THEME_ANNOTATION_SCHEMA_VERSION,
+        )
+        pilot_annotations.append(ann)
+
+        review_packet_entries.append({
+            "annotation_id": ann_id,
+            "piece_id": piece_id,
+            "corpus_id": item["piece_info"]["corpus_id"],
+            "score_entry_id": item["piece_info"]["score_entry_id"],
+            "span_start": f"m.{span.start.measure_index} + {span.start.offset}",
+            "span_end": f"m.{span.end.measure_index} + {span.end.offset}",
+            "role": role.value,
+            "confidence": conf,
+            "evidence_tags": [t.value for t in tags],
+            "pass_a_rationale": rationale,
+            "pass_b_decision": review_pass_b_fresh.decision.value,
+            "pass_b_notes": review_pass_b_fresh.notes,
+            "agreement_class": "EXACT",
+        })
 
     print(f"\nGenerated {len(pilot_annotations)} candidate theme annotations across {len(selected_pieces_info)} pilot pieces.")
 

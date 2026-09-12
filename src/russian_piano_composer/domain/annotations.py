@@ -234,11 +234,11 @@ class ThemeAnnotation:
                     "Annotation status ACCEPTED requires at least one approving ReviewRecord (decision == APPROVE)."
                 )
 
-        # Hard Rule: Algorithm candidates can never self-accept without independent review
+        # Hard Rule: Algorithm candidates can never self-accept without independent human review
         if self.annotator_type == AnnotatorType.ALGORITHM_CANDIDATE and self.status == AnnotationStatus.ACCEPTED:
             has_human_approval = any(
                 r.decision == ReviewDecision.APPROVE
-                and r.reviewer_type in (ReviewerType.SECOND_HUMAN_REVIEW, ReviewerType.MUSIC_THEORY_REVIEWER)
+                and r.reviewer_type == ReviewerType.SECOND_HUMAN_REVIEW
                 for r in self.reviews
             )
             if not has_human_approval:

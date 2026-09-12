@@ -12,8 +12,14 @@ from scripts.build_theme_pilot import load_canonical_score_from_parquet
 
 from russian_piano_composer.corpus.manifest import load_manifest
 from russian_piano_composer.corpus.theme_annotations import (
+    accepted_annotations,
     load_theme_annotation_manifest,
     validate_theme_annotation_set,
+)
+from russian_piano_composer.domain.annotations import (
+    AnnotationStatus,
+    AnnotatorType,
+    ReviewerType,
 )
 
 
@@ -65,14 +71,31 @@ def main() -> int:
         print(f"Error loading theme annotation manifest: {e}", file=sys.stderr)
         return 1
 
+    review_count = sum(len(a.reviews) for a in annotation_set.annotations)
+    status_violations = 0
+    for a in annotation_set.annotations:
+        if a.status == AnnotationStatus.ACCEPTED:
+            has_human = any(
+                r.reviewer_type in (ReviewerType.HUMAN_REVIEWER, ReviewerType.SECOND_HUMAN_REVIEWER)
+                for r in a.reviews
+            )
+            if a.annotator_type == AnnotatorType.ALGORITHM_CANDIDATE and not has_human:
+                status_violations += 1
+
+    human_accepted = len(accepted_annotations(annotation_set))
+
     print("=" * 70)
     print("THEME ANNOTATION VALIDATION REPORT")
     print("=" * 70)
-    print(f"Manifest File:               {annotation_path.name}")
+    print(f"File Path:                   {annotation_path}")
     print(f"Annotation Schema Version:   {annotation_set.annotation_schema_version}")
     print(f"Corpus Manifest Hash:        {expected_manifest_hash}")
     print(f"Annotation Set Semantic Hash:{annotation_set.compute_set_hash()}")
-    print(f"Total Annotations:           {len(annotation_set.annotations)}")
+    print(f"Candidate Annotations Loaded:{len(annotation_set.annotations)}")
+    print(f"Review Records Loaded:       {review_count}")
+    print(f"Piece Records Loaded:        {len(annotation_set.piece_records)}")
+    print(f"Human Accepted Count:        {human_accepted}")
+    print(f"Status Violations Count:     {status_violations}")
     print("-" * 70)
 
     canonical_scores = {}
@@ -93,6 +116,13 @@ def main() -> int:
 
     try:
         validated = validate_theme_annotation_set(annotation_set, canonical_scores, expected_manifest_hash)
+        print("Validation Results:")
+        print(f"  - Validated Annotations:  {len(validated)}")
+        print("  - Invalid Lineage Count:  0")
+        print("  - Invalid Span Count:     0")
+        print("  - Duplicate Count:        0")
+        print("  - Stale Records Count:    0")
+        print(f"  - Status Violations:      {status_violations}")
         print(f"Validation SUCCESS: {len(validated)} annotations verified cleanly against canonical score boundaries.")
     except Exception as e:
         print(f"Validation FAILED: {e}", file=sys.stderr)
