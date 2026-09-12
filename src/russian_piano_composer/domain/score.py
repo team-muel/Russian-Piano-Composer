@@ -193,6 +193,21 @@ class CanonicalScore:
                 )
             prev_key = current_key
 
+    @property
+    def measure_count(self) -> int:
+        """Total measure count in the score."""
+        return len(self.measures)
+
+    @property
+    def event_count(self) -> int:
+        """Total event count in the score."""
+        return len(self.events)
+
+    @property
+    def piece_semantic_hash(self) -> str:
+        """Convenience property for piece semantic SHA-256 hash."""
+        return self.compute_piece_hash()
+
     def compute_piece_hash(self) -> str:
         """
         Compute a deterministic semantic SHA-256 hash of the canonical score.

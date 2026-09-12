@@ -1,0 +1,12 @@
+# Initial Curated Theme Annotation Manifest (v1)
+# Scientific Contract: RC-008
+# All future thematic annotations must adhere to the schema and review protocol documented in docs/spec/THEME_ANNOTATION_SCHEMA.md.
+
+annotation_schema_version: 1
+canonical_schema_version: 1
+corpus_manifest_hash: "cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212"
+annotation_set_id: "theme_v1_initial"
+description: "Initial empty canonical theme annotation set for Russian Piano Composer corpus v1."
+
+annotations: []
+piece_records: []
