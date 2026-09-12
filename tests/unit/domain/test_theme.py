@@ -1,6 +1,9 @@
-import pytest
 from fractions import Fraction
-from russian_piano_composer.domain import Theme, ThemeEvent, ThemeScores, ScoredTheme
+
+import pytest
+
+from russian_piano_composer.domain import ScoredTheme, Theme, ThemeEvent, ThemeScores
+
 
 def get_valid_event(onset_val: int) -> ThemeEvent:
     return ThemeEvent(

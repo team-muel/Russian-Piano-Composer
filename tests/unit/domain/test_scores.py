@@ -1,5 +1,7 @@
 import pytest
+
 from russian_piano_composer.domain import ThemeScores
+
 
 def test_themescores_valid_construction():
     scores = ThemeScores(

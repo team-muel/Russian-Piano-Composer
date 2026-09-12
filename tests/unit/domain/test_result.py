@@ -1,6 +1,16 @@
-import pytest
 from fractions import Fraction
-from russian_piano_composer.domain import Theme, ThemeEvent, ThemeScores, ScoredTheme, GenerationResult, ThemeDNA
+
+import pytest
+
+from russian_piano_composer.domain import (
+    GenerationResult,
+    ScoredTheme,
+    Theme,
+    ThemeDNA,
+    ThemeEvent,
+    ThemeScores,
+)
+
 
 def get_scored_theme() -> ScoredTheme:
     event = ThemeEvent(60, Fraction(0), Fraction(1), Fraction(0), 1.0, False)
@@ -45,7 +55,7 @@ def test_result_best_not_in_pareto():
     theme2 = Theme((event,), 0, "minor", 4, 4, 2, "lyrical", 42)
     scores2 = ThemeScores(0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.1, 0.0)
     scored2 = ScoredTheme(theme2, scores2)
-    
+
     dna = get_dna()
     with pytest.raises(ValueError, match="best must belong to pareto_front"):
         GenerationResult(scored1, (scored2,), 10, dna, 42)

@@ -1,5 +1,7 @@
 import pytest
+
 from russian_piano_composer.domain import ThemeDNA
+
 
 def test_themedna_valid_construction():
     dna = ThemeDNA(
@@ -27,7 +29,7 @@ def test_themedna_invalid_continuous_field():
         )
 
 def test_themedna_invalid_composer_weights():
-    with pytest.raises(ValueError, match="Composer weights must sum to 1.0"):
+    with pytest.raises(ValueError, match=r"Composer weights must sum to 1.0"):
         ThemeDNA(
             darkness=0.5, lyricism=0.8, mystery=0.2, agitation=0.1,
             chromaticism=0.4, modal_strength=0.7,

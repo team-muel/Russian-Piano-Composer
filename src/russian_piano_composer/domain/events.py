@@ -4,11 +4,12 @@ Core event primitives for the Russian Piano Composer.
 from dataclasses import dataclass
 from fractions import Fraction
 
+
 @dataclass(frozen=True, slots=True)
 class ThemeEvent:
     """
     A canonical monophonic musical event within a theme.
-    
+
     This represents symbolic musical information independent of serialization
     formats like MIDI or MusicXML.
     """

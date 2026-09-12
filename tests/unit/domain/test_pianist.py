@@ -1,5 +1,7 @@
 import pytest
+
 from russian_piano_composer.domain import PianistProfile
+
 
 def test_pianist_valid():
     profile = PianistProfile(

@@ -1,6 +1,10 @@
 from fractions import Fraction
-from hypothesis import given, strategies as st
-from russian_piano_composer.domain import ThemeEvent, ThemeDNA, ThemeScores
+
+from hypothesis import given
+from hypothesis import strategies as st
+
+from russian_piano_composer.domain import ThemeDNA, ThemeEvent, ThemeScores
+
 
 @given(st.integers(min_value=0, max_value=127))
 def test_valid_midi_values(midi_val: int):
@@ -57,7 +61,7 @@ def test_composer_weights(w1: float, w2: float):
     if w1 + w2 > 1.0:
         w1, w2 = w1 / (w1 + w2), w2 / (w1 + w2)
     w3 = 1.0 - (w1 + w2)
-    
+
     dna = ThemeDNA(
         0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,
         12, 16, w1, w2, w3, "test"

@@ -1,6 +1,9 @@
-import pytest
 from fractions import Fraction
+
+import pytest
+
 from russian_piano_composer.domain import ThemeEvent
+
 
 def test_theme_event_valid_construction():
     event = ThemeEvent(
@@ -39,7 +42,7 @@ def test_theme_event_invalid_metric_position():
         ThemeEvent(60, Fraction(0), Fraction(1), Fraction(-1), 1.0, False)
 
 def test_theme_event_invalid_metric_strength():
-    with pytest.raises(ValueError, match="Metric strength -0.1 must be in \\[0, 1\\]"):
+    with pytest.raises(ValueError, match=r"Metric strength -0.1 must be in \[0, 1\]"):
         ThemeEvent(60, Fraction(0), Fraction(1), Fraction(0), -0.1, False)
-    with pytest.raises(ValueError, match="Metric strength 1.1 must be in \\[0, 1\\]"):
+    with pytest.raises(ValueError, match=r"Metric strength 1.1 must be in \[0, 1\]"):
         ThemeEvent(60, Fraction(0), Fraction(1), Fraction(0), 1.1, False)

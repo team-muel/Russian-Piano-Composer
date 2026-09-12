@@ -2,19 +2,19 @@
 Core domain models for the Russian Piano Composer.
 """
 
-from .events import ThemeEvent
 from .dna import ThemeDNA
-from .scores import ThemeScores
-from .theme import Theme, ScoredTheme
-from .result import GenerationResult
+from .events import ThemeEvent
 from .pianist import PianistProfile
+from .result import GenerationResult
+from .scores import ThemeScores
+from .theme import ScoredTheme, Theme
 
 __all__ = [
-    "ThemeEvent",
-    "ThemeDNA",
-    "ThemeScores",
-    "Theme",
-    "ScoredTheme",
     "GenerationResult",
     "PianistProfile",
+    "ScoredTheme",
+    "Theme",
+    "ThemeDNA",
+    "ThemeEvent",
+    "ThemeScores",
 ]
