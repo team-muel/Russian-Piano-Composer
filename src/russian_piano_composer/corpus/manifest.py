@@ -18,6 +18,7 @@ from russian_piano_composer.domain.corpus import (
     ProvenanceStatus,
     ReadinessStatus,
     RightsStatus,
+    ScopeCompleteness,
 )
 
 if TYPE_CHECKING:
@@ -111,18 +112,25 @@ class CorpusManifest:
                 "license_claims": claims_data,
                 "is_non_commercial": s.is_non_commercial,
                 "readiness_status": s.readiness_status.value,
+                "scope_completeness": s.scope_completeness.value,
                 "verified_at": s.verified_at,
                 "composer_authority_ids": s.composer_authority_ids,
                 "piano_medium": s.piano_medium.value,
                 "coverage_notes": s.coverage_notes,
                 "is_complete_for_claimed_scope": s.is_complete_for_claimed_scope,
                 "representative_of_full_composer_output": s.representative_of_full_composer_output,
+                "score_entry_ids": list(s.score_entry_ids),
+                "catalog_groups": list(s.catalog_groups),
                 "work_count": s.work_count,
                 "piece_count": s.piece_count,
                 "score_entry_count": s.score_entry_count,
                 "musical_piece_count": s.musical_piece_count,
                 "work_cycle_count": s.work_cycle_count,
+                "catalog_group_count": s.catalog_group_count,
+                "variation_number_count": s.variation_number_count,
                 "source_file_count": s.source_file_count,
+                "notation_score_file_count": s.notation_score_file_count,
+                "tabular_artifact_file_count": s.tabular_artifact_file_count,
                 "source_commit": s.source_commit,
                 "meta_repository_commit": s.meta_repository_commit,
                 "source_documentation": s.source_documentation,
@@ -172,6 +180,11 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
         raise ValueError(f"Invalid readiness_status in source {raw.get('corpus_id')!r}: {e}") from e
 
     try:
+        scope_completeness = ScopeCompleteness(raw.get("scope_completeness", "COMPLETE_FOR_DECLARED_SCOPE"))
+    except ValueError as e:
+        raise ValueError(f"Invalid scope_completeness in source {raw.get('corpus_id')!r}: {e}") from e
+
+    try:
         piano_medium = PianoMedium(raw.get("piano_medium", "SOLO_PIANO"))
     except ValueError as e:
         raise ValueError(f"Invalid piano_medium in source {raw.get('corpus_id')!r}: {e}") from e
@@ -197,6 +210,9 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
             )
         )
 
+    score_entry_ids = tuple(str(x) for x in raw.get("score_entry_ids", ()))
+    catalog_groups = tuple(str(x) for x in raw.get("catalog_groups", ()))
+
     return CorpusSource(
         corpus_id=raw["corpus_id"],
         title=raw["title"],
@@ -211,17 +227,24 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
         license_claims=tuple(license_claims),
         is_non_commercial=bool(raw.get("is_non_commercial", True)),
         readiness_status=readiness_status,
+        scope_completeness=scope_completeness,
         composer_authority_ids=dict(raw.get("composer_authority_ids", {})),
         piano_medium=piano_medium,
         coverage_notes=raw.get("coverage_notes"),
         is_complete_for_claimed_scope=bool(raw.get("is_complete_for_claimed_scope", False)),
         representative_of_full_composer_output=bool(raw.get("representative_of_full_composer_output", False)),
+        score_entry_ids=score_entry_ids,
+        catalog_groups=catalog_groups,
         work_count=raw.get("work_count"),
         piece_count=raw.get("piece_count"),
         score_entry_count=raw.get("score_entry_count"),
         musical_piece_count=raw.get("musical_piece_count"),
         work_cycle_count=raw.get("work_cycle_count"),
+        catalog_group_count=raw.get("catalog_group_count"),
+        variation_number_count=raw.get("variation_number_count"),
         source_file_count=raw.get("source_file_count"),
+        notation_score_file_count=raw.get("notation_score_file_count"),
+        tabular_artifact_file_count=raw.get("tabular_artifact_file_count"),
         source_commit=raw.get("source_commit"),
         meta_repository_commit=raw.get("meta_repository_commit"),
         source_documentation=raw.get("source_documentation"),

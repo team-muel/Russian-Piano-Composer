@@ -72,6 +72,11 @@ def verify_local_provenance(manifest_path: Path, inventory_path: Path) -> int:
                 f"{src.corpus_id}: score entry count mismatch. Manifest has {src.score_entry_count}, inventory list has {len(inv_score_entries)}"
             )
 
+        if src.score_entry_ids and tuple(inv_score_entries) != src.score_entry_ids:
+            errors.append(
+                f"{src.corpus_id}: score_entry_ids in manifest do not match score_entries in inventory"
+            )
+
         # Verify license claim conflicts enforce REVIEW_REQUIRED
         claim_values = {c.value.upper().replace("-", " ").strip() for c in src.license_claims}
         if len(claim_values) > 1 and not src.rights_review_required:
@@ -79,8 +84,11 @@ def verify_local_provenance(manifest_path: Path, inventory_path: Path) -> int:
 
         print(f"  Role: {src.role.value}")
         print(f"  Readiness: {src.readiness_status.value}")
+        print(f"  Scope Completeness: {src.scope_completeness.value}")
         print(f"  Commit: {src.source_commit}")
-        print(f"  Score entries: {src.score_entry_count} (matched)")
+        print(f"  Score entries: {src.score_entry_count} (matched {len(inv_score_entries)} inventory IDs)")
+        print(f"  Notation score files (.mscx/.mscz): {src.notation_score_file_count}")
+        print(f"  Tabular artifacts (.tsv): {src.tabular_artifact_file_count}")
 
     if errors:
         print("\n[FAIL] Provenance verification failed with errors:", file=sys.stderr)

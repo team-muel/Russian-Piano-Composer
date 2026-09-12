@@ -13,7 +13,17 @@ sources:
     score_entry_count: 19
     musical_piece_count: 19
     work_cycle_count: 7
-    source_file_count: 135
+    catalog_group_count: 7
+    notation_score_file_count: 19
+    tabular_artifact_file_count: 76
+    catalog_groups:
+      - "Op.8"
+      - "Op.14"
+      - "Op.26"
+      - "Op.34"
+      - "Op.35"
+      - "Op.42"
+      - "Op.48"
     score_entries:
       - "op08n01"
       - "op14n01"
@@ -39,9 +49,10 @@ sources:
     repository: "DCMLab/rachmaninoff_piano"
     commit: "a73f3246a764215863000357c81309b210a43f15"
     score_entry_count: 22
-    musical_piece_count: 20
+    variation_number_count: 20
     work_cycle_count: 1
-    source_file_count: 24
+    notation_score_file_count: 24
+    tabular_artifact_file_count: 88
     score_entries:
       - "op42_01a"
       - "op42_01b"
@@ -72,7 +83,8 @@ sources:
     score_entry_count: 12
     musical_piece_count: 12
     work_cycle_count: 1
-    source_file_count: 97
+    notation_score_file_count: 12
+    tabular_artifact_file_count: 48
     score_entries:
       - "op37a01"
       - "op37a02"
@@ -92,8 +104,8 @@ sources:
     commit: "5931135e614985023b96de2a291c74b7ef90b287"
     score_entry_count: 56
     musical_piece_count: 56
-    work_cycle_count: 56
-    source_file_count: 390
+    notation_score_file_count: 56
+    tabular_artifact_file_count: 224
     score_entries:
       - "BI105-1op30-1"
       - "BI105-2op30-2"
@@ -156,9 +168,14 @@ sources:
     repository: "DCMLab/liszt_pelerinage"
     commit: "f1cfd308adba5763aad3a18885eac48d42449fc4"
     score_entry_count: 19
-    musical_piece_count: 26
     work_cycle_count: 3
-    source_file_count: 134
+    catalog_group_count: 3
+    notation_score_file_count: 19
+    tabular_artifact_file_count: 76
+    catalog_groups:
+      - "S.160"
+      - "S.161"
+      - "S.162"
     score_entries:
       - "160.01_Chapelle_de_Guillaume_Tell"
       - "160.02_Au_Lac_de_Wallenstadt"
@@ -186,7 +203,8 @@ sources:
     score_entry_count: 13
     musical_piece_count: 13
     work_cycle_count: 1
-    source_file_count: 92
+    notation_score_file_count: 13
+    tabular_artifact_file_count: 52
     score_entries:
       - "n01"
       - "n02"

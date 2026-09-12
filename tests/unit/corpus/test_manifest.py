@@ -12,7 +12,7 @@ from russian_piano_composer.domain.corpus import CorpusRole
 
 CANONICAL_MANIFEST_PATH = Path("data/manifests/corpus_manifest.yaml")
 CANONICAL_INVENTORY_PATH = Path("data/manifests/source_inventory_v1.yaml")
-EXPECTED_V1_MANIFEST_HASH = "27d3533e73b65af956aeb35801be77b040e3bd032ac31ebe35cc4b1f31e4ff0b"
+EXPECTED_V1_MANIFEST_HASH = "cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212"
 
 
 def test_load_canonical_manifest():
@@ -73,22 +73,42 @@ def test_medtner_pinned_inventory():
     medtner_src = manifest.get_source("dcml_medtner_tales")
 
     assert medtner_src.score_entry_count == 19
+    assert len(medtner_src.score_entry_ids) == 19
     assert medtner_src.musical_piece_count == 19
     assert medtner_src.work_cycle_count == 7
-    assert medtner_src.source_file_count == 135
+    assert medtner_src.catalog_group_count == 7
+    assert medtner_src.notation_score_file_count == 19
+    assert medtner_src.tabular_artifact_file_count == 76
     assert medtner_src.source_commit == "1d2e58ba8d329463829e45e75900af43be4256bf"
 
 
-def test_rachmaninoff_coverage_and_split_files():
+def test_rachmaninoff_coverage_count_semantics():
     manifest = load_manifest(CANONICAL_MANIFEST_PATH)
     rach_src = manifest.get_source("dcml_rachmaninoff_op42")
 
-    assert rach_src.work_cycle_count == 1
-    assert rach_src.musical_piece_count == 20
     assert rach_src.score_entry_count == 22
-    assert rach_src.source_file_count == 24
+    assert len(rach_src.score_entry_ids) == 22
+    assert rach_src.variation_number_count == 20
+    assert rach_src.work_cycle_count == 1
+    assert rach_src.musical_piece_count is None  # Unambiguous piece mapping absent
+    assert rach_src.notation_score_file_count == 24
+    assert rach_src.tabular_artifact_file_count == 88
     assert rach_src.representative_of_full_composer_output is False
     assert rach_src.source_commit == "a73f3246a764215863000357c81309b210a43f15"
+
+
+def test_liszt_coverage_count_semantics():
+    manifest = load_manifest(CANONICAL_MANIFEST_PATH)
+    liszt_src = manifest.get_source("dcml_liszt_annees")
+
+    assert liszt_src.catalog_groups == ("S.160", "S.161", "S.162")
+    assert liszt_src.catalog_group_count == 3
+    assert liszt_src.score_entry_count == 19
+    assert len(liszt_src.score_entry_ids) == 19
+    assert liszt_src.musical_piece_count is None  # External 26 pieces not claimed
+    assert liszt_src.work_cycle_count == 3
+    assert liszt_src.notation_score_file_count == 19
+    assert liszt_src.tabular_artifact_file_count == 76
 
 
 def test_commit_sha_hex_validation():
@@ -126,6 +146,8 @@ def test_source_inventory_matching():
         inv_entry = inv_sources[src.corpus_id]
         assert inv_entry["commit"] == src.source_commit
         assert len(inv_entry["score_entries"]) == src.score_entry_count
+        if src.score_entry_ids:
+            assert tuple(inv_entry["score_entries"]) == src.score_entry_ids
 
 
 def test_compute_manifest_hash_format_and_golden():

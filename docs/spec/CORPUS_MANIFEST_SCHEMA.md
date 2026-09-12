@@ -44,10 +44,16 @@ Each registered `CorpusSource` records multi-source evidence via `license_claims
 Where upstream files express conflicting license strings (e.g. `CC BY-NC-SA 4.0` in `README` vs `CC-BY-NC-4.0` in `CITATION.cff`), `rights_status` is set to `REVIEW_REQUIRED` and `rights_review_required` is set to `true`. This causes `generative_eligible` to fail closed (`False`).
 
 ## Precise Count Metrics
-- `score_entry_count`: Number of distinct score entries / TSV rows / movement folders (e.g. 19 for Medtner, 22 for Rachmaninoff Op. 42).
-- `musical_piece_count`: Count of distinct musical pieces/variations (e.g. 20 variations for Rachmaninoff Op. 42, 26 for Liszt).
-- `work_cycle_count`: Count of overall opus/work cycles (e.g. 7 for Medtner, 1 for Rachmaninoff Op. 42).
-- `source_file_count`: Total raw score files in source repository (e.g. 135 for Medtner, 24 for Rachmaninoff Op. 42).
+To prevent conflating artifact counts with musical units, the schema enforces:
+
+- `score_entry_count`: Number of canonical encoded score IDs in the pinned source inventory (derived from `len(score_entry_ids)`).
+- `variation_number_count`: Count of numbered variations for variation cycles (e.g. 20 for Rachmaninoff Op. 42).
+- `catalog_group_count`: Count of distinct catalog groups (e.g. 7 for Medtner, 3 for Liszt S.160/S.161/S.162).
+- `musical_piece_count`: Count of distinct musical pieces where 1-to-1 piece mapping is unambiguous. (Must be `null` when piece boundaries are ambiguous or unencoded).
+- `work_cycle_count`: Count of overall opus or work cycles.
+- `notation_score_file_count`: Count of MuseScore `.mscx`/`.mscz` notation score files in the source repository.
+- `tabular_artifact_file_count`: Count of tabular data TSV files (`.notes.tsv`, `.measures.tsv`, `.harmonies.tsv`, etc.).
+- `scope_completeness`: `COMPLETE_FOR_DECLARED_SCOPE`, `PARTIAL_FOR_DECLARED_SCOPE`, or `UNKNOWN`.
 - `representative_of_full_composer_output`: Explicit flag indicating whether dataset represents composer's full piano output.
 
 ## Fail-Closed Principles

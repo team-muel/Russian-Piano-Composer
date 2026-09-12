@@ -10,14 +10,42 @@ sources:
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Medtner Skazki (Fairy Tales) for solo piano, Op. 8, Op. 14, Op. 26, Op. 34, Op. 35, Op. 42, Op. 48"
     coverage_notes: "Covers 19 score entries across 7 Skazki cycles for solo piano."
-    is_complete_for_claimed_scope: true
+    scope_completeness: "COMPLETE_FOR_DECLARED_SCOPE"
     representative_of_full_composer_output: false
-    work_count: 7
-    piece_count: 19
+    catalog_groups:
+      - "Op.8"
+      - "Op.14"
+      - "Op.26"
+      - "Op.34"
+      - "Op.35"
+      - "Op.42"
+      - "Op.48"
+    score_entry_ids:
+      - "op08n01"
+      - "op14n01"
+      - "op26n01"
+      - "op26n02"
+      - "op26n03"
+      - "op26n04"
+      - "op34n01"
+      - "op34n02"
+      - "op34n03"
+      - "op34n04"
+      - "op35n01"
+      - "op35n02"
+      - "op35n03"
+      - "op35n04"
+      - "op42n01"
+      - "op42n02"
+      - "op42n03"
+      - "op48n01"
+      - "op48n02"
     score_entry_count: 19
     musical_piece_count: 19
     work_cycle_count: 7
-    source_file_count: 135
+    catalog_group_count: 7
+    notation_score_file_count: 19
+    tabular_artifact_file_count: 76
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/medtner_tales"
     meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
@@ -63,15 +91,37 @@ sources:
       wikidata: "Q131861"
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Sergei Rachmaninoff, Variations on a Theme of Corelli, Op. 42 for solo piano"
-    coverage_notes: "Covers Op. 42 variation cycle only (20 variations + Theme, Intermezzo, Coda across 22 score entries / 24 score files). NOT representative of full Rachmaninoff solo piano output."
-    is_complete_for_claimed_scope: true
+    coverage_notes: "Covers Sergei Rachmaninoff, Variations on a Theme of Corelli, Op. 42 (1 work cycle, 20 numbered variations, 22 encoded score entries in DCML corpus). NOT representative of full Rachmaninoff solo piano output."
+    scope_completeness: "COMPLETE_FOR_DECLARED_SCOPE"
     representative_of_full_composer_output: false
-    work_count: 1
-    piece_count: 20
+    score_entry_ids:
+      - "op42_01a"
+      - "op42_01b"
+      - "op42_02"
+      - "op42_03"
+      - "op42_04"
+      - "op42_05"
+      - "op42_06"
+      - "op42_07"
+      - "op42_08"
+      - "op42_09"
+      - "op42_10"
+      - "op42_11"
+      - "op42_12"
+      - "op42_13a"
+      - "op42_13b"
+      - "op42_14"
+      - "op42_15"
+      - "op42_16"
+      - "op42_17"
+      - "op42_18"
+      - "op42_19"
+      - "op42_20"
     score_entry_count: 22
-    musical_piece_count: 20
+    variation_number_count: 20
     work_cycle_count: 1
-    source_file_count: 24
+    notation_score_file_count: 24
+    tabular_artifact_file_count: 88
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/rachmaninoff_piano"
     meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
@@ -118,14 +168,26 @@ sources:
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Pyotr Ilyich Tchaikovsky, The Seasons (Les Saisons), Op. 37b (12 piano pieces)"
     coverage_notes: "Covers Op. 37b complete 12 pieces."
-    is_complete_for_claimed_scope: true
+    scope_completeness: "COMPLETE_FOR_DECLARED_SCOPE"
     representative_of_full_composer_output: false
-    work_count: 1
-    piece_count: 12
+    score_entry_ids:
+      - "op37a01"
+      - "op37a02"
+      - "op37a03"
+      - "op37a04"
+      - "op37a05"
+      - "op37a06"
+      - "op37a07"
+      - "op37a08"
+      - "op37a09"
+      - "op37a10"
+      - "op37a11"
+      - "op37a12"
     score_entry_count: 12
     musical_piece_count: 12
     work_cycle_count: 1
-    source_file_count: 97
+    notation_score_file_count: 12
+    tabular_artifact_file_count: 48
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/tchaikovsky_seasons"
     meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
@@ -172,14 +234,69 @@ sources:
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Chopin Solo Piano Mazurkas (Control Repertoire)"
     coverage_notes: "Non-Russian control corpus for style discrimination (56 mazurkas)."
-    is_complete_for_claimed_scope: true
+    scope_completeness: "COMPLETE_FOR_DECLARED_SCOPE"
     representative_of_full_composer_output: false
-    work_count: 56
-    piece_count: 56
+    score_entry_ids:
+      - "BI105-1op30-1"
+      - "BI105-2op30-2"
+      - "BI105-3op30-3"
+      - "BI105-4op30-4"
+      - "BI115-1op33-1"
+      - "BI115-2op33-2"
+      - "BI115-3op33-3"
+      - "BI115-4op33-4"
+      - "BI122op41-2"
+      - "BI126-1op41-4"
+      - "BI126-3op41-1"
+      - "BI126-4op41-3"
+      - "BI134"
+      - "BI140"
+      - "BI145-1op50-1"
+      - "BI145-2op50-2"
+      - "BI145-3op50-3"
+      - "BI153-1op56-1"
+      - "BI153-2op56-2"
+      - "BI153-3op56-3"
+      - "BI157-1op59-1"
+      - "BI157-2op59-2"
+      - "BI157-3op59-3"
+      - "BI16-1"
+      - "BI16-2"
+      - "BI162-1op63-1"
+      - "BI162-2op63-2"
+      - "BI162-3op63-3"
+      - "BI163op67-4"
+      - "BI167op67-2"
+      - "BI168op68-4"
+      - "BI18op68-2"
+      - "BI34op68-3"
+      - "BI38op68-1"
+      - "BI60-1op06-1"
+      - "BI60-2op06-2"
+      - "BI60-3op06-3"
+      - "BI60-4op06-4"
+      - "BI61-1op07-1"
+      - "BI61-2op07-2"
+      - "BI61-3op07-3"
+      - "BI61-4op07-4"
+      - "BI61-5op07-5"
+      - "BI71"
+      - "BI73"
+      - "BI77-1op17-1"
+      - "BI77-2op17-2"
+      - "BI77-3op17-3"
+      - "BI77-4op17-4"
+      - "BI85"
+      - "BI89-1op24-1"
+      - "BI89-2op24-2"
+      - "BI89-3op24-3"
+      - "BI89-4op24-4"
+      - "BI93-1op67-1"
+      - "BI93-2op67-3"
     score_entry_count: 56
     musical_piece_count: 56
-    work_cycle_count: 56
-    source_file_count: 390
+    notation_score_file_count: 56
+    tabular_artifact_file_count: 224
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/chopin_mazurkas"
     meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
@@ -225,15 +342,38 @@ sources:
       wikidata: "Q41309"
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Franz Liszt Années de Pèlerinage (Control Repertoire)"
-    coverage_notes: "Non-Russian control corpus for virtuoso Romantic piano style comparison (19 score folders / 26 pieces)."
-    is_complete_for_claimed_scope: true
+    coverage_notes: "Covers S.160, S.161, S.162 (19 encoded score entries across 3 catalog groups). Does NOT contain S.163."
+    scope_completeness: "PARTIAL_FOR_DECLARED_SCOPE"
     representative_of_full_composer_output: false
-    work_count: 3
-    piece_count: 26
+    catalog_groups:
+      - "S.160"
+      - "S.161"
+      - "S.162"
+    score_entry_ids:
+      - "160.01_Chapelle_de_Guillaume_Tell"
+      - "160.02_Au_Lac_de_Wallenstadt"
+      - "160.03_Pastorale"
+      - "160.04_Au_Bord_dUne_Source"
+      - "160.05_Orage"
+      - "160.06_Vallee_dObermann"
+      - "160.07_Eglogue"
+      - "160.08_Le_Mal_du_Pays_(Heimweh)"
+      - "160.09_Les_Cloches_de_Geneve_(Nocturne)"
+      - "161.01_Sposalizio"
+      - "161.02_Il_Pensieroso"
+      - "161.03_Canzonetta_del_Salvator_Rosa"
+      - "161.04_Sonetto_47_del_Petrarca"
+      - "161.05_Sonetto_104_del_Petrarca"
+      - "161.06_Sonetto_123_del_Petrarca"
+      - "161.07_Apres_une_lecture_du_Dante"
+      - "162.01_Gondoliera"
+      - "162.02_Canzone"
+      - "162.03_Tarantella_da_Guillaume_Louis_Cottrau._Presto_e_canzone_napolitana"
     score_entry_count: 19
-    musical_piece_count: 26
     work_cycle_count: 3
-    source_file_count: 134
+    catalog_group_count: 3
+    notation_score_file_count: 19
+    tabular_artifact_file_count: 76
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/liszt_pelerinage"
     meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
@@ -280,14 +420,27 @@ sources:
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Robert Schumann Kinderszenen Op. 15 (Control Repertoire)"
     coverage_notes: "Non-Russian control corpus for German Romantic miniature style comparison (13 pieces)."
-    is_complete_for_claimed_scope: true
+    scope_completeness: "COMPLETE_FOR_DECLARED_SCOPE"
     representative_of_full_composer_output: false
-    work_count: 1
-    piece_count: 13
+    score_entry_ids:
+      - "n01"
+      - "n02"
+      - "n03"
+      - "n04"
+      - "n05"
+      - "n06"
+      - "n07"
+      - "n08"
+      - "n09"
+      - "n10"
+      - "n11"
+      - "n12"
+      - "n13"
     score_entry_count: 13
     musical_piece_count: 13
     work_cycle_count: 1
-    source_file_count: 92
+    notation_score_file_count: 13
+    tabular_artifact_file_count: 52
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/schumann_kinderszenen"
     meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"

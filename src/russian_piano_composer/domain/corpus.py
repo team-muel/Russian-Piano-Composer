@@ -78,6 +78,15 @@ class ReadinessStatus(StrEnum):
     BLOCKED = "BLOCKED"
 
 
+class ScopeCompleteness(StrEnum):
+    """
+    Completeness of the source relative to its declared repertoire scope.
+    """
+    COMPLETE_FOR_DECLARED_SCOPE = "COMPLETE_FOR_DECLARED_SCOPE"
+    PARTIAL_FOR_DECLARED_SCOPE = "PARTIAL_FOR_DECLARED_SCOPE"
+    UNKNOWN = "UNKNOWN"
+
+
 @dataclass(frozen=True, slots=True)
 class LicenseClaim:
     """
@@ -117,17 +126,24 @@ class CorpusSource:
     license_claims: tuple[LicenseClaim, ...] = ()
     is_non_commercial: bool = True
     readiness_status: ReadinessStatus = ReadinessStatus.REVIEW_REQUIRED
+    scope_completeness: ScopeCompleteness = ScopeCompleteness.COMPLETE_FOR_DECLARED_SCOPE
     composer_authority_ids: dict[str, str] = field(default_factory=dict)
     piano_medium: PianoMedium = PianoMedium.SOLO_PIANO
     coverage_notes: str | None = None
     is_complete_for_claimed_scope: bool = False
     representative_of_full_composer_output: bool = False
+    score_entry_ids: tuple[str, ...] = ()
+    catalog_groups: tuple[str, ...] = ()
     work_count: int | None = None
     piece_count: int | None = None
     score_entry_count: int | None = None
     musical_piece_count: int | None = None
     work_cycle_count: int | None = None
+    catalog_group_count: int | None = None
+    variation_number_count: int | None = None
     source_file_count: int | None = None
+    notation_score_file_count: int | None = None
+    tabular_artifact_file_count: int | None = None
     source_commit: str | None = None
     meta_repository_commit: str | None = None
     source_documentation: str | None = None
@@ -155,6 +171,26 @@ class CorpusSource:
             raise TypeError(f"piano_medium must be a PianoMedium enum instance, got {type(self.piano_medium).__name__}.")
         if not isinstance(self.readiness_status, ReadinessStatus):
             raise TypeError(f"readiness_status must be a ReadinessStatus enum instance, got {type(self.readiness_status).__name__}.")
+        if not isinstance(self.scope_completeness, ScopeCompleteness):
+            raise TypeError(f"scope_completeness must be a ScopeCompleteness enum instance, got {type(self.scope_completeness).__name__}.")
+
+        if (
+            self.score_entry_ids
+            and self.score_entry_count is not None
+            and len(self.score_entry_ids) != self.score_entry_count
+        ):
+            raise ValueError(
+                f"score_entry_count ({self.score_entry_count}) does not match len(score_entry_ids) ({len(self.score_entry_ids)}) for {self.corpus_id!r}"
+            )
+
+        if (
+            self.catalog_groups
+            and self.catalog_group_count is not None
+            and len(self.catalog_groups) != self.catalog_group_count
+        ):
+            raise ValueError(
+                f"catalog_group_count ({self.catalog_group_count}) does not match len(catalog_groups) ({len(self.catalog_groups)}) for {self.corpus_id!r}"
+            )
 
         if self.source_commit is not None and (
             not HEX_COMMIT_REGEX.match(self.source_commit) or DISALLOWED_COMMIT_PATTERNS.search(self.source_commit)

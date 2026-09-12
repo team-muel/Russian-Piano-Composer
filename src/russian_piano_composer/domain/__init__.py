@@ -12,6 +12,7 @@ from .corpus import (
     ProvenanceStatus,
     ReadinessStatus,
     RightsStatus,
+    ScopeCompleteness,
 )
 from .dna import ThemeDNA
 from .events import ThemeEvent
@@ -32,6 +33,7 @@ __all__ = [
     "ProvenanceStatus",
     "ReadinessStatus",
     "RightsStatus",
+    "ScopeCompleteness",
     "ScoredTheme",
     "Theme",
     "ThemeDNA",
