@@ -1,0 +1,203 @@
+# Machine-readable verified score inventory derived from pinned upstream repository commits.
+# Pinned Meta-Repository: DCMLab/distant_listening_corpus @ 12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d
+
+meta_repository:
+  repository: "DCMLab/distant_listening_corpus"
+  commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
+  verified_at: "2026-09-13"
+
+sources:
+  dcml_medtner_tales:
+    repository: "DCMLab/medtner_tales"
+    commit: "1d2e58ba8d329463829e45e75900af43be4256bf"
+    score_entry_count: 19
+    musical_piece_count: 19
+    work_cycle_count: 7
+    source_file_count: 135
+    score_entries:
+      - "op08n01"
+      - "op14n01"
+      - "op26n01"
+      - "op26n02"
+      - "op26n03"
+      - "op26n04"
+      - "op34n01"
+      - "op34n02"
+      - "op34n03"
+      - "op34n04"
+      - "op35n01"
+      - "op35n02"
+      - "op35n03"
+      - "op35n04"
+      - "op42n01"
+      - "op42n02"
+      - "op42n03"
+      - "op48n01"
+      - "op48n02"
+
+  dcml_rachmaninoff_op42:
+    repository: "DCMLab/rachmaninoff_piano"
+    commit: "a73f3246a764215863000357c81309b210a43f15"
+    score_entry_count: 22
+    musical_piece_count: 20
+    work_cycle_count: 1
+    source_file_count: 24
+    score_entries:
+      - "op42_01a"
+      - "op42_01b"
+      - "op42_02"
+      - "op42_03"
+      - "op42_04"
+      - "op42_05"
+      - "op42_06"
+      - "op42_07"
+      - "op42_08"
+      - "op42_09"
+      - "op42_10"
+      - "op42_11"
+      - "op42_12"
+      - "op42_13a"
+      - "op42_13b"
+      - "op42_14"
+      - "op42_15"
+      - "op42_16"
+      - "op42_17"
+      - "op42_18"
+      - "op42_19"
+      - "op42_20"
+
+  dcml_tchaikovsky_seasons:
+    repository: "DCMLab/tchaikovsky_seasons"
+    commit: "5af15033c5f9c282f38fcf71234b86349e61e8c3"
+    score_entry_count: 12
+    musical_piece_count: 12
+    work_cycle_count: 1
+    source_file_count: 97
+    score_entries:
+      - "op37a01"
+      - "op37a02"
+      - "op37a03"
+      - "op37a04"
+      - "op37a05"
+      - "op37a06"
+      - "op37a07"
+      - "op37a08"
+      - "op37a09"
+      - "op37a10"
+      - "op37a11"
+      - "op37a12"
+
+  dcml_chopin_mazurkas:
+    repository: "DCMLab/chopin_mazurkas"
+    commit: "5931135e614985023b96de2a291c74b7ef90b287"
+    score_entry_count: 56
+    musical_piece_count: 56
+    work_cycle_count: 56
+    source_file_count: 390
+    score_entries:
+      - "BI105-1op30-1"
+      - "BI105-2op30-2"
+      - "BI105-3op30-3"
+      - "BI105-4op30-4"
+      - "BI115-1op33-1"
+      - "BI115-2op33-2"
+      - "BI115-3op33-3"
+      - "BI115-4op33-4"
+      - "BI122op41-2"
+      - "BI126-1op41-4"
+      - "BI126-3op41-1"
+      - "BI126-4op41-3"
+      - "BI134"
+      - "BI140"
+      - "BI145-1op50-1"
+      - "BI145-2op50-2"
+      - "BI145-3op50-3"
+      - "BI153-1op56-1"
+      - "BI153-2op56-2"
+      - "BI153-3op56-3"
+      - "BI157-1op59-1"
+      - "BI157-2op59-2"
+      - "BI157-3op59-3"
+      - "BI16-1"
+      - "BI16-2"
+      - "BI162-1op63-1"
+      - "BI162-2op63-2"
+      - "BI162-3op63-3"
+      - "BI163op67-4"
+      - "BI167op67-2"
+      - "BI168op68-4"
+      - "BI18op68-2"
+      - "BI34op68-3"
+      - "BI38op68-1"
+      - "BI60-1op06-1"
+      - "BI60-2op06-2"
+      - "BI60-3op06-3"
+      - "BI60-4op06-4"
+      - "BI61-1op07-1"
+      - "BI61-2op07-2"
+      - "BI61-3op07-3"
+      - "BI61-4op07-4"
+      - "BI61-5op07-5"
+      - "BI71"
+      - "BI73"
+      - "BI77-1op17-1"
+      - "BI77-2op17-2"
+      - "BI77-3op17-3"
+      - "BI77-4op17-4"
+      - "BI85"
+      - "BI89-1op24-1"
+      - "BI89-2op24-2"
+      - "BI89-3op24-3"
+      - "BI89-4op24-4"
+      - "BI93-1op67-1"
+      - "BI93-2op67-3"
+
+  dcml_liszt_annees:
+    repository: "DCMLab/liszt_pelerinage"
+    commit: "f1cfd308adba5763aad3a18885eac48d42449fc4"
+    score_entry_count: 19
+    musical_piece_count: 26
+    work_cycle_count: 3
+    source_file_count: 134
+    score_entries:
+      - "160.01_Chapelle_de_Guillaume_Tell"
+      - "160.02_Au_Lac_de_Wallenstadt"
+      - "160.03_Pastorale"
+      - "160.04_Au_Bord_dUne_Source"
+      - "160.05_Orage"
+      - "160.06_Vallee_dObermann"
+      - "160.07_Eglogue"
+      - "160.08_Le_Mal_du_Pays_(Heimweh)"
+      - "160.09_Les_Cloches_de_Geneve_(Nocturne)"
+      - "161.01_Sposalizio"
+      - "161.02_Il_Pensieroso"
+      - "161.03_Canzonetta_del_Salvator_Rosa"
+      - "161.04_Sonetto_47_del_Petrarca"
+      - "161.05_Sonetto_104_del_Petrarca"
+      - "161.06_Sonetto_123_del_Petrarca"
+      - "161.07_Apres_une_lecture_du_Dante"
+      - "162.01_Gondoliera"
+      - "162.02_Canzone"
+      - "162.03_Tarantella_da_Guillaume_Louis_Cottrau._Presto_e_canzone_napolitana"
+
+  dcml_schumann_kinderszenen:
+    repository: "DCMLab/schumann_kinderszenen"
+    commit: "ee929c1556bc937fe1ea7303cac4476e37caa4d1"
+    score_entry_count: 13
+    musical_piece_count: 13
+    work_cycle_count: 1
+    source_file_count: 92
+    score_entries:
+      - "n01"
+      - "n02"
+      - "n03"
+      - "n04"
+      - "n05"
+      - "n06"
+      - "n07"
+      - "n08"
+      - "n09"
+      - "n10"
+      - "n11"
+      - "n12"
+      - "n13"

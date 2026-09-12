@@ -16,6 +16,7 @@ from russian_piano_composer.domain.corpus import (
     LicenseClaim,
     PianoMedium,
     ProvenanceStatus,
+    ReadinessStatus,
     RightsStatus,
 )
 
@@ -109,6 +110,7 @@ class CorpusManifest:
                 "license": s.license,
                 "license_claims": claims_data,
                 "is_non_commercial": s.is_non_commercial,
+                "readiness_status": s.readiness_status.value,
                 "verified_at": s.verified_at,
                 "composer_authority_ids": s.composer_authority_ids,
                 "piano_medium": s.piano_medium.value,
@@ -117,8 +119,12 @@ class CorpusManifest:
                 "representative_of_full_composer_output": s.representative_of_full_composer_output,
                 "work_count": s.work_count,
                 "piece_count": s.piece_count,
+                "score_entry_count": s.score_entry_count,
+                "musical_piece_count": s.musical_piece_count,
+                "work_cycle_count": s.work_cycle_count,
                 "source_file_count": s.source_file_count,
                 "source_commit": s.source_commit,
+                "meta_repository_commit": s.meta_repository_commit,
                 "source_documentation": s.source_documentation,
                 "doi": s.doi,
                 "citation": s.citation,
@@ -161,6 +167,11 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
         raise ValueError(f"Invalid provenance_status in source {raw.get('corpus_id')!r}: {e}") from e
 
     try:
+        readiness_status = ReadinessStatus(raw.get("readiness_status", "REVIEW_REQUIRED"))
+    except ValueError as e:
+        raise ValueError(f"Invalid readiness_status in source {raw.get('corpus_id')!r}: {e}") from e
+
+    try:
         piano_medium = PianoMedium(raw.get("piano_medium", "SOLO_PIANO"))
     except ValueError as e:
         raise ValueError(f"Invalid piano_medium in source {raw.get('corpus_id')!r}: {e}") from e
@@ -199,6 +210,7 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
         verified_at=str(raw["verified_at"]),
         license_claims=tuple(license_claims),
         is_non_commercial=bool(raw.get("is_non_commercial", True)),
+        readiness_status=readiness_status,
         composer_authority_ids=dict(raw.get("composer_authority_ids", {})),
         piano_medium=piano_medium,
         coverage_notes=raw.get("coverage_notes"),
@@ -206,8 +218,12 @@ def _parse_source_entry(raw: dict[str, Any]) -> CorpusSource:
         representative_of_full_composer_output=bool(raw.get("representative_of_full_composer_output", False)),
         work_count=raw.get("work_count"),
         piece_count=raw.get("piece_count"),
+        score_entry_count=raw.get("score_entry_count"),
+        musical_piece_count=raw.get("musical_piece_count"),
+        work_cycle_count=raw.get("work_cycle_count"),
         source_file_count=raw.get("source_file_count"),
         source_commit=raw.get("source_commit"),
+        meta_repository_commit=raw.get("meta_repository_commit"),
         source_documentation=raw.get("source_documentation"),
         doi=raw.get("doi"),
         citation=raw.get("citation"),

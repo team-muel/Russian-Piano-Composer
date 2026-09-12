@@ -1,6 +1,7 @@
 """
 Domain models and value objects for corpus provenance and rights management.
 """
+import re
 from dataclasses import dataclass, field
 from enum import StrEnum
 
@@ -66,6 +67,17 @@ class PianoMedium(StrEnum):
     UNKNOWN = "UNKNOWN"
 
 
+class ReadinessStatus(StrEnum):
+    """
+    Acquisition/provenance readiness status of a corpus source.
+    Separate from scientific role.
+    """
+    PROVENANCE_READY = "PROVENANCE_READY"
+    REVIEW_REQUIRED = "REVIEW_REQUIRED"
+    UNVERIFIED = "UNVERIFIED"
+    BLOCKED = "BLOCKED"
+
+
 @dataclass(frozen=True, slots=True)
 class LicenseClaim:
     """
@@ -82,23 +94,29 @@ class LicenseClaim:
             raise ValueError("LicenseClaim value cannot be empty.")
 
 
+HEX_COMMIT_REGEX = re.compile(r"^[0-9a-f]{40}$")
+DISALLOWED_COMMIT_PATTERNS = re.compile(r"(a1b2c3d4|c1c2c3c4|l1l2l3l4|s1s2s3s4|00000000000000000000|\.\.\.)")
+
+
 @dataclass(frozen=True, slots=True)
 class CorpusSource:
     """
-    Immutable metadata record for a registered corpus source.
+    Metadata representation of a candidate score corpus source.
+    Must be fully specified before any score acquisition occurs.
     """
     corpus_id: str
     title: str
-    role: CorpusRole
     composer: str
-    source_provider: str
-    source_repository: str
-    source_version: str
+    role: CorpusRole
     repertoire_scope: str
     license: str
     verified_at: str
+    source_provider: str = ""
+    source_repository: str = ""
+    source_version: str = ""
     license_claims: tuple[LicenseClaim, ...] = ()
     is_non_commercial: bool = True
+    readiness_status: ReadinessStatus = ReadinessStatus.REVIEW_REQUIRED
     composer_authority_ids: dict[str, str] = field(default_factory=dict)
     piano_medium: PianoMedium = PianoMedium.SOLO_PIANO
     coverage_notes: str | None = None
@@ -106,8 +124,12 @@ class CorpusSource:
     representative_of_full_composer_output: bool = False
     work_count: int | None = None
     piece_count: int | None = None
+    score_entry_count: int | None = None
+    musical_piece_count: int | None = None
+    work_cycle_count: int | None = None
     source_file_count: int | None = None
     source_commit: str | None = None
+    meta_repository_commit: str | None = None
     source_documentation: str | None = None
     doi: str | None = None
     citation: str | None = None
@@ -131,6 +153,21 @@ class CorpusSource:
             raise TypeError(f"provenance_status must be a ProvenanceStatus enum instance, got {type(self.provenance_status).__name__}.")
         if not isinstance(self.piano_medium, PianoMedium):
             raise TypeError(f"piano_medium must be a PianoMedium enum instance, got {type(self.piano_medium).__name__}.")
+        if not isinstance(self.readiness_status, ReadinessStatus):
+            raise TypeError(f"readiness_status must be a ReadinessStatus enum instance, got {type(self.readiness_status).__name__}.")
+
+        if self.source_commit is not None and (
+            not HEX_COMMIT_REGEX.match(self.source_commit) or DISALLOWED_COMMIT_PATTERNS.search(self.source_commit)
+        ):
+            raise ValueError(
+                f"source_commit for {self.corpus_id!r} must be a 40-character lowercase hex string without synthetic placeholder patterns, got {self.source_commit!r}"
+            )
+        if self.meta_repository_commit is not None and (
+            not HEX_COMMIT_REGEX.match(self.meta_repository_commit) or DISALLOWED_COMMIT_PATTERNS.search(self.meta_repository_commit)
+        ):
+            raise ValueError(
+                f"meta_repository_commit for {self.corpus_id!r} must be a 40-character lowercase hex string without synthetic placeholder patterns, got {self.meta_repository_commit!r}"
+            )
 
     @property
     def generative_eligible(self) -> bool:
@@ -141,6 +178,7 @@ class CorpusSource:
             self.role == CorpusRole.GENERATIVE_RUSSIAN
             and self.rights_status == RightsStatus.VERIFIED
             and not self.rights_review_required
+            and self.readiness_status == ReadinessStatus.PROVENANCE_READY
         )
 
 

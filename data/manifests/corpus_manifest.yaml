@@ -8,36 +8,43 @@ sources:
       viaf: "14958975"
       wikidata: "Q312859"
     piano_medium: "SOLO_PIANO"
-    repertoire_scope: "Medtner Skazki (Fairy Tales) for solo piano, Op. 8, Op. 9, Op. 14, Op. 20, Op. 26, Op. 34, Op. 35, Op. 42, Op. 48, Op. 51"
-    coverage_notes: "Covers major Skazki cycles for solo piano."
+    repertoire_scope: "Medtner Skazki (Fairy Tales) for solo piano, Op. 8, Op. 14, Op. 26, Op. 34, Op. 35, Op. 42, Op. 48"
+    coverage_notes: "Covers 19 score entries across 7 Skazki cycles for solo piano."
     is_complete_for_claimed_scope: true
     representative_of_full_composer_output: false
-    work_count: 10
-    piece_count: 38
-    source_file_count: 38
+    work_count: 7
+    piece_count: 19
+    score_entry_count: 19
+    musical_piece_count: 19
+    work_cycle_count: 7
+    source_file_count: 135
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/medtner_tales"
+    meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
     source_version: "v1.0"
-    source_commit: "e7f2081d6f1ef2e861d85be44a6311684c3116bc"
-    source_documentation: "https://github.com/DCMLab/medtner_tales/blob/main/README.md"
+    source_commit: "1d2e58ba8d329463829e45e75900af43be4256bf"
+    source_documentation: "https://github.com/DCMLab/medtner_tales/blob/1d2e58ba8d329463829e45e75900af43be4256bf/README.md"
     citation: "DCML Medtner Tales Dataset, EPFL Digital and Cognitive Musicology Lab"
-    license: "CC BY-NC-SA 4.0"
+    doi: "10.5281/zenodo.7473528"
+    license: "UNRESOLVED (CC BY-NC-SA 4.0 / CC-BY-NC-4.0 CONFLICT)"
     license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     license_claims:
       - source_type: "README"
         value: "CC BY-NC-SA 4.0"
-        source_url: "https://github.com/DCMLab/medtner_tales/blob/main/README.md"
+        source_url: "https://github.com/DCMLab/medtner_tales/blob/1d2e58ba8d329463829e45e75900af43be4256bf/README.md"
       - source_type: "CITATION_CFF"
-        value: "CC-BY-NC-SA-4.0"
-        source_url: "https://github.com/DCMLab/medtner_tales/blob/main/CITATION.cff"
+        value: "CC-BY-NC-4.0"
+        source_url: "https://github.com/DCMLab/medtner_tales/blob/1d2e58ba8d329463829e45e75900af43be4256bf/CITATION.cff"
       - source_type: "ZENODO"
-        value: "CC BY-NC-SA 4.0"
-        source_url: "https://zenodo.org/record/medtner_tales"
+        value: "CC-BY-NC-SA-4.0"
+        source_url: "https://zenodo.org/record/7473528"
     is_non_commercial: true
-    rights_notes: "Upstream DCML license contains NonCommercial and ShareAlike clauses."
+    rights_notes: "Upstream metadata conflict: CITATION.cff claims CC-BY-NC-4.0 while README/Zenodo claim CC BY-NC-SA 4.0."
     rights_status: "REVIEW_REQUIRED"
     rights_review_required: true
+    readiness_status: "REVIEW_REQUIRED"
     provenance_status: "VERIFIED_SOURCE"
+    generative_eligible: false
     formats_available:
       - "MUSESCORE_MSCX"
       - "TSV_NOTES"
@@ -45,7 +52,7 @@ sources:
       - "TSV_HARMONIES"
     retrieval_method: "git_clone"
     verified_at: "2026-09-13"
-    notes: "Primary Russian generative source candidate for Medtner thematic and harmonic language. Pending legal review due to NC clause."
+    notes: "Primary Russian generative source candidate for Medtner thematic and harmonic language. Pending legal review due to NC clause and license claim conflict."
 
   - corpus_id: "dcml_rachmaninoff_op42"
     title: "DCML Rachmaninoff Variations on a Theme of Corelli Op. 42"
@@ -56,35 +63,42 @@ sources:
       wikidata: "Q131861"
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Sergei Rachmaninoff, Variations on a Theme of Corelli, Op. 42 for solo piano"
-    coverage_notes: "Covers Op. 42 variation cycle only (20 variations + theme/intermezzo/coda across 24 score files). NOT representative of full Rachmaninoff solo piano output."
+    coverage_notes: "Covers Op. 42 variation cycle only (20 variations + Theme, Intermezzo, Coda across 22 score entries / 24 score files). NOT representative of full Rachmaninoff solo piano output."
     is_complete_for_claimed_scope: true
     representative_of_full_composer_output: false
     work_count: 1
     piece_count: 20
+    score_entry_count: 22
+    musical_piece_count: 20
+    work_cycle_count: 1
     source_file_count: 24
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
-    source_repository: "https://github.com/DCMLab/rachmaninoff_corelli"
+    source_repository: "https://github.com/DCMLab/rachmaninoff_piano"
+    meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
     source_version: "v1.0"
-    source_commit: "8894178553641bd29013fa0eecdf4061a938c538"
-    source_documentation: "https://github.com/DCMLab/rachmaninoff_corelli/blob/main/README.md"
+    source_commit: "a73f3246a764215863000357c81309b210a43f15"
+    source_documentation: "https://github.com/DCMLab/rachmaninoff_piano/blob/a73f3246a764215863000357c81309b210a43f15/README.md"
     citation: "DCML Rachmaninoff Corelli Variations Dataset, EPFL Digital and Cognitive Musicology Lab"
-    license: "CC BY-NC-SA 4.0"
+    doi: "10.5281/zenodo.14984155"
+    license: "UNRESOLVED (CC BY-NC-SA 4.0 / CC-BY-NC-4.0 CONFLICT)"
     license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     license_claims:
       - source_type: "README"
         value: "CC BY-NC-SA 4.0"
-        source_url: "https://github.com/DCMLab/rachmaninoff_corelli/blob/main/README.md"
+        source_url: "https://github.com/DCMLab/rachmaninoff_piano/blob/a73f3246a764215863000357c81309b210a43f15/README.md"
       - source_type: "CITATION_CFF"
-        value: "CC-BY-NC-SA-4.0"
-        source_url: "https://github.com/DCMLab/rachmaninoff_corelli/blob/main/CITATION.cff"
+        value: "CC-BY-NC-4.0"
+        source_url: "https://github.com/DCMLab/rachmaninoff_piano/blob/a73f3246a764215863000357c81309b210a43f15/CITATION.cff"
       - source_type: "ZENODO"
-        value: "CC BY-NC-SA 4.0"
-        source_url: "https://zenodo.org/record/rachmaninoff_corelli"
+        value: "CC-BY-NC-SA-4.0"
+        source_url: "https://zenodo.org/record/14984155"
     is_non_commercial: true
-    rights_notes: "Upstream DCML license contains NonCommercial and ShareAlike clauses."
+    rights_notes: "Upstream metadata conflict: CITATION.cff claims CC-BY-NC-4.0 while README/Zenodo claim CC BY-NC-SA 4.0."
     rights_status: "REVIEW_REQUIRED"
     rights_review_required: true
+    readiness_status: "REVIEW_REQUIRED"
     provenance_status: "VERIFIED_SOURCE"
+    generative_eligible: false
     formats_available:
       - "MUSESCORE_MSCX"
       - "TSV_NOTES"
@@ -92,7 +106,7 @@ sources:
       - "TSV_HARMONIES"
     retrieval_method: "git_clone"
     verified_at: "2026-09-13"
-    notes: "Russian generative source candidate for Rachmaninoff late-period variation technique. Pending legal review due to NC clause."
+    notes: "Russian generative source candidate for Rachmaninoff late-period variation technique. Pending legal review due to NC clause and license claim conflict."
 
   - corpus_id: "dcml_tchaikovsky_seasons"
     title: "DCML Tchaikovsky The Seasons Op. 37b"
@@ -108,30 +122,37 @@ sources:
     representative_of_full_composer_output: false
     work_count: 1
     piece_count: 12
-    source_file_count: 12
+    score_entry_count: 12
+    musical_piece_count: 12
+    work_cycle_count: 1
+    source_file_count: 97
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/tchaikovsky_seasons"
+    meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
     source_version: "v1.0"
-    source_commit: "a1b2c3d4e5f67890a1b2c3d4e5f67890a1b2c3d4"
-    source_documentation: "https://github.com/DCMLab/tchaikovsky_seasons/blob/main/README.md"
+    source_commit: "5af15033c5f9c282f38fcf71234b86349e61e8c3"
+    source_documentation: "https://github.com/DCMLab/tchaikovsky_seasons/blob/5af15033c5f9c282f38fcf71234b86349e61e8c3/README.md"
     citation: "DCML Tchaikovsky Seasons Dataset, EPFL Digital and Cognitive Musicology Lab"
-    license: "CC BY-NC-SA 4.0"
+    doi: "10.5281/zenodo.7473586"
+    license: "UNRESOLVED (CC BY-NC-SA 4.0 / CC-BY-NC-4.0 CONFLICT)"
     license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     license_claims:
       - source_type: "README"
         value: "CC BY-NC-SA 4.0"
-        source_url: "https://github.com/DCMLab/tchaikovsky_seasons/blob/main/README.md"
+        source_url: "https://github.com/DCMLab/tchaikovsky_seasons/blob/5af15033c5f9c282f38fcf71234b86349e61e8c3/README.md"
       - source_type: "CITATION_CFF"
-        value: "CC-BY-NC-SA-4.0"
-        source_url: "https://github.com/DCMLab/tchaikovsky_seasons/blob/main/CITATION.cff"
+        value: "CC-BY-NC-4.0"
+        source_url: "https://github.com/DCMLab/tchaikovsky_seasons/blob/5af15033c5f9c282f38fcf71234b86349e61e8c3/CITATION.cff"
       - source_type: "ZENODO"
-        value: "CC BY-NC-SA 4.0"
-        source_url: "https://zenodo.org/record/tchaikovsky_seasons"
+        value: "CC-BY-NC-SA-4.0"
+        source_url: "https://zenodo.org/record/7473586"
     is_non_commercial: true
-    rights_notes: "Upstream DCML license contains NonCommercial and ShareAlike clauses."
+    rights_notes: "Upstream metadata conflict: CITATION.cff claims CC-BY-NC-4.0 while README/Zenodo claim CC BY-NC-SA 4.0."
     rights_status: "REVIEW_REQUIRED"
     rights_review_required: true
+    readiness_status: "REVIEW_REQUIRED"
     provenance_status: "VERIFIED_SOURCE"
+    generative_eligible: false
     formats_available:
       - "MUSESCORE_MSCX"
       - "TSV_NOTES"
@@ -139,7 +160,7 @@ sources:
       - "TSV_HARMONIES"
     retrieval_method: "git_clone"
     verified_at: "2026-09-13"
-    notes: "Russian generative source candidate for 19th-century lyricism. Pending legal review due to NC clause."
+    notes: "Russian generative source candidate for 19th-century lyricism. Pending legal review due to NC clause and license claim conflict."
 
   - corpus_id: "dcml_chopin_mazurkas"
     title: "DCML Chopin Mazurkas Dataset"
@@ -150,35 +171,42 @@ sources:
       wikidata: "Q1268"
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Chopin Solo Piano Mazurkas (Control Repertoire)"
-    coverage_notes: "Non-Russian control corpus for style discrimination."
+    coverage_notes: "Non-Russian control corpus for style discrimination (56 mazurkas)."
     is_complete_for_claimed_scope: true
     representative_of_full_composer_output: false
-    work_count: 50
-    piece_count: 50
-    source_file_count: 50
+    work_count: 56
+    piece_count: 56
+    score_entry_count: 56
+    musical_piece_count: 56
+    work_cycle_count: 56
+    source_file_count: 390
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/chopin_mazurkas"
+    meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
     source_version: "v1.0"
-    source_commit: "c1c2c3c4c5c6c7c8c1c2c3c4c5c6c7c8c1c2c3c4"
-    source_documentation: "https://github.com/DCMLab/chopin_mazurkas/blob/main/README.md"
+    source_commit: "5931135e614985023b96de2a291c74b7ef90b287"
+    source_documentation: "https://github.com/DCMLab/chopin_mazurkas/blob/5931135e614985023b96de2a291c74b7ef90b287/README.md"
     citation: "DCML Chopin Mazurkas Dataset, EPFL Digital and Cognitive Musicology Lab"
-    license: "CC BY-NC-SA 4.0"
+    doi: "10.5281/zenodo.7473566"
+    license: "UNRESOLVED (CC BY-NC-SA 4.0 / CC-BY-NC-4.0 CONFLICT)"
     license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     license_claims:
       - source_type: "README"
         value: "CC BY-NC-SA 4.0"
-        source_url: "https://github.com/DCMLab/chopin_mazurkas/blob/main/README.md"
+        source_url: "https://github.com/DCMLab/chopin_mazurkas/blob/5931135e614985023b96de2a291c74b7ef90b287/README.md"
       - source_type: "CITATION_CFF"
-        value: "CC-BY-NC-SA-4.0"
-        source_url: "https://github.com/DCMLab/chopin_mazurkas/blob/main/CITATION.cff"
+        value: "CC-BY-NC-4.0"
+        source_url: "https://github.com/DCMLab/chopin_mazurkas/blob/5931135e614985023b96de2a291c74b7ef90b287/CITATION.cff"
       - source_type: "ZENODO"
-        value: "CC BY-NC-SA 4.0"
-        source_url: "https://zenodo.org/record/chopin_mazurkas"
+        value: "CC-BY-NC-SA-4.0"
+        source_url: "https://zenodo.org/record/7473566"
     is_non_commercial: true
-    rights_notes: "Control data only. Must never leak into generative statistics."
-    rights_status: "VERIFIED"
-    rights_review_required: false
+    rights_notes: "Control data only. Upstream license conflict: CITATION.cff claims CC-BY-NC-4.0 while README/Zenodo claim CC BY-NC-SA 4.0."
+    rights_status: "REVIEW_REQUIRED"
+    rights_review_required: true
+    readiness_status: "REVIEW_REQUIRED"
     provenance_status: "VERIFIED_SOURCE"
+    generative_eligible: false
     formats_available:
       - "MUSESCORE_MSCX"
       - "TSV_NOTES"
@@ -197,35 +225,42 @@ sources:
       wikidata: "Q41309"
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Franz Liszt Années de Pèlerinage (Control Repertoire)"
-    coverage_notes: "Non-Russian control corpus for virtuoso Romantic piano style comparison."
+    coverage_notes: "Non-Russian control corpus for virtuoso Romantic piano style comparison (19 score folders / 26 pieces)."
     is_complete_for_claimed_scope: true
     representative_of_full_composer_output: false
     work_count: 3
     piece_count: 26
-    source_file_count: 26
+    score_entry_count: 19
+    musical_piece_count: 26
+    work_cycle_count: 3
+    source_file_count: 134
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
-    source_repository: "https://github.com/DCMLab/liszt_annees"
+    source_repository: "https://github.com/DCMLab/liszt_pelerinage"
+    meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
     source_version: "v1.0"
-    source_commit: "l1l2l3l4l5l6l7l8l1l2l3l4l5l6l7l8l1l2l3l4"
-    source_documentation: "https://github.com/DCMLab/liszt_annees/blob/main/README.md"
+    source_commit: "f1cfd308adba5763aad3a18885eac48d42449fc4"
+    source_documentation: "https://github.com/DCMLab/liszt_pelerinage/blob/f1cfd308adba5763aad3a18885eac48d42449fc4/README.md"
     citation: "DCML Liszt Années de Pèlerinage Dataset, EPFL Digital and Cognitive Musicology Lab"
-    license: "CC BY-NC-SA 4.0"
+    doi: "10.5281/zenodo.7473580"
+    license: "UNRESOLVED (CC BY-NC-SA 4.0 / CC-BY-NC-4.0 CONFLICT)"
     license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     license_claims:
       - source_type: "README"
         value: "CC BY-NC-SA 4.0"
-        source_url: "https://github.com/DCMLab/liszt_annees/blob/main/README.md"
+        source_url: "https://github.com/DCMLab/liszt_pelerinage/blob/f1cfd308adba5763aad3a18885eac48d42449fc4/README.md"
       - source_type: "CITATION_CFF"
-        value: "CC-BY-NC-SA-4.0"
-        source_url: "https://github.com/DCMLab/liszt_annees/blob/main/CITATION.cff"
+        value: "CC-BY-NC-4.0"
+        source_url: "https://github.com/DCMLab/liszt_pelerinage/blob/f1cfd308adba5763aad3a18885eac48d42449fc4/CITATION.cff"
       - source_type: "ZENODO"
-        value: "CC BY-NC-SA 4.0"
-        source_url: "https://zenodo.org/record/liszt_annees"
+        value: "CC-BY-NC-SA-4.0"
+        source_url: "https://zenodo.org/record/7473580"
     is_non_commercial: true
-    rights_notes: "Control data only."
-    rights_status: "VERIFIED"
-    rights_review_required: false
+    rights_notes: "Control data only. Upstream license conflict: CITATION.cff claims CC-BY-NC-4.0 while README/Zenodo claim CC BY-NC-SA 4.0."
+    rights_status: "REVIEW_REQUIRED"
+    rights_review_required: true
+    readiness_status: "REVIEW_REQUIRED"
     provenance_status: "VERIFIED_SOURCE"
+    generative_eligible: false
     formats_available:
       - "MUSESCORE_MSCX"
       - "TSV_NOTES"
@@ -244,35 +279,42 @@ sources:
       wikidata: "Q7351"
     piano_medium: "SOLO_PIANO"
     repertoire_scope: "Robert Schumann Kinderszenen Op. 15 (Control Repertoire)"
-    coverage_notes: "Non-Russian control corpus for German Romantic miniature style comparison."
+    coverage_notes: "Non-Russian control corpus for German Romantic miniature style comparison (13 pieces)."
     is_complete_for_claimed_scope: true
     representative_of_full_composer_output: false
     work_count: 1
     piece_count: 13
-    source_file_count: 13
+    score_entry_count: 13
+    musical_piece_count: 13
+    work_cycle_count: 1
+    source_file_count: 92
     source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
     source_repository: "https://github.com/DCMLab/schumann_kinderszenen"
+    meta_repository_commit: "12be0d3ff7c6e0ef67c7d4e8e44541e5f288f39d"
     source_version: "v1.0"
-    source_commit: "s1s2s3s4s5s6s7s8s1s2s3s4s5s6s7s8s1s2s3s4"
-    source_documentation: "https://github.com/DCMLab/schumann_kinderszenen/blob/main/README.md"
+    source_commit: "ee929c1556bc937fe1ea7303cac4476e37caa4d1"
+    source_documentation: "https://github.com/DCMLab/schumann_kinderszenen/blob/ee929c1556bc937fe1ea7303cac4476e37caa4d1/README.md"
     citation: "DCML Schumann Kinderszenen Dataset, EPFL Digital and Cognitive Musicology Lab"
-    license: "CC BY-NC-SA 4.0"
+    doi: "10.5281/zenodo.7473582"
+    license: "UNRESOLVED (CC BY-NC-SA 4.0 / CC-BY-NC-4.0 CONFLICT)"
     license_url: "https://creativecommons.org/licenses/by-nc-sa/4.0/"
     license_claims:
       - source_type: "README"
         value: "CC BY-NC-SA 4.0"
-        source_url: "https://github.com/DCMLab/schumann_kinderszenen/blob/main/README.md"
+        source_url: "https://github.com/DCMLab/schumann_kinderszenen/blob/ee929c1556bc937fe1ea7303cac4476e37caa4d1/README.md"
       - source_type: "CITATION_CFF"
-        value: "CC-BY-NC-SA-4.0"
-        source_url: "https://github.com/DCMLab/schumann_kinderszenen/blob/main/CITATION.cff"
+        value: "CC-BY-NC-4.0"
+        source_url: "https://github.com/DCMLab/schumann_kinderszenen/blob/ee929c1556bc937fe1ea7303cac4476e37caa4d1/CITATION.cff"
       - source_type: "ZENODO"
-        value: "CC BY-NC-SA 4.0"
-        source_url: "https://zenodo.org/record/schumann_kinderszenen"
+        value: "CC-BY-NC-SA-4.0"
+        source_url: "https://zenodo.org/record/7473582"
     is_non_commercial: true
-    rights_notes: "Control data only."
-    rights_status: "VERIFIED"
-    rights_review_required: false
+    rights_notes: "Control data only. Upstream license conflict: CITATION.cff claims CC-BY-NC-4.0 while README/Zenodo claim CC BY-NC-SA 4.0."
+    rights_status: "REVIEW_REQUIRED"
+    rights_review_required: true
+    readiness_status: "REVIEW_REQUIRED"
     provenance_status: "VERIFIED_SOURCE"
+    generative_eligible: false
     formats_available:
       - "MUSESCORE_MSCX"
       - "TSV_NOTES"
