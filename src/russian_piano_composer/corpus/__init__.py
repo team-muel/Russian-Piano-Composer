@@ -1,10 +1,15 @@
-"""Corpus ingestion and management.
-
-This module will contain:
-- Corpus manifest and provenance tracking
-- Symbolic score ingestion (MusicXML, MIDI, etc.)
-- Theme annotation schema
-- Feature extraction pipelines
-- Dataset splitting with piece-level isolation
-- Generation corpus vs control corpus separation
+"""Corpus ingestion and provenance management.
 """
+from russian_piano_composer.corpus.hashing import sha256_file
+from russian_piano_composer.corpus.manifest import (
+    MANIFEST_SCHEMA_VERSION,
+    CorpusManifest,
+    load_manifest,
+)
+
+__all__ = [
+    "MANIFEST_SCHEMA_VERSION",
+    "CorpusManifest",
+    "load_manifest",
+    "sha256_file",
+]

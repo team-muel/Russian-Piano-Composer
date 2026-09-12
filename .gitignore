@@ -45,9 +45,13 @@ coverage.xml
 outputs/*
 !outputs/.gitkeep
 
-# Raw data (keep .gitkeep)
-data/*
-!data/.gitkeep
+# Data directories
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
 
 # Model artifacts (keep .gitkeep)
 models/*

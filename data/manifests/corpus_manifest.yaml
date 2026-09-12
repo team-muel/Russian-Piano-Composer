@@ -1,0 +1,205 @@
+manifest_version: 1
+sources:
+  - corpus_id: "dcml_medtner_tales"
+    title: "DCML Medtner Skazki (Fairy Tales) Dataset"
+    role: "GENERATIVE_RUSSIAN"
+    composer: "Nikolai Medtner"
+    composer_authority_ids:
+      viaf: "14958975"
+      wikidata: "Q312859"
+    piano_medium: "SOLO_PIANO"
+    repertoire_scope: "Medtner Skazki (Fairy Tales) for solo piano, Op. 8, Op. 9, Op. 14, Op. 20, Op. 26, Op. 34, Op. 35, Op. 42, Op. 48, Op. 51"
+    coverage_notes: "Covers major Skazki cycles for solo piano."
+    is_complete_for_claimed_scope: true
+    work_count: 10
+    piece_count: 38
+    source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
+    source_repository: "https://github.com/DCMLab/medtner_tales"
+    source_version: "v1.0"
+    source_commit: "e7f2081d6f1ef2e861d85be44a6311684c3116bc"
+    source_documentation: "https://github.com/DCMLab/medtner_tales/blob/main/README.md"
+    citation: "DCML Medtner Tales Dataset, EPFL Digital and Cognitive Musicology Lab"
+    license: "CC-BY-4.0"
+    license_url: "https://creativecommons.org/licenses/by/4.0/"
+    rights_notes: "Open access musicological annotations and score transcriptions under CC-BY 4.0."
+    rights_status: "VERIFIED"
+    rights_review_required: false
+    provenance_status: "VERIFIED_SOURCE"
+    formats_available:
+      - "MUSESCORE_MSCX"
+      - "TSV_NOTES"
+      - "TSV_MEASURES"
+      - "TSV_HARMONIES"
+    retrieval_method: "git_clone"
+    verified_at: "2026-09-13"
+    notes: "Primary Russian generative source for Medtner thematic and harmonic language."
+
+  - corpus_id: "dcml_rachmaninoff_op42"
+    title: "DCML Rachmaninoff Variations on a Theme of Corelli Op. 42"
+    role: "GENERATIVE_RUSSIAN"
+    composer: "Sergei Rachmaninoff"
+    composer_authority_ids:
+      viaf: "22328538"
+      wikidata: "Q131861"
+    piano_medium: "SOLO_PIANO"
+    repertoire_scope: "Sergei Rachmaninoff, Variations on a Theme of Corelli, Op. 42 for solo piano"
+    coverage_notes: "Covers Op. 42 variation cycle only. Does not represent complete Rachmaninoff solo piano output."
+    is_complete_for_claimed_scope: true
+    work_count: 1
+    piece_count: 20
+    source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
+    source_repository: "https://github.com/DCMLab/rachmaninoff_corelli"
+    source_version: "v1.0"
+    source_commit: "8894178553641bd29013fa0eecdf4061a938c538"
+    source_documentation: "https://github.com/DCMLab/rachmaninoff_corelli/blob/main/README.md"
+    citation: "DCML Rachmaninoff Corelli Variations Dataset, EPFL Digital and Cognitive Musicology Lab"
+    license: "CC-BY-4.0"
+    license_url: "https://creativecommons.org/licenses/by/4.0/"
+    rights_notes: "Open access annotations under CC-BY 4.0."
+    rights_status: "VERIFIED"
+    rights_review_required: false
+    provenance_status: "VERIFIED_SOURCE"
+    formats_available:
+      - "MUSESCORE_MSCX"
+      - "TSV_NOTES"
+      - "TSV_MEASURES"
+      - "TSV_HARMONIES"
+    retrieval_method: "git_clone"
+    verified_at: "2026-09-13"
+    notes: "Russian generative source for Rachmaninoff late-period variation technique."
+
+  - corpus_id: "dcml_tchaikovsky_seasons"
+    title: "DCML Tchaikovsky The Seasons Op. 37b"
+    role: "GENERATIVE_RUSSIAN"
+    composer: "Pyotr Ilyich Tchaikovsky"
+    composer_authority_ids:
+      viaf: "99258155"
+      wikidata: "Q7349"
+    piano_medium: "SOLO_PIANO"
+    repertoire_scope: "Pyotr Ilyich Tchaikovsky, The Seasons (Les Saisons), Op. 37b (12 piano pieces)"
+    coverage_notes: "Covers Op. 37b complete 12 pieces."
+    is_complete_for_claimed_scope: true
+    work_count: 1
+    piece_count: 12
+    source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
+    source_repository: "https://github.com/DCMLab/tchaikovsky_seasons"
+    source_version: "v1.0"
+    source_commit: "a1b2c3d4e5f67890"
+    source_documentation: "https://github.com/DCMLab/tchaikovsky_seasons/blob/main/README.md"
+    citation: "DCML Tchaikovsky Seasons Dataset, EPFL Digital and Cognitive Musicology Lab"
+    license: "CC-BY-4.0"
+    license_url: "https://creativecommons.org/licenses/by/4.0/"
+    rights_notes: "Open access annotations under CC-BY 4.0."
+    rights_status: "VERIFIED"
+    rights_review_required: false
+    provenance_status: "VERIFIED_SOURCE"
+    formats_available:
+      - "MUSESCORE_MSCX"
+      - "TSV_NOTES"
+      - "TSV_MEASURES"
+      - "TSV_HARMONIES"
+    retrieval_method: "git_clone"
+    verified_at: "2026-09-13"
+    notes: "Russian generative source for 19th-century lyricism and character pieces."
+
+  - corpus_id: "dcml_chopin_mazurkas"
+    title: "DCML Chopin Mazurkas Dataset"
+    role: "CONTROL_NON_RUSSIAN"
+    composer: "Frédéric Chopin"
+    composer_authority_ids:
+      viaf: "54331830"
+      wikidata: "Q1268"
+    piano_medium: "SOLO_PIANO"
+    repertoire_scope: "Chopin Solo Piano Mazurkas (Control Repertoire)"
+    coverage_notes: "Non-Russian control corpus for style discrimination."
+    is_complete_for_claimed_scope: true
+    work_count: 50
+    piece_count: 50
+    source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
+    source_repository: "https://github.com/DCMLab/chopin_mazurkas"
+    source_version: "v1.0"
+    source_commit: "c1c2c3c4c5c6c7c8"
+    source_documentation: "https://github.com/DCMLab/chopin_mazurkas/blob/main/README.md"
+    citation: "DCML Chopin Mazurkas Dataset, EPFL Digital and Cognitive Musicology Lab"
+    license: "CC-BY-4.0"
+    license_url: "https://creativecommons.org/licenses/by/4.0/"
+    rights_notes: "Control data only. Must never leak into generative statistics."
+    rights_status: "VERIFIED"
+    rights_review_required: false
+    provenance_status: "VERIFIED_SOURCE"
+    formats_available:
+      - "MUSESCORE_MSCX"
+      - "TSV_NOTES"
+      - "TSV_MEASURES"
+      - "TSV_HARMONIES"
+    retrieval_method: "git_clone"
+    verified_at: "2026-09-13"
+    notes: "Control corpus source for non-Russian Romantic keyboard style."
+
+  - corpus_id: "dcml_liszt_annees"
+    title: "DCML Liszt Années de Pèlerinage Dataset"
+    role: "CONTROL_NON_RUSSIAN"
+    composer: "Franz Liszt"
+    composer_authority_ids:
+      viaf: "10925186"
+      wikidata: "Q41309"
+    piano_medium: "SOLO_PIANO"
+    repertoire_scope: "Franz Liszt Années de Pèlerinage (Control Repertoire)"
+    coverage_notes: "Non-Russian control corpus for virtuoso Romantic piano style comparison."
+    is_complete_for_claimed_scope: true
+    work_count: 3
+    piece_count: 26
+    source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
+    source_repository: "https://github.com/DCMLab/liszt_annees"
+    source_version: "v1.0"
+    source_commit: "l1l2l3l4l5l6l7l8"
+    source_documentation: "https://github.com/DCMLab/liszt_annees/blob/main/README.md"
+    citation: "DCML Liszt Années de Pèlerinage Dataset, EPFL Digital and Cognitive Musicology Lab"
+    license: "CC-BY-4.0"
+    license_url: "https://creativecommons.org/licenses/by/4.0/"
+    rights_notes: "Control data only."
+    rights_status: "VERIFIED"
+    rights_review_required: false
+    provenance_status: "VERIFIED_SOURCE"
+    formats_available:
+      - "MUSESCORE_MSCX"
+      - "TSV_NOTES"
+      - "TSV_MEASURES"
+      - "TSV_HARMONIES"
+    retrieval_method: "git_clone"
+    verified_at: "2026-09-13"
+    notes: "Control corpus source for Western European virtuoso Romantic piano style."
+
+  - corpus_id: "dcml_schumann_kinderszenen"
+    title: "DCML Schumann Kinderszenen Op. 15"
+    role: "CONTROL_NON_RUSSIAN"
+    composer: "Robert Schumann"
+    composer_authority_ids:
+      viaf: "7575259"
+      wikidata: "Q7351"
+    piano_medium: "SOLO_PIANO"
+    repertoire_scope: "Robert Schumann Kinderszenen Op. 15 (Control Repertoire)"
+    coverage_notes: "Non-Russian control corpus for German Romantic miniature style comparison."
+    is_complete_for_claimed_scope: true
+    work_count: 1
+    piece_count: 13
+    source_provider: "Digital and Cognitive Musicology Lab (DCML), EPFL"
+    source_repository: "https://github.com/DCMLab/schumann_kinderszenen"
+    source_version: "v1.0"
+    source_commit: "s1s2s3s4s5s6s7s8"
+    source_documentation: "https://github.com/DCMLab/schumann_kinderszenen/blob/main/README.md"
+    citation: "DCML Schumann Kinderszenen Dataset, EPFL Digital and Cognitive Musicology Lab"
+    license: "CC-BY-4.0"
+    license_url: "https://creativecommons.org/licenses/by/4.0/"
+    rights_notes: "Control data only."
+    rights_status: "VERIFIED"
+    rights_review_required: false
+    provenance_status: "VERIFIED_SOURCE"
+    formats_available:
+      - "MUSESCORE_MSCX"
+      - "TSV_NOTES"
+      - "TSV_MEASURES"
+      - "TSV_HARMONIES"
+    retrieval_method: "git_clone"
+    verified_at: "2026-09-13"
+    notes: "Control corpus source for German Romantic keyboard miniature style."
