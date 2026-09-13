@@ -11,7 +11,6 @@ class TieAttackPolicy(StrEnum):
     """How tie continuations are handled during feature extraction."""
 
     EXCLUDE_CONTINUATIONS = "EXCLUDE_CONTINUATIONS"
-    MERGE_TIES = "MERGE_TIES"
     COUNT_EVERY_EVENT = "COUNT_EVERY_EVENT"
 
 
@@ -33,7 +32,6 @@ class PitchWeightingPolicy(StrEnum):
     """Policy for weighting pitch observations."""
 
     ATTACK_UNWEIGHTED = "ATTACK_UNWEIGHTED"
-    DURATION_WEIGHTED = "DURATION_WEIGHTED"
 
 
 @dataclass(frozen=True, slots=True)
@@ -64,3 +62,4 @@ class FeatureExtractionPolicy:
         }
         encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
+
