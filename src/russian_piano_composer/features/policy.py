@@ -47,3 +47,20 @@ class FeatureExtractionPolicy:
     grace_policy: GraceNotePolicy = GraceNotePolicy.EXCLUDE
     pitch_weighting: PitchWeightingPolicy = PitchWeightingPolicy.ATTACK_UNWEIGHTED
     require_single_note_voice: bool = True
+
+    def compute_policy_hash(self) -> str:
+        """
+        Deterministic SHA-256 hash of feature extraction policy semantics.
+        """
+        import hashlib
+        import json
+
+        canonical = {
+            "tie_policy": self.tie_policy.value,
+            "melodic_policy": self.melodic_policy.value,
+            "grace_policy": self.grace_policy.value,
+            "pitch_weighting": self.pitch_weighting.value,
+            "require_single_note_voice": self.require_single_note_voice,
+        }
+        encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()

@@ -62,6 +62,7 @@ class PieceFeatureSet:
     manifest_hash: str
     canonical_piece_hash: str
     feature_schema_version: int = FEATURE_SCHEMA_VERSION
+    feature_policy_hash: str = ""
 
     def __post_init__(self) -> None:
         if not self.piece_id or not self.piece_id.strip():
@@ -87,6 +88,7 @@ class CorpusFeatureMatrix:
     manifest_hash: str
     feature_registry: tuple[FeatureDefinition, ...]
     feature_schema_version: int = FEATURE_SCHEMA_VERSION
+    feature_policy_hash: str = ""
 
     def __post_init__(self) -> None:
         if not self.pieces:
@@ -110,6 +112,7 @@ class CorpusFeatureMatrix:
     def compute_matrix_hash(self) -> str:
         """
         Deterministic SHA-256 hash of the feature matrix for reproducibility tracking.
+        Includes feature extraction policy identity.
         """
         sorted_pieces = sorted(self.pieces, key=lambda p: p.piece_id)
         sorted_registry = sorted(self.feature_registry, key=lambda f: f.feature_id)
@@ -117,6 +120,7 @@ class CorpusFeatureMatrix:
         canonical: dict[str, Any] = {
             "manifest_hash": self.manifest_hash,
             "feature_schema_version": self.feature_schema_version,
+            "feature_policy_hash": self.feature_policy_hash,
             "registry": [
                 {
                     "feature_id": fd.feature_id,
@@ -134,6 +138,7 @@ class CorpusFeatureMatrix:
                     "corpus_id": p.corpus_id,
                     "corpus_role": p.corpus_role,
                     "canonical_piece_hash": p.canonical_piece_hash,
+                    "feature_policy_hash": p.feature_policy_hash,
                     "features": {
                         k: v for k, v in sorted(p.features.items())
                     },

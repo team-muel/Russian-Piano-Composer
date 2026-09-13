@@ -83,3 +83,31 @@ def test_feature_registry_provenance() -> None:
             assert fd.provenance == FeatureProvenance.ENGINEERING_HEURISTIC
         else:
             assert fd.provenance == FeatureProvenance.OBSERVED
+
+
+def test_matrix_hash_policy_sensitivity() -> None:
+    """Verify that different extraction policies result in different matrix semantic hashes."""
+    from russian_piano_composer.features.policy import FeatureExtractionPolicy, GraceNotePolicy
+
+    pfs1 = PieceFeatureSet("t:1", "t", "r", {"a": 1.0}, "hash1", "cp1")
+    fd = FeatureDefinition("a", "A", "desc", FeatureProvenance.OBSERVED, "unit", "float")
+
+    policy1 = FeatureExtractionPolicy(grace_policy=GraceNotePolicy.INCLUDE)
+    policy2 = FeatureExtractionPolicy(grace_policy=GraceNotePolicy.EXCLUDE)
+
+    matrix1 = CorpusFeatureMatrix(
+        pieces=(pfs1,),
+        manifest_hash="hash1",
+        feature_registry=(fd,),
+        feature_policy_hash=policy1.compute_policy_hash()
+    )
+    matrix2 = CorpusFeatureMatrix(
+        pieces=(pfs1,),
+        manifest_hash="hash1",
+        feature_registry=(fd,),
+        feature_policy_hash=policy2.compute_policy_hash()
+    )
+
+    assert policy1.compute_policy_hash() != policy2.compute_policy_hash()
+    assert matrix1.compute_matrix_hash() != matrix2.compute_matrix_hash()
+
