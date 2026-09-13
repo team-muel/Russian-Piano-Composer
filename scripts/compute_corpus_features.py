@@ -35,6 +35,7 @@ from russian_piano_composer.features import (
     FEATURE_REGISTRY,
     extract_piece_features,
 )
+from russian_piano_composer.features.policy import FeatureExtractionPolicy
 from russian_piano_composer.theory.meter import TimeSignature
 from russian_piano_composer.theory.pitch import PitchLetter, SpelledPitch
 
@@ -211,10 +212,14 @@ def main() -> None:
     print(f"Features per piece: {len(FEATURE_REGISTRY)}")
 
     # Build CorpusFeatureMatrix
+    default_policy = FeatureExtractionPolicy()
+    policy_hash = default_policy.compute_policy_hash()
+
     matrix = CorpusFeatureMatrix(
         pieces=tuple(all_features),
         manifest_hash=manifest_hash,
         feature_registry=FEATURE_REGISTRY,
+        feature_policy_hash=policy_hash,
     )
     matrix_hash = matrix.compute_matrix_hash()
     print(f"Feature matrix hash: {matrix_hash}")
@@ -244,7 +249,8 @@ def main() -> None:
     role_groups = df.groupby("corpus_role")
     summary: dict[str, object] = {
         "manifest_hash": manifest_hash,
-        "feature_schema_version": 1,
+        "feature_schema_version": 2,
+        "feature_policy_hash": policy_hash,
         "feature_matrix_hash": matrix_hash,
         "total_pieces": total_pieces,
         "feature_count": len(FEATURE_REGISTRY),

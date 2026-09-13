@@ -33,10 +33,9 @@ def test_mixed_durations(make_score) -> None:
     assert features["rhythm_distinct_durations"] == 3
 
 def test_dotted_quarter(make_score) -> None:
-    # dotted quarter (3/8 whole note)
-    notes = [(60, Fraction(3, 8), 0), (62, Fraction(1, 8), 0)]
-    score = make_score(notes)
+    """Test rhythm_dotted_ratio returns None (Category D unsupported feature)."""
+    # 3/8 whole note = 3/2 quarter notes = dotted quarter
+    score = make_score([(60, Fraction(3, 8), 0)])
     features = extract_rhythm_features(score)
 
-    # Check if rhythm_dotted_ratio exists and is > 0
-    assert features.get("rhythm_dotted_ratio", 0.0) > 0.0
+    assert features["rhythm_dotted_ratio"] is None

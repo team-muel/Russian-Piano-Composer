@@ -29,6 +29,7 @@ from russian_piano_composer.features.pitch_features import (
     PITCH_FEATURE_DEFINITIONS,
     extract_pitch_features,
 )
+from russian_piano_composer.features.policy import FeatureExtractionPolicy
 from russian_piano_composer.features.rhythm_features import (
     RHYTHM_FEATURE_DEFINITIONS,
     extract_rhythm_features,
@@ -45,24 +46,27 @@ FEATURE_REGISTRY: tuple[FeatureDefinition, ...] = (
 )
 
 
-
 def extract_piece_features(
     score: CanonicalScore,
     manifest_hash: str,
+    policy: FeatureExtractionPolicy | None = None,
 ) -> PieceFeatureSet:
     """
     Extract all registered features from a single canonical score.
 
-    Returns an immutable PieceFeatureSet with provenance binding.
+    Returns an immutable PieceFeatureSet with provenance and policy binding.
     """
+    if policy is None:
+        policy = FeatureExtractionPolicy()
+
     features: dict[str, float | int | None] = {}
 
-    features.update(extract_pitch_features(score))
-    features.update(extract_interval_features(score))
-    features.update(extract_rhythm_features(score))
-    features.update(extract_contour_features(score))
-    features.update(extract_density_features(score))
-    features.update(extract_meter_features(score))
+    features.update(extract_pitch_features(score, policy=policy))
+    features.update(extract_interval_features(score, policy=policy))
+    features.update(extract_rhythm_features(score, policy=policy))
+    features.update(extract_contour_features(score, policy=policy))
+    features.update(extract_density_features(score, policy=policy))
+    features.update(extract_meter_features(score, policy=policy))
 
     return PieceFeatureSet(
         piece_id=score.piece_id,
@@ -71,6 +75,7 @@ def extract_piece_features(
         features=features,
         manifest_hash=manifest_hash,
         canonical_piece_hash=score.compute_piece_hash(),
+        feature_policy_hash=policy.compute_policy_hash(),
     )
 
 
