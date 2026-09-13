@@ -60,7 +60,7 @@ def test_composer_weights(w1: float, w2: float):
     # Ensure they sum to <= 1.0
     if w1 + w2 > 1.0:
         w1, w2 = w1 / (w1 + w2), w2 / (w1 + w2)
-    w3 = 1.0 - (w1 + w2)
+    w3 = max(0.0, min(1.0, 1.0 - (w1 + w2)))
 
     dna = ThemeDNA(
         0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5,

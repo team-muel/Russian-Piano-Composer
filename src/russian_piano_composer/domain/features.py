@@ -122,6 +122,9 @@ class CorpusFeatureMatrix:
                     "feature_id": fd.feature_id,
                     "provenance": fd.provenance.value,
                     "dtype": fd.dtype,
+                    "validity_category": fd.validity_category,
+                    "comparison_ready": fd.comparison_ready,
+                    "observation_unit": fd.observation_unit,
                 }
                 for fd in sorted_registry
             ],

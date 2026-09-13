@@ -1,17 +1,45 @@
-# Feature Validity Audit V1 (RC-009A-A)
+# Feature Validity Audit V1 (RC-009A-B Corrected & Reconciled)
 
 ## Overview & Scientific Purpose
-This document provides the complete scientific feature semantics and polyphonic validity audit for all 39 registered score features in the **Russian Piano Composer** project.
+This document provides the complete, mechanically reconciled scientific feature semantics and polyphonic validity audit for all 39 registered score features in the **Russian Piano Composer** project.
 
 - **Corpus Manifest Hash**: `cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212`
 - **Canonical Score Schema Version**: `1`
 - **Feature Schema Version**: `2` (`FEATURE_SCHEMA_VERSION = 2`)
 - **Feature Matrix Semantic Hash**: `14b4518c59ce4f9c67df29182945db06c064ca6f7c25a5083cc986acfe6d1755`
-- **Audit Outcome**: 28 Category A (Analysis-Ready), 8 Category B (Usable with Limitation), 1 Category C (Diagnostic Only), 2 Category D (Unsupported/Disabled).
+- **Audit Reconciliation Outcome**: Exactly 39 registered descriptors, 39 emitted matrix columns.
+  - **Category A (Analysis-Ready)**: 32 features
+  - **Category B (Usable with Limitation)**: 5 features
+  - **Category C (Diagnostic Only)**: 1 feature (`contour_arc_score`)
+  - **Category D (Unsupported / Disabled)**: 1 feature (`rhythm_dotted_ratio`)
 
 ---
 
-## 1. Corpus Piece & Row Integrity
+## 1. Feature Set Reconciliation
+
+| Feature Count Type | Definition | Count |
+| :--- | :--- | :---: |
+| **REGISTERED** | Feature descriptors defined in `FEATURE_REGISTRY` | **39** |
+| **EMITTED** | Output feature columns in `corpus_features.parquet` | **39** |
+| **ANALYSIS_READY** | Category A features (free of size/representation confounds) | **32** |
+
+### Category Set Disjointness & Union
+- **`A`**: `{pitch_range_semitones, pitch_mean_midi, pitch_std_midi, pitch_median_midi, pitch_class_entropy, pitch_lowest_midi, pitch_highest_midi, interval_mean_abs_semitones, interval_std_abs_semitones, interval_max_abs_semitones, interval_leap_ratio, interval_step_ratio, interval_direction_change_ratio, interval_unison_ratio, rhythm_duration_mean, rhythm_duration_std, rhythm_duration_median, rhythm_shortest_duration, rhythm_longest_duration, rhythm_duration_range_ratio, contour_ascending_ratio, contour_descending_ratio, contour_repeat_ratio, density_notes_per_quarter, density_rest_ratio, density_grace_note_ratio, density_staff_count, density_voice_count, meter_primary_numerator, meter_primary_denominator, meter_change_count, meter_has_pickup}` (32)
+- **`B`**: `{pitch_class_count, rhythm_distinct_durations, density_notes_per_measure, density_events_per_measure, meter_total_measures}` (5)
+- **`C`**: `{contour_arc_score}` (1)
+- **`D`**: `{rhythm_dotted_ratio}` (1)
+
+$$
+A \cap B = A \cap C = A \cap D = B \cap C = B \cap D = C \cap D = \varnothing
+$$
+
+$$
+|A| + |B| + |C| + |D| = 32 + 5 + 1 + 1 = 39 = |FEATURE\_REGISTRY|
+$$
+
+---
+
+## 2. Corpus Piece & Row Integrity
 - **Total Registered Pieces**: 141
 - **Missing Pieces**: 0
 - **Extra Pieces**: 0
@@ -23,21 +51,6 @@ This document provides the complete scientific feature semantics and polyphonic 
   - `dcml_chopin_mazurkas`: 56
   - `dcml_liszt_annees`: 19
   - `dcml_schumann_kinderszenen`: 13
-
----
-
-## 2. Provenance Taxonomy & Categorization Rules
-
-### Provenance Classes
-- **`OBSERVED`**: Directly computed from canonical score notation (e.g. MIDI note numbers, time signatures).
-- **`DERIVED`**: Computed mathematical statistics derived from observed events (e.g. standard deviation, Shannon entropy).
-- **`ENGINEERING_HEURISTIC`**: Summary heuristic templates or ungrounded inferences (e.g. arch score correlation, dotted ratio guessing).
-
-### Audit Verdict Categories
-- **Category A — Analysis-Ready**: Fully validated, duration/count normalized, free of size/representation confounds.
-- **Category B — Usable with Explicit Limitations**: Valid observable, but contains length or meter confounds requiring explicit normalization before direct group comparison.
-- **Category C — Retained as Diagnostic Only**: Heuristic metric retained for exploratory diagnosis, but not comparison-ready for style inference.
-- **Category D — Unsupported / Disabled**: Feature cannot be derived from canonical score schema v1 without ungrounded guessing. Set to `null`.
 
 ---
 
@@ -84,11 +97,3 @@ This document provides the complete scientific feature semantics and polyphonic 
 | `meter_change_count` | Meter | count | Adjacent meter change count | whole_piece | unweighted | N/A | N/A | N/A | OBSERVED | **Category A** | `true` | Metric instability |
 | `meter_has_pickup` | Meter | boolean | First measure is pickup (0 or 1) | whole_piece | unweighted | N/A | N/A | N/A | OBSERVED | **Category A** | `true` | Anacrusis structure |
 | `meter_total_measures` | Meter | count | Measure count | whole_piece | unweighted | N/A | N/A | N/A | OBSERVED | **Category B** | `false` | Piece length confound |
-
----
-
-## 4. Category Breakdown
-- **Category A (Analysis-Ready)**: 28 features
-- **Category B (Usable with Limitation)**: 8 features
-- **Category C (Diagnostic Only)**: 1 feature (`contour_arc_score`)
-- **Category D (Unsupported / Disabled)**: 2 features (`rhythm_dotted_ratio`, `rhythm_tuplet_ratio`)

@@ -651,3 +651,93 @@ def test_voice_permutation_invariance() -> None:
     iv_perm = extract_interval_features(score_perm)
 
     assert iv_orig == iv_perm
+
+
+def test_global_transposition_invariance() -> None:
+    """Global Transposition Invariance — Transposing pitches preserves relative interval, contour, rhythm, density, meter."""
+    measures_base = (
+        CanonicalMeasure(
+            piece_id="test:base",
+            measure_index=0,
+            source_measure_label="1",
+            global_onset=Fraction(0),
+            actual_duration=Fraction(1),
+            time_signature=TimeSignature(4, 4),
+            expected_duration=Fraction(1),
+        ),
+    )
+    measures_trans = (
+        CanonicalMeasure(
+            piece_id="test:trans",
+            measure_index=0,
+            source_measure_label="1",
+            global_onset=Fraction(0),
+            actual_duration=Fraction(1),
+            time_signature=TimeSignature(4, 4),
+            expected_duration=Fraction(1),
+        ),
+    )
+    evs_base = [
+        CanonicalScoreEvent(piece_id="test:base", event_id="1", event_index=0, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(0), offset_in_measure=Fraction(0), duration=Fraction(1, 4), pitch=_make_pitch(60), midi=60),
+        CanonicalScoreEvent(piece_id="test:base", event_id="2", event_index=1, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(1, 4), offset_in_measure=Fraction(1, 4), duration=Fraction(1, 4), pitch=_make_pitch(64), midi=64),
+        CanonicalScoreEvent(piece_id="test:base", event_id="3", event_index=2, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(2, 4), offset_in_measure=Fraction(2, 4), duration=Fraction(1, 4), pitch=_make_pitch(67), midi=67),
+    ]
+    evs_base.sort(key=lambda e: (e.global_onset, e.measure_index, e.staff, e.voice, e.event_kind.value, e.event_index))
+    score_base = CanonicalScore(piece_id="test:base", corpus_id="test", corpus_role=CorpusRole.GENERATIVE_RUSSIAN, score_entry_id="base", composer="T", title="T", source_repository="t", source_commit="a"*40, source_relative_path="a.mscx", source_sha256="0"*64, manifest_hash="b"*64, parser_version="1.0", measures=measures_base, events=tuple(evs_base))
+
+    # Transposed +7 semitones (perfect 5th up)
+    evs_trans = [
+        CanonicalScoreEvent(piece_id="test:trans", event_id="1", event_index=0, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(0), offset_in_measure=Fraction(0), duration=Fraction(1, 4), pitch=_make_pitch(67), midi=67),
+        CanonicalScoreEvent(piece_id="test:trans", event_id="2", event_index=1, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(1, 4), offset_in_measure=Fraction(1, 4), duration=Fraction(1, 4), pitch=_make_pitch(71), midi=71),
+        CanonicalScoreEvent(piece_id="test:trans", event_id="3", event_index=2, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(2, 4), offset_in_measure=Fraction(2, 4), duration=Fraction(1, 4), pitch=_make_pitch(74), midi=74),
+    ]
+    evs_trans.sort(key=lambda e: (e.global_onset, e.measure_index, e.staff, e.voice, e.event_kind.value, e.event_index))
+    score_trans = CanonicalScore(piece_id="test:trans", corpus_id="test", corpus_role=CorpusRole.GENERATIVE_RUSSIAN, score_entry_id="trans", composer="T", title="T", source_repository="t", source_commit="a"*40, source_relative_path="a.mscx", source_sha256="0"*64, manifest_hash="b"*64, parser_version="1.0", measures=measures_trans, events=tuple(evs_trans))
+
+    iv_base = extract_interval_features(score_base)
+    iv_trans = extract_interval_features(score_trans)
+    c_base = extract_contour_features(score_base)
+    c_trans = extract_contour_features(score_trans)
+
+    assert iv_base == iv_trans
+    assert c_base == c_trans
+
+
+def test_event_record_order_invariance() -> None:
+    """Event Record Order Invariance — Sorting order of events in canonical score constructor preserves scientific results."""
+    measures_a = (
+        CanonicalMeasure(
+            piece_id="test:ord_a",
+            measure_index=0,
+            source_measure_label="1",
+            global_onset=Fraction(0),
+            actual_duration=Fraction(1),
+            time_signature=TimeSignature(4, 4),
+            expected_duration=Fraction(1),
+        ),
+    )
+    measures_b = (
+        CanonicalMeasure(
+            piece_id="test:ord_b",
+            measure_index=0,
+            source_measure_label="1",
+            global_onset=Fraction(0),
+            actual_duration=Fraction(1),
+            time_signature=TimeSignature(4, 4),
+            expected_duration=Fraction(1),
+        ),
+    )
+    # Event 1 at onset 0, Event 2 at onset 1/2
+    e1_a = CanonicalScoreEvent(piece_id="test:ord_a", event_id="1", event_index=0, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(0), offset_in_measure=Fraction(0), duration=Fraction(1, 2), pitch=_make_pitch(60), midi=60)
+    e2_a = CanonicalScoreEvent(piece_id="test:ord_a", event_id="2", event_index=1, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(1, 2), offset_in_measure=Fraction(1, 2), duration=Fraction(1, 2), pitch=_make_pitch(64), midi=64)
+
+    e1_b = CanonicalScoreEvent(piece_id="test:ord_b", event_id="1", event_index=0, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(0), offset_in_measure=Fraction(0), duration=Fraction(1, 2), pitch=_make_pitch(60), midi=60)
+    e2_b = CanonicalScoreEvent(piece_id="test:ord_b", event_id="2", event_index=1, event_kind=EventKind.NOTE, measure_index=0, source_measure_label="1", staff=1, voice=1, global_onset=Fraction(1, 2), offset_in_measure=Fraction(1, 2), duration=Fraction(1, 2), pitch=_make_pitch(64), midi=64)
+
+    score_a = CanonicalScore(piece_id="test:ord_a", corpus_id="test", corpus_role=CorpusRole.GENERATIVE_RUSSIAN, score_entry_id="ord_a", composer="T", title="T", source_repository="t", source_commit="a"*40, source_relative_path="a.mscx", source_sha256="0"*64, manifest_hash="b"*64, parser_version="1.0", measures=measures_a, events=(e1_a, e2_a))
+    score_b = CanonicalScore(piece_id="test:ord_b", corpus_id="test", corpus_role=CorpusRole.GENERATIVE_RUSSIAN, score_entry_id="ord_b", composer="T", title="T", source_repository="t", source_commit="a"*40, source_relative_path="a.mscx", source_sha256="0"*64, manifest_hash="b"*64, parser_version="1.0", measures=measures_b, events=(e1_b, e2_b))
+
+    p_a = extract_pitch_features(score_a)
+    p_b = extract_pitch_features(score_b)
+
+    assert p_a == p_b
