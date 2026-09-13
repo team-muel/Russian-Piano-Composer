@@ -1,63 +1,113 @@
 """
-Melodic contour feature extractor.
+Melodic contour feature extractor (v2 polyphonic voice-aware).
 
 Computes Parsons contour code statistics and arch-shape correlation
-from staff-1/voice-1 NOTE events.
-All features are OBSERVED provenance.
+from voice-partitioned single-note NOTE attack sequences.
+All features are OBSERVED provenance (arc_score is categorized C / ENGINEERING_HEURISTIC).
 """
 import math
+from collections import defaultdict
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from fractions import Fraction
 
 from russian_piano_composer.domain.features import FeatureDefinition, FeatureProvenance
-from russian_piano_composer.domain.score import CanonicalScore, EventKind
+from russian_piano_composer.domain.score import (
+    CanonicalScore,
+    CanonicalScoreEvent,
+    EventKind,
+    TieState,
+)
 
 CONTOUR_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
         feature_id="contour_ascending_ratio",
         name="Ascending Contour Ratio",
-        description="Fraction of Parsons U (up) transitions in melody",
+        description="Fraction of Parsons U (up) transitions in eligible monophonic voice streams",
         provenance=FeatureProvenance.OBSERVED,
         unit="ratio",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="voice_transition",
     ),
     FeatureDefinition(
         feature_id="contour_descending_ratio",
         name="Descending Contour Ratio",
-        description="Fraction of Parsons D (down) transitions in melody",
+        description="Fraction of Parsons D (down) transitions in eligible monophonic voice streams",
         provenance=FeatureProvenance.OBSERVED,
         unit="ratio",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="voice_transition",
     ),
     FeatureDefinition(
         feature_id="contour_repeat_ratio",
         name="Repeat Contour Ratio",
-        description="Fraction of Parsons R (repeat/same pitch) transitions in melody",
+        description="Fraction of Parsons R (repeat/same pitch) transitions in eligible monophonic voice streams",
         provenance=FeatureProvenance.OBSERVED,
         unit="ratio",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="voice_transition",
     ),
     FeatureDefinition(
         feature_id="contour_arc_score",
         name="Arch Contour Score",
-        description="Pearson correlation of pitch sequence with ideal arch shape (rise-then-fall)",
-        provenance=FeatureProvenance.OBSERVED,
+        description="Pearson correlation of top-voice pitch sequence with ideal arch shape (rise-then-fall)",
+        provenance=FeatureProvenance.ENGINEERING_HEURISTIC,
         unit="correlation",
         dtype="float",
+        comparison_ready=False,
+        validity_category="C",
+        observation_unit="whole_piece",
     ),
 )
 
 
-def _extract_melody_midi(score: CanonicalScore) -> list[int]:
-    """Extract MIDI values from staff-1/voice-1 NOTE events, sorted by onset."""
-    melody_events = [
-        e for e in score.events
-        if e.event_kind == EventKind.NOTE
-        and e.staff == 1
-        and e.voice == 1
-        and e.midi is not None
-    ]
-    melody_events.sort(key=lambda e: (e.global_onset, e.event_index))
-    # midi is guaranteed non-None by the filter above
-    return [e.midi for e in melody_events if e.midi is not None]
+def _extract_voice_monophonic_pitch_sequence(score: CanonicalScore) -> list[int]:
+    """
+    Extract eligible monophonic pitch sequences across voice streams.
+    """
+    voice_events: dict[tuple[int, int], list[CanonicalScoreEvent]] = defaultdict(list)
+    for e in score.events:
+        if (
+            e.event_kind == EventKind.NOTE
+            and not e.is_grace
+            and e.tie_state not in (TieState.CONTINUE, TieState.STOP)
+            and e.midi is not None
+        ):
+            voice_events[(e.staff, e.voice)].append(e)
+
+    # For arch score: extract top-voice (staff 1, lowest voice number) single-note sequence
+    top_voice_key = None
+    if voice_events:
+        staff1_keys = [k for k in voice_events if k[0] == 1]
+        if staff1_keys:
+            top_voice_key = min(staff1_keys, key=lambda k: k[1])
+        else:
+            top_voice_key = min(voice_events.keys())
+
+    if top_voice_key is None:
+        return []
+
+    events = voice_events[top_voice_key]
+    onset_groups: dict[Fraction, list[int]] = defaultdict(list)
+    for e in events:
+        if e.midi is not None:
+            onset_groups[e.global_onset].append(e.midi)
+
+    sorted_onsets = sorted(onset_groups.keys())
+    top_sequence = []
+    for on in sorted_onsets:
+        group = onset_groups[on]
+        if len(group) == 1:
+            top_sequence.append(group[0])
+
+    return top_sequence
 
 
 def _pearson_correlation(x: list[float], y: list[float]) -> float:
@@ -80,41 +130,37 @@ def _pearson_correlation(x: list[float], y: list[float]) -> float:
 
 
 def extract_contour_features(score: CanonicalScore) -> dict[str, float | int | None]:
-    """Extract melodic contour statistics from staff-1/voice-1."""
-    midi_seq = _extract_melody_midi(score)
+    """Extract melodic contour statistics using voice-aware monophonic streams."""
+    from russian_piano_composer.features.interval_features import (
+        _extract_voice_monophonic_intervals,
+    )
 
-    if len(midi_seq) < 2:
+    intervals = _extract_voice_monophonic_intervals(score)
+
+    if not intervals:
         return {fd.feature_id: None for fd in CONTOUR_FEATURE_DEFINITIONS}
 
-    # Parsons contour code
-    n_transitions = len(midi_seq) - 1
-    up_count = 0
-    down_count = 0
-    repeat_count = 0
+    n_transitions = len(intervals)
+    up_count = sum(1 for iv in intervals if iv > 0)
+    down_count = sum(1 for iv in intervals if iv < 0)
+    repeat_count = sum(1 for iv in intervals if iv == 0)
 
-    for i in range(n_transitions):
-        diff = midi_seq[i + 1] - midi_seq[i]
-        if diff > 0:
-            up_count += 1
-        elif diff < 0:
-            down_count += 1
-        else:
-            repeat_count += 1
+    # Arch score: correlation of top voice sequence with ideal arch shape
+    top_seq = _extract_voice_monophonic_pitch_sequence(score)
+    n_top = len(top_seq)
 
-    # Arch score: correlation with ideal arch shape
-    # Ideal arch: linearly rises to midpoint then linearly falls
-    n = len(midi_seq)
-    arch_template = []
-    for i in range(n):
-        # Normalized position [0, 1]
-        t = i / (n - 1) if n > 1 else 0.5
-        # Arch: peaks at t=0.5
-        arch_template.append(1.0 - abs(2.0 * t - 1.0))
+    if n_top >= 2:
+        arch_template = []
+        for i in range(n_top):
+            t = i / (n_top - 1) if n_top > 1 else 0.5
+            arch_template.append(1.0 - abs(2.0 * t - 1.0))
 
-    arc_score = _pearson_correlation(
-        [float(m) for m in midi_seq],
-        arch_template,
-    )
+        arc_score = _pearson_correlation(
+            [float(m) for m in top_seq],
+            arch_template,
+        )
+    else:
+        arc_score = 0.0
 
     return {
         "contour_ascending_ratio": round(up_count / n_transitions, 4),

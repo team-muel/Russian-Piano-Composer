@@ -76,6 +76,10 @@ def test_feature_registry_completeness() -> None:
 
 
 def test_feature_registry_provenance() -> None:
-    """Test all features in FEATURE_REGISTRY have OBSERVED provenance."""
+    """Verify registry provenance classifications are valid FeatureProvenance enum values."""
     for fd in FEATURE_REGISTRY:
-        assert fd.provenance == FeatureProvenance.OBSERVED
+        assert isinstance(fd.provenance, FeatureProvenance)
+        if fd.feature_id in ("contour_arc_score", "rhythm_dotted_ratio"):
+            assert fd.provenance == FeatureProvenance.ENGINEERING_HEURISTIC
+        else:
+            assert fd.provenance == FeatureProvenance.OBSERVED

@@ -1,34 +1,26 @@
 """
-Rhythmic duration statistics feature extractor.
+Rhythmic duration statistics feature extractor (v2 polyphonic-audited).
 
-Computes per-piece duration distribution features from NOTE events.
-Durations are expressed in quarter-note units (Fraction value * 4 when denominator is in whole notes).
+Computes per-piece duration distribution features from non-grace NOTE attacks.
+Excludes unsupported notation-derived dotted/tuplet ratio features.
 All features are OBSERVED provenance.
 """
 import math
-from fractions import Fraction
 
 from russian_piano_composer.domain.features import FeatureDefinition, FeatureProvenance
-from russian_piano_composer.domain.score import CanonicalScore, EventKind
-
-# Standard simple dotted durations in quarter-note units
-_DOTTED_VALUES: frozenset[Fraction] = frozenset({
-    Fraction(3, 2),   # dotted quarter
-    Fraction(3, 1),   # dotted half
-    Fraction(3, 4),   # dotted eighth
-    Fraction(3, 8),   # dotted sixteenth
-    Fraction(6, 1),   # dotted whole
-    Fraction(3, 16),  # dotted thirty-second
-})
+from russian_piano_composer.domain.score import CanonicalScore, EventKind, TieState
 
 RHYTHM_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
         feature_id="rhythm_duration_mean",
         name="Mean Note Duration",
-        description="Arithmetic mean of note durations in quarter-note units",
+        description="Arithmetic mean of non-grace note durations in quarter-note units",
         provenance=FeatureProvenance.OBSERVED,
         unit="quarter_notes",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="note_attack",
     ),
     FeatureDefinition(
         feature_id="rhythm_duration_std",
@@ -37,6 +29,9 @@ RHYTHM_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
         provenance=FeatureProvenance.OBSERVED,
         unit="quarter_notes",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="note_attack",
     ),
     FeatureDefinition(
         feature_id="rhythm_duration_median",
@@ -45,38 +40,53 @@ RHYTHM_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
         provenance=FeatureProvenance.OBSERVED,
         unit="quarter_notes",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="note_attack",
     ),
     FeatureDefinition(
         feature_id="rhythm_distinct_durations",
         name="Distinct Duration Count",
-        description="Number of distinct duration values observed",
+        description="Number of distinct non-grace duration values observed",
         provenance=FeatureProvenance.OBSERVED,
         unit="count",
         dtype="int",
+        comparison_ready=False,
+        validity_category="B",
+        observation_unit="note_attack",
     ),
     FeatureDefinition(
         feature_id="rhythm_dotted_ratio",
-        name="Dotted Note Ratio",
-        description="Fraction of notes whose duration matches a standard dotted value",
-        provenance=FeatureProvenance.OBSERVED,
+        name="Dotted Note Ratio (Unsupported)",
+        description="Disabled: Notation dot metadata is not preserved in canonical score schema v1",
+        provenance=FeatureProvenance.ENGINEERING_HEURISTIC,
         unit="ratio",
         dtype="float",
+        comparison_ready=False,
+        validity_category="D",
+        observation_unit="note_attack",
     ),
     FeatureDefinition(
         feature_id="rhythm_shortest_duration",
         name="Shortest Duration",
-        description="Minimum note duration in quarter-note units",
+        description="Minimum non-grace note duration in quarter-note units",
         provenance=FeatureProvenance.OBSERVED,
         unit="quarter_notes",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="note_attack",
     ),
     FeatureDefinition(
         feature_id="rhythm_longest_duration",
         name="Longest Duration",
-        description="Maximum note duration in quarter-note units",
+        description="Maximum non-grace note duration in quarter-note units",
         provenance=FeatureProvenance.OBSERVED,
         unit="quarter_notes",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="note_attack",
     ),
     FeatureDefinition(
         feature_id="rhythm_duration_range_ratio",
@@ -85,34 +95,29 @@ RHYTHM_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
         provenance=FeatureProvenance.OBSERVED,
         unit="ratio",
         dtype="float",
+        comparison_ready=True,
+        validity_category="A",
+        observation_unit="note_attack",
     ),
 )
 
 
-def _duration_to_quarter_notes(dur: Fraction) -> Fraction:
-    """
-    Convert a duration from whole-note units to quarter-note units.
-
-    In the CanonicalScore, durations are stored as fractions of a whole note.
-    A quarter note = Fraction(1, 4) whole notes.
-    To convert to quarter-note units: multiply by 4.
-    """
-    return dur * 4
-
-
 def extract_rhythm_features(score: CanonicalScore) -> dict[str, float | int | None]:
-    """Extract rhythmic duration statistics from a canonical score."""
+    """Extract rhythmic duration statistics from non-grace note attacks."""
     note_durations_raw = [
         e.duration for e in score.events
-        if e.event_kind == EventKind.NOTE and not e.is_grace
+        if e.event_kind == EventKind.NOTE
+        and not e.is_grace
+        and e.tie_state not in (TieState.CONTINUE, TieState.STOP)
     ]
 
     if not note_durations_raw:
-        return {fd.feature_id: None for fd in RHYTHM_FEATURE_DEFINITIONS}
+        res: dict[str, float | int | None] = {fd.feature_id: None for fd in RHYTHM_FEATURE_DEFINITIONS}
+        res["rhythm_dotted_ratio"] = None
+        return res
 
-    # Convert to quarter-note units
-    durations = [_duration_to_quarter_notes(d) for d in note_durations_raw]
-
+    # Convert whole-note Fraction to quarter-note units (* 4)
+    durations = [d * 4 for d in note_durations_raw]
     n = len(durations)
     dur_floats = [float(d) for d in durations]
 
@@ -129,8 +134,6 @@ def extract_rhythm_features(score: CanonicalScore) -> dict[str, float | int | No
     distinct = len(set(durations))
     shortest = min(dur_floats)
     longest = max(dur_floats)
-
-    dotted_count = sum(1 for d in durations if d in _DOTTED_VALUES)
     range_ratio = longest / shortest if shortest > 0 else 0.0
 
     return {
@@ -138,7 +141,7 @@ def extract_rhythm_features(score: CanonicalScore) -> dict[str, float | int | No
         "rhythm_duration_std": round(std, 4),
         "rhythm_duration_median": round(median, 4),
         "rhythm_distinct_durations": distinct,
-        "rhythm_dotted_ratio": round(dotted_count / n, 4),
+        "rhythm_dotted_ratio": None,  # Explicitly disabled Category D feature
         "rhythm_shortest_duration": round(shortest, 4),
         "rhythm_longest_duration": round(longest, 4),
         "rhythm_duration_range_ratio": round(range_ratio, 4),

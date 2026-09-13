@@ -10,7 +10,7 @@ from dataclasses import dataclass
 from enum import StrEnum
 from typing import Any
 
-FEATURE_SCHEMA_VERSION: int = 1
+FEATURE_SCHEMA_VERSION: int = 2
 
 
 class FeatureProvenance(StrEnum):
@@ -34,6 +34,9 @@ class FeatureDefinition:
     provenance: FeatureProvenance
     unit: str
     dtype: str
+    comparison_ready: bool = True
+    validity_category: str = "A"
+    observation_unit: str = "note_attack"
 
     def __post_init__(self) -> None:
         if not self.feature_id or not self.feature_id.strip():
