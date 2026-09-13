@@ -48,6 +48,46 @@ class FeatureDefinition:
                 f"provenance must be a FeatureProvenance enum, got {type(self.provenance).__name__}."
             )
 
+    def compute_semantic_hash(self) -> str:
+        """Deterministic SHA-256 hash of descriptor scientific semantics."""
+        canonical = {
+            "feature_id": self.feature_id,
+            "name": self.name,
+            "provenance": self.provenance.value,
+            "unit": self.unit,
+            "dtype": self.dtype,
+            "comparison_ready": self.comparison_ready,
+            "validity_category": self.validity_category,
+            "observation_unit": self.observation_unit,
+        }
+        encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()
+
+
+def compute_schema_semantic_hash(registry: tuple[FeatureDefinition, ...]) -> str:
+    """
+    Deterministic SHA-256 hash of the complete feature schema registry descriptors.
+    """
+    sorted_reg = sorted(registry, key=lambda f: f.feature_id)
+    canonical = {
+        "version": FEATURE_SCHEMA_VERSION,
+        "descriptors": [
+            {
+                "feature_id": fd.feature_id,
+                "name": fd.name,
+                "provenance": fd.provenance.value,
+                "unit": fd.unit,
+                "dtype": fd.dtype,
+                "comparison_ready": fd.comparison_ready,
+                "validity_category": fd.validity_category,
+                "observation_unit": fd.observation_unit,
+            }
+            for fd in sorted_reg
+        ],
+    }
+    encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
 
 @dataclass(frozen=True, slots=True)
 class PieceFeatureSet:
@@ -112,14 +152,15 @@ class CorpusFeatureMatrix:
     def compute_matrix_hash(self) -> str:
         """
         Deterministic SHA-256 hash of the feature matrix for reproducibility tracking.
-        Includes feature extraction policy identity.
+        Includes feature extraction policy identity and schema semantic fingerprint.
         """
         sorted_pieces = sorted(self.pieces, key=lambda p: p.piece_id)
-        sorted_registry = sorted(self.feature_registry, key=lambda f: f.feature_id)
+        schema_hash = compute_schema_semantic_hash(self.feature_registry)
 
         canonical: dict[str, Any] = {
             "manifest_hash": self.manifest_hash,
             "feature_schema_version": self.feature_schema_version,
+            "feature_schema_semantic_hash": schema_hash,
             "feature_policy_hash": self.feature_policy_hash,
             "registry": [
                 {
@@ -130,7 +171,7 @@ class CorpusFeatureMatrix:
                     "comparison_ready": fd.comparison_ready,
                     "observation_unit": fd.observation_unit,
                 }
-                for fd in sorted_registry
+                for fd in sorted(self.feature_registry, key=lambda f: f.feature_id)
             ],
             "pieces": [
                 {

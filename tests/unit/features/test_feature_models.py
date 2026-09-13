@@ -111,3 +111,21 @@ def test_matrix_hash_policy_sensitivity() -> None:
     assert policy1.compute_policy_hash() != policy2.compute_policy_hash()
     assert matrix1.compute_matrix_hash() != matrix2.compute_matrix_hash()
 
+
+def test_matrix_hash_schema_semantic_sensitivity() -> None:
+    """Verify that mutating feature schema category or semantics alters schema and matrix hashes."""
+    from russian_piano_composer.domain.features import compute_schema_semantic_hash
+
+    pfs1 = PieceFeatureSet("t:1", "t", "r", {"a": 1.0}, "hash1", "cp1")
+    fd1 = FeatureDefinition("a", "A", "desc", FeatureProvenance.OBSERVED, "unit", "float", validity_category="A")
+    fd2 = FeatureDefinition("a", "A", "desc", FeatureProvenance.OBSERVED, "unit", "float", validity_category="B")
+
+    hash1 = compute_schema_semantic_hash((fd1,))
+    hash2 = compute_schema_semantic_hash((fd2,))
+    assert hash1 != hash2
+
+    matrix1 = CorpusFeatureMatrix(pieces=(pfs1,), manifest_hash="hash1", feature_registry=(fd1,))
+    matrix2 = CorpusFeatureMatrix(pieces=(pfs1,), manifest_hash="hash1", feature_registry=(fd2,))
+    assert matrix1.compute_matrix_hash() != matrix2.compute_matrix_hash()
+
+
