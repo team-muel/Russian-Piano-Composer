@@ -39,19 +39,18 @@ def main() -> None:
     eligible_count = 0
     ineligible_count = 0
 
+    expected_piece_count = sum(len(s.score_entry_ids) for s in manifest.sources)
+    if expected_piece_count != 141:
+        raise RuntimeError(f"Corpus manifest error: Expected 141 total score entries, got {expected_piece_count}")
+
     for source in manifest.sources:
         corpus_dir = interim_base / source.corpus_id
         if not corpus_dir.exists():
-            continue
+            raise FileNotFoundError(f"Corpus directory not found for {source.corpus_id}: {corpus_dir}")
 
         for entry_id in source.score_entry_ids:
             piece_id = f"{source.corpus_id}:{entry_id}"
-            try:
-                score = load_canonical_score_from_parquet(corpus_dir, piece_id)
-            except Exception as e:
-                print(f"Warning: Failed to load {piece_id}: {e}")
-                continue
-
+            score = load_canonical_score_from_parquet(corpus_dir, piece_id)
             disc_res = discover_ctus_for_score(score, manifest_hash=manifest_hash, policy=policy)
             discovery_results.append(disc_res)
 
@@ -62,6 +61,9 @@ def main() -> None:
                 total_retained_ctus += len(disc_res.retained_ctus)
             else:
                 ineligible_count += 1
+
+    if len(discovery_results) != 141:
+        raise RuntimeError(f"FAIL CLOSED: Scanned {len(discovery_results)} pieces, expected exactly 141")
 
     summary = {
         "manifest_hash": manifest_hash,

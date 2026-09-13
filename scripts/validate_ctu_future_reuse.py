@@ -38,21 +38,24 @@ def main() -> None:
     scores_by_id = {}
     discovery_results = []
 
+    expected_piece_count = sum(len(s.score_entry_ids) for s in manifest.sources)
+    if expected_piece_count != 141:
+        raise RuntimeError(f"Corpus manifest error: Expected 141 total score entries, got {expected_piece_count}")
+
     for source in manifest.sources:
         corpus_dir = interim_base / source.corpus_id
         if not corpus_dir.exists():
-            continue
+            raise FileNotFoundError(f"Corpus directory not found for {source.corpus_id}: {corpus_dir}")
 
         for entry_id in source.score_entry_ids:
             piece_id = f"{source.corpus_id}:{entry_id}"
-            try:
-                score = load_canonical_score_from_parquet(corpus_dir, piece_id)
-                scores_by_id[piece_id] = score
-                disc_res = discover_ctus_for_score(score, manifest_hash=manifest_hash, policy=disc_policy)
-                discovery_results.append(disc_res)
-            except Exception as e:
-                print(f"Warning: Failed processing {piece_id}: {e}")
-                continue
+            score = load_canonical_score_from_parquet(corpus_dir, piece_id)
+            scores_by_id[piece_id] = score
+            disc_res = discover_ctus_for_score(score, manifest_hash=manifest_hash, policy=disc_policy)
+            discovery_results.append(disc_res)
+
+    if len(discovery_results) != 141:
+        raise RuntimeError(f"FAIL CLOSED: Processed {len(discovery_results)} pieces, expected exactly 141")
 
     val_result = validate_ctu_future_reuse(
         scores_by_id=scores_by_id,
@@ -66,6 +69,8 @@ def main() -> None:
         "manifest_hash": val_result.manifest_hash,
         "discovery_policy_hash": val_result.discovery_policy_hash,
         "validation_policy_hash": val_result.validation_policy_hash,
+        "candidate_set_hash": val_result.candidate_set_hash,
+        "validation_result_hash": val_result.compute_validation_result_hash(),
         "total_pieces": val_result.total_pieces,
         "eligible_pieces": val_result.eligible_pieces,
         "ineligible_pieces": val_result.ineligible_pieces,

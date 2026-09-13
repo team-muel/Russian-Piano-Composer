@@ -20,11 +20,13 @@ class CTUDiscoveryPolicy:
     nms_overlap_threshold: float = 0.50       # Non-maximum suppression Jaccard overlap threshold
     max_retained_ctus: int = 5                # Top N CTUs retained per piece
     min_event_count: int = 3                  # Minimum note attacks required in a candidate segment
+    evidence_threshold_e1: float = 0.30       # Minimum discovery recurrence score for E1 tier promotion
 
     # Heuristic similarity weights (classified as ENGINEERING_HEURISTIC)
     weight_melodic: float = 0.40
     weight_rhythmic: float = 0.30
-    weight_texture: float = 0.30
+    weight_texture: float = 0.15
+    weight_pitchclass: float = 0.15
 
     def compute_policy_hash(self) -> str:
         """Deterministic SHA-256 hash of discovery policy semantics."""
@@ -36,9 +38,11 @@ class CTUDiscoveryPolicy:
             "nms_overlap_threshold": self.nms_overlap_threshold,
             "max_retained_ctus": self.max_retained_ctus,
             "min_event_count": self.min_event_count,
+            "evidence_threshold_e1": self.evidence_threshold_e1,
             "weight_melodic": self.weight_melodic,
             "weight_rhythmic": self.weight_rhythmic,
             "weight_texture": self.weight_texture,
+            "weight_pitchclass": self.weight_pitchclass,
         }
         encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()

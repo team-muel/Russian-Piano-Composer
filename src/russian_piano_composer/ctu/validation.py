@@ -13,6 +13,7 @@ from russian_piano_composer.ctu.models import (
     PieceValidationRecord,
     SegmentPosition,
     SegmentSpan,
+    compute_candidate_set_hash,
 )
 from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy, CTUValidationPolicy
 from russian_piano_composer.ctu.representation import extract_segment_representation
@@ -152,23 +153,28 @@ def validate_ctu_future_reuse(
     positive_count = sum(1 for d in diffs if d > 0)
     positive_fraction = positive_count / eligible_count
 
-    # Cohen's d for paired differences
-    var_diff = sum((d - mean_diff) ** 2 for d in diffs) / eligible_count if eligible_count > 1 else 0.0
-    std_diff = math.sqrt(var_diff)
-    cohens_d = mean_diff / std_diff if std_diff > 0 else 0.0
+    # Paired Cohen's dz using sample SD (n - 1)
+    if eligible_count > 1:
+        var_diff = sum((d - mean_diff) ** 2 for d in diffs) / (eligible_count - 1)
+        std_diff = math.sqrt(var_diff)
+        cohens_d = mean_diff / std_diff if std_diff > 0 else 0.0
+    else:
+        cohens_d = 0.0
 
-    # Paired permutation test (10,000 iterations)
+    # True two-sided paired sign-flip permutation test (10,000 iterations)
     ctx = RandomContext(root_seed=val_policy.random_seed)
     perm_rng = ctx.child("permutation_test").python_rng()
 
+    observed_abs_mean = abs(mean_diff)
     extreme_count = 0
     for _ in range(val_policy.permutation_iterations):
         perm_diffs = [d if perm_rng.random() < 0.5 else -d for d in diffs]
         perm_mean = sum(perm_diffs) / eligible_count
-        if perm_mean >= mean_diff:
+        if abs(perm_mean) >= observed_abs_mean:
             extreme_count += 1
 
-    permutation_p = extreme_count / val_policy.permutation_iterations
+    # Monte Carlo correction p-value: never 0.0000
+    permutation_p = (extreme_count + 1) / (val_policy.permutation_iterations + 1)
 
     # Bootstrap 95% Confidence Interval for mean difference
     boot_rng = ctx.child("bootstrap_ci").python_rng()
@@ -191,6 +197,8 @@ def validate_ctu_future_reuse(
     else:
         status = EmpiricalCTUStatus.CTU_INCONCLUSIVE
 
+    cand_set_hash = compute_candidate_set_hash(discovery_results)
+
     return CTUValidationResult(
         total_pieces=total_pieces,
         eligible_pieces=eligible_count,
@@ -208,4 +216,5 @@ def validate_ctu_future_reuse(
         manifest_hash=manifest_hash,
         discovery_policy_hash=disc_hash,
         validation_policy_hash=val_hash,
+        candidate_set_hash=cand_set_hash,
     )

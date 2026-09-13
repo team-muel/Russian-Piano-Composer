@@ -3,37 +3,86 @@ Symbolic similarity metrics and recurrence evidence calculation.
 """
 
 import math
-from typing import Any
+from collections import Counter
+from collections.abc import Sequence
+from typing import TypeVar
 
 from russian_piano_composer.ctu.models import SegmentRepresentation, SegmentSpan
 from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy
 
+T = TypeVar("T")
 
-def _sequence_jaccard_similarity(seq1: tuple[Any, ...], seq2: tuple[Any, ...]) -> float:
-    """Compute Jaccard similarity over n-gram multiset tokens."""
+
+def compute_ordered_ngram_multiset_similarity[T](
+    seq1: Sequence[T],
+    seq2: Sequence[T],
+    n: int = 2,
+) -> float | None:
+    """
+    Compute multiset Jaccard similarity over ordered n-gram tuple tokens.
+    Returns None if neither sequence has enough elements to form an n-gram.
+    """
+    if len(seq1) < n and len(seq2) < n:
+        return None
+
+    if len(seq1) < n or len(seq2) < n:
+        return 0.0
+
+    ngrams1 = [tuple(seq1[i : i + n]) for i in range(len(seq1) - n + 1)]
+    ngrams2 = [tuple(seq2[i : i + n]) for i in range(len(seq2) - n + 1)]
+
+    c1 = Counter(ngrams1)
+    c2 = Counter(ngrams2)
+
+    all_keys = set(c1.keys()) | set(c2.keys())
+    intersection_count = sum(min(c1[k], c2[k]) for k in all_keys)
+    union_count = sum(max(c1[k], c2[k]) for k in all_keys)
+
+    return intersection_count / union_count if union_count > 0 else 0.0
+
+
+def compute_sequence_multiset_similarity[T](
+    seq1: Sequence[T],
+    seq2: Sequence[T],
+) -> float | None:
+    """
+    Compute multiset Jaccard similarity over sequence elements or 2-grams when length >= 2.
+    Returns None if both sequences are empty.
+    """
     if not seq1 and not seq2:
-        return 1.0
+        return None
+
     if not seq1 or not seq2:
         return 0.0
 
-    s1 = set(seq1)
-    s2 = set(seq2)
-    intersection = len(s1 & s2)
-    union = len(s1 | s2)
-    return intersection / union if union > 0 else 0.0
+    # Try 2-grams first if possible
+    sim2 = compute_ordered_ngram_multiset_similarity(seq1, seq2, n=2)
+    if sim2 is not None:
+        return sim2
+
+    # Fallback to 1-gram multiset Jaccard for single-element sequences
+    c1 = Counter(seq1)
+    c2 = Counter(seq2)
+    all_keys = set(c1.keys()) | set(c2.keys())
+    intersection_count = sum(min(c1[k], c2[k]) for k in all_keys)
+    union_count = sum(max(c1[k], c2[k]) for k in all_keys)
+    return intersection_count / union_count if union_count > 0 else 0.0
 
 
-def _cosine_similarity(vec1: tuple[int, ...], vec2: tuple[int, ...]) -> float:
-    """Compute cosine similarity between two equal-length numeric vectors."""
+def _cosine_similarity(vec1: Sequence[int], vec2: Sequence[int]) -> float | None:
+    """Compute cosine similarity between two numeric vectors. Returns None if both are empty/zero."""
     if len(vec1) != len(vec2) or not vec1:
-        return 0.0
+        return None
 
     dot = sum(v1 * v2 for v1, v2 in zip(vec1, vec2, strict=True))
     norm1 = math.sqrt(sum(v1 * v1 for v1 in vec1))
     norm2 = math.sqrt(sum(v2 * v2 for v2 in vec2))
 
+    if norm1 == 0.0 and norm2 == 0.0:
+        return None
     if norm1 == 0.0 or norm2 == 0.0:
         return 0.0
+
     return dot / (norm1 * norm2)
 
 
@@ -45,39 +94,68 @@ def compute_segment_similarity(
     """
     Compute multi-channel symbolic similarity between two segment representations.
 
-    Weights are classified as ENGINEERING_HEURISTIC.
+    Integrates 4 separate evidence channels:
+      1. Melodic Interval Channel (weight_melodic = 0.40): Symmetric stream bipartite matching.
+      2. Rhythmic IOI Ratio Channel (weight_rhythmic = 0.30): Ordered n-gram multiset Jaccard.
+      3. Texture Profile Channel (weight_texture = 0.15): Attack simultaneity profile cosine similarity.
+      4. Sounding Pitch-Class Channel (weight_pitchclass = 0.15): 12-bin pitch-class cosine similarity.
+
+    Missing/empty evidence channels return None and the composite score is normalized
+    across available evidence channels. Returns 0.0 if total available weight < 0.20.
+    Sim(A, B) == Sim(B, A) is strictly enforced.
     """
     if policy is None:
         policy = CTUDiscoveryPolicy()
 
-    # 1. Melodic channel similarity (average best stream match)
-    melodic_sim = 0.0
-    if rep1.melodic_intervals and rep2.melodic_intervals:
-        stream_sims = []
-        for s1 in rep1.melodic_intervals:
-            best_stream_sim = max(
-                (_sequence_jaccard_similarity(s1, s2) for s2 in rep2.melodic_intervals),
-                default=0.0,
-            )
-            stream_sims.append(best_stream_sim)
-        melodic_sim = sum(stream_sims) / len(stream_sims) if stream_sims else 0.0
-    elif not rep1.melodic_intervals and not rep2.melodic_intervals:
-        melodic_sim = 1.0
+    available_weights: float = 0.0
+    weighted_scores: float = 0.0
 
-    # 2. Rhythmic channel similarity
-    rhythmic_sim = _sequence_jaccard_similarity(rep1.rhythmic_ratios, rep2.rhythmic_ratios)
+    # 1. Melodic channel (Symmetric average best stream match)
+    streams1 = [s for s in rep1.melodic_intervals if s]
+    streams2 = [s for s in rep2.melodic_intervals if s]
 
-    # 3. Texture & Pitch profile similarity
-    texture_sim = _cosine_similarity(
-        rep1.pitch_class_counts,
-        rep2.pitch_class_counts,
-    )
+    melodic_sim: float | None = None
+    if streams1 or streams2:
+        if not streams1 or not streams2:
+            melodic_sim = 0.0
+        else:
+            # Pairwise stream similarities
+            sim_matrix = [
+                [compute_sequence_multiset_similarity(s1, s2) or 0.0 for s2 in streams2]
+                for s1 in streams1
+            ]
+            # Forward best matches
+            forward_avg = sum(max(row) for row in sim_matrix) / len(streams1)
+            # Backward best matches
+            backward_avg = sum(max(sim_matrix[i][j] for i in range(len(streams1))) for j in range(len(streams2))) / len(streams2)
+            melodic_sim = (forward_avg + backward_avg) / 2.0
 
-    composite = (
-        policy.weight_melodic * melodic_sim
-        + policy.weight_rhythmic * rhythmic_sim
-        + policy.weight_texture * texture_sim
-    )
+    if melodic_sim is not None:
+        weighted_scores += policy.weight_melodic * melodic_sim
+        available_weights += policy.weight_melodic
+
+    # 2. Rhythmic channel
+    rhythmic_sim = compute_sequence_multiset_similarity(rep1.rhythmic_ratios, rep2.rhythmic_ratios)
+    if rhythmic_sim is not None:
+        weighted_scores += policy.weight_rhythmic * rhythmic_sim
+        available_weights += policy.weight_rhythmic
+
+    # 3. Texture channel (using texture_profile)
+    texture_sim = compute_sequence_multiset_similarity(rep1.texture_profile, rep2.texture_profile)
+    if texture_sim is not None:
+        weighted_scores += policy.weight_texture * texture_sim
+        available_weights += policy.weight_texture
+
+    # 4. Sounding Pitch-class channel (using pitch_class_counts)
+    pc_sim = _cosine_similarity(rep1.pitch_class_counts, rep2.pitch_class_counts)
+    if pc_sim is not None:
+        weighted_scores += policy.weight_pitchclass * pc_sim
+        available_weights += policy.weight_pitchclass
+
+    if available_weights < 0.20:
+        return 0.0
+
+    composite = weighted_scores / available_weights
     return round(composite, 4)
 
 

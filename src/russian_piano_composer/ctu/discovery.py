@@ -94,10 +94,10 @@ def discover_ctus_for_score(
     # 4. Build candidate list sorted by discovery score descending
     candidates: list[CTUCandidate] = []
     for _idx, (span, rep, score_val) in enumerate(zip(spans, representations, discovery_scores, strict=True)):
-        rep_hash = rep.compute_semantic_hash()
+        rep_hash = rep.compute_content_hash()
         cid_input = f"{score.piece_id}|{span.start.measure_index}|{span.end.measure_index}|{rep_hash}".encode()
         cand_id = f"ctu_{hashlib.sha256(cid_input).hexdigest()[:16]}"
-        tier = EvidenceTier.E1_DISCOVERY_RECURRENCE if score_val > 0.30 else EvidenceTier.E0_CANDIDATE_ONLY
+        tier = EvidenceTier.E1_DISCOVERY_RECURRENCE if score_val >= policy.evidence_threshold_e1 else EvidenceTier.E0_CANDIDATE_ONLY
 
         candidates.append(
             CTUCandidate(
@@ -142,6 +142,8 @@ def discover_ctus_for_score(
             discovery_measure_count=discovery_measures,
             manifest_hash=manifest_hash,
             policy_hash=policy_hash,
+            min_event_count=policy.min_event_count,
+            existing_ctus=tuple(retained),
         )
         controls.append(ctrl_cand)
 
