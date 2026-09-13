@@ -10,7 +10,7 @@ CTUs are operational computational objects discovered purely from canonical symb
 
 ## 1. Scientific Objective & Integrity Safeguards
 
-The goal of RC-009B is to discover operational thematic units within symbolic piano scores and empirically evaluate whether these candidate units show statistically significant higher **future recurrence and developmental reuse** in a temporally held-out region compared to matched random negative control segments from the same piece.
+The goal of RC-009B is to discover operational thematic units within symbolic piano scores and empirically evaluate whether these candidate units show statistically significant higher **future recurrence and developmental reuse** in a temporally held-out region compared to activity-matched random negative control segments from the same piece.
 
 ### Integrity & Independence Invariants
 1. **Zero Human Ground Truth Leakage**: Human theme annotations (e.g. from RC-008) were **NOT** used for training, hyperparameter tuning, candidate selection, thresholding, or validation.
@@ -19,7 +19,8 @@ The goal of RC-009B is to discover operational thematic units within symbolic pi
    - **Future Validation Region**: Last 40% of complete measures ($[\text{discovery\_measures}, \text{total\_measures})$).
    No information from the future validation region influenced candidate generation, similarity weights, candidate filtering, or ranking.
 3. **Role-Blind Discovery**: Scores were processed without composer, style, or group labels. Corpus metadata was attached solely post-hoc for summary reporting.
-4. **Polyphonic Texture Respect**: Pitch and interval evidence maintains separate `(staff, voice)` streams without collapsing multi-voice textures into a single top-note pseudo-melody or assuming `staff == hand`. Melodic transitions are restricted strictly to consecutive single-note attacked onsets per voice.
+4. **Polyphonic Texture Respect**: Pitch and interval evidence maintains separate `(staff, voice)` streams without collapsing multi-voice textures into a single top-note pseudo-melody or assuming `staff == hand`. Melodic transitions are restricted strictly to consecutive single-note attacked onsets per voice stream (adjacent single-note onsets only; no interval bridging across chords).
+5. **Fail-Closed Activity Control Matching**: Negative controls require exact piece, measure length, discovery region placement, $\text{IoU} < 0.50$ with the target CTU and all retained CTUs, and activity matching within $\pm 25\%$ of note attack count and distinct onset count. Unconditional fallbacks are strictly prohibited.
 
 ---
 
@@ -35,14 +36,14 @@ $$
 Each candidate segment $S$ is converted to a multi-channel symbolic representation:
 1. **Melodic Interval Channel**: Vector of pitch interval transitions $\Delta p = p_{i+1} - p_i$ between consecutive single-note attacked onsets within each `(staff, voice)` stream.
 2. **IOI Rhythm Channel**: Vector of consecutive Inter-Onset-Interval ratios $r_i = \text{IOI}_{i+1} / \text{IOI}_i$.
-3. **Texture Profile Channel**: Vector of note attack simultaneities $a(t)$ at each distinct onset time $t$.
+3. **Texture Profile Channel**: Ordered sequence of note attack simultaneities $a(t)$ at each distinct onset time $t$.
 4. **Sounding Pitch-Class Channel**: 12-dimensional pitch class distribution vector ($midi \pmod{12}$) normalized by total attacks.
 
 ### C. Pairwise Recurrence & Composite Discovery Score
 For two non-overlapping discovery segments $S_A, S_B \subset [0, M_{\text{disc}})$, component similarities are computed:
 - **Melodic Similarity** $Sim_{\text{mel}}$: Symmetric bipartite match of 2-gram multiset Jaccard similarity across active voice streams.
 - **Rhythmic Similarity** $Sim_{\text{rhy}}$: Symmetric bipartite match of 2-gram multiset Jaccard similarity across IOI ratio sequences.
-- **Texture Profile Similarity** $Sim_{\text{tex}}$: Cosine similarity over attack simultaneity distributions.
+- **Texture Profile Similarity** $Sim_{\text{tex}}$: Ordered 2-gram multiset Jaccard similarity over note attack simultaneity sequences.
 - **Sounding Pitch-Class Similarity** $Sim_{\text{pc}}$: Cosine similarity over 12-bin pitch-class vectors.
 
 The composite discovery recurrence score is defined as:
@@ -67,7 +68,10 @@ For each retained CTU $S_i$ of length $L_i$ measures in the discovery region, a 
 - $\text{Length}(C_i) = L_i$
 - $C_i \subset [0, M_{\text{disc}})$
 - $\text{IoU}(C_i, S_i) < 0.50$
-- $C_i$ satisfies `min_event_count` activity eligibility (non-empty).
+- $\text{IoU}(C_i, S_r) < 0.50$ for all retained CTUs $S_r$
+- $| \text{attack\_count}(C_i) - \text{attack\_count}(S_i) | / \text{attack\_count}(S_i) \le 0.25$
+- $| \text{onset\_count}(C_i) - \text{onset\_count}(S_i) | / \text{onset\_count}(S_i) \le 0.25$
+- $C_i$ satisfies `min_event_count` activity eligibility.
 
 ---
 
@@ -102,16 +106,19 @@ Statistical hypothesis testing across eligible pieces:
 - **Ineligible Pieces ($< 12$ measures)**: 0
 - **Raw Candidate Windows Generated**: 40,837
 - **Post-NMS Retained CTUs**: 705 (5 CTUs per piece retained)
-- **Matched Control Segments**: 705
+- **Requested Control Pairs**: 705
+- **Valid Matched Control Pairs**: 705
+- **Unavailable Control Pairs**: 0
+- **Fallback Count**: 0 (Strict 0)
 
 ### Statistical Validation Outcome
-- **Mean CTU Future Reuse Score**: **0.7132**
-- **Mean Control Future Reuse Score**: **0.6063**
-- **Mean Paired Difference ($\bar{\Delta}$)**: **+0.1070**
-- **Paired Effect Size (Cohen's $d_z$)**: **0.5233** (Medium-to-large effect)
-- **95% Bootstrap Confidence Interval**: **[0.0742, 0.1407]**
-- **Permutation Test p-value**: **0.0001**
-- **Positive Effect Fraction**: **72.34%** (102 out of 141 pieces showed higher CTU future reuse than matched controls)
+- **Mean CTU Future Reuse Score**: **0.7146**
+- **Mean Control Future Reuse Score**: **0.6537**
+- **Mean Paired Difference ($\bar{\Delta}$)**: **+0.0609**
+- **Paired Effect Size (Cohen's $d_z$)**: **0.3037**
+- **95% Bootstrap Confidence Interval**: **[0.0281, 0.0931]**
+- **Permutation Test p-value**: **0.0006**
+- **Positive Effect Fraction**: **63.83%** (90 out of 141 pieces showed higher CTU future reuse than matched controls)
 
 ---
 
@@ -121,13 +128,13 @@ Statistical hypothesis testing across eligible pieces:
 | :--- | :--- |
 | **Canonical Manifest Hash** | `cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212` |
 | **CTU Schema Version** | `1` |
-| **CTU Schema Semantic Hash** | `037b58c5f5bdfeab6230f81d11ec591b3fa1d5ee0ce6cc4ca7aa83a8cf82e88a` |
-| **Segment Representation Hash** | `d4efb796eaedff6ea9bb5fc5bd3be2e3ef4efca00ffbd09264cce54d9fb821f5` |
-| **Similarity Semantic Hash** | `ec91433f4a38f3ea6b1a37c976934c56e074dfffcac4431e7af1a566580f845d` |
-| **Discovery Policy Hash** | `85e83e92eaee05963f45f8e5f2cfebdf5eeed04d49aef50e9eb86d63d6666df6` |
-| **Validation Policy Hash** | `4be4f2913fe93d3bd811b7dfb8d4380628e8334468fbefd65ec8d80f8e97f0a9` |
-| **Candidate Set Hash** | `18ef126427a98c3a85378333235cec6ef6603a9451885da1c8159476aa432d50` |
-| **Validation Result Hash** | `9a8665e534bb74f405240145b3df7c79eeea97377b4b11ac970ca4640706b2da` |
+| **CTU Schema Semantic Hash** | `03e8103ae9d7d534ded951b781ee6d43269a046fc787c543029c5f9ce3dd0ec1` |
+| **Segment Representation Hash** | `967c42a2f47e16dbc6ce3b160ff56284298c73524b46133b6df116ef06db3539` |
+| **Similarity Semantic Hash** | `9a6e9350eecbd445fdef4f613127a219e0e02088bd2bd7c626f5740d46e09f72` |
+| **Discovery Policy Hash** | `df0810aa9601131df59e1341d6281ce339e1d97b8c993d0baf453fa4a31f0367` |
+| **Validation Policy Hash** | `de1fcc0804270f62f104e50958e490d8c3b617b800b578797dee637a7a246e30` |
+| **Candidate Set Hash** | `cca7bb139e3286633f2e087ca3e079394e7da1f585df707fe8c4e93582e1811e` |
+| **Validation Result Hash** | `dead5806bee3483103231d85e2bf7a4ce9cbcd03a48155db20253cefed8b0ec4` |
 
 ---
 
@@ -138,7 +145,6 @@ $$
 $$
 
 ### Scientific Interpretation
-Unsupervised Candidate Thematic Units (CTUs) discovered solely within the initial 60% discovery region of canonical symbolic scores exhibit statistically significant, medium-to-large higher future-reuse scores in the temporally held-out 40% region ($p = 0.0001, d_z = 0.5233, 95\%\text{ CI } [0.0742, 0.1407]$) compared to matched random negative control segments across all 141 pieces.
+Unsupervised Candidate Thematic Units (CTUs) discovered solely within the initial 60% discovery region of canonical symbolic scores exhibit statistically significant higher future-reuse scores in the temporally held-out 40% region ($p = 0.0006, d_z = 0.3037, 95\%\text{ CI } [0.0281, 0.0931]$) compared to fail-closed activity-matched random negative control segments across all 141 pieces.
 
 *Note: `CTU_VALIDATED` is an operational computational status confirming higher future recurrence/developmental reuse under frozen V1 semantics. It does NOT imply human musicological theme adjudication or ground truth consensus.*
-

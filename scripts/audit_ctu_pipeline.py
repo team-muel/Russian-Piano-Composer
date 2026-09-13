@@ -173,7 +173,25 @@ def main() -> None:
     print(f"  Candidate Set Hash:     {cand_set_hash1}")
     print(f"  Validation Result Hash: {val_hash1}")
 
-    # Audit 3: Forbidden Code Inspection Safeguard
+    # Audit 3: Static & Dynamic Forbidden Code Inspection Safeguard (Role Blindness)
+    forbidden_terms = [
+        "theme_annotations",
+        "candidate_specs",
+        "human_review",
+        "composer_name",
+        "composer_rules",
+        "GENERATIVE_RUSSIAN",
+        "CONTROL_NON_RUSSIAN",
+    ]
+    ctu_dir = Path("src/russian_piano_composer/ctu")
+    for py_file in ctu_dir.glob("*.py"):
+        text = py_file.read_text(encoding="utf-8")
+        for term in forbidden_terms:
+            if term in text:
+                raise RuntimeError(
+                    f"ROLE-BLINDNESS STATIC AUDIT ERROR: Forbidden term '{term}' found in production file {py_file}!"
+                )
+
     forbidden_modules = [
         "russian_piano_composer.corpus.theme_annotations",
         "russian_piano_composer.domain.annotations",
@@ -181,9 +199,9 @@ def main() -> None:
     for mod in sys.modules:
         for fmod in forbidden_modules:
             if mod.startswith(fmod):
-                raise RuntimeError(f"ROLE-BLINDNESS AUDIT ERROR: Forbidden annotation module {mod} loaded in environment!")
+                raise RuntimeError(f"ROLE-BLINDNESS DYNAMIC AUDIT ERROR: Forbidden annotation module {mod} loaded in environment!")
 
-    print("Audit 3: Zero Ground Truth / Annotation Leakage -> PASS (no annotation or candidate spec modules imported)")
+    print("Audit 3: Zero Ground Truth / Annotation Leakage -> PASS (static AST & dynamic module inspection clean)")
     print("\n--- ALL CTU PIPELINE INVARIANTS VERIFIED CLEAN ACROSS FULL CORPUS ---")
 
 

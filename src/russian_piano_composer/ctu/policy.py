@@ -57,6 +57,8 @@ class CTUValidationPolicy:
     permutation_iterations: int = 10000
     bootstrap_iterations: int = 10000
     random_seed: int = 42
+    control_attack_count_tolerance_ratio: float = 0.25
+    control_onset_count_tolerance_ratio: float = 0.25
 
     def compute_policy_hash(self) -> str:
         """Deterministic SHA-256 hash of validation policy semantics."""
@@ -64,6 +66,8 @@ class CTUValidationPolicy:
             "permutation_iterations": self.permutation_iterations,
             "bootstrap_iterations": self.bootstrap_iterations,
             "random_seed": self.random_seed,
+            "control_attack_count_tolerance_ratio": self.control_attack_count_tolerance_ratio,
+            "control_onset_count_tolerance_ratio": self.control_onset_count_tolerance_ratio,
         }
         encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()

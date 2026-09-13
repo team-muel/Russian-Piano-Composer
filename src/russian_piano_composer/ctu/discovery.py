@@ -145,7 +145,8 @@ def discover_ctus_for_score(
             min_event_count=policy.min_event_count,
             existing_ctus=tuple(retained),
         )
-        controls.append(ctrl_cand)
+        if ctrl_cand is not None:
+            controls.append(ctrl_cand)
 
     return CTUDiscoveryResult(
         piece_id=score.piece_id,

@@ -140,7 +140,7 @@ def compute_segment_similarity(
         weighted_scores += policy.weight_rhythmic * rhythmic_sim
         available_weights += policy.weight_rhythmic
 
-    # 3. Texture channel (using texture_profile)
+    # 3. Texture channel (weight_texture = 0.15: attack simultaneity sequence ordered 2-gram multiset Jaccard)
     texture_sim = compute_sequence_multiset_similarity(rep1.texture_profile, rep2.texture_profile)
     if texture_sim is not None:
         weighted_scores += policy.weight_texture * texture_sim

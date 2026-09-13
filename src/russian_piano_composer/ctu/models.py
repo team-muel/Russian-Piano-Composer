@@ -18,8 +18,6 @@ class EvidenceTier(StrEnum):
 
     E0_CANDIDATE_ONLY = "E0_CANDIDATE_ONLY"
     E1_DISCOVERY_RECURRENCE = "E1_DISCOVERY_RECURRENCE"
-    E2_MULTICHANNEL_CONSENSUS = "E2_MULTICHANNEL_CONSENSUS"
-    E3_HELDOUT_FUTURE_SUPPORTED = "E3_HELDOUT_FUTURE_SUPPORTED"
 
 
 class EmpiricalCTUStatus(StrEnum):
@@ -74,6 +72,8 @@ def compute_ctu_schema_semantic_hash() -> str:
         "ctu_schema_version": CTU_SCHEMA_VERSION,
         "evidence_tiers": [t.value for t in EvidenceTier],
         "empirical_statuses": [s.value for s in EmpiricalCTUStatus],
+        "grace_note_policy": "EXCLUDE_GRACE_NOTES",
+        "tie_state_policy": "EXCLUDE_TIE_CONTINUATIONS_AND_STOPS",
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
@@ -85,9 +85,9 @@ def compute_segment_representation_semantic_hash() -> str:
     import json
 
     canonical = {
-        "melodic_channel": "single_note_attacked_onsets_per_staff_voice_stream",
+        "melodic_channel": "consecutive_single_note_attacked_onsets_per_staff_voice_stream_no_chord_bridging",
         "rhythmic_channel": "consecutive_ioi_ratios_curr_over_prev",
-        "texture_channel": "attack_count_per_onset_texture_profile",
+        "texture_channel": "attack_count_per_onset_simultaneity_sequence",
         "pitchclass_channel": "12_bin_sounding_midi_pitchclass_counts",
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -100,11 +100,14 @@ def compute_similarity_semantic_hash() -> str:
     import json
 
     canonical = {
-        "melodic_metric": "symmetric_bipartite_stream_match_ordered_ngram_multiset_jaccard",
-        "rhythmic_metric": "ordered_ngram_multiset_jaccard",
-        "texture_metric": "multiset_jaccard_or_cosine",
-        "pitchclass_metric": "12_bin_cosine_similarity",
-        "missing_channel_policy": "renormalize_across_available_weights_min_available_0_20",
+        "melodic_metric": "symmetric_bipartite_stream_match_ordered_2gram_multiset_jaccard",
+        "rhythmic_metric": "ordered_2gram_multiset_jaccard",
+        "texture_metric": "attack_simultaneity_ordered_2gram_multiset_jaccard",
+        "pitchclass_metric": "12_bin_sounding_pitchclass_cosine_similarity",
+        "missing_channel_policy": "renormalize_across_available_evidence_weights_min_available_0_20",
+        "channel_weights": "melodic=0.40_rhythmic=0.30_texture=0.15_pitchclass=0.15",
+        "minimum_evidence_rule": "E1_THRESHOLD_0.30",
+        "nms_semantics": "measure_iou_threshold_0.50",
         "symmetry": "strictly_enforced_sim_a_b_eq_sim_b_a",
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")

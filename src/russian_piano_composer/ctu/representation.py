@@ -46,18 +46,15 @@ def extract_segment_representation(
         onset_dict = stream_onsets[_v_key]
         sorted_onsets = sorted(onset_dict.keys())
 
-        # Form melodic transitions only between consecutive onsets with exactly 1 note attack
-        single_note_sequence: list[int] = []
-        for on in sorted_onsets:
-            notes = onset_dict[on]
-            if len(notes) == 1:
-                single_note_sequence.append(notes[0])
+        # Form melodic transitions ONLY between consecutive onset groups where both adjacent groups contain exactly 1 note attack
+        intervals: list[int] = []
+        for i in range(len(sorted_onsets) - 1):
+            curr_notes = onset_dict[sorted_onsets[i]]
+            next_notes = onset_dict[sorted_onsets[i + 1]]
+            if len(curr_notes) == 1 and len(next_notes) == 1:
+                intervals.append(next_notes[0] - curr_notes[0])
 
-        if len(single_note_sequence) >= 2:
-            intervals = tuple(single_note_sequence[i + 1] - single_note_sequence[i] for i in range(len(single_note_sequence) - 1))
-            melodic_streams.append(intervals)
-        elif len(single_note_sequence) == 1:
-            melodic_streams.append(())
+        melodic_streams.append(tuple(intervals))
 
     # 2. Rhythm Channel (consecutive IOI ratios r_i = IOI_{i+1} / IOI_i)
     note_onsets = sorted({e.global_onset for e in events if e.event_kind == EventKind.NOTE})
