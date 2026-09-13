@@ -18,7 +18,6 @@ class MelodicTransitionPolicy(StrEnum):
     """Policy for selecting eligible melodic transitions in polyphonic scores."""
 
     VOICE_AWARE_SINGLE_NOTE_ONLY = "VOICE_AWARE_SINGLE_NOTE_ONLY"
-    GLOBAL_ONSET_SORTED = "GLOBAL_ONSET_SORTED"
 
 
 class GraceNotePolicy(StrEnum):
@@ -38,13 +37,18 @@ class PitchWeightingPolicy(StrEnum):
 class FeatureExtractionPolicy:
     """
     Immutable configuration policy for score feature extraction.
+    Frozen Feature Schema V2 production extraction semantics:
+      - Voice-aware (staff, voice) streams
+      - Single-note onset transitions only
+      - Grace notes excluded by default
+      - Tie continuations excluded by default
+      - Attack-unweighted pitch observations
     """
 
     tie_policy: TieAttackPolicy = TieAttackPolicy.EXCLUDE_CONTINUATIONS
     melodic_policy: MelodicTransitionPolicy = MelodicTransitionPolicy.VOICE_AWARE_SINGLE_NOTE_ONLY
     grace_policy: GraceNotePolicy = GraceNotePolicy.EXCLUDE
     pitch_weighting: PitchWeightingPolicy = PitchWeightingPolicy.ATTACK_UNWEIGHTED
-    require_single_note_voice: bool = True
 
     def compute_policy_hash(self) -> str:
         """
@@ -58,8 +62,8 @@ class FeatureExtractionPolicy:
             "melodic_policy": self.melodic_policy.value,
             "grace_policy": self.grace_policy.value,
             "pitch_weighting": self.pitch_weighting.value,
-            "require_single_note_voice": self.require_single_note_voice,
         }
         encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
+
 

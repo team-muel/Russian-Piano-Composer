@@ -22,7 +22,6 @@ from russian_piano_composer.domain.score import (
 from russian_piano_composer.features.policy import (
     FeatureExtractionPolicy,
     GraceNotePolicy,
-    MelodicTransitionPolicy,
     TieAttackPolicy,
 )
 
@@ -124,14 +123,11 @@ def _extract_voice_monophonic_intervals(
     if policy.tie_policy == TieAttackPolicy.EXCLUDE_CONTINUATIONS:
         events = [e for e in events if e.tie_state not in (TieState.CONTINUE, TieState.STOP)]
 
-    # Group events by (staff, voice) if VOICE_AWARE, or treat as single stream if GLOBAL_ONSET_SORTED
+    # Group events by (staff, voice) stream
     voice_events: dict[tuple[int, int], list[CanonicalScoreEvent]] = defaultdict(list)
     for e in events:
         if e.event_kind == EventKind.NOTE and e.midi is not None:
-            if policy.melodic_policy == MelodicTransitionPolicy.VOICE_AWARE_SINGLE_NOTE_ONLY:
-                voice_events[(e.staff, e.voice)].append(e)
-            else:
-                voice_events[(1, 1)].append(e)
+            voice_events[(e.staff, e.voice)].append(e)
 
     all_intervals: list[int] = []
 
@@ -144,7 +140,7 @@ def _extract_voice_monophonic_intervals(
 
         sorted_onsets = sorted(onset_groups.keys())
 
-        # Extract transitions between consecutive onsets
+        # Extract transitions between consecutive single-note onsets
         for i in range(len(sorted_onsets) - 1):
             on1 = sorted_onsets[i]
             on2 = sorted_onsets[i + 1]
@@ -152,15 +148,11 @@ def _extract_voice_monophonic_intervals(
             group1 = onset_groups[on1]
             group2 = onset_groups[on2]
 
-            if policy.require_single_note_voice:
-                if len(group1) == 1 and len(group2) == 1:
-                    all_intervals.append(group2[0] - group1[0])
-            else:
-                # If polyphonic chord at onset, use average pitch or first note
-                iv = round(sum(group2) / len(group2) - sum(group1) / len(group1))
-                all_intervals.append(iv)
+            if len(group1) == 1 and len(group2) == 1:
+                all_intervals.append(group2[0] - group1[0])
 
     return all_intervals
+
 
 
 def extract_interval_features(
