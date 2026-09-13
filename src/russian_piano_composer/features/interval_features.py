@@ -19,6 +19,12 @@ from russian_piano_composer.domain.score import (
     EventKind,
     TieState,
 )
+from russian_piano_composer.features.policy import (
+    FeatureExtractionPolicy,
+    GraceNotePolicy,
+    MelodicTransitionPolicy,
+    TieAttackPolicy,
+)
 
 INTERVAL_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
@@ -101,41 +107,44 @@ INTERVAL_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
 )
 
 
-def _extract_voice_monophonic_intervals(score: CanonicalScore) -> list[int]:
+def _extract_voice_monophonic_intervals(
+    score: CanonicalScore,
+    policy: FeatureExtractionPolicy | None = None,
+) -> list[int]:
     """
-    Extract eligible monophonic melodic interval semitones from voice-partitioned note streams.
+    Extract eligible monophonic melodic interval semitones from note streams per policy.
+    """
+    if policy is None:
+        policy = FeatureExtractionPolicy()
 
-    Polyphonic Validity Rules:
-    1. Group non-grace NOTE attack events by (staff, voice).
-    2. Exclude tie continuations (tie_state in [CONTINUE, STOP]).
-    3. Group by global_onset within each (staff, voice) stream.
-    4. Include a transition between onset_i and onset_{i+1} ONLY if BOTH onset groups contain
-       EXACTLY ONE attacked pitch (strict single-note monophonic transition).
-    5. Concatenate all eligible transitions across all voices in the piece.
-    """
-    # Group events by (staff, voice)
+    events: list[CanonicalScoreEvent] = list(score.events)
+    if policy.grace_policy == GraceNotePolicy.EXCLUDE:
+        events = [e for e in events if not e.is_grace]
+
+    if policy.tie_policy == TieAttackPolicy.EXCLUDE_CONTINUATIONS:
+        events = [e for e in events if e.tie_state not in (TieState.CONTINUE, TieState.STOP)]
+
+    # Group events by (staff, voice) if VOICE_AWARE, or treat as single stream if GLOBAL_ONSET_SORTED
     voice_events: dict[tuple[int, int], list[CanonicalScoreEvent]] = defaultdict(list)
-    for e in score.events:
-        if (
-            e.event_kind == EventKind.NOTE
-            and not e.is_grace
-            and e.tie_state not in (TieState.CONTINUE, TieState.STOP)
-            and e.midi is not None
-        ):
-            voice_events[(e.staff, e.voice)].append(e)
+    for e in events:
+        if e.event_kind == EventKind.NOTE and e.midi is not None:
+            if policy.melodic_policy == MelodicTransitionPolicy.VOICE_AWARE_SINGLE_NOTE_ONLY:
+                voice_events[(e.staff, e.voice)].append(e)
+            else:
+                voice_events[(1, 1)].append(e)
 
     all_intervals: list[int] = []
 
-    for _stream_key, events in voice_events.items():
-        # Group events by onset within this voice
+    for _stream_key, stream_events in voice_events.items():
+        # Group events by onset within this stream
         onset_groups: dict[Fraction, list[int]] = defaultdict(list)
-        for e in events:
+        for e in stream_events:
             if e.midi is not None:
                 onset_groups[e.global_onset].append(e.midi)
 
         sorted_onsets = sorted(onset_groups.keys())
 
-        # Extract transitions between consecutive single-note onsets
+        # Extract transitions between consecutive onsets
         for i in range(len(sorted_onsets) - 1):
             on1 = sorted_onsets[i]
             on2 = sorted_onsets[i + 1]
@@ -143,17 +152,26 @@ def _extract_voice_monophonic_intervals(score: CanonicalScore) -> list[int]:
             group1 = onset_groups[on1]
             group2 = onset_groups[on2]
 
-            # Melodic transition is eligible ONLY when both onset groups have exactly one note
-            if len(group1) == 1 and len(group2) == 1:
-                iv = group2[0] - group1[0]
+            if policy.require_single_note_voice:
+                if len(group1) == 1 and len(group2) == 1:
+                    all_intervals.append(group2[0] - group1[0])
+            else:
+                # If polyphonic chord at onset, use average pitch or first note
+                iv = round(sum(group2) / len(group2) - sum(group1) / len(group1))
                 all_intervals.append(iv)
 
     return all_intervals
 
 
-def extract_interval_features(score: CanonicalScore) -> dict[str, float | int | None]:
-    """Extract voice-aware melodic interval statistics across eligible single-note transitions."""
-    intervals = _extract_voice_monophonic_intervals(score)
+def extract_interval_features(
+    score: CanonicalScore,
+    policy: FeatureExtractionPolicy | None = None,
+) -> dict[str, float | int | None]:
+    """Extract voice-aware melodic interval statistics across eligible transitions using policy."""
+    if policy is None:
+        policy = FeatureExtractionPolicy()
+
+    intervals = _extract_voice_monophonic_intervals(score, policy=policy)
 
     if not intervals:
         return {fd.feature_id: None for fd in INTERVAL_FEATURE_DEFINITIONS}

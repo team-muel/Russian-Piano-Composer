@@ -61,12 +61,12 @@ def extract_piece_features(
 
     features: dict[str, float | int | None] = {}
 
-    features.update(extract_pitch_features(score))
-    features.update(extract_interval_features(score))
-    features.update(extract_rhythm_features(score))
-    features.update(extract_contour_features(score))
-    features.update(extract_density_features(score))
-    features.update(extract_meter_features(score))
+    features.update(extract_pitch_features(score, policy=policy))
+    features.update(extract_interval_features(score, policy=policy))
+    features.update(extract_rhythm_features(score, policy=policy))
+    features.update(extract_contour_features(score, policy=policy))
+    features.update(extract_density_features(score, policy=policy))
+    features.update(extract_meter_features(score, policy=policy))
 
     return PieceFeatureSet(
         piece_id=score.piece_id,

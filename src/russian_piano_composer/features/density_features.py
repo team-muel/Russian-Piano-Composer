@@ -9,6 +9,11 @@ from fractions import Fraction
 
 from russian_piano_composer.domain.features import FeatureDefinition, FeatureProvenance
 from russian_piano_composer.domain.score import CanonicalScore, EventKind, TieState
+from russian_piano_composer.features.policy import (
+    FeatureExtractionPolicy,
+    GraceNotePolicy,
+    TieAttackPolicy,
+)
 
 DENSITY_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
@@ -91,8 +96,23 @@ DENSITY_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
 )
 
 
-def extract_density_features(score: CanonicalScore) -> dict[str, float | int | None]:
-    """Extract note density and texture features from a canonical score."""
+def extract_density_features(
+    score: CanonicalScore,
+    policy: FeatureExtractionPolicy | None = None,
+) -> dict[str, float | int | None]:
+    """Extract note density and texture features from a canonical score using policy."""
+    if policy is None:
+        policy = FeatureExtractionPolicy()
+
+    events = score.events
+    if policy.grace_policy == GraceNotePolicy.EXCLUDE:
+        events_for_density = [e for e in events if not e.is_grace]
+    else:
+        events_for_density = list(events)
+
+    if policy.tie_policy == TieAttackPolicy.EXCLUDE_CONTINUATIONS:
+        events_for_density = [e for e in events_for_density if e.tie_state not in (TieState.CONTINUE, TieState.STOP)]
+
     total_events = len(score.events)
     total_measures = len(score.measures)
 
@@ -100,9 +120,8 @@ def extract_density_features(score: CanonicalScore) -> dict[str, float | int | N
         return {fd.feature_id: None for fd in DENSITY_FEATURE_DEFINITIONS}
 
     note_attacks = sum(
-        1 for e in score.events
+        1 for e in events_for_density
         if e.event_kind == EventKind.NOTE
-        and e.tie_state not in (TieState.CONTINUE, TieState.STOP)
     )
     all_notes_count = sum(1 for e in score.events if e.event_kind == EventKind.NOTE)
     rest_count = sum(1 for e in score.events if e.event_kind == EventKind.REST)

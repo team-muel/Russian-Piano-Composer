@@ -8,7 +8,17 @@ All features are OBSERVED provenance.
 import math
 
 from russian_piano_composer.domain.features import FeatureDefinition, FeatureProvenance
-from russian_piano_composer.domain.score import CanonicalScore, EventKind, TieState
+from russian_piano_composer.domain.score import (
+    CanonicalScore,
+    CanonicalScoreEvent,
+    EventKind,
+    TieState,
+)
+from russian_piano_composer.features.policy import (
+    FeatureExtractionPolicy,
+    GraceNotePolicy,
+    TieAttackPolicy,
+)
 
 RHYTHM_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
@@ -102,13 +112,24 @@ RHYTHM_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
 )
 
 
-def extract_rhythm_features(score: CanonicalScore) -> dict[str, float | int | None]:
-    """Extract rhythmic duration statistics from non-grace note attacks."""
+def extract_rhythm_features(
+    score: CanonicalScore,
+    policy: FeatureExtractionPolicy | None = None,
+) -> dict[str, float | int | None]:
+    """Extract rhythmic duration statistics from note events using policy."""
+    if policy is None:
+        policy = FeatureExtractionPolicy()
+
+    events: list[CanonicalScoreEvent] = list(score.events)
+    if policy.grace_policy == GraceNotePolicy.EXCLUDE:
+        events = [e for e in events if not e.is_grace]
+
+    if policy.tie_policy == TieAttackPolicy.EXCLUDE_CONTINUATIONS:
+        events = [e for e in events if e.tie_state not in (TieState.CONTINUE, TieState.STOP)]
+
     note_durations_raw = [
-        e.duration for e in score.events
+        e.duration for e in events
         if e.event_kind == EventKind.NOTE
-        and not e.is_grace
-        and e.tie_state not in (TieState.CONTINUE, TieState.STOP)
     ]
 
     if not note_durations_raw:

@@ -10,6 +10,7 @@ from fractions import Fraction
 
 from russian_piano_composer.domain.features import FeatureDefinition, FeatureProvenance
 from russian_piano_composer.domain.score import CanonicalScore
+from russian_piano_composer.features.policy import FeatureExtractionPolicy
 
 METER_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
@@ -70,7 +71,10 @@ METER_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
 )
 
 
-def extract_meter_features(score: CanonicalScore) -> dict[str, float | int | None]:
+def extract_meter_features(
+    score: CanonicalScore,
+    policy: FeatureExtractionPolicy | None = None,
+) -> dict[str, float | int | None]:
     """Extract metric and meter features from a canonical score."""
     if not score.measures:
         return {fd.feature_id: None for fd in METER_FEATURE_DEFINITIONS}

@@ -19,6 +19,7 @@ from russian_piano_composer.domain.score import (
     EventKind,
     TieState,
 )
+from russian_piano_composer.features.policy import FeatureExtractionPolicy
 
 CONTOUR_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
@@ -129,13 +130,19 @@ def _pearson_correlation(x: list[float], y: list[float]) -> float:
     return cov / denom
 
 
-def extract_contour_features(score: CanonicalScore) -> dict[str, float | int | None]:
-    """Extract melodic contour statistics using voice-aware monophonic streams."""
+def extract_contour_features(
+    score: CanonicalScore,
+    policy: FeatureExtractionPolicy | None = None,
+) -> dict[str, float | int | None]:
+    """Extract melodic contour statistics using voice-aware monophonic streams and policy."""
+    if policy is None:
+        policy = FeatureExtractionPolicy()
+
     from russian_piano_composer.features.interval_features import (
         _extract_voice_monophonic_intervals,
     )
 
-    intervals = _extract_voice_monophonic_intervals(score)
+    intervals = _extract_voice_monophonic_intervals(score, policy=policy)
 
     if not intervals:
         return {fd.feature_id: None for fd in CONTOUR_FEATURE_DEFINITIONS}

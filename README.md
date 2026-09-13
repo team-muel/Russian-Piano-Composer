@@ -11,7 +11,7 @@ An interpretable symbolic composition system for autonomous generation of origin
 
 ## Status
 
-**Current milestone**: RC-001 (Repository Bootstrap)
+**Current milestone**: RC-009A (Objective Descriptive Music Feature Semantics & Reproducibility)
 
 ## Quick Start
 

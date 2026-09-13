@@ -37,6 +37,7 @@ class FeatureDefinition:
     comparison_ready: bool = True
     validity_category: str = "A"
     observation_unit: str = "note_attack"
+    definition_id: str = "v2.0"
 
     def __post_init__(self) -> None:
         if not self.feature_id or not self.feature_id.strip():
@@ -53,6 +54,8 @@ class FeatureDefinition:
         canonical = {
             "feature_id": self.feature_id,
             "name": self.name,
+            "description": self.description,
+            "definition_id": self.definition_id,
             "provenance": self.provenance.value,
             "unit": self.unit,
             "dtype": self.dtype,
@@ -75,6 +78,8 @@ def compute_schema_semantic_hash(registry: tuple[FeatureDefinition, ...]) -> str
             {
                 "feature_id": fd.feature_id,
                 "name": fd.name,
+                "description": fd.description,
+                "definition_id": fd.definition_id,
                 "provenance": fd.provenance.value,
                 "unit": fd.unit,
                 "dtype": fd.dtype,

@@ -9,7 +9,17 @@ import math
 from collections import Counter
 
 from russian_piano_composer.domain.features import FeatureDefinition, FeatureProvenance
-from russian_piano_composer.domain.score import CanonicalScore, EventKind, TieState
+from russian_piano_composer.domain.score import (
+    CanonicalScore,
+    CanonicalScoreEvent,
+    EventKind,
+    TieState,
+)
+from russian_piano_composer.features.policy import (
+    FeatureExtractionPolicy,
+    GraceNotePolicy,
+    TieAttackPolicy,
+)
 
 PITCH_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
     FeatureDefinition(
@@ -103,20 +113,26 @@ PITCH_FEATURE_DEFINITIONS: tuple[FeatureDefinition, ...] = (
 )
 
 
-def extract_pitch_features(score: CanonicalScore) -> dict[str, float | int | None]:
+def extract_pitch_features(
+    score: CanonicalScore,
+    policy: FeatureExtractionPolicy | None = None,
+) -> dict[str, float | int | None]:
     """
-    Extract pitch statistics from a canonical score.
+    Extract pitch statistics from a canonical score using FeatureExtractionPolicy.
+    """
+    if policy is None:
+        policy = FeatureExtractionPolicy()
 
-    Note Attack Filtering Policy:
-    - Excludes REST events
-    - Excludes grace notes (is_grace == True)
-    - Excludes tie continuations (tie_state in [CONTINUE, STOP]) to avoid false pitch attack duplication
-    """
+    events: list[CanonicalScoreEvent] = list(score.events)
+    if policy.grace_policy == GraceNotePolicy.EXCLUDE:
+        events = [e for e in events if not e.is_grace]
+
+    if policy.tie_policy == TieAttackPolicy.EXCLUDE_CONTINUATIONS:
+        events = [e for e in events if e.tie_state not in (TieState.CONTINUE, TieState.STOP)]
+
     midi_values = [
-        e.midi for e in score.events
+        e.midi for e in events
         if e.event_kind == EventKind.NOTE
-        and not e.is_grace
-        and e.tie_state not in (TieState.CONTINUE, TieState.STOP)
         and e.midi is not None
     ]
 
