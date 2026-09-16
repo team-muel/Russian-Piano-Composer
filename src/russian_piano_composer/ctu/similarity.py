@@ -46,8 +46,14 @@ def compute_sequence_multiset_similarity[T](
     seq2: Sequence[T],
 ) -> float | None:
     """
-    Compute multiset Jaccard similarity over sequence elements or 2-grams when length >= 2.
-    Returns None if both sequences are empty.
+    Compute multiset Jaccard similarity over sequence elements.
+
+    V1 Sparse Sequence Rules:
+      - Both empty: return None (channel unavailable)
+      - One empty, one non-empty: return 0.0
+      - Both lengths >= 2: ordered 2-gram multiset Jaccard
+      - Both lengths == 1: ordered 1-gram multiset Jaccard fallback
+      - One length == 1, other length >= 2: return 0.0
     """
     if not seq1 and not seq2:
         return None
@@ -55,18 +61,22 @@ def compute_sequence_multiset_similarity[T](
     if not seq1 or not seq2:
         return 0.0
 
-    # Try 2-grams first if possible
-    sim2 = compute_ordered_ngram_multiset_similarity(seq1, seq2, n=2)
-    if sim2 is not None:
-        return sim2
+    len1 = len(seq1)
+    len2 = len(seq2)
 
-    # Fallback to 1-gram multiset Jaccard for single-element sequences
-    c1 = Counter(seq1)
-    c2 = Counter(seq2)
-    all_keys = set(c1.keys()) | set(c2.keys())
-    intersection_count = sum(min(c1[k], c2[k]) for k in all_keys)
-    union_count = sum(max(c1[k], c2[k]) for k in all_keys)
-    return intersection_count / union_count if union_count > 0 else 0.0
+    if len1 >= 2 and len2 >= 2:
+        return compute_ordered_ngram_multiset_similarity(seq1, seq2, n=2)
+
+    if len1 == 1 and len2 == 1:
+        c1 = Counter(seq1)
+        c2 = Counter(seq2)
+        all_keys = set(c1.keys()) | set(c2.keys())
+        intersection_count = sum(min(c1[k], c2[k]) for k in all_keys)
+        union_count = sum(max(c1[k], c2[k]) for k in all_keys)
+        return intersection_count / union_count if union_count > 0 else 0.0
+
+    # Length mismatch (e.g. one length == 1, other >= 2)
+    return 0.0
 
 
 def _cosine_similarity(vec1: Sequence[int], vec2: Sequence[int]) -> float | None:
@@ -95,10 +105,13 @@ def compute_segment_similarity(
     Compute multi-channel symbolic similarity between two segment representations.
 
     Integrates 4 separate evidence channels:
-      1. Melodic Interval Channel (weight_melodic = 0.40): Symmetric stream bipartite matching.
-      2. Rhythmic IOI Ratio Channel (weight_rhythmic = 0.30): Ordered n-gram multiset Jaccard.
-      3. Texture Profile Channel (weight_texture = 0.15): Attack simultaneity profile cosine similarity.
-      4. Sounding Pitch-Class Channel (weight_pitchclass = 0.15): 12-bin pitch-class cosine similarity.
+      1. Melodic Interval Channel (weight_melodic = 0.40): Symmetric stream bipartite matching using
+         ordered 2-gram multiset Jaccard (with single-element 1-gram fallback).
+      2. Rhythmic IOI Ratio Channel (weight_rhythmic = 0.30): Ordered 2-gram multiset Jaccard
+         (with single-element 1-gram fallback).
+      3. Texture Profile Channel (weight_texture = 0.15): Note attack simultaneity sequence ordered 2-gram
+         multiset Jaccard (with single-element 1-gram fallback).
+      4. Sounding Pitch-Class Channel (weight_pitchclass = 0.15): 12-bin pitch-class attack cosine similarity.
 
     Missing/empty evidence channels return None and the composite score is normalized
     across available evidence channels. Returns 0.0 if total available weight < 0.20.
@@ -140,13 +153,13 @@ def compute_segment_similarity(
         weighted_scores += policy.weight_rhythmic * rhythmic_sim
         available_weights += policy.weight_rhythmic
 
-    # 3. Texture channel (weight_texture = 0.15: attack simultaneity sequence ordered 2-gram multiset Jaccard)
+    # 3. Texture channel (weight_texture = 0.15: attack simultaneity sequence ordered 2-gram multiset Jaccard with 1-gram fallback)
     texture_sim = compute_sequence_multiset_similarity(rep1.texture_profile, rep2.texture_profile)
     if texture_sim is not None:
         weighted_scores += policy.weight_texture * texture_sim
         available_weights += policy.weight_texture
 
-    # 4. Sounding Pitch-class channel (using pitch_class_counts)
+    # 4. Sounding Pitch-class channel (using pitch_class_counts cosine similarity)
     pc_sim = _cosine_similarity(rep1.pitch_class_counts, rep2.pitch_class_counts)
     if pc_sim is not None:
         weighted_scores += policy.weight_pitchclass * pc_sim

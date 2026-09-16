@@ -3,8 +3,8 @@ True Two-Process Reproducibility Verification Script for CTU Pipeline.
 
 Launches two independent Python subprocess workers.
 Each worker independently loads the manifest, loads all 141 scores from disk,
-runs CTU discovery, generates activity-matched controls, and runs held-out validation.
-Compares exact outputs and lineage hashes between Process A and Process B.
+runs CTU discovery, builds matched control pairs, and runs held-out validation.
+Compares exact detailed outputs, complete pair records, and lineage hashes between Process A and Process B.
 """
 
 import json
@@ -14,6 +14,7 @@ import tempfile
 from pathlib import Path
 
 WORKER_SCRIPT = """
+import hashlib
 import json
 import sys
 from pathlib import Path
@@ -32,12 +33,15 @@ from russian_piano_composer.domain.score import (
 )
 from russian_piano_composer.theory.meter import TimeSignature
 from russian_piano_composer.theory.pitch import PitchLetter, SpelledPitch
+from russian_piano_composer.ctu.controls import build_matched_control_pairs
 from russian_piano_composer.ctu.discovery import discover_ctus_for_score
 from russian_piano_composer.ctu.models import (
     compute_candidate_set_hash,
+    compute_control_pair_set_hash,
     compute_ctu_schema_semantic_hash,
     compute_segment_representation_semantic_hash,
     compute_similarity_semantic_hash,
+    compute_validation_semantic_hash,
 )
 from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy, CTUValidationPolicy
 from russian_piano_composer.ctu.validation import validate_ctu_future_reuse
@@ -135,6 +139,7 @@ def run_worker(out_json_path: str) -> None:
     scores_by_id = {}
     discovery_results = []
     piece_hashes = {}
+    detailed_pairs_records = []
 
     for source in manifest.sources:
         corpus_dir = interim_base / source.corpus_id
@@ -146,6 +151,20 @@ def run_worker(out_json_path: str) -> None:
             disc_res = discover_ctus_for_score(score, manifest_hash=manifest_hash, policy=disc_policy)
             discovery_results.append(disc_res)
 
+            pairs = build_matched_control_pairs(score, disc_res, val_policy, manifest_hash)
+            for p in pairs:
+                detailed_pairs_records.append({
+                    "piece_id": piece_id,
+                    "candidate_id": p.target_candidate_id,
+                    "target_span": [p.target_ctu.span.start.measure_index, p.target_ctu.span.end.measure_index],
+                    "target_rep_hash": p.target_ctu.representation_hash,
+                    "target_disc_score": p.target_ctu.discovery_score,
+                    "control_id": p.control_candidate.candidate_id if p.control_candidate else None,
+                    "control_span": [p.control_candidate.span.start.measure_index, p.control_candidate.span.end.measure_index] if p.control_candidate else None,
+                    "control_rep_hash": p.control_candidate.representation_hash if p.control_candidate else None,
+                    "is_available": p.is_available,
+                })
+
     val_res = validate_ctu_future_reuse(scores_by_id, tuple(discovery_results), manifest_hash, disc_policy, val_policy)
 
     payload = {
@@ -155,26 +174,41 @@ def run_worker(out_json_path: str) -> None:
         "schema_semantic_hash": compute_ctu_schema_semantic_hash(),
         "representation_semantic_hash": compute_segment_representation_semantic_hash(),
         "similarity_semantic_hash": compute_similarity_semantic_hash(),
+        "validation_semantic_hash": compute_validation_semantic_hash(),
         "discovery_policy_hash": disc_policy.compute_policy_hash(),
         "validation_policy_hash": val_policy.compute_policy_hash(),
         "candidate_set_hash": val_res.candidate_set_hash,
+        "control_pair_set_hash": val_res.control_pair_set_hash,
         "validation_result_hash": val_res.compute_validation_result_hash(),
         "mean_ctu_future_score": val_res.mean_ctu_future_score,
         "mean_control_future_score": val_res.mean_control_future_score,
         "mean_difference": val_res.mean_difference,
         "cohens_d": val_res.cohens_d,
+        "bootstrap_ci": [val_res.bootstrap_ci_lower, val_res.bootstrap_ci_upper],
         "permutation_p_value": val_res.permutation_p_value,
+        "permutation_extreme_count": val_res.permutation_extreme_count,
+        "permutation_iterations": val_res.permutation_iterations,
         "empirical_status": val_res.empirical_status.value,
+        "total_requested_controls": val_res.total_requested_controls,
+        "valid_matched_controls": val_res.valid_matched_controls,
+        "unavailable_controls": val_res.unavailable_controls,
+        "detailed_pairs": detailed_pairs_records,
         "piece_records": [
             {
                 "piece_id": r.piece_id,
                 "ctu": r.ctu_mean_future_score,
                 "ctrl": r.control_mean_future_score,
                 "diff": r.difference,
+                "matched_pairs": r.matched_pair_count,
+                "unavailable": r.unavailable_control_count,
             }
             for r in val_res.piece_records
         ]
     }
+
+    # Compute process payload hash over complete canonical payload json
+    payload_encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    payload["process_payload_hash"] = hashlib.sha256(payload_encoded).hexdigest()
 
     with open(out_json_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, indent=2)
@@ -196,6 +230,10 @@ def main() -> None:
 
         worker_code_path.write_text(WORKER_SCRIPT, encoding="utf-8")
 
+        import os
+        worker_env = os.environ.copy()
+        worker_env["PYTHONPATH"] = "src"
+
         # Launch Worker Process A
         print("Launching Process A...")
         proc_a = subprocess.run(
@@ -203,6 +241,7 @@ def main() -> None:
             capture_output=True,
             text=True,
             check=False,
+            env=worker_env,
         )
         if proc_a.returncode != 0:
             print(f"Process A FAILED:\n{proc_a.stderr}")
@@ -215,6 +254,7 @@ def main() -> None:
             capture_output=True,
             text=True,
             check=False,
+            env=worker_env,
         )
         if proc_b.returncode != 0:
             print(f"Process B FAILED:\n{proc_b.stderr}")
@@ -226,25 +266,34 @@ def main() -> None:
         with open(out_b_path, encoding="utf-8") as f:
             data_b = json.load(f)
 
+        payload_hash_a = data_a.get("process_payload_hash", "")
+        payload_hash_b = data_b.get("process_payload_hash", "")
+
         # Compare exact keys and values between Process A and Process B
         mismatches = []
         for key in data_a:
             if data_a[key] != data_b.get(key):
                 mismatches.append(f"Field mismatch for '{key}': A={data_a[key]} vs B={data_b.get(key)}")
 
-        if mismatches:
+        if mismatches or payload_hash_a != payload_hash_b:
             print("REPRODUCIBILITY ERROR: Mismatches found between Process A and Process B:")
             for m in mismatches:
                 print(f"  - {m}")
+            if payload_hash_a != payload_hash_b:
+                print(f"  - Payload hash mismatch: Process A={payload_hash_a} vs Process B={payload_hash_b}")
             sys.exit(1)
 
         print("\n--- TRUE TWO-PROCESS REPRODUCIBILITY AUDIT: PASS ---")
         print(f"  Processed Pieces:           {len(data_a['piece_ids'])} / 141")
+        print(f"  Process A Payload Hash:     {payload_hash_a}")
+        print(f"  Process B Payload Hash:     {payload_hash_b}")
         print(f"  Candidate Set Hash:         {data_a['candidate_set_hash']}")
+        print(f"  Control Pair Set Hash:      {data_a['control_pair_set_hash']}")
         print(f"  Validation Result Hash:     {data_a['validation_result_hash']}")
         print(f"  CTU Schema Semantic Hash:   {data_a['schema_semantic_hash']}")
         print(f"  Representation Sem. Hash:   {data_a['representation_semantic_hash']}")
         print(f"  Similarity Semantic Hash:   {data_a['similarity_semantic_hash']}")
+        print(f"  Validation Semantic Hash:   {data_a['validation_semantic_hash']}")
         print(f"  Discovery Policy Hash:      {data_a['discovery_policy_hash']}")
         print(f"  Validation Policy Hash:     {data_a['validation_policy_hash']}")
         print(f"  Empirical Status:           {data_a['empirical_status']}")

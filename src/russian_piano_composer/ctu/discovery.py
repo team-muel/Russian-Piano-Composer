@@ -4,7 +4,6 @@ Unsupervised CTU discovery engine and non-maximum suppression (NMS) deduplicatio
 
 import hashlib
 
-from russian_piano_composer.ctu.controls import generate_matched_control
 from russian_piano_composer.ctu.models import (
     CTUCandidate,
     CTUDiscoveryResult,
@@ -32,6 +31,8 @@ def discover_ctus_for_score(
     """
     Perform unsupervised CTU candidate generation, recurrence scoring, and NMS deduplication
     strictly within the discovery region of a single canonical score.
+
+    Note: Control generation is separate and performed during validation via build_matched_control_pairs.
     """
     if policy is None:
         policy = CTUDiscoveryPolicy()
@@ -49,7 +50,6 @@ def discover_ctus_for_score(
             discovery_measures=discovery_measures,
             is_eligible=False,
             retained_ctus=(),
-            matched_controls=(),
             raw_candidate_count=0,
             post_dedup_candidate_count=0,
             manifest_hash=manifest_hash,
@@ -69,7 +69,6 @@ def discover_ctus_for_score(
             discovery_measures=discovery_measures,
             is_eligible=True,
             retained_ctus=(),
-            matched_controls=(),
             raw_candidate_count=0,
             post_dedup_candidate_count=0,
             manifest_hash=manifest_hash,
@@ -132,22 +131,6 @@ def discover_ctus_for_score(
 
     post_dedup_count = len(retained)
 
-    # 6. Generate matched negative control segments for retained CTUs
-    controls: list[CTUCandidate] = []
-    for c_idx, ctu in enumerate(retained):
-        ctrl_cand = generate_matched_control(
-            score=score,
-            ctu=ctu,
-            control_index=c_idx,
-            discovery_measure_count=discovery_measures,
-            manifest_hash=manifest_hash,
-            policy_hash=policy_hash,
-            min_event_count=policy.min_event_count,
-            existing_ctus=tuple(retained),
-        )
-        if ctrl_cand is not None:
-            controls.append(ctrl_cand)
-
     return CTUDiscoveryResult(
         piece_id=score.piece_id,
         corpus_id=score.corpus_id,
@@ -156,7 +139,6 @@ def discover_ctus_for_score(
         discovery_measures=discovery_measures,
         is_eligible=True,
         retained_ctus=tuple(retained),
-        matched_controls=tuple(controls),
         raw_candidate_count=raw_count,
         post_dedup_candidate_count=post_dedup_count,
         manifest_hash=manifest_hash,

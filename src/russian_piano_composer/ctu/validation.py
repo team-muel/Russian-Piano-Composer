@@ -3,17 +3,22 @@ Held-out future-reuse validation pipeline and paired statistical inference.
 """
 
 import math
+from collections.abc import Sequence
 from fractions import Fraction
 
+from russian_piano_composer.ctu.controls import build_matched_control_pairs
 from russian_piano_composer.ctu.models import (
     CTUCandidate,
     CTUDiscoveryResult,
     CTUValidationResult,
     EmpiricalCTUStatus,
+    MatchedControlPair,
     PieceValidationRecord,
     SegmentPosition,
     SegmentSpan,
     compute_candidate_set_hash,
+    compute_control_pair_set_hash,
+    compute_validation_semantic_hash,
 )
 from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy, CTUValidationPolicy
 from russian_piano_composer.ctu.representation import extract_segment_representation
@@ -61,12 +66,14 @@ def validate_ctu_future_reuse(
     manifest_hash: str,
     disc_policy: CTUDiscoveryPolicy | None = None,
     val_policy: CTUValidationPolicy | None = None,
+    matched_control_pairs: Sequence[MatchedControlPair] | None = None,
 ) -> CTUValidationResult:
     """
     Perform held-out future-reuse validation across eligible pieces in the corpus.
 
-    Anti-leakage: Future-region similarity is evaluated strictly after all discovery decisions are frozen.
-    Computes piece-level paired differences and non-parametric permutation / bootstrap statistics.
+    Controls are generated from val_policy via build_matched_control_pairs.
+    Calculates paired future-reuse metrics only over successfully matched CTU/Control pairs.
+    If a control is CONTROL_UNAVAILABLE, that exact CTU/control pair is excluded from both CTU and control averages.
     """
     if disc_policy is None:
         disc_policy = CTUDiscoveryPolicy()
@@ -75,10 +82,16 @@ def validate_ctu_future_reuse(
 
     disc_hash = disc_policy.compute_policy_hash()
     val_hash = val_policy.compute_policy_hash()
+    val_sem_hash = compute_validation_semantic_hash()
 
     total_pieces = len(discovery_results)
     eligible_records: list[PieceValidationRecord] = []
+    all_control_pairs: list[MatchedControlPair] = []
     ineligible_count = 0
+
+    total_requested = 0
+    total_valid_matched = 0
+    total_unavailable = 0
 
     for disc_res in discovery_results:
         if not disc_res.is_eligible or not disc_res.retained_ctus:
@@ -90,23 +103,47 @@ def validate_ctu_future_reuse(
             ineligible_count += 1
             continue
 
-        # Evaluate future reuse scores for retained CTUs and matched controls
-        ctu_future_scores: list[float] = []
-        for ctu in disc_res.retained_ctus:
-            fs = _compute_future_reuse_score(
-                score, ctu, disc_res.discovery_measures, disc_res.total_measures, disc_policy
+        if matched_control_pairs is not None:
+            pairs = tuple(p for p in matched_control_pairs if p.target_ctu.piece_id == disc_res.piece_id)
+        else:
+            # Generate matched control pairs explicitly governed by val_policy
+            pairs = build_matched_control_pairs(
+                score=score,
+                discovery_result=disc_res,
+                validation_policy=val_policy,
+                manifest_hash=manifest_hash,
             )
-            ctu_future_scores.append(fs)
+        all_control_pairs.extend(pairs)
 
-        control_future_scores: list[float] = []
-        for ctrl in disc_res.matched_controls:
-            fs = _compute_future_reuse_score(
-                score, ctrl, disc_res.discovery_measures, disc_res.total_measures, disc_policy
+        ctu_paired_scores: list[float] = []
+        ctrl_paired_scores: list[float] = []
+        unavailable_in_piece = 0
+
+        for pair in pairs:
+            total_requested += 1
+            if not pair.is_available or pair.control_candidate is None:
+                total_unavailable += 1
+                unavailable_in_piece += 1
+                continue
+
+            total_valid_matched += 1
+
+            ctu_fs = _compute_future_reuse_score(
+                score, pair.target_ctu, disc_res.discovery_measures, disc_res.total_measures, disc_policy
             )
-            control_future_scores.append(fs)
+            ctrl_fs = _compute_future_reuse_score(
+                score, pair.control_candidate, disc_res.discovery_measures, disc_res.total_measures, disc_policy
+            )
 
-        mean_ctu_fs = sum(ctu_future_scores) / len(ctu_future_scores) if ctu_future_scores else 0.0
-        mean_ctrl_fs = sum(control_future_scores) / len(control_future_scores) if control_future_scores else 0.0
+            ctu_paired_scores.append(ctu_fs)
+            ctrl_paired_scores.append(ctrl_fs)
+
+        if not ctu_paired_scores:
+            ineligible_count += 1
+            continue
+
+        mean_ctu_fs = sum(ctu_paired_scores) / len(ctu_paired_scores)
+        mean_ctrl_fs = sum(ctrl_paired_scores) / len(ctrl_paired_scores)
         diff = mean_ctu_fs - mean_ctrl_fs
 
         eligible_records.append(
@@ -116,10 +153,15 @@ def validate_ctu_future_reuse(
                 ctu_mean_future_score=round(mean_ctu_fs, 4),
                 control_mean_future_score=round(mean_ctrl_fs, 4),
                 difference=round(diff, 4),
+                matched_pair_count=len(ctu_paired_scores),
+                unavailable_control_count=unavailable_in_piece,
             )
         )
 
     eligible_count = len(eligible_records)
+
+    cand_set_hash = compute_candidate_set_hash(discovery_results)
+    ctrl_set_hash = compute_control_pair_set_hash(all_control_pairs)
 
     if eligible_count == 0:
         return CTUValidationResult(
@@ -139,6 +181,14 @@ def validate_ctu_future_reuse(
             manifest_hash=manifest_hash,
             discovery_policy_hash=disc_hash,
             validation_policy_hash=val_hash,
+            validation_semantic_hash=val_sem_hash,
+            candidate_set_hash=cand_set_hash,
+            control_pair_set_hash=ctrl_set_hash,
+            permutation_iterations=val_policy.permutation_iterations,
+            permutation_extreme_count=val_policy.permutation_iterations,
+            total_requested_controls=total_requested,
+            valid_matched_controls=total_valid_matched,
+            unavailable_controls=total_unavailable,
         )
 
     # Calculate corpus-level paired statistics
@@ -161,7 +211,7 @@ def validate_ctu_future_reuse(
     else:
         cohens_d = 0.0
 
-    # True two-sided paired sign-flip permutation test (10,000 iterations)
+    # True two-sided paired sign-flip permutation test
     ctx = RandomContext(root_seed=val_policy.random_seed)
     perm_rng = ctx.child("permutation_test").python_rng()
 
@@ -173,12 +223,11 @@ def validate_ctu_future_reuse(
         if abs(perm_mean) >= observed_abs_mean:
             extreme_count += 1
 
-    # Monte Carlo correction p-value: never 0.0000
+    # Monte Carlo correction p-value: (extreme_count + 1) / (iterations + 1)
     permutation_p = (extreme_count + 1) / (val_policy.permutation_iterations + 1)
 
     # Bootstrap 95% Confidence Interval for mean difference
     boot_rng = ctx.child("bootstrap_ci").python_rng()
-
     boot_means: list[float] = []
 
     for _ in range(val_policy.bootstrap_iterations):
@@ -197,8 +246,6 @@ def validate_ctu_future_reuse(
     else:
         status = EmpiricalCTUStatus.CTU_INCONCLUSIVE
 
-    cand_set_hash = compute_candidate_set_hash(discovery_results)
-
     return CTUValidationResult(
         total_pieces=total_pieces,
         eligible_pieces=eligible_count,
@@ -216,5 +263,12 @@ def validate_ctu_future_reuse(
         manifest_hash=manifest_hash,
         discovery_policy_hash=disc_hash,
         validation_policy_hash=val_hash,
+        validation_semantic_hash=val_sem_hash,
         candidate_set_hash=cand_set_hash,
+        control_pair_set_hash=ctrl_set_hash,
+        permutation_iterations=val_policy.permutation_iterations,
+        permutation_extreme_count=extreme_count,
+        total_requested_controls=total_requested,
+        valid_matched_controls=total_valid_matched,
+        unavailable_controls=total_unavailable,
     )
