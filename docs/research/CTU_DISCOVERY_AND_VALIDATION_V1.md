@@ -20,7 +20,7 @@ The goal of RC-009B is to discover operational thematic units within symbolic pi
    No information from the future validation region influenced candidate generation, similarity weights, candidate filtering, or ranking.
 3. **Role-Blind Discovery**: Scores were processed without composer, style, or group labels. Corpus metadata was attached solely post-hoc for summary reporting.
 4. **Polyphonic Texture Respect**: Pitch and interval evidence maintains separate `(staff, voice)` streams without collapsing multi-voice textures into a single top-note pseudo-melody or assuming `staff == hand`. Melodic transitions are restricted strictly to consecutive single-note attacked onsets per voice stream (adjacent single-note onsets only; no interval bridging across chords).
-5. **Fail-Closed Activity Control Matching**: Negative controls require exact piece, measure length, discovery region placement, $\text{IoU} < 0.50$ with the target CTU and all retained CTUs, and activity matching within $\pm 25\%$ of note attack count and distinct onset count. Unconditional fallbacks are strictly prohibited.
+5. **Fail-Closed Activity Control Matching**: Negative controls require exact piece, measure length, discovery region placement, $\text{IoU} < 0.50$ with the target CTU and all retained CTUs, and activity matching within $\pm 25\%$ of note attack count and distinct onset count. Unconditional fallbacks are strictly prohibited. If no valid control exists, `CONTROL_UNAVAILABLE` is assigned and the pair is excluded from paired difference statistics.
 
 ---
 
@@ -107,18 +107,20 @@ Statistical hypothesis testing across eligible pieces:
 - **Raw Candidate Windows Generated**: 40,837
 - **Post-NMS Retained CTUs**: 705 (5 CTUs per piece retained)
 - **Requested Control Pairs**: 705
-- **Valid Matched Control Pairs**: 705
-- **Unavailable Control Pairs**: 0
+- **Valid Matched Control Pairs**: 660
+- **Unavailable Control Pairs**: 45
 - **Fallback Count**: 0 (Strict 0)
 
 ### Statistical Validation Outcome
-- **Mean CTU Future Reuse Score**: **0.7146**
-- **Mean Control Future Reuse Score**: **0.6537**
-- **Mean Paired Difference ($\bar{\Delta}$)**: **+0.0609**
-- **Paired Effect Size (Cohen's $d_z$)**: **0.3037**
-- **95% Bootstrap Confidence Interval**: **[0.0281, 0.0931]**
-- **Permutation Test p-value**: **0.0006**
-- **Positive Effect Fraction**: **63.83%** (90 out of 141 pieces showed higher CTU future reuse than matched controls)
+- **Mean CTU Future Reuse Score**: **0.7167**
+- **Mean Control Future Reuse Score**: **0.6498**
+- **Mean Paired Difference ($\bar{\Delta}$)**: **+0.0669**
+- **Paired Effect Size (Cohen's $d_z$)**: **0.3497**
+- **95% Bootstrap Confidence Interval**: **[0.0349, 0.0991]**
+- **Permutation Test Iterations**: **10,000**
+- **Permutation Extreme Count**: **1**
+- **Exact Corrected Permutation p-value**: **0.0002** ($p = (1 + 1) / (10000 + 1) = 2 / 10001 \approx 0.0002$)
+- **Positive Effect Fraction**: **64.75%** (90 out of 139 eligible pieces with matched controls showed higher CTU future reuse than matched controls)
 
 ---
 
@@ -130,11 +132,15 @@ Statistical hypothesis testing across eligible pieces:
 | **CTU Schema Version** | `1` |
 | **CTU Schema Semantic Hash** | `03e8103ae9d7d534ded951b781ee6d43269a046fc787c543029c5f9ce3dd0ec1` |
 | **Segment Representation Hash** | `967c42a2f47e16dbc6ce3b160ff56284298c73524b46133b6df116ef06db3539` |
-| **Similarity Semantic Hash** | `9a6e9350eecbd445fdef4f613127a219e0e02088bd2bd7c626f5740d46e09f72` |
+| **Similarity Semantic Hash** | `9cdd0387050e9c4aa7025f333da975ed02e453b345ebda3622266343fdb475e2` |
 | **Discovery Policy Hash** | `df0810aa9601131df59e1341d6281ce339e1d97b8c993d0baf453fa4a31f0367` |
+| **Validation Semantic Hash** | `cb62e4587e415f8500dc52ece0e5ecec68e42c72c7cc7a81b5937d233f877466` |
 | **Validation Policy Hash** | `de1fcc0804270f62f104e50958e490d8c3b617b800b578797dee637a7a246e30` |
-| **Candidate Set Hash** | `cca7bb139e3286633f2e087ca3e079394e7da1f585df707fe8c4e93582e1811e` |
-| **Validation Result Hash** | `dead5806bee3483103231d85e2bf7a4ce9cbcd03a48155db20253cefed8b0ec4` |
+| **Candidate Set Hash** | `43fda7ba9503df0650fa4e2fb03ff897452a90adf225650d2d785d71a6f6ba8d` |
+| **Control Pair Set Hash** | `2f7e25aca378bafffb8efeccaabf682eb84487ea0cbbebc69b56fafae519c96e` |
+| **Validation Result Hash** | `4f6878a1cd0e79ca8aa79e44d0ea055fd022f160b773612df419331d27ceebf3` |
+| **Process A Payload Hash** | `133f101a85b29b439abce7462dc2258c71290734b1e86c740f0b124e6898b0ae` |
+| **Process B Payload Hash** | `133f101a85b29b439abce7462dc2258c71290734b1e86c740f0b124e6898b0ae` |
 
 ---
 
@@ -145,6 +151,6 @@ $$
 $$
 
 ### Scientific Interpretation
-Unsupervised Candidate Thematic Units (CTUs) discovered solely within the initial 60% discovery region of canonical symbolic scores exhibit statistically significant higher future-reuse scores in the temporally held-out 40% region ($p = 0.0006, d_z = 0.3037, 95\%\text{ CI } [0.0281, 0.0931]$) compared to fail-closed activity-matched random negative control segments across all 141 pieces.
+Unsupervised Candidate Thematic Units (CTUs) discovered solely within the initial 60% discovery region of canonical symbolic scores exhibit statistically significant higher future-reuse scores in the temporally held-out 40% region ($p = 0.0002, d_z = 0.3497, 95\%\text{ CI } [0.0349, 0.0991]$) compared to fail-closed activity-matched random negative control segments across all 141 pieces.
 
 *Note: `CTU_VALIDATED` is an operational computational status confirming higher future recurrence/developmental reuse under frozen V1 semantics. It does NOT imply human musicological theme adjudication or ground truth consensus.*
