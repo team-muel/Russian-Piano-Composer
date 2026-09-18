@@ -11,7 +11,7 @@ An interpretable symbolic composition system for autonomous generation of origin
 
 ## Status
 
-**Current milestone**: RC-009A (Objective Descriptive Music Feature Semantics & Reproducibility)
+**Current milestone**: RC-009B (Unsupervised Candidate Thematic Unit Discovery & Held-Out Future-Reuse Validation)
 
 ## Quick Start
 
