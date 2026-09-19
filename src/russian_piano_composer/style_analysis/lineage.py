@@ -117,22 +117,50 @@ def compute_evaluation_result_hash(
     perm_result: ExactComposerPermutationResult,
 ) -> str:
     """
-    Deterministic SHA-256 hash of primary evaluation results and permutation outcome.
+    Deterministic SHA-256 hash of complete primary evaluation results and all 20 permutation records.
     """
     canonical = {
         "model_name": eval_c.model_name,
         "macro_pair_auc": eval_c.macro_pair_auc,
         "num_folds_auc_gt_050": eval_c.num_folds_auc_gt_050,
-        "fold_aucs": [fr.roc_auc for fr in eval_c.fold_results],
+        "fold_records": [
+            {
+                "fold_index": fr.fold_index,
+                "held_out_russian": fr.held_out_russian,
+                "held_out_control": fr.held_out_control,
+                "n_test_russian_pieces": fr.n_test_russian_pieces,
+                "n_test_control_pieces": fr.n_test_control_pieces,
+                "roc_auc": fr.roc_auc,
+                "balanced_accuracy": fr.balanced_accuracy,
+                "sensitivity": fr.sensitivity,
+                "specificity": fr.specificity,
+                "brier_score": fr.brier_score,
+            }
+            for fr in eval_c.fold_results
+        ],
         "composer_held_out_auc": eval_c.composer_held_out_auc,
-        "exact_p_value": perm_result.exact_p_value,
+        "permutation_records": [
+            {
+                "assignment_index": pr.assignment_index,
+                "class_1_composers": list(pr.class_1_composers),
+                "class_0_composers": list(pr.class_0_composers),
+                "complement_assignment_index": pr.complement_assignment_index,
+                "split_plan_hash": pr.split_plan_hash,
+                "macro_pair_auc": pr.macro_pair_auc,
+                "num_folds_auc_gt_050": pr.num_folds_auc_gt_050,
+                "is_observed_assignment": pr.is_observed_assignment,
+            }
+            for pr in perm_result.permutation_records
+        ],
+        "all_permutation_aucs": list(perm_result.all_permutation_aucs),
         "extreme_count": perm_result.extreme_count,
-        "observed_rank": perm_result.observed_rank,
+        "exact_p_value": perm_result.exact_p_value,
         "observed_rank_min": perm_result.observed_rank_min,
         "observed_rank_max": perm_result.observed_rank_max,
         "observed_rank_interval": perm_result.observed_rank_interval,
         "tied_rank_count": perm_result.tied_rank_count,
         "minimum_attainable_p_value": perm_result.minimum_attainable_p_value,
+        "symmetry_verified": perm_result.symmetry_verified,
         "empirical_status": perm_result.empirical_status.value,
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")

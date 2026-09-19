@@ -16,18 +16,18 @@
 | **CTU Schema Semantic Hash** | `03e8103ae9d7d534ded951b781ee6d43269a046fc787c543029c5f9ce3dd0ec1` |
 | **Representation Semantic Hash** | `967c42a2f47e16dbc6ce3b160ff56284298c73524b46133b6df116ef06db3539` |
 | **Similarity Semantic Hash** | `9cdd0387050e9c4aa7025f333da975ed02e453b345ebda3622266343fdb475e2` |
-| **CTU Style Feature Schema V1 Hash (MODEL_B)** | `3806cd743b1c97230c015c25136849f8694235814ed0083935ed78f9fe92dca4` |
+| **CTU Style Feature Schema V1 Hash** | `3806cd743b1c97230c015c25136849f8694235814ed0083935ed78f9fe92dca4` |
 | **MODEL_A Schema Hash** | `a825ea8f33a88fa6588e1bb4e6c9644c9c12c79824c6e9eca8eb7e162b531550` |
-| **MODEL_B Schema Hash** | `3806cd743b1c97230c015c25136849f8694235814ed0083935ed78f9fe92dca4` |
-| **MODEL_C Composite Schema Hash** | `2e95c77615bf402a1245f8fd014da72c73839a5fac4dd299d2014f3e68a33b80` |
-| **Role-Blind Feature Matrix Hash (MODEL_C)** | `dbdd6736a83f205d2ee3b4ee0192dba477209408cdbde6cdeb021214718c23a0` |
+| **MODEL_B Schema Hash** | `9a2839f33a90fbfed7c487474f6dd6d399a1603921af1759966d89b9061506d4` |
+| **MODEL_C Composite Schema Hash** | `cb15c54c1253003f248cffe0d5442fe45da05984fea3c2b07bf74306247bf6df` |
+| **Role-Blind Feature Matrix Hash (MODEL_C)** | `e7216079e62eb610c9e8f69442535742d08e23c0158f939ae2443e6a9c6da440` |
 | **Composer Label Assignment Hash** | `a9af08f4360b0d11abc7e416a12f6695778d15adccb9efed762a141ebf2502cb` |
 | **9-Fold Composer Split Plan Hash** | `4ad2aa5f089ec8d0ea9ea5db84f5c4aeebd32d7356402147466ef3631216df8d` |
 | **Primary Model Specification Hash** | `5535389cfca255e67f7a8e38dd933d59740a012ff33327c9cc541dcab7ff8db9` |
 | **Composer Weighting Policy Hash** | `12500a37a7949fdb812ab34044cb2db3b99fe490d1cbbd113bb39be8b3f37786` |
 | **20-Composer Permutation Plan Hash** | `20011b5f8c4b6c5e4483165daae34dea70649cf4c79a4c238c77b1839d4c37f5` |
-| **Evaluation Result Hash** | `96b29ed40e19932be5b728859fc011649cd78316d6f9757e2429b0da9f01e6bc` |
-| **Bundle Lineage Hash** | `a1d10cea7ef406f4bc89d7ee81feebe0a092f526f38f14b80e6a022db6563f08` |
+| **Evaluation Result Hash** | `3387923be44a665c526f3187c951dd9b658c614e88d1fa1bf5c5373557ead4ea` |
+| **Bundle Lineage Hash** | `ed0749b81d897089715d3b8a013b0d7dafcbc5bc4fd0849cd2b4abe6174c5247` |
 
 ---
 
@@ -185,7 +185,7 @@ Each of the 20 exact partitions constructs its own dynamic assignment-specific $
 ### 8. Scientific Interpretation & Mandatory Limitations Statement
 
 #### Scientific Interpretation
-Under rigorous composer-held-out validation, models trained on subset composers fail to generalize style boundary distinctions to unseen held-out composers. Instead of learning a shared "Russian" vs "Control" style signal, linear models fit composer-specific idiosyncrasies that do not transfer across composer boundaries. The macro AUC of `0.2964` demonstrates that held-out performance is significantly below chance, and exact permutation testing ($p = 0.9000$, rank interval `17-18 / 20`) shows that the observed Russian/Control partition ranks among the worst possible groupings out of all 20 exact partitions.
+Under rigorous composer-held-out validation, models trained on subset composers fail to generalize style boundary distinctions to unseen held-out composers. Instead of learning a shared "Russian" vs "Control" style signal, linear models fit composer-specific idiosyncrasies that do not transfer across composer boundaries. The primary model (MODEL_C) achieves a MACRO_PAIR_AUC of `0.2964`, which is below 0.50 in composer-held-out evaluation. Furthermore, under exact 20-assignment permutation testing ($p = 0.9000$, rank interval `17-18 / 20`), the observed partition received one of the lower MACRO_PAIR_AUC values among the 20 exact label assignments (tied with its label-inversion complement).
 
 #### Mandatory Scientific Limitations
 1. Only six composers are represented in the canonical corpus (Medtner, Rachmaninoff, Tchaikovsky vs. Chopin, Liszt, Schumann).
@@ -195,3 +195,4 @@ Under rigorous composer-held-out validation, models trained on subset composers 
 5. RC-010 tests discriminability within the canonical six-composer corpus, not a universal definition of Russian music.
 6. Human aesthetic judgment is not validated here.
 7. Successful discrimination does not by itself justify generative composition (and here, discrimination is NOT supported).
+

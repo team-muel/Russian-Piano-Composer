@@ -18,7 +18,10 @@ WORKER_SCRIPT = """
 import hashlib
 import json
 import sys
+import warnings
 from pathlib import Path
+
+warnings.filterwarnings("ignore")
 
 from russian_piano_composer.corpus.adapters.dcml_ms3 import load_canonical_score_from_parquet
 from russian_piano_composer.corpus.manifest import load_manifest
@@ -30,6 +33,7 @@ from russian_piano_composer.style_analysis.permutation import run_exact_composer
 from russian_piano_composer.style_analysis.splits import (
     ALL_COMPOSERS,
     RUSSIAN_COMPOSERS,
+    build_pair_holdout_plan,
     normalize_composer_name,
 )
 from russian_piano_composer.style_analysis.statistics import compute_feature_statistics
@@ -88,6 +92,23 @@ def run_worker(out_json_path: str) -> None:
         perm_result=perm_res,
     )
 
+    permutation_fold_plans = [
+        {
+            "assignment_index": pr.assignment_index,
+            "folds": [
+                {
+                    "fold_index": f.fold_index,
+                    "held_out_class_1": f.held_out_class_1,
+                    "held_out_class_0": f.held_out_class_0,
+                    "training_class_1": list(f.training_class_1),
+                    "training_class_0": list(f.training_class_0),
+                }
+                for f in build_pair_holdout_plan(pr.class_1_composers, pr.class_0_composers).folds
+            ],
+        }
+        for pr in perm_res.permutation_records
+    ]
+
     payload = {
         "manifest_hash": manifest_hash,
         "piece_count": len(scores_by_id),
@@ -112,6 +133,20 @@ def run_worker(out_json_path: str) -> None:
         "minimum_attainable_p_value": perm_res.minimum_attainable_p_value,
         "empirical_status": perm_res.empirical_status.value,
         "all_permutation_aucs": list(perm_res.all_permutation_aucs),
+        "permutation_records": [
+            {
+                "assignment_index": pr.assignment_index,
+                "class_1_composers": list(pr.class_1_composers),
+                "class_0_composers": list(pr.class_0_composers),
+                "complement_assignment_index": pr.complement_assignment_index,
+                "split_plan_hash": pr.split_plan_hash,
+                "macro_pair_auc": pr.macro_pair_auc,
+                "num_folds_auc_gt_050": pr.num_folds_auc_gt_050,
+                "is_observed_assignment": pr.is_observed_assignment,
+            }
+            for pr in perm_res.permutation_records
+        ],
+        "permutation_fold_plans": permutation_fold_plans,
         "fold_results_c": [
             {
                 "fold_index": fr.fold_index,
@@ -223,6 +258,16 @@ def main() -> None:
         # Load both payloads
         payload_a = json.loads(out_a_path.read_text(encoding="utf-8"))
         payload_b = json.loads(out_b_path.read_text(encoding="utf-8"))
+
+        # Direct structural equality comparison of complete payloads before comparing hashes
+        payload_a_clean = {k: v for k, v in payload_a.items() if k != "process_payload_hash"}
+        payload_b_clean = {k: v for k, v in payload_b.items() if k != "process_payload_hash"}
+
+        if payload_a_clean != payload_b_clean:
+            print("REPRODUCIBILITY ERROR: Process A and Process B complete clean payloads do NOT match!")
+            sys.exit(1)
+
+        print("  Process A Complete Payload == Process B Complete Payload: TRUE")
 
         hash_a = payload_a.get("process_payload_hash")
         hash_b = payload_b.get("process_payload_hash")

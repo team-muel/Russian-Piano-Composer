@@ -35,10 +35,11 @@ Predeclared predictor sets evaluated in RC-010:
 
 1. **`MODEL_A`**: 32 Category-A `ANALYSIS_READY` piece-level features from RC-009A Feature Schema V2.
    - Schema Hash: `a825ea8f33a88fa6588e1bb4e6c9644c9c12c79824c6e9eca8eb7e162b531550`
-2. **`MODEL_B`**: 14 CTU Style features (`CTU_STYLE_FEATURE_SCHEMA_V1`).
-   - Schema Hash: `3806cd743b1c97230c015c25136849f8694235814ed0083935ed78f9fe92dca4`
+2. **`MODEL_B`**: 14 CTU Style features (`CTU_STYLE_FEATURE_SCHEMA_V1`) bound with RC-009B CTU schemas, discovery policy, and candidate set.
+   - Schema Hash: `9a2839f33a90fbfed7c487474f6dd6d399a1603921af1759966d89b9061506d4`
 3. **`MODEL_C`**: `MODEL_A` + `MODEL_B` combined (46 features total). **`MODEL_C` is the PRIMARY scientific model.**
-   - Composite Schema Hash: `2e95c77615bf402a1245f8fd014da72c73839a5fac4dd299d2014f3e68a33b80`
+   - Composite Schema Hash: `cb15c54c1253003f248cffe0d5442fe45da05984fea3c2b07bf74306247bf6df`
+
 
 ---
 

@@ -193,15 +193,38 @@ def compute_style_feature_schema_hash() -> str:
 
 
 def compute_model_b_schema_hash() -> str:
-    """Convenience alias for MODEL_B schema hash."""
-    return compute_style_feature_schema_hash()
+    """
+    Deterministic composite SHA-256 hash of MODEL_B schema identity.
+    Binds CTU Style Feature Schema V1, RC-009B CTU schema semantic hash,
+    segment representation semantic hash, similarity semantic hash,
+    accepted discovery policy hash, and accepted candidate set hash.
+    """
+    from russian_piano_composer.ctu.models import (
+        compute_ctu_schema_semantic_hash,
+        compute_segment_representation_semantic_hash,
+        compute_similarity_semantic_hash,
+    )
+
+    canonical = {
+        "style_feature_schema_hash": compute_style_feature_schema_hash(),
+        "ctu_schema_semantic_hash": compute_ctu_schema_semantic_hash(),
+        "representation_semantic_hash": compute_segment_representation_semantic_hash(),
+        "similarity_semantic_hash": compute_similarity_semantic_hash(),
+        "rc009b_discovery_policy_hash": ACCEPTED_RC009B_DISCOVERY_POLICY_HASH,
+        "rc009b_candidate_set_hash": ACCEPTED_RC009B_CANDIDATE_SET_HASH,
+    }
+    encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def compute_model_c_schema_hash() -> str:
-    """Deterministic composite SHA-256 hash of MODEL_C (MODEL_A + MODEL_B)."""
+    """
+    Deterministic composite SHA-256 hash of MODEL_C (MODEL_A + MODEL_B).
+    Binds MODEL_A schema hash and MODEL_B composite schema hash.
+    """
     canonical = {
         "model_a_schema_hash": compute_model_a_schema_hash(),
-        "model_b_schema_hash": compute_style_feature_schema_hash(),
+        "model_b_schema_hash": compute_model_b_schema_hash(),
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
