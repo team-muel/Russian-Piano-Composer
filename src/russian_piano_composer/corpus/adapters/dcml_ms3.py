@@ -277,3 +277,87 @@ def ingest_score_entry_from_ms3(
         parser_name="ms3",
     )
     return score
+
+
+def load_canonical_score_from_parquet(corpus_dir: Path, target_piece_id: str) -> CanonicalScore:
+    """
+    Reconstruct a CanonicalScore from saved interim parquet files.
+    """
+    df_pieces = pd.read_parquet(corpus_dir / "pieces.parquet")
+    p_row = df_pieces[df_pieces["piece_id"] == target_piece_id].iloc[0]
+
+    df_measures = pd.read_parquet(corpus_dir / "measures.parquet")
+    p_measures = df_measures[df_measures["piece_id"] == target_piece_id].sort_values("measure_index")
+
+    df_events = pd.read_parquet(corpus_dir / "events.parquet")
+    p_events = df_events[df_events["piece_id"] == target_piece_id].sort_values("event_index")
+
+    measures: list[CanonicalMeasure] = []
+    for _, m_row in p_measures.iterrows():
+        measures.append(
+            CanonicalMeasure(
+                piece_id=str(m_row["piece_id"]),
+                measure_index=int(m_row["measure_index"]),
+                source_measure_label=str(m_row["source_measure_label"]),
+                global_onset=Fraction(int(m_row["global_onset_num"]), int(m_row["global_onset_den"])),
+                actual_duration=Fraction(int(m_row["actual_duration_num"]), int(m_row["actual_duration_den"])),
+                time_signature=TimeSignature(int(m_row["meter_numerator"]), int(m_row["meter_denominator"])),
+                expected_duration=Fraction(int(m_row["expected_duration_num"]), int(m_row["expected_duration_den"])),
+                is_pickup=bool(m_row["is_pickup"]),
+            )
+        )
+
+    events: list[CanonicalScoreEvent] = []
+    for _, e_row in p_events.iterrows():
+        p_letter = e_row["pitch_letter"]
+        pitch = None
+        if pd.notna(p_letter) and p_letter:
+            pitch = SpelledPitch(
+                letter=PitchLetter[str(p_letter)],
+                alteration=int(e_row["pitch_alteration"]),
+                octave=int(e_row["pitch_octave"]),
+            )
+
+        midi_val = int(e_row["midi"]) if pd.notna(e_row["midi"]) else None
+
+        events.append(
+            CanonicalScoreEvent(
+                piece_id=str(e_row["piece_id"]),
+                event_id=str(e_row["event_id"]),
+                event_index=int(e_row["event_index"]),
+                event_kind=EventKind(str(e_row["event_kind"])),
+                measure_index=int(e_row["measure_index"]),
+                source_measure_label=str(e_row["source_measure_label"]),
+                staff=int(e_row["staff"]),
+                voice=int(e_row["voice"]),
+                global_onset=Fraction(int(e_row["onset_num"]), int(e_row["onset_den"])),
+                offset_in_measure=Fraction(int(e_row["offset_num"]), int(e_row["offset_den"])),
+                duration=Fraction(int(e_row["duration_num"]), int(e_row["duration_den"])),
+                pitch=pitch,
+                midi=midi_val,
+                is_grace=bool(e_row["is_grace"]),
+                tie_state=TieState(str(e_row["tie_state"])),
+                source_relative_path=str(e_row["source_relative_path"]),
+                source_event_locator=str(e_row["source_event_locator"]),
+            )
+        )
+
+    return CanonicalScore(
+        piece_id=str(p_row["piece_id"]),
+        corpus_id=str(p_row["corpus_id"]),
+        corpus_role=CorpusRole(str(p_row["corpus_role"])),
+        score_entry_id=str(p_row["score_entry_id"]),
+        composer=str(p_row["composer"]),
+        title=str(p_row["title"]),
+        source_repository="http://dummy",
+        source_commit=str(p_row["source_commit"]),
+        source_relative_path=str(p_row["source_relative_path"]),
+        source_sha256=str(p_row["source_sha256"]),
+        manifest_hash=str(p_row["manifest_hash"]),
+        parser_version=str(p_row["parser_version"]),
+        measures=tuple(measures),
+        events=tuple(events),
+        canonical_schema_version=int(p_row.get("canonical_schema_version", CANONICAL_SCORE_SCHEMA_VERSION)),
+        parser_name=str(p_row.get("parser_name", "ms3")),
+    )
+
