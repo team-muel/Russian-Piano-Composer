@@ -133,10 +133,10 @@ def extract_cadence_features(
         pcs = frozenset(p % 12 for p in pitches)
         is_downbeat = (off_frac == Fraction(0, 1))
 
-        # Local window for median IOI (+/- 4 measures or 8 surrounding onsets)
+        # Local window for median IOI (+/- 4 measures)
         local_iois = [
-            iois[j] for j in range(max(0, i - 4), min(n_onsets, i + 5))
-            if j != i
+            iois[j] for j, oj in enumerate(sorted_onsets)
+            if j != i and abs(onsets_map[oj][0].measure_index - m_idx) <= policy.local_window_measures
         ]
         if not local_iois:
             local_iois = [iois[i]]
@@ -146,9 +146,10 @@ def extract_cadence_features(
         is_lengthened = (ioi >= local_median_ioi * policy.boundary_ioi_ratio_threshold)
         is_final_event = (i == n_onsets - 1)
 
-        # Rest evidence: release before next onset
+        # Rest evidence: explicit gap >= 0.5 quarter notes (Fraction(1, 8) score whole-notes)
         max_release = max(n.global_onset + n.duration for n in onset_notes)
-        has_rest = (i + 1 < n_onsets) and (max_release < sorted_onsets[i + 1])
+        min_rest_gap = Fraction(1, 8)  # 0.5 quarter notes
+        has_rest = (i + 1 < n_onsets) and ((sorted_onsets[i + 1] - max_release) >= min_rest_gap)
 
         if is_lengthened or is_final_event or (is_downbeat and ioi > local_median_ioi) or has_rest:
             strength = 0.25 * (1.0 if is_downbeat else 0.5)
@@ -209,18 +210,14 @@ def extract_cadence_features(
 
                 curr_bass_deg = (cand.bass_pitch - local_tonic) % 12
                 prev_bass_deg = (prev_bass - local_tonic) % 12
-                bass_interval = (cand.bass_pitch - prev_bass) % 12
 
-                # Authentic resolution: 5 -> 1 or 7 -> 1
+                # Authentic resolution: bass moves 5 -> 1 or 7 -> 1 relative to local tonic
                 if prev_bass_deg == 7 and curr_bass_deg == 0:
                     tonic_resolutions += 1
                     res_score += 0.6
                 elif prev_bass_deg == 11 and curr_bass_deg == 0:
                     tonic_resolutions += 1
                     res_score += 0.5
-                elif bass_interval == 5 or bass_interval == 7:  # Fourth up / Fifth down
-                    tonic_resolutions += 1
-                    res_score += 0.4
 
                 # Dominant-to-Tonic chord type proxy relative to local tonic
                 has_dom_element = ((local_tonic + 7) % 12 in prev_pcs) or ((local_tonic + 11) % 12 in prev_pcs)

@@ -57,9 +57,9 @@ Structural Schema Hash: `547406a0836da4182310dfb6f2049481fe134ecfff58894d2f7c2be
 | **TEXTURE** | `texture_interstaff_gap_mean` | Semitones | Invariant | OBSERVED | $\ge 1$ 2-staff onset |
 | **TEXTURE** | `texture_simultaneity_attack_mean` | Attacks / onset | Invariant | OBSERVED | $\ge 1$ onset |
 | **TEXTURE** | `texture_block_chord_share` | Ratio $[0, 1]$ | Invariant | HYPOTHESIS | $\ge 1$ onset |
-| **TEXTURE** | `texture_arpeggiation_proxy_rate` | Runs / measure | Invariant | HYPOTHESIS | $\ge 1$ measure |
+| **TEXTURE** | `texture_arpeggiation_proxy_rate` | Runs / measure | Sensitive by design (dilated) | HYPOTHESIS | $\ge 1$ measure |
 | **TEXTURE** | `texture_octave_doubling_share` | Ratio $[0, 1]$ | Invariant | OBSERVED | $\ge 1$ onset |
-| **TEXTURE** | `texture_repeated_note_attack_rate` | Repetitions / measure | Invariant | OBSERVED | $\ge 1$ measure |
+| **TEXTURE** | `texture_repeated_note_attack_rate` | Repetitions / measure | Sensitive by design (dilated) | OBSERVED | $\ge 1$ measure |
 | **TRAJECTORY** | `traj_register_center_slope` | Slope / piece | Invariant | HEURISTIC | $\ge 1$ note |
 | **TRAJECTORY** | `traj_register_span_slope` | Slope / piece | Invariant | HEURISTIC | $\ge 1$ note |
 | **TRAJECTORY** | `traj_attack_density_slope` | Slope / piece | Invariant | HEURISTIC | $\ge 1$ note |

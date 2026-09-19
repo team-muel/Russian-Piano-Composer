@@ -24,6 +24,7 @@ from russian_piano_composer.domain.score import (
 from russian_piano_composer.structure_analysis.extractor import extract_structural_representation
 from russian_piano_composer.structure_analysis.schema import (
     STRUCTURAL_FEATURE_CATALOG,
+    AvailabilityStatus,
     FeatureFamily,
     InvarianceClass,
     TransformationType,
@@ -453,20 +454,93 @@ FIXTURE_REGISTRY: tuple[SyntheticFixture, ...] = (
 
 
 def compute_synthetic_fixture_suite_hash(fixtures: tuple[SyntheticFixture, ...] = FIXTURE_REGISTRY) -> str:
-    """Deterministic SHA-256 hash of the complete 20-fixture suite."""
+    """Deterministic SHA-256 hash of the complete 20-fixture suite binding all note/measure data."""
     records = []
     for f in sorted(fixtures, key=lambda x: x.fixture_id):
         score = f.builder()
+        note_events = [e for e in score.events if e.event_kind == EventKind.NOTE]
+        event_list = [
+            {
+                "measure": e.measure_index,
+                "onset": str(e.global_onset),
+                "offset": str(e.offset_in_measure),
+                "duration": str(e.duration),
+                "midi": e.midi,
+                "staff": e.staff,
+                "voice": e.voice,
+            }
+            for e in score.events
+        ]
         records.append({
             "fixture_id": f.fixture_id,
             "name": f.name,
             "family": f.family_owner.value,
+            "measure_count": len(score.measures),
+            "note_count": len(note_events),
+            "events": event_list,
             "semantic_hash": compute_fixture_semantic_hash(score),
         })
     canonical = {
-        "version": "SYNTHETIC_FIXTURE_SUITE_V1",
+        "version": "SYNTHETIC_FIXTURE_SUITE_V2",
         "fixture_count": len(fixtures),
         "fixtures": records,
+    }
+    encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+@dataclass(frozen=True, slots=True)
+class SyntheticAssertionContract:
+    """Immutable definition of a directional music theory assertion."""
+
+    assertion_id: str
+    fixture_id: str
+    family: FeatureFamily
+    condition_description: str
+    expected_relational_operator: str
+
+
+# Immutable Registry of all 20 Directional Theory Assertions
+ASSERTION_REGISTRY: tuple[SyntheticAssertionContract, ...] = (
+    SyntheticAssertionContract("ASSERT_TONAL_A_VS_B_TRANSPOSITION_INVARIANCE", "A/B", FeatureFamily.TONAL, "abs(A.tonal_conf - B.tonal_conf) < 1e-4 and A.tonal_conf > 0.60", "=="),
+    SyntheticAssertionContract("ASSERT_TONAL_C_CENTER_CHANGE_DETECTION", "C", FeatureFamily.TONAL, "C.tonal_center_change_rate > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_TONAL_D_CHROMATICITY_ELEVATION", "D", FeatureFamily.TONAL, "D.chromatic_share > 0.30 and D.tonal_conf < A.tonal_conf", ">"),
+    SyntheticAssertionContract("ASSERT_SONORITY_BLOCK_VS_ARPEGGIO_CARDINALITY", "G/H", FeatureFamily.SONORITY, "G.pc_card_mean >= 3.0 and H.pc_card_mean <= 1.5", ">="),
+    SyntheticAssertionContract("ASSERT_SONORITY_D_IC1_DISSONANCE", "D", FeatureFamily.SONORITY, "D.ic1_share > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_CADENCE_E_AUTHENTIC_RESOLUTION", "E", FeatureFamily.CADENCE, "E.tonic_resolution_rate > 0.0 and E.boundary_rate > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_CADENCE_F_DECEPTIVE_MOTION", "F", FeatureFamily.CADENCE, "F.deceptive_proxy_rate > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_FORM_N_VS_O_RECAPITULATION_RETURN", "N/O", FeatureFamily.FORM, "N.late_return > 0.70 and N.late_return > O.late_return + 0.20", ">"),
+    SyntheticAssertionContract("ASSERT_VL_K_PARALLEL_DOMINANCE", "K", FeatureFamily.VOICE_LEADING, "K.parallel_motion_share > 0.75", ">"),
+    SyntheticAssertionContract("ASSERT_VL_L_CONTRARY_DOMINANCE", "L", FeatureFamily.VOICE_LEADING, "L.contrary_motion_share > 0.75", ">"),
+    SyntheticAssertionContract("ASSERT_VL_M_OBLIQUE_DOMINANCE", "M", FeatureFamily.VOICE_LEADING, "M.oblique_motion_share > 0.75", ">"),
+    SyntheticAssertionContract("ASSERT_TEXTURE_G_BLOCK_CHORD", "G", FeatureFamily.TEXTURE_REGISTER, "G.block_chord_share > 0.80", ">"),
+    SyntheticAssertionContract("ASSERT_TEXTURE_H_ARPEGGIO_PROXY", "H", FeatureFamily.TEXTURE_REGISTER, "H.arpeggiation_proxy_rate > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_TEXTURE_I_REPEATED_NOTES", "I", FeatureFamily.TEXTURE_REGISTER, "I.repeated_note_attack_rate > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_TEXTURE_J_OCTAVE_DOUBLING", "J", FeatureFamily.TEXTURE_REGISTER, "J.octave_doubling_share > 0.80", ">"),
+    SyntheticAssertionContract("ASSERT_TRAJ_P_ASCENDING_REGISTER", "P", FeatureFamily.TEMPORAL_TRAJECTORY, "P.register_center_slope > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_TRAJ_Q_DESCENDING_REGISTER", "Q", FeatureFamily.TEMPORAL_TRAJECTORY, "Q.register_center_slope < 0.0", "<"),
+    SyntheticAssertionContract("ASSERT_TRAJ_R_STABLE_REGISTER", "R", FeatureFamily.TEMPORAL_TRAJECTORY, "abs(R.register_center_slope) < 0.5", "<"),
+    SyntheticAssertionContract("ASSERT_TRAJ_S_SPARSE_TO_DENSE", "S", FeatureFamily.TEMPORAL_TRAJECTORY, "S.attack_density_slope > 0.0", ">"),
+    SyntheticAssertionContract("ASSERT_TRAJ_T_DENSE_TO_SPARSE", "T", FeatureFamily.TEMPORAL_TRAJECTORY, "T.attack_density_slope < 0.0", "<"),
+)
+
+
+def compute_synthetic_assertion_contract_hash(contracts: tuple[SyntheticAssertionContract, ...] = ASSERTION_REGISTRY) -> str:
+    """Deterministic SHA-256 hash of the complete synthetic assertion contract."""
+    records = [
+        {
+            "assertion_id": c.assertion_id,
+            "fixture_id": c.fixture_id,
+            "family": c.family.value,
+            "condition": c.condition_description,
+            "operator": c.expected_relational_operator,
+        }
+        for c in sorted(contracts, key=lambda x: x.assertion_id)
+    ]
+    canonical = {
+        "version": "SYNTHETIC_ASSERTION_CONTRACT_V1",
+        "assertion_count": len(contracts),
+        "assertions": records,
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
@@ -750,10 +824,19 @@ class MetamorphicCheckRecord:
     """Record of a metamorphic transformation check on a feature."""
 
     feature_id: str
+    fixture_id: str
     transformation: TransformationType
+    transformation_parameter: Any
+    original_value: float
+    original_availability_status: AvailabilityStatus
+    original_reason: str
+    transformed_value: float
+    transformed_availability_status: AvailabilityStatus
+    transformed_reason: str
     expected_behavior: InvarianceClass
+    expected_relation: str
+    actual_relation: str
     passed: bool
-    detail: str
 
 
 @dataclass(frozen=True, slots=True)
@@ -782,8 +865,49 @@ class ValidationResult:
     exclusion_ledger_hash: str
     invariance_contract_hash: str
     fixture_suite_hash: str
+    assertion_contract_hash: str
     overall_status: str
     validation_hash: str
+
+
+_METAMORPHIC_FEATURE_FIXTURE_MAP: dict[str, str] = {
+    "tonal_center_change_rate": "C",
+    "tonal_modulatory_index": "C",
+    "tonal_circle5_distance_mean": "C",
+    "tonal_circle5_distance_max": "C",
+    "tonal_local_confidence_std": "C",
+    "tonal_chromatic_duration_share": "D",
+    "sonority_ic1_semitone_share": "D",
+    "sonority_ic6_tritone_share": "D",
+    "sonority_harmonic_change_rate": "A",
+    "cadence_deceptive_proxy_rate": "F",
+    "form_novelty_mean": "O",
+    "vl_outer_contrary_motion_share": "L",
+    "vl_outer_oblique_motion_share": "M",
+    "vl_semitone_approach_rate": "D",
+    "vl_common_tone_retention_rate": "A",
+    "texture_arpeggiation_proxy_rate": "H",
+    "texture_repeated_note_attack_rate": "I",
+    "texture_octave_doubling_share": "J",
+    "traj_attack_density_slope": "S",
+}
+
+_METAMORPHIC_FAMILY_DEFAULT_FIXTURE: dict[FeatureFamily, str] = {
+    FeatureFamily.TONAL: "A",
+    FeatureFamily.SONORITY: "G",
+    FeatureFamily.CADENCE: "E",
+    FeatureFamily.FORM: "N",
+    FeatureFamily.VOICE_LEADING: "K",
+    FeatureFamily.TEXTURE_REGISTER: "G",
+    FeatureFamily.TEMPORAL_TRAJECTORY: "P",
+}
+
+
+def get_metamorphic_fixture_id(feature_id: str, family: FeatureFamily) -> str:
+    """Map each feature to its optimal non-vacuous fixture for metamorphic testing."""
+    if feature_id in _METAMORPHIC_FEATURE_FIXTURE_MAP:
+        return _METAMORPHIC_FEATURE_FIXTURE_MAP[feature_id]
+    return _METAMORPHIC_FAMILY_DEFAULT_FIXTURE.get(family, "A")
 
 
 def run_synthetic_and_metamorphic_validation(
@@ -1084,8 +1208,6 @@ def run_synthetic_and_metamorphic_validation(
 
     # 2. Metamorphic Invariance Checks
     metamorphic_records: list[MetamorphicCheckRecord] = []
-    base_score = fixture_scores["A"]
-    base_feats = fixture_feats["A"]
 
     test_transformations: list[tuple[TransformationType, Any]] = [
         (TransformationType.TRANSPOSITION, -7),
@@ -1099,46 +1221,77 @@ def run_synthetic_and_metamorphic_validation(
         (TransformationType.STAFF_SWAP, None),
     ]
 
-    for trans_type, param in test_transformations:
-        trans_score = apply_metamorphic_transformation(base_score, trans_type, param)
-        trans_feats = extract_structural_representation(trans_score)
+    for fdef in STRUCTURAL_FEATURE_CATALOG:
+        fid = fdef.feature_id
+        fx_id = get_metamorphic_fixture_id(fid, fdef.family)
+        base_score = fixture_scores[fx_id]
+        orig_obj = fixture_feats[fx_id][fid]
 
-        for fdef in STRUCTURAL_FEATURE_CATALOG:
-            fid = fdef.feature_id
+        for trans_type, param in test_transformations:
+            trans_score = apply_metamorphic_transformation(base_score, trans_type, param)
+            trans_feats = extract_structural_representation(trans_score)
+            trans_obj = trans_feats[fid]
             expected_behavior = get_feature_invariance_contract(fid, trans_type)
-            val_orig = base_feats[fid].value
-            val_trans = trans_feats[fid].value
 
             passed = False
-            detail = ""
+            expected_rel = ""
+            actual_rel = ""
 
             if expected_behavior == InvarianceClass.INVARIANT:
-                diff = abs(val_orig - val_trans)
-                passed = diff < 1e-4
-                detail = f"orig={val_orig}, trans={val_trans}, diff={diff}"
+                diff = abs(orig_obj.value - trans_obj.value)
+                status_equal = (orig_obj.status == trans_obj.status)
+                passed = (diff < 1e-4) and status_equal
+                expected_rel = "abs(orig - trans) < 1e-4 and status_orig == status_trans"
+                actual_rel = f"diff={diff:.6f}, orig_status={orig_obj.status.value}, trans_status={trans_obj.status.value}"
             elif expected_behavior == InvarianceClass.EQUIVARIANT:
                 if trans_type == TransformationType.TRANSPOSITION:
                     shift = int(param)
-                    diff = abs(val_trans - (val_orig + shift))
-                    passed = diff < 1e-4
-                    detail = f"orig={val_orig}, trans={val_trans}, expected={val_orig + shift}"
+                    diff = abs(trans_obj.value - (orig_obj.value + shift))
+                    status_equal = (orig_obj.status == trans_obj.status)
+                    passed = (diff < 1e-4) and status_equal
+                    expected_rel = f"abs(trans - (orig + {shift})) < 1e-4 and status_orig == status_trans"
+                    actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}, expected={orig_obj.value + shift:.4f}, orig_status={orig_obj.status.value}, trans_status={trans_obj.status.value}"
                 else:
                     passed = True
-                    detail = "equivariant checked"
+                    expected_rel = "equivariant"
+                    actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}"
             elif expected_behavior == InvarianceClass.SENSITIVE_BY_DESIGN:
-                passed = True  # Verified behavior is allowed to change
-                detail = f"sensitive by design: orig={val_orig}, trans={val_trans}"
+                if trans_type == TransformationType.STAFF_SWAP and fid == "texture_interstaff_gap_mean":
+                    passed = (orig_obj.value > 0 and trans_obj.value < 0)
+                    expected_rel = "trans < 0 < orig"
+                    actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}"
+                elif trans_type == TransformationType.TIME_DILATION and fid in (
+                    "texture_arpeggiation_proxy_rate",
+                    "texture_repeated_note_attack_rate",
+                ):
+                    passed = (orig_obj.value > 0 and trans_obj.value == 0.0)
+                    expected_rel = "orig > 0 and trans == 0.0"
+                    actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}"
+                else:
+                    passed = True
+                    expected_rel = "sensitive by design"
+                    actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}"
             else:
                 passed = True
-                detail = "not applicable"
+                expected_rel = "not applicable"
+                actual_rel = "skipped"
 
             metamorphic_records.append(
                 MetamorphicCheckRecord(
                     feature_id=fid,
+                    fixture_id=fx_id,
                     transformation=trans_type,
+                    transformation_parameter=param,
+                    original_value=orig_obj.value,
+                    original_availability_status=orig_obj.status,
+                    original_reason=orig_obj.reason,
+                    transformed_value=trans_obj.value,
+                    transformed_availability_status=trans_obj.status,
+                    transformed_reason=trans_obj.reason,
                     expected_behavior=expected_behavior,
+                    expected_relation=expected_rel,
+                    actual_relation=actual_rel,
                     passed=passed,
-                    detail=detail,
                 )
             )
 
@@ -1181,12 +1334,14 @@ def run_synthetic_and_metamorphic_validation(
 
     fixture_suite_hash = compute_synthetic_fixture_suite_hash()
     invariance_contract_hash = compute_invariance_contract_hash()
+    assertion_contract_hash = compute_synthetic_assertion_contract_hash()
 
-    # 4. Compute deterministic validation hash
+    # 4. Compute deterministic validation hash binding all per-record metamorphic & assertion records
     canonical = {
-        "version": "STRUCTURAL_VALIDATION_RESULT_V1",
+        "version": "STRUCTURAL_VALIDATION_RESULT_V2",
         "fixture_count": len(FIXTURE_REGISTRY),
         "fixture_suite_hash": fixture_suite_hash,
+        "assertion_contract_hash": assertion_contract_hash,
         "invariance_contract_hash": invariance_contract_hash,
         "exclusion_ledger_hash": exclusion_ledger_hash,
         "overall_status": overall_status,
@@ -1196,20 +1351,38 @@ def run_synthetic_and_metamorphic_validation(
                 "fixture_id": a.fixture_id,
                 "family": a.family.value,
                 "passed": a.passed,
+                "condition": a.condition_description,
                 "summary": a.actual_value_summary,
             }
             for a in assertions
         ],
-        "metamorphic_summary": {
-            "total_checks": len(metamorphic_records),
-            "passed_checks": sum(1 for m in metamorphic_records if m.passed),
-        },
+        "metamorphic_records": [
+            {
+                "feature_id": m.feature_id,
+                "fixture_id": m.fixture_id,
+                "transformation": m.transformation.value,
+                "transformation_parameter": str(m.transformation_parameter),
+                "original_value": round(m.original_value, 6),
+                "original_availability_status": m.original_availability_status.value,
+                "original_reason": m.original_reason,
+                "transformed_value": round(m.transformed_value, 6),
+                "transformed_availability_status": m.transformed_availability_status.value,
+                "transformed_reason": m.transformed_reason,
+                "expected_behavior": m.expected_behavior.value,
+                "expected_relation": m.expected_relation,
+                "actual_relation": m.actual_relation,
+                "passed": m.passed,
+            }
+            for m in metamorphic_records
+        ],
         "family_statuses": [
             {
                 "family": fs.family.value,
                 "status": fs.status,
                 "passed_assertions": fs.passed_assertions,
                 "total_assertions": fs.total_assertions,
+                "passed_metamorphic": fs.passed_metamorphic,
+                "total_metamorphic": fs.total_metamorphic,
             }
             for fs in family_statuses
         ],
@@ -1233,6 +1406,7 @@ def run_synthetic_and_metamorphic_validation(
         exclusion_ledger_hash=exclusion_ledger_hash,
         invariance_contract_hash=invariance_contract_hash,
         fixture_suite_hash=fixture_suite_hash,
+        assertion_contract_hash=assertion_contract_hash,
         overall_status=overall_status,
         validation_hash=val_hash,
     )

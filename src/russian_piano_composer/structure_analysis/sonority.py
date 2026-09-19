@@ -9,13 +9,10 @@ import hashlib
 import json
 import math
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from fractions import Fraction
 
 from russian_piano_composer.domain.score import CanonicalScore, EventKind
 from russian_piano_composer.structure_analysis.schema import AvailabilityStatus, FeatureValue
-
-if TYPE_CHECKING:
-    from fractions import Fraction
 
 
 @dataclass(frozen=True, slots=True)
@@ -51,6 +48,7 @@ def extract_sonority_features(
 
     measures = score.measures
     span_measures = max(1, max(m.measure_index for m in measures) - min(m.measure_index for m in measures) + 1) if measures else 1
+    m_dur_map = {m.measure_index: m.actual_duration for m in measures}
 
     if not notes:
         return {
@@ -115,8 +113,9 @@ def extract_sonority_features(
         # Measure float position
         # Find measure index corresponding to t
         active_m_idx = active_notes[0].measure_index if active_notes else 0
-        active_off = float(active_notes[0].offset_in_measure) if active_notes else 0.0
-        measure_pos = float(active_m_idx) + active_off
+        m_dur = m_dur_map.get(active_m_idx, Fraction(1, 1))
+        norm_off = float(active_notes[0].offset_in_measure / m_dur) if (active_notes and m_dur > 0) else 0.0
+        measure_pos = float(active_m_idx) + norm_off
 
         slice_pc_sets.append((sounding_pcs, max(0.0, slice_dur_quarters), measure_pos))
 

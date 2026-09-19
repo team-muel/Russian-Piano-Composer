@@ -6,17 +6,21 @@ stepwise resolution rates in soprano/bass, semitone approaches, common tone rete
 and minimal assignment voice-leading distance (Tymoczko metric).
 """
 
+import functools
 import hashlib
 import itertools
 import json
+import math
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from russian_piano_composer.domain.score import CanonicalScore, CanonicalScoreEvent, EventKind
-from russian_piano_composer.structure_analysis.schema import AvailabilityStatus, FeatureValue
+from scipy.optimize import linear_sum_assignment
 
 if TYPE_CHECKING:
     from fractions import Fraction
+
+from russian_piano_composer.domain.score import CanonicalScore, CanonicalScoreEvent, EventKind
+from russian_piano_composer.structure_analysis.schema import AvailabilityStatus, FeatureValue
 
 
 @dataclass(frozen=True, slots=True)
@@ -37,19 +41,22 @@ def _pc_dist(a: int, b: int) -> int:
     return min(d, 12 - d)
 
 
+@functools.cache
 def minimal_voice_leading_distance(pc_set1: frozenset[int], pc_set2: frozenset[int]) -> float:
     """
     Compute deterministic, symmetric minimal voice-leading displacement between two pitch-class sets.
 
     - For equal-cardinality sets |A| = |B| = n: finds the optimal one-to-one bijection minimizing mean step distance.
-    - For unequal cardinalities: computes the symmetric assignment distance (1/2)(C(A->B) + C(B->A)).
+    - For unequal cardinalities: expands elements to L = lcm(|A|, |B|) and solves optimal bipartite matching
+      via scipy.optimize.linear_sum_assignment, normalized by L (Tymoczko optimal transport assignment).
     - Strictly symmetric: D(A, B) == D(B, A).
     - Transposition equivariant: D(A+k, B+k) == D(A, B).
     """
     if not pc_set1 or not pc_set2:
         return 0.0
 
-    s1, s2 = list(pc_set1), list(pc_set2)
+    s1 = sorted(pc_set1)
+    s2 = sorted(pc_set2)
     n1, n2 = len(s1), len(s2)
 
     if n1 == n2:
@@ -61,10 +68,17 @@ def minimal_voice_leading_distance(pc_set1: frozenset[int], pc_set2: frozenset[i
                 min_total = float(total)
         return min_total / float(n1)
 
-    # Unequal cardinality: symmetric assignment distance
-    cost_1_to_2 = sum(min(_pc_dist(a, b) for b in s2) for a in s1) / float(n1)
-    cost_2_to_1 = sum(min(_pc_dist(b, a) for a in s1) for b in s2) / float(n2)
-    return (cost_1_to_2 + cost_2_to_1) / 2.0
+    # Unequal cardinality: expand each set to L = lcm(n1, n2) and solve optimal assignment
+    l_common = math.lcm(n1, n2)
+    rep1 = l_common // n1
+    rep2 = l_common // n2
+    exp1 = sorted(s1 * rep1)
+    exp2 = sorted(s2 * rep2)
+
+    cost_matrix = [[_pc_dist(a, b) for b in exp2] for a in exp1]
+    row_ind, col_ind = linear_sum_assignment(cost_matrix)
+    total_cost = sum(cost_matrix[r][c] for r, c in zip(row_ind, col_ind, strict=True))
+    return float(total_cost) / float(l_common)
 
 
 def extract_voice_leading_features(

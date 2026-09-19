@@ -19,6 +19,7 @@ RC-011 establishes the theory-grounded symbolic structural music representation 
 | **Master Baseline Commit** | `53fcecef76598c50e62d7f6cac6c86d9730cedbf` |
 | **Preregistration Commit** | `ad3299e0f36f4fb028a2f5125a88b19361504d27` |
 | **Preregistration Amendment 1** | `d9881562a9a206629544681a96b13d99a819cf56` |
+| **Preregistration Amendment 2** | `973ca6eddeba03163542a6d34293e261d67f0977` |
 | **Canonical Manifest Hash** | `cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212` |
 | **RC-009A Feature Schema Hash** | `55a388b490dda3089d3073463818edcbc60abf0bcbc9dd114cd5a28032976516` |
 | **RC-009A Feature Policy Hash** | `46ac0709d3b34b8e930b6f2d09723ca658cd7f29c204f235b0814f8c2a86150e` |
@@ -35,15 +36,16 @@ RC-011 establishes the theory-grounded symbolic structural music representation 
 | **Voice-Leading Policy Hash** | `1b05bbb24043839fae1c771954bfa7a8bed1f72af395c2d0d66dd932e4293324` |
 | **Texture Policy Hash** | `356996d524279b1c5d53f7e817922640e0564440a75b4b72760b26099729de9c` |
 | **Trajectory Policy Hash** | `3635098aae8631d2dc93acdb7be6885509bc54d32bb8dd55333e2037f39e347f` |
-| **Synthetic Fixture Suite Hash** | `258dcceb677f183b14d8015dc9e51b558c090f381f27c8375031a98f0616ec43` |
-| **Invariance Contract Hash** | `a21ed9cf21f2df3e75414f06556f0b69ab98694bd201733b90f46389832f58b4` |
-| **Preregistration Amendment Hash** | `50f8ffa67cb01b9521b73d3588c4e4d0210d8b744137541a38f6515b24ba56eb` |
+| **Synthetic Fixture Suite Hash** | `4c98af49d67ba7937875ad357d283d5cd2bfcec02ec4ecf33f19ddd59fe912ca` |
+| **Assertion Contract Hash** | `2e048976d9f2a126358d5b87ec67de6ce7f2c44ba258bf70e0418ee6e6fd5ce9` |
+| **Invariance Contract Hash** | `5853f73a287cd510b2de3a5cbfee27e1d661413a3971963b2a542583356ab4f9` |
+| **Preregistration Amendment Hash** | `b052e74dee4564df9537ff2ae1117bb4952dc21ae82ecf8a3510987b3c120e8a` |
 | **Exclusion Ledger Hash** | `28b142e1bbef5eeff65ee3a62a94b55e55f88841c3b5954d763d098579eac9b3` |
-| **Full Corpus Structural Matrix Hash** | `fab23da25a0c41baad5f1cd76f6bb3f927cd3592543ba7e5a5e3050d50554f2d` |
-| **Validation Result Hash** | `74e5710615d27522dd028ebae2bac545a327e51018a467e86ef9114cf38d5925` |
-| **Process A Payload Hash** | `3cac2db7aa463635cf25e380b2517e6f4906229d67894efa28f55c958919b1a8` |
-| **Process B Payload Hash** | `3cac2db7aa463635cf25e380b2517e6f4906229d67894efa28f55c958919b1a8` |
-| **Lineage Bundle Hash** | `85158c5b0f511f44296be5b833a52feee0b248c8bdd99772fb6a4700706c00b3` |
+| **Full Corpus Structural Matrix Hash** | `245034bfb0c0018d80324fd941713b8ee868e0e9a679e5836edeb72fd3459db2` |
+| **Validation Result Hash** | `7998e22780c674ed026d0168cc7b15e28baaec35f7df94d51b3c2cda23865639` |
+| **Process A Payload Hash** | `e5ac61f7f17d470702cbdc5b6dfc01655267f9f29a5c40ef2fedc4e80be3fe64` |
+| **Process B Payload Hash** | `e5ac61f7f17d470702cbdc5b6dfc01655267f9f29a5c40ef2fedc4e80be3fe64` |
+| **Lineage Bundle Hash** | `fab7fa898d1823a97146c1976c85e29ebc7e472b647b4af6cd0b62c0728f2d42` |
 
 ---
 

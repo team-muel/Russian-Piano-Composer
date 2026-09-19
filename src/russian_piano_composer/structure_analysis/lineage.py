@@ -10,12 +10,14 @@ matrix hash, and validation hash.
 import hashlib
 import json
 from dataclasses import dataclass
+from pathlib import Path
 
 from russian_piano_composer.ctu.models import (
     compute_ctu_schema_semantic_hash,
     compute_segment_representation_semantic_hash,
     compute_similarity_semantic_hash,
 )
+from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy
 from russian_piano_composer.domain.features import (
     compute_schema_semantic_hash as compute_rc009a_schema_hash,
 )
@@ -39,6 +41,17 @@ from russian_piano_composer.style_analysis.features import (
 MASTER_BASELINE_SHA: str = "53fcecef76598c50e62d7f6cac6c86d9730cedbf"
 PREREGISTRATION_COMMIT_SHA: str = "ad3299e0f36f4fb028a2f5125a88b19361504d27"
 PREREGISTRATION_AMENDMENT_1_COMMIT_SHA: str = "d9881562a9a206629544681a96b13d99a819cf56"
+PREREGISTRATION_AMENDMENT_2_COMMIT_SHA: str = "973ca6eddeba03163542a6d34293e261d67f0977"
+
+
+def compute_preregistration_amendment_hash(path: Path | None = None) -> str:
+    """Dynamically compute SHA-256 hash of RC011_PREREGISTRATION_AMENDMENT_2.md."""
+    if path is None:
+        p = Path("docs/research/RC011_PREREGISTRATION_AMENDMENT_2.md")
+        if not p.exists():
+            p = Path(__file__).resolve().parent.parent.parent.parent / "docs" / "research" / "RC011_PREREGISTRATION_AMENDMENT_2.md"
+        path = p
+    return hashlib.sha256(path.read_bytes()).hexdigest()
 
 # Accepted prior milestone constants for fail-closed checks
 ACCEPTED_CANONICAL_MANIFEST_HASH: str = "cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212"
@@ -73,6 +86,7 @@ class StructuralRepresentationLineage:
     texture_policy_hash: str
     trajectory_policy_hash: str
     synthetic_fixture_suite_hash: str
+    assertion_contract_hash: str
     invariance_contract_hash: str
     preregistration_amendment_hash: str
     exclusion_ledger_hash: str
@@ -102,6 +116,7 @@ class StructuralRepresentationLineage:
             "texture_policy_hash": self.texture_policy_hash,
             "trajectory_policy_hash": self.trajectory_policy_hash,
             "synthetic_fixture_suite_hash": self.synthetic_fixture_suite_hash,
+            "assertion_contract_hash": self.assertion_contract_hash,
             "invariance_contract_hash": self.invariance_contract_hash,
             "preregistration_amendment_hash": self.preregistration_amendment_hash,
             "exclusion_ledger_hash": self.exclusion_ledger_hash,
@@ -134,6 +149,12 @@ def verify_prior_milestone_hashes_fail_closed(
             f"RC-009A Policy hash mismatch: expected {ACCEPTED_RC009A_POLICY_HASH}, got {rc009a_policy}"
         )
 
+    ctu_policy = CTUDiscoveryPolicy().compute_policy_hash()
+    if ctu_policy != ACCEPTED_RC009B_DISCOVERY_POLICY_HASH:
+        raise ValueError(
+            f"RC-009B CTU Discovery Policy hash mismatch: expected {ACCEPTED_RC009B_DISCOVERY_POLICY_HASH}, got {ctu_policy}"
+        )
+
     ctu_schema = compute_ctu_schema_semantic_hash()
     if ctu_schema != ACCEPTED_RC009B_CTU_SCHEMA_HASH:
         raise ValueError(
@@ -163,7 +184,7 @@ def compute_structural_representation_lineage(
     manifest_hash: str,
     matrix: StructuralRepresentationMatrix,
     val_result: ValidationResult,
-    preregistration_amendment_hash: str = "50f8ffa67cb01b9521b73d3588c4e4d0210d8b744137541a38f6515b24ba56eb",
+    preregistration_amendment_hash: str | None = None,
     exclusion_ledger_hash: str = "28b142e1bbef5eeff65ee3a62a94b55e55f88841c3b5954d763d098579eac9b3",
     policy: StructuralExtractionPolicy | None = None,
     dynamically_computed_candidate_set_hash: str | None = None,
@@ -172,12 +193,15 @@ def compute_structural_representation_lineage(
     if policy is None:
         policy = StructuralExtractionPolicy()
 
+    if preregistration_amendment_hash is None:
+        preregistration_amendment_hash = compute_preregistration_amendment_hash()
+
     verify_prior_milestone_hashes_fail_closed(manifest_hash, dynamically_computed_candidate_set_hash)
 
     return StructuralRepresentationLineage(
         master_baseline_sha=MASTER_BASELINE_SHA,
         preregistration_commit_sha=PREREGISTRATION_COMMIT_SHA,
-        preregistration_amendment_commit_sha=PREREGISTRATION_AMENDMENT_1_COMMIT_SHA,
+        preregistration_amendment_commit_sha=PREREGISTRATION_AMENDMENT_2_COMMIT_SHA,
         manifest_hash=manifest_hash,
         rc009a_feature_schema_semantic_hash=compute_rc009a_schema_hash(FEATURE_REGISTRY),
         rc009a_feature_policy_hash=FeatureExtractionPolicy().compute_policy_hash(),
@@ -195,6 +219,7 @@ def compute_structural_representation_lineage(
         texture_policy_hash=policy.texture_policy.compute_policy_hash(),
         trajectory_policy_hash=policy.trajectory_policy.compute_policy_hash(),
         synthetic_fixture_suite_hash=compute_synthetic_fixture_suite_hash(),
+        assertion_contract_hash=val_result.assertion_contract_hash,
         invariance_contract_hash=compute_invariance_contract_hash(),
         preregistration_amendment_hash=preregistration_amendment_hash,
         exclusion_ledger_hash=exclusion_ledger_hash,

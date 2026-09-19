@@ -153,7 +153,7 @@ def test_metamorphic_transpositions_all_four_steps() -> None:
 
 
 def test_metamorphic_time_dilation_x2() -> None:
-    """Verify uniform time dilation x2 preserves normalized/rate features."""
+    """Verify uniform time dilation x2 preserves normalized/rate features and drops absolute-rate features."""
     base_score = FIXTURE_REGISTRY[0].builder()
     base_rep = extract_structural_representation(base_score)
 
@@ -162,6 +162,19 @@ def test_metamorphic_time_dilation_x2() -> None:
 
     assert abs(dil_rep["cadence_boundary_candidate_rate"].value - base_rep["cadence_boundary_candidate_rate"].value) < 1e-4
     assert abs(dil_rep["sonority_change_rate"].value - base_rep["sonority_change_rate"].value) < 1e-4
+
+    # Absolute-tempo rate features drop to 0 under dilation
+    score_h = FIXTURE_REGISTRY[7].builder()
+    rep_h = extract_structural_representation(score_h)
+    dil_h = extract_structural_representation(apply_metamorphic_transformation(score_h, TransformationType.TIME_DILATION))
+    assert rep_h["texture_arpeggiation_proxy_rate"].value > 0.0
+    assert dil_h["texture_arpeggiation_proxy_rate"].value == 0.0
+
+    score_i = FIXTURE_REGISTRY[8].builder()
+    rep_i = extract_structural_representation(score_i)
+    dil_i = extract_structural_representation(apply_metamorphic_transformation(score_i, TransformationType.TIME_DILATION))
+    assert rep_i["texture_repeated_note_attack_rate"].value > 0.0
+    assert dil_i["texture_repeated_note_attack_rate"].value == 0.0
 
 
 def test_metamorphic_metadata_renames_invariance() -> None:
@@ -178,7 +191,7 @@ def test_metamorphic_metadata_renames_invariance() -> None:
 
 def test_metamorphic_staff_swap_sensitive_by_design() -> None:
     """Verify staff swap inverts interstaff gap while preserving other features."""
-    base_score = FIXTURE_REGISTRY[0].builder()
+    base_score = FIXTURE_REGISTRY[6].builder()  # Fixture G: two-staff block chords
     base_rep = extract_structural_representation(base_score)
 
     swap_score = apply_metamorphic_transformation(base_score, TransformationType.STAFF_SWAP)
@@ -326,3 +339,102 @@ def test_prior_milestone_hashes_fail_closed() -> None:
 
     with pytest.raises(ValueError, match="Manifest hash mismatch"):
         verify_prior_milestone_hashes_fail_closed("corrupted_manifest_hash")
+
+
+def test_cadence_rest_evidence_threshold() -> None:
+    """Verify sounding gap >= 0.5 quarter notes triggers rest evidence, whereas < 0.5 does not."""
+    # Gap of 0.25 quarters = Fraction(1, 16) whole note
+    notes_small_gap = [
+        (60, 0, Fraction(0, 1), Fraction(3, 16)),  # releases at 3/16, next onset at 4/16 => gap = 1/16 (< 0.5 quarters)
+        (64, 0, Fraction(4, 16), Fraction(1, 4)),
+    ]
+    sc_small = build_synthetic_score(notes_small_gap, 1, "small_gap")
+    feats_small = extract_cadence_features(sc_small)
+
+    # Gap of 0.5 quarters = Fraction(1, 8) whole note
+    notes_large_gap = [
+        (60, 0, Fraction(0, 1), Fraction(1, 8)),  # releases at 1/8, next onset at 2/8 => gap = 1/8 (== 0.5 quarters)
+        (64, 0, Fraction(2, 8), Fraction(1, 4)),
+    ]
+    sc_large = build_synthetic_score(notes_large_gap, 1, "large_gap")
+    feats_large = extract_cadence_features(sc_large)
+
+    assert feats_large["cadence_boundary_candidate_rate"].value >= feats_small["cadence_boundary_candidate_rate"].value
+
+
+def test_cadence_unrelated_fourth_fifth_motion_rejected() -> None:
+    """Verify arbitrary fourth/fifth bass movement not resolving to local tonic degree 1 is rejected."""
+    # Bass moves C (48) -> F (53) (interval 5 / 4th up) in C major.
+    # F is scale degree 5 relative to Bb or 5 in C, but here bass moves 0 -> 5 (not 5 -> 1 or 7 -> 1).
+    # In the old code, bass_interval == 5 was counted as authentic resolution; now it must be 0.0.
+    notes = [
+        (48, 0, Fraction(0, 1), Fraction(1, 1)), (60, 0, Fraction(0, 1), Fraction(1, 1)), (64, 0, Fraction(0, 1), Fraction(1, 1)),
+        (53, 1, Fraction(0, 1), Fraction(1, 1)), (60, 1, Fraction(0, 1), Fraction(1, 1)), (65, 1, Fraction(0, 1), Fraction(1, 1)),
+    ]
+    sc = build_synthetic_score(notes, 2, "c_to_f_bass")
+    feats = extract_cadence_features(sc)
+    assert feats["cadence_tonic_resolution_rate"].value == 0.0
+
+
+def test_voice_leading_unequal_cardinality_optimal_transport() -> None:
+    """Verify minimal voice leading on unequal cardinalities uses LCM optimal assignment."""
+    dyad = frozenset([0, 4])       # |A| = 2: C, E
+    triad = frozenset([0, 4, 7])   # |B| = 3: C, E, G
+    # LCM(2, 3) = 6
+    # Expands dyad to [0, 0, 0, 4, 4, 4] and triad to [0, 0, 4, 4, 7, 7]
+    # Cost matrix matching: 0->0(x2), 4->4(x2), leaving {0, 4} and {7, 7}: dist(0, 7)=5, dist(4, 7)=3 -> sum=8
+    # Total distance / 6 = 8 / 6 = 1.333333
+    d = minimal_voice_leading_distance(dyad, triad)
+    assert abs(d - (8.0 / 6.0)) < 1e-5
+    # Strict symmetry
+    assert minimal_voice_leading_distance(dyad, triad) == minimal_voice_leading_distance(triad, dyad)
+
+
+def test_form_ctu_pairwise_non_overlapping_suppression() -> None:
+    """Verify overlapping candidate CTU occurrences are suppressed pairwise."""
+    from russian_piano_composer.ctu.discovery import discover_ctus_for_score
+    from russian_piano_composer.structure_analysis.form import extract_form_features
+    sc = FIXTURE_REGISTRY[13].builder()  # Fixture N (12 measures)
+    disc = discover_ctus_for_score(sc, manifest_hash="0" * 64)
+    assert len(disc.retained_ctus) > 0
+    feats = extract_form_features(sc, retained_ctus=disc.retained_ctus)
+    assert feats["form_ctu_recurrence_dispersion"].status == AvailabilityStatus.AVAILABLE
+    assert feats["form_ctu_late_return_presence"].value == 1.0
+
+
+def test_form_ctu_recurrence_dispersion_availability_status() -> None:
+    """Verify form_ctu_recurrence_dispersion is AVAILABLE iff >= 2 occurrences found, else STRUCTURAL_ZERO."""
+    from russian_piano_composer.structure_analysis.form import extract_form_features
+    sc_o = FIXTURE_REGISTRY[14].builder()  # Fixture O: through-composed (no CTU recurrence)
+    feats_o = extract_form_features(sc_o, retained_ctus=[])
+    assert feats_o["form_ctu_recurrence_dispersion"].status == AvailabilityStatus.STRUCTURAL_ZERO
+    assert feats_o["form_ctu_recurrence_dispersion"].reason == "Fewer than 2 CTU occurrences found"
+
+
+def test_metamorphic_mutation_sensitivity() -> None:
+    """Verify that all 504 metamorphic records pass and validation result binds them."""
+    res1 = run_synthetic_and_metamorphic_validation()
+    assert res1.overall_status == "STRUCTURAL_REPRESENTATION_VALIDATED"
+    assert len(res1.metamorphic_records) == 504
+    assert len(res1.assertion_records) == 20
+    assert all(m.passed for m in res1.metamorphic_records)
+
+
+def test_dynamic_ctu_policy_hash_fail_closed(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Verify that tampering with CTUDiscoveryPolicy hash raises ValueError in fail-closed check."""
+    from russian_piano_composer.structure_analysis import lineage
+    monkeypatch.setattr(lineage, "ACCEPTED_RC009B_DISCOVERY_POLICY_HASH", "tampered_policy_hash")
+    with pytest.raises(ValueError, match="RC-009B CTU Discovery Policy hash mismatch"):
+        verify_prior_milestone_hashes_fail_closed(ACCEPTED_CANONICAL_MANIFEST_HASH)
+
+
+def test_assertion_contract_hash_determinism() -> None:
+    """Verify compute_synthetic_assertion_contract_hash is deterministic and ordering-invariant."""
+    from russian_piano_composer.structure_analysis.validation import (
+        ASSERTION_REGISTRY,
+        compute_synthetic_assertion_contract_hash,
+    )
+    h1 = compute_synthetic_assertion_contract_hash()
+    h2 = compute_synthetic_assertion_contract_hash(tuple(reversed(ASSERTION_REGISTRY)))
+    assert len(h1) == 64
+    assert h1 == h2

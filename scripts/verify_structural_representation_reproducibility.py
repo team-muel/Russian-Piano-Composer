@@ -94,18 +94,55 @@ payload = {
     "structural_matrix_hash": lineage.structural_matrix_hash,
     "validation_result_hash": lineage.validation_result_hash,
     "lineage_bundle_hash": lineage.compute_bundle_hash(),
+    "lineage_hashes": {
+        "tonal_policy_hash": lineage.tonal_policy_hash,
+        "sonority_policy_hash": lineage.sonority_policy_hash,
+        "cadence_policy_hash": lineage.cadence_policy_hash,
+        "form_policy_hash": lineage.form_policy_hash,
+        "vl_policy_hash": lineage.vl_policy_hash,
+        "texture_policy_hash": lineage.texture_policy_hash,
+        "trajectory_policy_hash": lineage.trajectory_policy_hash,
+        "synthetic_fixture_suite_hash": lineage.synthetic_fixture_suite_hash,
+        "assertion_contract_hash": lineage.assertion_contract_hash,
+        "invariance_contract_hash": lineage.invariance_contract_hash,
+        "preregistration_amendment_hash": lineage.preregistration_amendment_hash,
+        "exclusion_ledger_hash": lineage.exclusion_ledger_hash,
+    },
     "piece_ids": list(matrix.piece_ids),
     "feature_names": list(matrix.feature_names),
     "matrix_data": [list(row) for row in matrix.data],
     "matrix_availability": [[st.value for st in r] for r in matrix.availability_matrix],
     "matrix_reasons": [list(r) for r in matrix.reasons_matrix],
+    "fixture_count": val_result.fixture_count,
     "assertions": [
         {
             "assertion_id": a.assertion_id,
+            "fixture_id": a.fixture_id,
+            "family": a.family.value,
             "passed": a.passed,
+            "condition": a.condition_description,
             "summary": a.actual_value_summary,
         }
         for a in val_result.assertion_records
+    ],
+    "metamorphic_records": [
+        {
+            "feature_id": m.feature_id,
+            "fixture_id": m.fixture_id,
+            "transformation": m.transformation.value,
+            "transformation_parameter": str(m.transformation_parameter),
+            "original_value": round(m.original_value, 6),
+            "original_availability_status": m.original_availability_status.value,
+            "original_reason": m.original_reason,
+            "transformed_value": round(m.transformed_value, 6),
+            "transformed_availability_status": m.transformed_availability_status.value,
+            "transformed_reason": m.transformed_reason,
+            "expected_behavior": m.expected_behavior.value,
+            "expected_relation": m.expected_relation,
+            "actual_relation": m.actual_relation,
+            "passed": m.passed,
+        }
+        for m in val_result.metamorphic_records
     ],
     "family_statuses": [
         {
@@ -113,6 +150,8 @@ payload = {
             "status": fs.status,
             "passed_assertions": fs.passed_assertions,
             "total_assertions": fs.total_assertions,
+            "passed_metamorphic": fs.passed_metamorphic,
+            "total_metamorphic": fs.total_metamorphic,
         }
         for fs in val_result.family_statuses
     ],
@@ -130,26 +169,39 @@ print("JSON_END")
 """
 
 
-def _run_worker(name: str) -> dict:
-    print(f"Launching Worker Process {name}...")
-    proc = subprocess.run(
+def _run_workers() -> tuple[dict, dict]:
+    print("Launching Worker Process A and Worker Process B concurrently...")
+    proc_a = subprocess.Popen(
         [sys.executable, "-c", WORKER_SCRIPT],
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
         text=True,
-        check=True,
     )
-    stdout = proc.stdout
-    if "JSON_START" not in stdout or "JSON_END" not in stdout:
-        raise RuntimeError(f"Worker {name} output missing JSON delimiters:\n{stdout}\nSTDERR:\n{proc.stderr}")
-    json_text = stdout.split("JSON_START")[1].split("JSON_END")[0].strip()
-    return json.loads(json_text)
+    proc_b = subprocess.Popen(
+        [sys.executable, "-c", WORKER_SCRIPT],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    stdout_a, stderr_a = proc_a.communicate()
+    stdout_b, stderr_b = proc_b.communicate()
+    if proc_a.returncode != 0:
+        raise RuntimeError(f"Worker A failed with code {proc_a.returncode}:\n{stderr_a}")
+    if proc_b.returncode != 0:
+        raise RuntimeError(f"Worker B failed with code {proc_b.returncode}:\n{stderr_b}")
+
+    def _parse(stdout: str, name: str) -> dict:
+        if "JSON_START" not in stdout or "JSON_END" not in stdout:
+            raise RuntimeError(f"Worker {name} output missing JSON delimiters:\n{stdout}")
+        return json.loads(stdout.split("JSON_START")[1].split("JSON_END")[0].strip())
+
+    return _parse(stdout_a, "A"), _parse(stdout_b, "B")
 
 
 def main() -> None:
     print("--- Running True Two-Process Structural Representation Reproducibility Audit ---")
 
-    payload_a = _run_worker("A")
-    payload_b = _run_worker("B")
+    payload_a, payload_b = _run_workers()
 
     # 1. Direct Structural Comparison
     is_structurally_equal = (payload_a == payload_b)

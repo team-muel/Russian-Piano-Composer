@@ -10,7 +10,7 @@ import hashlib
 import json
 import math
 from dataclasses import dataclass
-from typing import TYPE_CHECKING
+from fractions import Fraction
 
 from russian_piano_composer.domain.score import CanonicalScore, CanonicalScoreEvent, EventKind
 from russian_piano_composer.structure_analysis.schema import AvailabilityStatus, FeatureValue
@@ -19,9 +19,6 @@ from russian_piano_composer.structure_analysis.tonal import (
     MINOR_SCALE_PCS,
     estimate_key_from_pc_distribution,
 )
-
-if TYPE_CHECKING:
-    from fractions import Fraction
 
 
 @dataclass(frozen=True, slots=True)
@@ -101,9 +98,12 @@ def extract_trajectory_features(
     # Partition notes into 8 normalized score-position bins
     n_bins = policy.bin_count
     bin_notes: list[list[CanonicalScoreEvent]] = [[] for _ in range(n_bins)]
+    m_dur_map = {m.measure_index: m.actual_duration for m in measures}
 
     for n in notes:
-        m_offset = n.measure_index - min_m_idx + float(n.offset_in_measure)
+        m_dur = m_dur_map.get(n.measure_index, Fraction(1, 1))
+        norm_off = float(n.offset_in_measure / m_dur) if m_dur > 0 else 0.0
+        m_offset = float(n.measure_index - min_m_idx) + norm_off
         norm_pos = min(0.999999, max(0.0, m_offset / float(span_measures)))
         b_idx = int(norm_pos * n_bins)
         bin_notes[b_idx].append(n)

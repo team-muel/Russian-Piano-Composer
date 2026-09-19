@@ -896,6 +896,11 @@ def get_feature_invariance_contract(
         return InvarianceClass.INVARIANT
 
     if transformation == TransformationType.TIME_DILATION:
+        if feature_id in (
+            "texture_arpeggiation_proxy_rate",
+            "texture_repeated_note_attack_rate",
+        ):
+            return InvarianceClass.SENSITIVE_BY_DESIGN
         return InvarianceClass.INVARIANT
 
     if transformation in (

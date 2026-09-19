@@ -155,12 +155,12 @@ def extract_form_features(
     novelty_peak_rate = novelty_peaks / float(span_measures)
 
     # 5. CTU-derived formal features across the FULL score
+    first_positions: list[float] = []
+    all_occurrence_positions: list[float] = []
+    late_recurrence_found = False
+
     if retained_ctus:
         discovery_policy = CTUDiscoveryPolicy()
-        first_positions: list[float] = []
-        all_occurrence_positions: list[float] = []
-        late_recurrence_found = False
-
         max_m_idx = max(measure_indices)
 
         for ctu in retained_ctus:
@@ -172,23 +172,34 @@ def extract_form_features(
             first_positions.append(pos_norm)
             all_occurrence_positions.append(pos_norm)
 
-            # Scan full piece for non-overlapping matching occurrences
+            # 1. Gather all candidate matching windows across full piece with similarity >= threshold
+            raw_matches: list[tuple[float, int, int]] = []  # (similarity, start_measure, end_measure)
             for m in range(min_m_idx, max_m_idx - span_len + 2):
+                # Cannot overlap with original discovery span of this CTU
+                is_overlap_discovery = not ((m + span_len <= ctu_start_m) or (m >= ctu_end_m))
+                if is_overlap_discovery:
+                    continue
+
                 cand_span = SegmentSpan(
                     start=SegmentPosition(measure_index=m, offset=Fraction(0, 1)),
                     end=SegmentPosition(measure_index=m + span_len, offset=Fraction(0, 1)),
                 )
-
-                # Non-overlapping check with discovery region of this CTU
-                is_non_overlapping = (m + span_len <= ctu_start_m) or (m >= ctu_end_m)
-                if not is_non_overlapping:
-                    continue
-
                 cand_rep = extract_segment_representation(score, cand_span)
                 sim = compute_segment_similarity(ctu.representation, cand_rep, policy=discovery_policy)
 
                 if sim is not None and sim >= policy.ctu_match_similarity_threshold:
-                    match_pos_norm = float(m - min_m_idx) / float(span_measures)
+                    raw_matches.append((sim, m, m + span_len))
+
+            # 2. Deterministic selection: sort by similarity descending, then start_m ascending
+            raw_matches.sort(key=lambda x: (-x[0], x[1]))
+
+            # 3. Non-overlapping suppression: ensure accepted matches do not overlap with each other
+            accepted_occurrences: list[tuple[int, int]] = []  # [(start_m, end_m), ...]
+            for _sim, start_m, end_m in raw_matches:
+                overlaps = any(not (end_m <= acc_start or start_m >= acc_end) for acc_start, acc_end in accepted_occurrences)
+                if not overlaps:
+                    accepted_occurrences.append((start_m, end_m))
+                    match_pos_norm = float(start_m - min_m_idx) / float(span_measures)
                     all_occurrence_positions.append(match_pos_norm)
                     if match_pos_norm >= policy.late_return_start_fraction:
                         late_recurrence_found = True
@@ -222,7 +233,8 @@ def extract_form_features(
         ),
         "form_ctu_recurrence_dispersion": FeatureValue(
             round(pos_disp, 6),
-            AvailabilityStatus.AVAILABLE if len(retained_ctus) > 1 else AvailabilityStatus.STRUCTURAL_ZERO,
+            AvailabilityStatus.AVAILABLE if len(all_occurrence_positions) > 1 else AvailabilityStatus.STRUCTURAL_ZERO,
+            "" if len(all_occurrence_positions) > 1 else "Fewer than 2 CTU occurrences found",
         ),
         "form_ctu_late_return_presence": FeatureValue(
             round(has_late_return, 6),
