@@ -14,12 +14,12 @@ from russian_piano_composer.structure_analysis.schema import (
 )
 
 __all__ = [
+    "STRUCTURAL_FEATURE_CATALOG",
     "AvailabilityStatus",
     "FeatureFamily",
     "FeatureValue",
     "InvarianceClass",
     "Provenance",
-    "STRUCTURAL_FEATURE_CATALOG",
     "StructuralFeatureDefinition",
     "compute_structural_schema_hash",
 ]
