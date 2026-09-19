@@ -15,9 +15,19 @@ from russian_piano_composer.ctu.models import (
     compute_segment_representation_semantic_hash,
     compute_similarity_semantic_hash,
 )
+from russian_piano_composer.domain.features import (
+    compute_schema_semantic_hash as compute_feature_schema_semantic_hash,
+)
+from russian_piano_composer.features import FEATURE_REGISTRY
+from russian_piano_composer.features.policy import FeatureExtractionPolicy
 from russian_piano_composer.style_analysis.evaluation import ComposerHeldOutEvaluation
 from russian_piano_composer.style_analysis.features import (
+    ACCEPTED_RC009B_CANDIDATE_SET_HASH,
+    ACCEPTED_RC009B_DISCOVERY_POLICY_HASH,
     RoleBlindFeatureMatrix,
+    compute_model_a_schema_hash,
+    compute_model_b_schema_hash,
+    compute_model_c_schema_hash,
     compute_style_feature_schema_hash,
 )
 from russian_piano_composer.style_analysis.models import compute_model_spec_hash
@@ -39,10 +49,17 @@ class StyleAnalysisLineage:
 
     master_baseline_sha: str
     manifest_hash: str
+    rc009a_feature_schema_semantic_hash: str
+    rc009a_feature_policy_hash: str
+    rc009b_candidate_set_hash: str
+    rc009b_discovery_policy_hash: str
     ctu_schema_semantic_hash: str
     representation_semantic_hash: str
     similarity_semantic_hash: str
     style_feature_schema_hash: str
+    model_a_schema_hash: str
+    model_b_schema_hash: str
+    model_c_schema_hash: str
     role_blind_feature_matrix_hash: str
     label_assignment_hash: str
     composer_split_plan_hash: str
@@ -58,10 +75,17 @@ class StyleAnalysisLineage:
         canonical = {
             "master_baseline_sha": self.master_baseline_sha,
             "manifest_hash": self.manifest_hash,
+            "rc009a_feature_schema_semantic_hash": self.rc009a_feature_schema_semantic_hash,
+            "rc009a_feature_policy_hash": self.rc009a_feature_policy_hash,
+            "rc009b_candidate_set_hash": self.rc009b_candidate_set_hash,
+            "rc009b_discovery_policy_hash": self.rc009b_discovery_policy_hash,
             "ctu_schema_semantic_hash": self.ctu_schema_semantic_hash,
             "representation_semantic_hash": self.representation_semantic_hash,
             "similarity_semantic_hash": self.similarity_semantic_hash,
             "style_feature_schema_hash": self.style_feature_schema_hash,
+            "model_a_schema_hash": self.model_a_schema_hash,
+            "model_b_schema_hash": self.model_b_schema_hash,
+            "model_c_schema_hash": self.model_c_schema_hash,
             "role_blind_feature_matrix_hash": self.role_blind_feature_matrix_hash,
             "label_assignment_hash": self.label_assignment_hash,
             "composer_split_plan_hash": self.composer_split_plan_hash,
@@ -104,6 +128,11 @@ def compute_evaluation_result_hash(
         "exact_p_value": perm_result.exact_p_value,
         "extreme_count": perm_result.extreme_count,
         "observed_rank": perm_result.observed_rank,
+        "observed_rank_min": perm_result.observed_rank_min,
+        "observed_rank_max": perm_result.observed_rank_max,
+        "observed_rank_interval": perm_result.observed_rank_interval,
+        "tied_rank_count": perm_result.tied_rank_count,
+        "minimum_attainable_p_value": perm_result.minimum_attainable_p_value,
         "empirical_status": perm_result.empirical_status.value,
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -126,10 +155,17 @@ def compute_style_analysis_lineage(
     return StyleAnalysisLineage(
         master_baseline_sha=MASTER_BASELINE_SHA,
         manifest_hash=manifest_hash,
+        rc009a_feature_schema_semantic_hash=compute_feature_schema_semantic_hash(FEATURE_REGISTRY),
+        rc009a_feature_policy_hash=FeatureExtractionPolicy().compute_policy_hash(),
+        rc009b_candidate_set_hash=ACCEPTED_RC009B_CANDIDATE_SET_HASH,
+        rc009b_discovery_policy_hash=ACCEPTED_RC009B_DISCOVERY_POLICY_HASH,
         ctu_schema_semantic_hash=compute_ctu_schema_semantic_hash(),
         representation_semantic_hash=compute_segment_representation_semantic_hash(),
         similarity_semantic_hash=compute_similarity_semantic_hash(),
         style_feature_schema_hash=compute_style_feature_schema_hash(),
+        model_a_schema_hash=compute_model_a_schema_hash(),
+        model_b_schema_hash=compute_model_b_schema_hash(),
+        model_c_schema_hash=compute_model_c_schema_hash(),
         role_blind_feature_matrix_hash=matrix_c.compute_matrix_hash(),
         label_assignment_hash=label_hash,
         composer_split_plan_hash=compute_composer_split_plan_hash(),

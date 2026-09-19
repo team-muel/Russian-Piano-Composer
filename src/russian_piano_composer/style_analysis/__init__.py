@@ -16,6 +16,9 @@ from russian_piano_composer.style_analysis.features import (
     CTUStyleFeatureSchema,
     RoleBlindFeatureMatrix,
     build_role_blind_feature_matrices,
+    compute_model_a_schema_hash,
+    compute_model_b_schema_hash,
+    compute_model_c_schema_hash,
     compute_style_feature_schema_hash,
 )
 from russian_piano_composer.style_analysis.lineage import (
@@ -33,6 +36,7 @@ from russian_piano_composer.style_analysis.permutation import (
 from russian_piano_composer.style_analysis.splits import (
     ComposerSplitPlan,
     build_composer_split_plan,
+    build_pair_holdout_plan,
     compute_composer_split_plan_hash,
 )
 from russian_piano_composer.style_analysis.weighting import (
@@ -52,10 +56,14 @@ __all__ = [
     "RoleBlindFeatureMatrix",
     "StyleAnalysisLineage",
     "build_composer_split_plan",
+    "build_pair_holdout_plan",
     "build_role_blind_feature_matrices",
     "compute_composer_balanced_weights",
     "compute_composer_split_plan_hash",
     "compute_composer_weighting_policy_hash",
+    "compute_model_a_schema_hash",
+    "compute_model_b_schema_hash",
+    "compute_model_c_schema_hash",
     "compute_model_spec_hash",
     "compute_style_analysis_lineage",
     "compute_style_feature_schema_hash",

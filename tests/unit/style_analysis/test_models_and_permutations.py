@@ -99,6 +99,25 @@ def test_evaluate_empirical_style_status_inconclusive() -> None:
 
 
 def test_compute_roc_auc_safe() -> None:
-    """Verify safe ROC AUC calculation handling single class edge cases."""
-    assert compute_roc_auc_safe([1, 1, 1], [0.8, 0.9, 0.7]) == 0.50
+    """Verify compute_roc_auc_safe calculates ROC AUC and fails closed if <2 classes."""
+    import pytest
+
+    with pytest.raises(ValueError, match="ROC AUC requires exactly 2 binary classes"):
+        compute_roc_auc_safe([1, 1, 1], [0.8, 0.9, 0.7])
+
     assert compute_roc_auc_safe([1, 0, 1, 0], [0.8, 0.2, 0.9, 0.1]) == 1.0
+
+
+def test_complement_permutation_pairs() -> None:
+    """Verify that 20 assignments contain exactly 10 complement pairs."""
+    perms = generate_all_composer_label_permutations()
+    assert len(perms) == 20
+
+    comp_indices = [p.complement_assignment_index for p in perms]
+    for idx, comp_idx in enumerate(comp_indices):
+        assert comp_idx != idx
+        assert comp_indices[comp_idx] == idx
+        p1 = perms[idx]
+        p2 = perms[comp_idx]
+        assert set(p1.russian_composers) == set(p2.control_composers)
+        assert set(p1.control_composers) == set(p2.russian_composers)

@@ -9,18 +9,25 @@
 | :--- | :--- |
 | **Master Baseline Commit** | `2aed82a4f13aa161743b25e30ad879baadc68b3f` |
 | **Canonical Corpus Manifest Hash** | `cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212` |
+| **RC-009A Schema Semantic Hash** | `55a388b490dda3089d3073463818edcbc60abf0bcbc9dd114cd5a28032976516` |
+| **RC-009A Policy Hash** | `46ac0709d3b34b8e930b6f2d09723ca658cd7f29c204f235b0814f8c2a86150e` |
+| **RC-009B Candidate Set Hash** | `43fda7ba9503df0650fa4e2fb03ff897452a90adf225650d2d785d71a6f6ba8d` |
+| **RC-009B Discovery Policy Hash** | `df0810aa9601131df59e1341d6281ce339e1d97b8c993d0baf453fa4a31f0367` |
 | **CTU Schema Semantic Hash** | `03e8103ae9d7d534ded951b781ee6d43269a046fc787c543029c5f9ce3dd0ec1` |
 | **Representation Semantic Hash** | `967c42a2f47e16dbc6ce3b160ff56284298c73524b46133b6df116ef06db3539` |
 | **Similarity Semantic Hash** | `9cdd0387050e9c4aa7025f333da975ed02e453b345ebda3622266343fdb475e2` |
-| **CTU Style Feature Schema V1 Hash** | `bd8f1dc788f7173aaf11c568f5dcc1317dc76497c1061d0834ce5979f5c498a6` |
-| **Role-Blind Feature Matrix Hash (MODEL_C)** | `7c1071cb38380ade5ac1bd60034e080f8eb23e9369294298b922790f463c681a` |
+| **CTU Style Feature Schema V1 Hash (MODEL_B)** | `3806cd743b1c97230c015c25136849f8694235814ed0083935ed78f9fe92dca4` |
+| **MODEL_A Schema Hash** | `a825ea8f33a88fa6588e1bb4e6c9644c9c12c79824c6e9eca8eb7e162b531550` |
+| **MODEL_B Schema Hash** | `3806cd743b1c97230c015c25136849f8694235814ed0083935ed78f9fe92dca4` |
+| **MODEL_C Composite Schema Hash** | `2e95c77615bf402a1245f8fd014da72c73839a5fac4dd299d2014f3e68a33b80` |
+| **Role-Blind Feature Matrix Hash (MODEL_C)** | `dbdd6736a83f205d2ee3b4ee0192dba477209408cdbde6cdeb021214718c23a0` |
 | **Composer Label Assignment Hash** | `a9af08f4360b0d11abc7e416a12f6695778d15adccb9efed762a141ebf2502cb` |
-| **9-Fold Composer Split Plan Hash** | `8a8e4d2e0f486c8cd55a63082f02294532a6a0fdfdb6c2e2d6718d5e619b3740` |
+| **9-Fold Composer Split Plan Hash** | `4ad2aa5f089ec8d0ea9ea5db84f5c4aeebd32d7356402147466ef3631216df8d` |
 | **Primary Model Specification Hash** | `5535389cfca255e67f7a8e38dd933d59740a012ff33327c9cc541dcab7ff8db9` |
 | **Composer Weighting Policy Hash** | `12500a37a7949fdb812ab34044cb2db3b99fe490d1cbbd113bb39be8b3f37786` |
-| **20-Composer Permutation Plan Hash** | `f62fafce69f581c63614630ed4e39f577ba1451f2713df008a87492a5f459e34` |
-| **Evaluation Result Hash** | `2dc64a4009cca6f26ba8c5547e9e99b986dc612a31158ecefa5f98bdfad2940d` |
-| **Bundle Lineage Hash** | `730b7bd1494848ee8e97c50dca7a0f7dca18a7dd8ed2ccb86fcf0fe39541aba7` |
+| **20-Composer Permutation Plan Hash** | `20011b5f8c4b6c5e4483165daae34dea70649cf4c79a4c238c77b1839d4c37f5` |
+| **Evaluation Result Hash** | `96b29ed40e19932be5b728859fc011649cd78316d6f9757e2429b0da9f01e6bc` |
+| **Bundle Lineage Hash** | `a1d10cea7ef406f4bc89d7ee81feebe0a092f526f38f14b80e6a022db6563f08` |
 
 ---
 
@@ -34,8 +41,11 @@ When entire composers are held out during model fitting, symbolic musical inform
 
 - **Primary MODEL_C MACRO_PAIR_AUC**: `0.2964` (below chance level `0.5000`)
 - **Folds with AUC > 0.50**: `1` of `9` (Fold 5: Rachmaninoff vs Schumann, `AUC = 0.5315`)
-- **Exact 20-Permutation Rank**: `19` / `20` (Observed assignment is tied for worst rank among all label partitions)
-- **Exact Permutation $p$-value**: `1.0000` (Extreme count `20` / `20`)
+- **Exact 20-Permutation Rank**: `18` / `20` (Observed Rank Interval: `17-18` / `20`, tied with complement assignment)
+- **Tied Assignments Count**: `2`
+- **Exact Permutation $p$-value**: `0.9000` (Extreme count `18` / `20`)
+- **Minimum Attainable $p$-value**: `0.1000` (due to label-inversion complement symmetry across the 10 complement pairs)
+- **Primary Missing Values**: `0` (Strict fail-closed verified across all 141 pieces)
 
 ---
 
@@ -69,35 +79,40 @@ When entire composers are held out during model fitting, symbolic musical inform
 
 ---
 
-### 5. Exhaustive 20-Composer Permutation Test Distribution
+### 5. Exhaustive 20-Composer Permutation Test Distribution & Complement Symmetry
 
-| Assign Index | Russian Class Composers | Control Class Composers | MACRO_PAIR_AUC | Folds > 0.50 | Observed Assignment |
-| :---: | :--- | :--- | :---: | :---: | :---: |
-| 0 | Chopin, Liszt, Medtner | Rachmaninoff, Schumann, Tchaikovsky | 0.7036 | 8 | No |
-| 1 | Chopin, Liszt, Rachmaninoff | Medtner, Schumann, Tchaikovsky | 0.6170 | 7 | No |
-| 2 | Chopin, Liszt, Schumann | Medtner, Rachmaninoff, Tchaikovsky | 0.7036 | 8 | No |
-| 3 | Chopin, Liszt, Tchaikovsky | Medtner, Rachmaninoff, Schumann | 0.7734 | 9 | No |
-| 4 | Chopin, Medtner, Rachmaninoff | Liszt, Schumann, Tchaikovsky | 0.5042 | 4 | No |
-| 5 | Chopin, Medtner, Schumann | Liszt, Rachmaninoff, Tchaikovsky | 0.5771 | 6 | No |
-| 6 | Chopin, Medtner, Tchaikovsky | Liszt, Rachmaninoff, Schumann | 0.6623 | 8 | No |
-| 7 | Chopin, Rachmaninoff, Schumann | Liszt, Medtner, Tchaikovsky | 0.4958 | 4 | No |
-| 8 | Chopin, Rachmaninoff, Tchaikovsky | Liszt, Medtner, Schumann | 0.5810 | 6 | No |
-| 9 | Chopin, Schumann, Tchaikovsky | Liszt, Medtner, Rachmaninoff | 0.6623 | 8 | No |
-| 10 | Liszt, Medtner, Rachmaninoff | Chopin, Schumann, Tchaikovsky | 0.3377 | 1 | No |
-| 11 | Liszt, Medtner, Schumann | Chopin, Rachmaninoff, Tchaikovsky | 0.4190 | 3 | No |
-| 12 | Liszt, Medtner, Tchaikovsky | Chopin, Rachmaninoff, Schumann | 0.5042 | 4 | No |
-| 13 | Liszt, Rachmaninoff, Schumann | Chopin, Medtner, Tchaikovsky | 0.3377 | 1 | No |
-| 14 | Liszt, Rachmaninoff, Tchaikovsky | Chopin, Medtner, Schumann | 0.4229 | 3 | No |
-| 15 | Liszt, Schumann, Tchaikovsky | Chopin, Medtner, Rachmaninoff | 0.4958 | 4 | No |
-| 16 | Medtner, Rachmaninoff, Schumann | Chopin, Liszt, Tchaikovsky | 0.2266 | 0 | No |
-| 17 | Medtner, Rachmaninoff, Tchaikovsky | Chopin, Liszt, Schumann | 0.2964 | 1 | **YES** |
-| 18 | Medtner, Schumann, Tchaikovsky | Chopin, Liszt, Rachmaninoff | 0.3830 | 2 | No |
-| 19 | Rachmaninoff, Schumann, Tchaikovsky | Chopin, Liszt, Medtner | 0.2964 | 1 | No |
+Each of the 20 exact partitions constructs its own dynamic assignment-specific $3 \times 3$ outer split plan ($9$ outer folds per assignment, $180$ folds evaluated in total). Under L2-regularized logistic regression with symmetric z-scoring, label inversion ($0 \leftrightarrow 1$) yields identical ROC AUC curves ($\text{AUC}(A) = \text{AUC}(A')$), forming $10$ exact complement pairs.
+
+| Assign Index | Complement Index | Class 1 Composers | Class 0 Composers | MACRO_PAIR_AUC | Folds > 0.50 | Observed Assignment |
+| :---: | :---: | :--- | :--- | :---: | :---: | :---: |
+| 0 | 19 | Chopin, Liszt, Medtner | Rachmaninoff, Schumann, Tchaikovsky | 0.7036 | 8 | No |
+| 1 | 18 | Chopin, Liszt, Rachmaninoff | Medtner, Schumann, Tchaikovsky | 0.6170 | 7 | No |
+| 2 | 17 | Chopin, Liszt, Schumann | Medtner, Rachmaninoff, Tchaikovsky | 0.2964 | 1 | No (Complement) |
+| 3 | 16 | Chopin, Liszt, Tchaikovsky | Medtner, Rachmaninoff, Schumann | 0.7734 | 9 | No |
+| 4 | 15 | Chopin, Medtner, Rachmaninoff | Liszt, Schumann, Tchaikovsky | 0.5042 | 4 | No |
+| 5 | 14 | Chopin, Medtner, Schumann | Liszt, Rachmaninoff, Tchaikovsky | 0.5771 | 6 | No |
+| 6 | 13 | Chopin, Medtner, Tchaikovsky | Liszt, Rachmaninoff, Schumann | 0.6623 | 8 | No |
+| 7 | 12 | Chopin, Rachmaninoff, Schumann | Liszt, Medtner, Tchaikovsky | 0.4958 | 4 | No |
+| 8 | 11 | Chopin, Rachmaninoff, Tchaikovsky | Liszt, Medtner, Schumann | 0.5810 | 6 | No |
+| 9 | 10 | Chopin, Schumann, Tchaikovsky | Liszt, Medtner, Rachmaninoff | 0.6623 | 8 | No |
+| 10 | 9 | Liszt, Medtner, Rachmaninoff | Chopin, Schumann, Tchaikovsky | 0.6623 | 8 | No |
+| 11 | 8 | Liszt, Medtner, Schumann | Chopin, Rachmaninoff, Tchaikovsky | 0.5810 | 6 | No |
+| 12 | 7 | Liszt, Medtner, Tchaikovsky | Chopin, Rachmaninoff, Schumann | 0.4958 | 4 | No |
+| 13 | 6 | Liszt, Rachmaninoff, Schumann | Chopin, Medtner, Tchaikovsky | 0.6623 | 8 | No |
+| 14 | 5 | Liszt, Rachmaninoff, Tchaikovsky | Chopin, Medtner, Schumann | 0.5771 | 6 | No |
+| 15 | 4 | Liszt, Schumann, Tchaikovsky | Chopin, Medtner, Rachmaninoff | 0.5042 | 4 | No |
+| 16 | 3 | Medtner, Rachmaninoff, Schumann | Chopin, Liszt, Tchaikovsky | 0.7734 | 9 | No |
+| 17 | 2 | Medtner, Rachmaninoff, Tchaikovsky | Chopin, Liszt, Schumann | 0.2964 | 1 | **YES (Observed)** |
+| 18 | 1 | Medtner, Schumann, Tchaikovsky | Chopin, Liszt, Rachmaninoff | 0.6170 | 7 | No |
+| 19 | 0 | Rachmaninoff, Schumann, Tchaikovsky | Chopin, Liszt, Medtner | 0.7036 | 8 | No |
 
 - **Observed MACRO_PAIR_AUC**: `0.2964`
-- **Observed Rank**: `19` / `20`
-- **Extreme Count ($\text{AUC} \ge 0.2964$)**: `20` / `20`
-- **Exact $p$-value**: `1.0000`
+- **Observed Rank**: `18` / `20`
+- **Observed Rank Interval (Ties)**: `17-18` / `20`
+- **Tied Assignments Count**: `2`
+- **Extreme Count ($\text{AUC} \ge 0.2964$)**: `18` / `20`
+- **Exact $p$-value**: `0.9000`
+- **Minimum Attainable $p$-value**: `0.1000`
 
 ---
 
@@ -170,13 +185,13 @@ When entire composers are held out during model fitting, symbolic musical inform
 ### 8. Scientific Interpretation & Mandatory Limitations Statement
 
 #### Scientific Interpretation
-Under rigorous composer-held-out validation, models trained on subset composers fail to generalize style boundary distinctions to unseen held-out composers. Instead of learning a shared "Russian" vs "Control" style signal, linear models fit composer-specific idiosyncrasies that do not transfer across composer boundaries. The macro AUC of `0.2964` demonstrates that held-out performance is significantly below chance, and exact permutation testing ($p = 1.0000$) shows that the observed Russian/Control partition ranks among the worst possible groupings out of all 20 exact partitions.
+Under rigorous composer-held-out validation, models trained on subset composers fail to generalize style boundary distinctions to unseen held-out composers. Instead of learning a shared "Russian" vs "Control" style signal, linear models fit composer-specific idiosyncrasies that do not transfer across composer boundaries. The macro AUC of `0.2964` demonstrates that held-out performance is significantly below chance, and exact permutation testing ($p = 0.9000$, rank interval `17-18 / 20`) shows that the observed Russian/Control partition ranks among the worst possible groupings out of all 20 exact partitions.
 
 #### Mandatory Scientific Limitations
 1. Only six composers are represented in the canonical corpus (Medtner, Rachmaninoff, Tchaikovsky vs. Chopin, Liszt, Schumann).
 2. Composer identity and national/style class are structurally confounded in source corpora.
 3. Composer-pair hold-out reduces memorization risk but does not create independent evidence from unseen historical traditions.
-4. Exact permutation inference has only 20 possible composer-label assignments (min $p = 0.05$).
+4. Exact permutation inference has 20 composer-label assignments with 10 complement pairs (minimum attainable two-sided $p$-value = 0.10 under label-inversion symmetry; $p \le 0.05$ is structurally unattainable for $N=6$).
 5. RC-010 tests discriminability within the canonical six-composer corpus, not a universal definition of Russian music.
 6. Human aesthetic judgment is not validated here.
 7. Successful discrimination does not by itself justify generative composition (and here, discrimination is NOT supported).

@@ -42,26 +42,42 @@ def normalize_composer_name(raw_name: str) -> str:
 @dataclass(frozen=True, slots=True)
 class ComposerFold:
     """
-    Outer fold specification holding out exactly 1 Russian composer and 1 Control composer.
+    Outer fold specification holding out exactly 1 class-1 composer and 1 class-0 composer.
     """
 
     fold_index: int
-    held_out_russian: str
-    held_out_control: str
-    training_russian: tuple[str, ...]
-    training_control: tuple[str, ...]
+    held_out_class_1: str
+    held_out_class_0: str
+    training_class_1: tuple[str, ...]
+    training_class_0: tuple[str, ...]
+
+    @property
+    def held_out_russian(self) -> str:
+        return self.held_out_class_1
+
+    @property
+    def held_out_control(self) -> str:
+        return self.held_out_class_0
+
+    @property
+    def training_russian(self) -> tuple[str, ...]:
+        return self.training_class_1
+
+    @property
+    def training_control(self) -> tuple[str, ...]:
+        return self.training_class_0
 
     @property
     def name(self) -> str:
-        return f"Fold_{self.fold_index:02d}_HeldOut_{self.held_out_russian}_vs_{self.held_out_control}"
+        return f"Fold_{self.fold_index:02d}_HeldOut_{self.held_out_class_1}_vs_{self.held_out_class_0}"
 
     @property
     def training_composers(self) -> tuple[str, ...]:
-        return (*self.training_russian, *self.training_control)
+        return (*self.training_class_1, *self.training_class_0)
 
     @property
     def test_composers(self) -> tuple[str, ...]:
-        return (self.held_out_russian, self.held_out_control)
+        return (self.held_out_class_1, self.held_out_class_0)
 
 
 @dataclass(frozen=True, slots=True)
@@ -71,23 +87,31 @@ class ComposerSplitPlan:
     """
 
     folds: tuple[ComposerFold, ...]
-    russian_composers: tuple[str, ...] = RUSSIAN_COMPOSERS
-    control_composers: tuple[str, ...] = CONTROL_COMPOSERS
+    class_1_composers: tuple[str, ...] = RUSSIAN_COMPOSERS
+    class_0_composers: tuple[str, ...] = CONTROL_COMPOSERS
+
+    @property
+    def russian_composers(self) -> tuple[str, ...]:
+        return self.class_1_composers
+
+    @property
+    def control_composers(self) -> tuple[str, ...]:
+        return self.class_0_composers
 
     def compute_plan_hash(self) -> str:
         """
         Deterministic SHA-256 hash of the composer split plan.
         """
         canonical = {
-            "russian_composers": list(self.russian_composers),
-            "control_composers": list(self.control_composers),
+            "class_1_composers": list(self.class_1_composers),
+            "class_0_composers": list(self.class_0_composers),
             "folds": [
                 {
                     "fold_index": f.fold_index,
-                    "held_out_russian": f.held_out_russian,
-                    "held_out_control": f.held_out_control,
-                    "training_russian": list(f.training_russian),
-                    "training_control": list(f.training_control),
+                    "held_out_class_1": f.held_out_class_1,
+                    "held_out_class_0": f.held_out_class_0,
+                    "training_class_1": list(f.training_class_1),
+                    "training_class_0": list(f.training_class_0),
                 }
                 for f in self.folds
             ],
@@ -96,32 +120,63 @@ class ComposerSplitPlan:
         return hashlib.sha256(encoded).hexdigest()
 
 
-def build_composer_split_plan() -> ComposerSplitPlan:
+def build_pair_holdout_plan(
+    class_1_composers: tuple[str, ...],
+    class_0_composers: tuple[str, ...],
+) -> ComposerSplitPlan:
     """
-    Construct the canonical 9 outer Leave-One-Russian + One-Control Composer Pair Out folds.
+    Construct an exact 3 x 3 = 9 outer fold split plan holding out each (class-1, class-0) composer pair.
+
+    Guarantees:
+      - Exactly 9 outer folds.
+      - Each fold holds out exactly 1 class-1 composer and 1 class-0 composer.
+      - Training set contains exactly the remaining 2 class-1 and 2 class-0 composers.
+      - Zero train/test composer overlap.
     """
+    if len(class_1_composers) != 3 or len(class_0_composers) != 3:
+        raise ValueError("Both class_1_composers and class_0_composers must contain exactly 3 composers.")
+    if set(class_1_composers).intersection(set(class_0_composers)):
+        raise ValueError("class_1_composers and class_0_composers must be disjoint.")
+
+    c1_sorted = tuple(sorted(class_1_composers))
+    c0_sorted = tuple(sorted(class_0_composers))
+
     folds: list[ComposerFold] = []
     idx = 0
-    for r_comp in RUSSIAN_COMPOSERS:
-        for c_comp in CONTROL_COMPOSERS:
-            train_r = tuple(c for c in RUSSIAN_COMPOSERS if c != r_comp)
-            train_c = tuple(c for c in CONTROL_COMPOSERS if c != c_comp)
+    for c1 in c1_sorted:
+        for c0 in c0_sorted:
+            train_c1 = tuple(c for c in c1_sorted if c != c1)
+            train_c0 = tuple(c for c in c0_sorted if c != c0)
             folds.append(
                 ComposerFold(
                     fold_index=idx,
-                    held_out_russian=r_comp,
-                    held_out_control=c_comp,
-                    training_russian=train_r,
-                    training_control=train_c,
+                    held_out_class_1=c1,
+                    held_out_class_0=c0,
+                    training_class_1=train_c1,
+                    training_class_0=train_c0,
                 )
             )
             idx += 1
 
-    return ComposerSplitPlan(folds=tuple(folds))
+    return ComposerSplitPlan(
+        folds=tuple(folds),
+        class_1_composers=c1_sorted,
+        class_0_composers=c0_sorted,
+    )
+
+
+def build_composer_split_plan() -> ComposerSplitPlan:
+    """
+    Construct the canonical 9 outer Leave-One-Russian + One-Control Composer Pair Out folds.
+    """
+    return build_pair_holdout_plan(
+        class_1_composers=RUSSIAN_COMPOSERS,
+        class_0_composers=CONTROL_COMPOSERS,
+    )
 
 
 def compute_composer_split_plan_hash() -> str:
-    """Convenience function returning SHA-256 hash of the 9-fold split plan."""
+    """Convenience function returning SHA-256 hash of the canonical 9-fold split plan."""
     return build_composer_split_plan().compute_plan_hash()
 
 

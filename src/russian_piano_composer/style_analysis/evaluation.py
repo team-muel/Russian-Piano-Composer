@@ -69,15 +69,14 @@ class ComposerHeldOutEvaluation:
 
 def compute_roc_auc_safe(y_true: Sequence[int], y_prob: Sequence[float]) -> float:
     """
-    Calculate ROC AUC safely. Returns 0.50 if only one class is present.
+    Calculate ROC AUC strictly requiring both binary classes to be present.
+    Fails closed if binary classes are missing.
     """
-    if len(set(y_true)) < 2:
-        return 0.50
-    try:
-        score = float(roc_auc_score(y_true, y_prob))
-        return round(score, 6)
-    except ValueError:
-        return 0.50
+    classes = set(y_true)
+    if len(classes) != 2:
+        raise ValueError(f"ROC AUC requires exactly 2 binary classes (0 and 1), got {classes}.")
+    score = float(roc_auc_score(y_true, y_prob))
+    return round(score, 6)
 
 
 def evaluate_model_across_folds(
@@ -94,6 +93,7 @@ def evaluate_model_across_folds(
       - Scaler fit ONLY on training pieces per fold.
       - Training-composer-balanced sample weights applied per fold.
       - Zero train/test composer overlap.
+      - Every fold MUST contain both binary classes in train and test sets (fails closed).
       - Full metric transparency.
     """
     if split_plan is None:
@@ -135,6 +135,23 @@ def evaluate_model_across_folds(
 
         x_test = tuple(matrix.data[i] for i in test_indices)
         y_test = tuple(piece_class_labels[pid] for pid in test_pids)
+
+        # Fail closed if training data does not contain both classes
+        if len(set(y_train)) != 2:
+            raise ValueError(
+                f"Fold {fold.fold_index} training labels must contain exactly 2 classes, got {set(y_train)}."
+            )
+        if set(train_comps) != set(fold.training_composers):
+            raise ValueError(
+                f"Fold {fold.fold_index} training composers do not match fold specification."
+            )
+
+        # Fail closed if test data does not contain both classes
+        if len(set(y_test)) != 2:
+            raise ValueError(
+                f"Fold {fold.fold_index} test labels must contain exactly 2 classes, got {set(y_test)}. "
+                f"Single-class test folds are strictly invalid."
+            )
 
         # Calculate training-composer-balanced sample weights
         train_weights = compute_composer_balanced_weights(train_comps)

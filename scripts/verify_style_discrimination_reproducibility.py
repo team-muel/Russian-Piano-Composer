@@ -50,26 +50,28 @@ def run_worker(out_json_path: str) -> None:
         sys.exit(1)
 
     scores_by_id: dict[str, CanonicalScore] = {}
-    piece_composers: dict[str, str] = {}
-    piece_class_labels: dict[str, int] = {}
-
     for source in manifest.sources:
         corpus_dir = interim_base / source.corpus_id
         for entry_id in source.score_entry_ids:
             piece_id = f"{source.corpus_id}:{entry_id}"
             score = load_canonical_score_from_parquet(corpus_dir, piece_id)
             scores_by_id[piece_id] = score
-            comp_norm = normalize_composer_name(score.composer)
-            piece_composers[piece_id] = comp_norm
-            piece_class_labels[piece_id] = 1 if comp_norm in RUSSIAN_COMPOSERS else 0
 
     if len(scores_by_id) != 141:
         raise RuntimeError(f"Expected 141 pieces, got {len(scores_by_id)}")
 
+    # Construct role-blind matrices before attaching labels
     matrices = build_role_blind_feature_matrices(scores_by_id, manifest_hash=manifest_hash)
     mat_a = matrices["MODEL_A"]
     mat_b = matrices["MODEL_B"]
     mat_c = matrices["MODEL_C"]
+
+    piece_composers: dict[str, str] = {}
+    piece_class_labels: dict[str, int] = {}
+    for piece_id, score in scores_by_id.items():
+        comp_norm = normalize_composer_name(score.composer)
+        piece_composers[piece_id] = comp_norm
+        piece_class_labels[piece_id] = 1 if comp_norm in RUSSIAN_COMPOSERS else 0
 
     eval_a = evaluate_model_across_folds(mat_a, piece_composers, piece_class_labels)
     eval_b = evaluate_model_across_folds(mat_b, piece_composers, piece_class_labels)
@@ -103,6 +105,11 @@ def run_worker(out_json_path: str) -> None:
         "extreme_count": perm_res.extreme_count,
         "total_assignments": perm_res.total_assignments,
         "observed_rank": perm_res.observed_rank,
+        "observed_rank_min": perm_res.observed_rank_min,
+        "observed_rank_max": perm_res.observed_rank_max,
+        "observed_rank_interval": perm_res.observed_rank_interval,
+        "tied_rank_count": perm_res.tied_rank_count,
+        "minimum_attainable_p_value": perm_res.minimum_attainable_p_value,
         "empirical_status": perm_res.empirical_status.value,
         "all_permutation_aucs": list(perm_res.all_permutation_aucs),
         "fold_results_c": [
@@ -133,7 +140,18 @@ def run_worker(out_json_path: str) -> None:
         ],
         "lineage": {
             "master_baseline_sha": lineage.master_baseline_sha,
+            "manifest_hash": lineage.manifest_hash,
+            "rc009a_feature_schema_semantic_hash": lineage.rc009a_feature_schema_semantic_hash,
+            "rc009a_feature_policy_hash": lineage.rc009a_feature_policy_hash,
+            "rc009b_candidate_set_hash": lineage.rc009b_candidate_set_hash,
+            "rc009b_discovery_policy_hash": lineage.rc009b_discovery_policy_hash,
+            "ctu_schema_semantic_hash": lineage.ctu_schema_semantic_hash,
+            "representation_semantic_hash": lineage.representation_semantic_hash,
+            "similarity_semantic_hash": lineage.similarity_semantic_hash,
             "style_feature_schema_hash": lineage.style_feature_schema_hash,
+            "model_a_schema_hash": lineage.model_a_schema_hash,
+            "model_b_schema_hash": lineage.model_b_schema_hash,
+            "model_c_schema_hash": lineage.model_c_schema_hash,
             "role_blind_feature_matrix_hash": lineage.role_blind_feature_matrix_hash,
             "label_assignment_hash": lineage.label_assignment_hash,
             "composer_split_plan_hash": lineage.composer_split_plan_hash,

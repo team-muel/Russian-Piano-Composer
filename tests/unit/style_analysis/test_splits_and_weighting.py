@@ -13,6 +13,7 @@ from russian_piano_composer.style_analysis.splits import (
     CONTROL_COMPOSERS,
     RUSSIAN_COMPOSERS,
     build_composer_split_plan,
+    build_pair_holdout_plan,
     compute_composer_split_plan_hash,
     normalize_composer_name,
 )
@@ -60,6 +61,33 @@ def test_composer_split_plan_structure() -> None:
         all_pairs.add((fold.held_out_russian, fold.held_out_control))
 
     # All 3 x 3 = 9 unique pairs must exist
+    assert len(all_pairs) == 9
+
+
+def test_build_pair_holdout_plan_arbitrary_partitions() -> None:
+    """Verify build_pair_holdout_plan builds valid 9-fold plans for arbitrary partitions."""
+    class_1 = ("Chopin", "Liszt", "Medtner")
+    class_0 = ("Rachmaninoff", "Schumann", "Tchaikovsky")
+
+    plan = build_pair_holdout_plan(class_1, class_0)
+    assert len(plan.folds) == 9
+
+    all_pairs = set()
+    for fold in plan.folds:
+        assert fold.held_out_class_1 in class_1
+        assert fold.held_out_class_0 in class_0
+
+        train_comps = set(fold.training_composers)
+        test_comps = set(fold.test_composers)
+        assert train_comps.isdisjoint(test_comps)
+
+        assert len(fold.training_class_1) == 2
+        assert len(fold.training_class_0) == 2
+        assert len(train_comps) == 4
+        assert len(test_comps) == 2
+
+        all_pairs.add((fold.held_out_class_1, fold.held_out_class_0))
+
     assert len(all_pairs) == 9
 
 

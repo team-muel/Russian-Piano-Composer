@@ -9,10 +9,11 @@ composer identity, title, repository paths, and role annotations.
 import hashlib
 import json
 import math
+import sys
 from dataclasses import dataclass
 
 from russian_piano_composer.ctu.discovery import discover_ctus_for_score
-from russian_piano_composer.ctu.models import CTUCandidate
+from russian_piano_composer.ctu.models import CTUCandidate, compute_candidate_set_hash
 from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy
 from russian_piano_composer.domain.score import CanonicalScore
 from russian_piano_composer.features import FEATURE_REGISTRY, extract_piece_features
@@ -151,9 +152,25 @@ CTU_STYLE_FEATURE_REGISTRY: tuple[CTUStyleFeatureDefinition, ...] = (
 )
 
 
+ACCEPTED_RC009B_CANDIDATE_SET_HASH: str = (
+    "43fda7ba9503df0650fa4e2fb03ff897452a90adf225650d2d785d71a6f6ba8d"
+)
+ACCEPTED_RC009B_DISCOVERY_POLICY_HASH: str = (
+    "df0810aa9601131df59e1341d6281ce339e1d97b8c993d0baf453fa4a31f0367"
+)
+
+
+def compute_model_a_schema_hash() -> str:
+    """Deterministic SHA-256 hash of MODEL_A (Category-A piece features) schema."""
+    from russian_piano_composer.domain.features import compute_schema_semantic_hash
+    cat_a_defs = tuple(fd for fd in FEATURE_REGISTRY if fd.validity_category == "A")
+    return compute_schema_semantic_hash(cat_a_defs)
+
+
 def compute_style_feature_schema_hash() -> str:
     """
-    Deterministic SHA-256 hash of CTU Style Feature Schema V1.
+    Deterministic SHA-256 hash of CTU Style Feature Schema V1 (MODEL_B).
+    Binds all descriptor attributes including provenance, known_confounds, and semantic_version.
     """
     canonical = {
         "version": CTU_STYLE_FEATURE_SCHEMA_VERSION,
@@ -164,9 +181,27 @@ def compute_style_feature_schema_hash() -> str:
                 "observation_unit": d.observation_unit,
                 "normalization": d.normalization,
                 "missing_value_rule": d.missing_value_rule,
+                "provenance": d.provenance,
+                "known_confounds": d.known_confounds,
+                "semantic_version": d.semantic_version,
             }
             for d in sorted(CTU_STYLE_FEATURE_REGISTRY, key=lambda x: x.feature_id)
         ],
+    }
+    encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def compute_model_b_schema_hash() -> str:
+    """Convenience alias for MODEL_B schema hash."""
+    return compute_style_feature_schema_hash()
+
+
+def compute_model_c_schema_hash() -> str:
+    """Deterministic composite SHA-256 hash of MODEL_C (MODEL_A + MODEL_B)."""
+    canonical = {
+        "model_a_schema_hash": compute_model_a_schema_hash(),
+        "model_b_schema_hash": compute_style_feature_schema_hash(),
     }
     encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
@@ -334,10 +369,12 @@ def build_role_blind_feature_matrices(
     manifest_hash: str,
     disc_policy: CTUDiscoveryPolicy | None = None,
     feat_policy: FeatureExtractionPolicy | None = None,
+    verify_rc009b_reproducibility: bool = True,
 ) -> dict[str, RoleBlindFeatureMatrix]:
     """
     Construct role-blind feature matrices for MODEL_A, MODEL_B, and MODEL_C.
     Guaranteed role-blind: extracted strictly before composer/role labels are attached.
+    Fails closed on missing/non-finite values and verifies RC-009B candidate set reproducibility.
     """
     if disc_policy is None:
         disc_policy = CTUDiscoveryPolicy()
@@ -355,8 +392,9 @@ def build_role_blind_feature_matrices(
     model_b_rows: list[tuple[float, ...]] = []
     model_c_rows: list[tuple[float, ...]] = []
 
-    import sys
+    all_discovery_results = []
     n_total = len(sorted_piece_ids)
+
     for idx, pid in enumerate(sorted_piece_ids, start=1):
         if idx == 1 or idx % 20 == 0 or idx == n_total:
             print(f"  Extracting features: {idx}/{n_total} pieces processed...")
@@ -364,13 +402,37 @@ def build_role_blind_feature_matrices(
         score = scores_by_id[pid]
         pfs = extract_piece_features(score, manifest_hash=manifest_hash, policy=feat_policy)
 
-        # MODEL_A values
-        a_vals = tuple(float(pfs.features.get(name) or 0.0) for name in cat_a_names)
+        # MODEL_A values: strict fail-closed validation on None, NaN, Inf
+        a_vals_list: list[float] = []
+        for name in cat_a_names:
+            raw_val = pfs.features.get(name)
+            if raw_val is None:
+                raise ValueError(
+                    f"Missing value detected for Category-A feature '{name}' in piece '{pid}'."
+                )
+            f_val = float(raw_val)
+            if math.isnan(f_val) or math.isinf(f_val):
+                raise ValueError(
+                    f"Non-finite value '{f_val}' for Category-A feature '{name}' in piece '{pid}'."
+                )
+            a_vals_list.append(round(f_val, 6))
+        a_vals = tuple(a_vals_list)
 
         # MODEL_B values (from frozen RC-009B retained CTUs)
         disc_res = discover_ctus_for_score(score, manifest_hash=manifest_hash, policy=disc_policy)
+        all_discovery_results.append(disc_res)
+
         ctu_feats = extract_ctu_style_features(disc_res.retained_ctus)
-        b_vals = tuple(ctu_feats.get(name, 0.0) for name in ctu_names)
+        b_vals_list: list[float] = []
+        for name in ctu_names:
+            b_raw = ctu_feats.get(name)
+            if b_raw is None:
+                raise ValueError(f"Missing CTU feature '{name}' in piece '{pid}'.")
+            b_float = float(b_raw)
+            if math.isnan(b_float) or math.isinf(b_float):
+                raise ValueError(f"Non-finite CTU feature '{name}' = {b_float} in piece '{pid}'.")
+            b_vals_list.append(round(b_float, 6))
+        b_vals = tuple(b_vals_list)
 
         c_vals = a_vals + b_vals
 
@@ -378,7 +440,19 @@ def build_role_blind_feature_matrices(
         model_b_rows.append(b_vals)
         model_c_rows.append(c_vals)
 
-    schema_hash_ctu = compute_style_feature_schema_hash()
+    # If evaluating the full 141-piece canonical corpus, verify RC-009B candidate set hash
+    if verify_rc009b_reproducibility and len(sorted_piece_ids) == 141:
+        cand_hash = compute_candidate_set_hash(all_discovery_results)
+        if cand_hash != ACCEPTED_RC009B_CANDIDATE_SET_HASH:
+            raise RuntimeError(
+                f"RC-009B candidate set hash mismatch!\n"
+                f"  Expected: {ACCEPTED_RC009B_CANDIDATE_SET_HASH}\n"
+                f"  Got:      {cand_hash}"
+            )
+
+    schema_hash_a = compute_model_a_schema_hash()
+    schema_hash_b = compute_model_b_schema_hash()
+    schema_hash_c = compute_model_c_schema_hash()
 
     matrix_a = RoleBlindFeatureMatrix(
         piece_ids=sorted_piece_ids,
@@ -386,7 +460,7 @@ def build_role_blind_feature_matrices(
         data=tuple(model_a_rows),
         model_name="MODEL_A",
         manifest_hash=manifest_hash,
-        schema_hash=schema_hash_ctu,
+        schema_hash=schema_hash_a,
     )
 
     matrix_b = RoleBlindFeatureMatrix(
@@ -395,7 +469,7 @@ def build_role_blind_feature_matrices(
         data=tuple(model_b_rows),
         model_name="MODEL_B",
         manifest_hash=manifest_hash,
-        schema_hash=schema_hash_ctu,
+        schema_hash=schema_hash_b,
     )
 
     matrix_c = RoleBlindFeatureMatrix(
@@ -404,7 +478,7 @@ def build_role_blind_feature_matrices(
         data=tuple(model_c_rows),
         model_name="MODEL_C",
         manifest_hash=manifest_hash,
-        schema_hash=schema_hash_ctu,
+        schema_hash=schema_hash_c,
     )
 
     return {
