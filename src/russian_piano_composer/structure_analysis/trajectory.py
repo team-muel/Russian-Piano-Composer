@@ -3,6 +3,7 @@ Family G: Normalized Temporal Trajectories for RC-011.
 
 Implements 8-bin normalized score-position binning, linear trajectory slopes,
 second-order polynomial curvatures, early-vs-late contrast, and trajectory volatility.
+Strictly respects availability contract without silent imputation.
 """
 
 import hashlib
@@ -58,7 +59,7 @@ def _quadratic_curvature(y_vals: list[float]) -> float:
     n = len(y_vals)
     if n < 3:
         return 0.0
-    x_centered_sq = [( (i / float(n - 1)) - 0.5 ) ** 2 for i in range(n)]
+    x_centered_sq = [((i / float(n - 1)) - 0.5) ** 2 for i in range(n)]
     mean_q = sum(x_centered_sq) / float(n)
     mean_y = sum(y_vals) / float(n)
     num = sum((q - mean_q) * (y - mean_y) for q, y in zip(x_centered_sq, y_vals, strict=True))
@@ -97,15 +98,6 @@ def extract_trajectory_features(
             "traj_register_volatility": FeatureValue(0.0, AvailabilityStatus.UNAVAILABLE, "No sounding notes"),
         }
 
-    # Global key for chromaticity
-    global_pc = [0.0] * 12
-    for n in notes:
-        if n.midi is not None:
-            global_pc[n.midi % 12] += float(n.duration * 4)
-    g_tonic, g_mode, _ = estimate_key_from_pc_distribution(global_pc)
-    scale_set = MAJOR_SCALE_PCS if g_mode == "major" else MINOR_SCALE_PCS
-    diatonic_pcs = {(p + g_tonic) % 12 for p in scale_set}
-
     # Partition notes into 8 normalized score-position bins
     n_bins = policy.bin_count
     bin_notes: list[list[CanonicalScoreEvent]] = [[] for _ in range(n_bins)]
@@ -116,6 +108,31 @@ def extract_trajectory_features(
         b_idx = int(norm_pos * n_bins)
         bin_notes[b_idx].append(n)
 
+    populated_bins_count = sum(1 for b in bin_notes if b)
+
+    # If not all 8 bins are populated, return STRUCTURAL_ZERO explicitly without silent imputation
+    if populated_bins_count < n_bins:
+        reason = f"Only {populated_bins_count}/{n_bins} bins populated"
+        return {
+            "traj_register_center_slope": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+            "traj_register_span_slope": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+            "traj_attack_density_slope": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+            "traj_attack_density_curvature": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+            "traj_chromaticity_slope": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+            "traj_sonority_cardinality_slope": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+            "traj_density_early_late_contrast": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+            "traj_register_volatility": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, reason),
+        }
+
+    # Global key for chromaticity
+    global_pc = [0.0] * 12
+    for n in notes:
+        if n.midi is not None:
+            global_pc[n.midi % 12] += float(n.duration * 4)
+    g_tonic, g_mode, _ = estimate_key_from_pc_distribution(global_pc)
+    scale_set = MAJOR_SCALE_PCS if g_mode == "major" else MINOR_SCALE_PCS
+    diatonic_pcs = {(p + g_tonic) % 12 for p in scale_set}
+
     # Compute base metrics per bin
     bin_reg_centers: list[float] = []
     bin_reg_spans: list[float] = []
@@ -125,28 +142,15 @@ def extract_trajectory_features(
 
     measures_per_bin = float(span_measures) / float(n_bins)
 
-    # Whole piece fallback mean pitch
-    whole_piece_pitches = [n.midi for n in notes if n.midi is not None]
-    global_mean_pitch = (sum(whole_piece_pitches) / float(len(whole_piece_pitches))) if whole_piece_pitches else 60.0
-
     for b_idx in range(n_bins):
         b_notes = bin_notes[b_idx]
-        if not b_notes:
-            # Fallback to whole piece mean or 0 if bin is completely empty
-            bin_reg_centers.append(global_mean_pitch)
-            bin_reg_spans.append(0.0)
-            bin_attack_densities.append(0.0)
-            bin_chromatic_shares.append(0.0)
-            bin_pc_cardinalities.append(1.0)
-            continue
-
         b_pitches = [n.midi for n in b_notes if n.midi is not None]
         bin_reg_centers.append(sum(b_pitches) / float(len(b_pitches)))
 
         # Onset grouping within bin
-        b_onsets: dict[tuple[int, Fraction], list[CanonicalScoreEvent]] = {}
+        b_onsets: dict[Fraction, list[CanonicalScoreEvent]] = {}
         for n in b_notes:
-            b_onsets.setdefault((n.measure_index, n.offset_in_measure), []).append(n)
+            b_onsets.setdefault(n.global_onset, []).append(n)
 
         onset_spans = []
         for on in b_onsets.values():
@@ -155,7 +159,6 @@ def extract_trajectory_features(
                 onset_spans.append(max(on_pitches) - min(on_pitches))
 
         bin_reg_spans.append((sum(onset_spans) / float(len(onset_spans))) if onset_spans else 0.0)
-
         bin_attack_densities.append(len(b_notes) / max(0.1, measures_per_bin))
 
         total_b_dur = sum(float(n.duration * 4) for n in b_notes)

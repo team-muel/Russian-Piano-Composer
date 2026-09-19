@@ -3,10 +3,11 @@ Family E: Voice-Leading Geometry for RC-011.
 
 Implements outer-voice contrapuntal motion classification (parallel, contrary, oblique),
 stepwise resolution rates in soprano/bass, semitone approaches, common tone retention,
-and minimal bipartite matching voice-leading distance.
+and minimal assignment voice-leading distance (Tymoczko metric).
 """
 
 import hashlib
+import itertools
 import json
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
@@ -30,25 +31,40 @@ class VoiceLeadingPolicy:
         return hashlib.sha256(encoded).hexdigest()
 
 
-def _minimal_voice_leading_distance(pc_set1: frozenset[int], pc_set2: frozenset[int]) -> float:
+def _pc_dist(a: int, b: int) -> int:
+    """Distance between two pitch classes on circle of 12."""
+    d = abs(a - b) % 12
+    return min(d, 12 - d)
+
+
+def minimal_voice_leading_distance(pc_set1: frozenset[int], pc_set2: frozenset[int]) -> float:
     """
-    Compute minimal total semitone displacement between two pitch-class sets (Tymoczko metric).
-    Maps each pitch class in smaller set to closest pitch class in larger set.
+    Compute deterministic, symmetric minimal voice-leading displacement between two pitch-class sets.
+
+    - For equal-cardinality sets |A| = |B| = n: finds the optimal one-to-one bijection minimizing mean step distance.
+    - For unequal cardinalities: computes the symmetric assignment distance (1/2)(C(A->B) + C(B->A)).
+    - Strictly symmetric: D(A, B) == D(B, A).
+    - Transposition equivariant: D(A+k, B+k) == D(A, B).
     """
     if not pc_set1 or not pc_set2:
         return 0.0
 
     s1, s2 = list(pc_set1), list(pc_set2)
-    # Distance between two pitch classes on circle of 12
-    def pc_dist(a: int, b: int) -> int:
-        d = abs(a - b) % 12
-        return min(d, 12 - d)
+    n1, n2 = len(s1), len(s2)
 
-    total_dist = 0
-    for a in s1:
-        min_d = min(pc_dist(a, b) for b in s2)
-        total_dist += min_d
-    return float(total_dist) / float(len(s1))
+    if n1 == n2:
+        # Check all permutations for optimal 1-to-1 bijective matching
+        min_total = float("inf")
+        for perm in itertools.permutations(s2):
+            total = sum(_pc_dist(a, b) for a, b in zip(s1, perm, strict=True))
+            if total < min_total:
+                min_total = float(total)
+        return min_total / float(n1)
+
+    # Unequal cardinality: symmetric assignment distance
+    cost_1_to_2 = sum(min(_pc_dist(a, b) for b in s2) for a in s1) / float(n1)
+    cost_2_to_1 = sum(min(_pc_dist(b, a) for a in s1) for b in s2) / float(n2)
+    return (cost_1_to_2 + cost_2_to_1) / 2.0
 
 
 def extract_voice_leading_features(
@@ -79,11 +95,10 @@ def extract_voice_leading_features(
             "vl_min_voice_leading_distance_mean": FeatureValue(0.0, AvailabilityStatus.UNAVAILABLE, "No sounding notes"),
         }
 
-    # Group notes by unique onset timepoint
-    onsets_map: dict[tuple[int, Fraction], list[CanonicalScoreEvent]] = {}
+    # Group notes by unique global onset
+    onsets_map: dict[Fraction, list[CanonicalScoreEvent]] = {}
     for n in notes:
-        key = (n.measure_index, n.offset_in_measure)
-        onsets_map.setdefault(key, []).append(n)
+        onsets_map.setdefault(n.global_onset, []).append(n)
 
     sorted_onsets = sorted(onsets_map.keys())
 
@@ -103,11 +118,11 @@ def extract_voice_leading_features(
     vl_distances: list[float] = []
 
     for i in range(1, len(sorted_onsets)):
-        prev_k = sorted_onsets[i - 1]
-        curr_k = sorted_onsets[i]
+        prev_t = sorted_onsets[i - 1]
+        curr_t = sorted_onsets[i]
 
-        prev_pitches = sorted([n.midi for n in onsets_map[prev_k] if n.midi is not None])
-        curr_pitches = sorted([n.midi for n in onsets_map[curr_k] if n.midi is not None])
+        prev_pitches = sorted({n.midi for n in onsets_map[prev_t] if n.midi is not None})
+        curr_pitches = sorted({n.midi for n in onsets_map[curr_t] if n.midi is not None})
 
         if not prev_pitches or not curr_pitches:
             continue
@@ -150,18 +165,18 @@ def extract_voice_leading_features(
         if len(prev_pcs.intersection(curr_pcs)) >= 1:
             common_tone_retained += 1
 
-        vl_dist = _minimal_voice_leading_distance(prev_pcs, curr_pcs)
+        vl_dist = minimal_voice_leading_distance(prev_pcs, curr_pcs)
         vl_distances.append(vl_dist)
 
-    parallel_share = (parallel_motions / float(outer_motions_total)) if outer_motions_total > 0 else 0.0
-    contrary_share = (contrary_motions / float(outer_motions_total)) if outer_motions_total > 0 else 0.0
-    oblique_share = (oblique_motions / float(outer_motions_total)) if outer_motions_total > 0 else 0.0
+    parallel_share = max(0.0, min(1.0, (parallel_motions / float(outer_motions_total)) if outer_motions_total > 0 else 0.0))
+    contrary_share = max(0.0, min(1.0, (contrary_motions / float(outer_motions_total)) if outer_motions_total > 0 else 0.0))
+    oblique_share = max(0.0, min(1.0, (oblique_motions / float(outer_motions_total)) if outer_motions_total > 0 else 0.0))
 
-    soprano_step_share = (soprano_step_motions / float(soprano_motions_total)) if soprano_motions_total > 0 else 0.0
-    bass_step_share = (bass_step_motions / float(bass_motions_total)) if bass_motions_total > 0 else 0.0
+    soprano_step_share = max(0.0, min(1.0, (soprano_step_motions / float(soprano_motions_total)) if soprano_motions_total > 0 else 0.0))
+    bass_step_share = max(0.0, min(1.0, (bass_step_motions / float(bass_motions_total)) if bass_motions_total > 0 else 0.0))
 
     semitone_rate = semitone_approaches / float(span_measures)
-    common_tone_rate = (common_tone_retained / float(len(sorted_onsets) - 1)) if len(sorted_onsets) > 1 else 0.0
+    common_tone_rate = max(0.0, min(1.0, (common_tone_retained / float(len(sorted_onsets) - 1)) if len(sorted_onsets) > 1 else 0.0))
     vl_dist_mean = (sum(vl_distances) / float(len(vl_distances))) if vl_distances else 0.0
 
     return {

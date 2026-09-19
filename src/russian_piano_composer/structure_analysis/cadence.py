@@ -1,8 +1,9 @@
 """
 Family C: Cadential & Boundary Proxies for RC-011.
 
-Implements observable boundary candidate detection (rhythmic elongation, rests, metric weight),
-bass-scale degree resolutions (5->1, 4->1, 5->6), and composite cadential strength scoring.
+Implements observable boundary candidate detection based on inter-onset interval (IOI) lengthening,
+rest presence, metric position, local key estimation, bass scale degree resolutions (5->1, 5->6),
+and cadential resolution strength scoring.
 """
 
 import hashlib
@@ -20,12 +21,14 @@ class CadencePolicy:
     """Frozen policy parameters for Family C extraction."""
 
     boundary_ioi_ratio_threshold: float = 1.5
-    min_measure_boundary_gap: float = 2.0
+    min_measure_boundary_gap: float = 1.0
+    local_window_measures: int = 4
 
     def compute_policy_hash(self) -> str:
         canonical = {
             "boundary_ioi_ratio_threshold": self.boundary_ioi_ratio_threshold,
             "min_measure_boundary_gap": self.min_measure_boundary_gap,
+            "local_window_measures": self.local_window_measures,
         }
         encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
@@ -37,11 +40,37 @@ class BoundaryCandidate:
 
     measure_index: int
     offset_fraction: Fraction
-    duration_quarters: float
+    global_onset: Fraction
+    ioi_quarters: float
     strength_score: float
     bass_pitch: int
     pc_set: frozenset[int]
     is_downbeat: bool
+
+
+def _estimate_local_key_at_measure(
+    notes: list[CanonicalScoreEvent],
+    target_measure: int,
+    window_measures: int = 4,
+) -> int:
+    """Estimate local tonic pitch class in the preceding window [target_measure - window, target_measure]."""
+    local_notes = [
+        n for n in notes
+        if (target_measure - window_measures) <= n.measure_index <= target_measure
+        and n.midi is not None
+    ]
+    if not local_notes:
+        local_notes = [n for n in notes if n.measure_index <= target_measure and n.midi is not None]
+    if not local_notes:
+        local_notes = [n for n in notes if n.midi is not None]
+
+    pc_dist = [0.0] * 12
+    for n in local_notes:
+        if n.midi is not None:
+            pc_dist[n.midi % 12] += float(n.duration * 4)
+
+    tonic, _, _ = estimate_key_from_pc_distribution(pc_dist)
+    return tonic
 
 
 def extract_cadence_features(
@@ -70,111 +99,149 @@ def extract_cadence_features(
             "cadence_resolution_strength_mean": FeatureValue(0.0, AvailabilityStatus.UNAVAILABLE, "No sounding notes"),
         }
 
-    # Group notes by unique onset timepoint
-    onsets_map: dict[tuple[int, Fraction], list[CanonicalScoreEvent]] = {}
+    # Group notes by unique global onset
+    onsets_map: dict[Fraction, list[CanonicalScoreEvent]] = {}
     for n in notes:
-        key = (n.measure_index, n.offset_in_measure)
-        onsets_map.setdefault(key, []).append(n)
+        onsets_map.setdefault(n.global_onset, []).append(n)
 
     sorted_onsets = sorted(onsets_map.keys())
+    n_onsets = len(sorted_onsets)
 
-    # Calculate global/local key for tonic relative pitch degree checks
-    global_pc = [0.0] * 12
-    for n in notes:
-        if n.midi is not None:
-            global_pc[n.midi % 12] += float(n.duration * 4)
-    g_tonic, _, _ = estimate_key_from_pc_distribution(global_pc)
+    # 1. Compute exact Inter-Onset Intervals (IOI) in quarter notes
+    iois: list[float] = []
+    for i, t in enumerate(sorted_onsets):
+        if i + 1 < n_onsets:
+            ioi_q = float((sorted_onsets[i + 1] - t) * 4)
+        else:
+            max_dur = max(float(n.duration * 4) for n in onsets_map[t])
+            ioi_q = max_dur
+        iois.append(ioi_q)
 
-    # 1. Identify boundary candidates based on duration lengthening & metric position
-    durations = [float(max(n.duration * 4 for n in onsets_map[k])) for k in sorted_onsets]
-    median_dur = sorted(durations)[len(durations) // 2] if durations else 1.0
+    # 2. Detect boundary candidates using local median IOI and rest evidence
+    raw_candidates: list[tuple[int, BoundaryCandidate]] = []  # (onset_index, candidate)
 
-    boundary_candidates: list[BoundaryCandidate] = []
-    tonic_resolutions = 0
-    dominant_tonic_proxies = 0
-    deceptive_proxies = 0
-    resolution_scores: list[float] = []
+    for i, t in enumerate(sorted_onsets):
+        onset_notes = onsets_map[t]
+        m_idx = onset_notes[0].measure_index
+        off_frac = onset_notes[0].offset_in_measure
+        ioi = iois[i]
 
-    for i in range(len(sorted_onsets)):
-        onset_k = sorted_onsets[i]
-        m_idx, off_frac = onset_k
-        onset_notes = onsets_map[onset_k]
-        dur = durations[i]
-        pitches = sorted([n.midi for n in onset_notes if n.midi is not None])
+        pitches = sorted({n.midi for n in onset_notes if n.midi is not None})
         if not pitches:
             continue
         bass_p = pitches[0]
         pcs = frozenset(p % 12 for p in pitches)
         is_downbeat = (off_frac == Fraction(0, 1))
 
-        # Check boundary cue: duration lengthening or end of score
-        is_lengthened = (dur >= median_dur * policy.boundary_ioi_ratio_threshold)
-        is_final_event = (i == len(sorted_onsets) - 1)
+        # Local window for median IOI (+/- 4 measures or 8 surrounding onsets)
+        local_iois = [
+            iois[j] for j in range(max(0, i - 4), min(n_onsets, i + 5))
+            if j != i
+        ]
+        if not local_iois:
+            local_iois = [iois[i]]
+        sorted_local = sorted(local_iois)
+        local_median_ioi = sorted_local[len(sorted_local) // 2]
 
-        if is_lengthened or is_final_event or (is_downbeat and dur > median_dur):
-            # Compute boundary strength
-            strength = 0.3 * (1.0 if is_downbeat else 0.5)
-            strength += 0.4 * min(2.0, dur / max(0.1, median_dur)) / 2.0
+        is_lengthened = (ioi >= local_median_ioi * policy.boundary_ioi_ratio_threshold)
+        is_final_event = (i == n_onsets - 1)
+
+        # Rest evidence: release before next onset
+        max_release = max(n.global_onset + n.duration for n in onset_notes)
+        has_rest = (i + 1 < n_onsets) and (max_release < sorted_onsets[i + 1])
+
+        if is_lengthened or is_final_event or (is_downbeat and ioi > local_median_ioi) or has_rest:
+            strength = 0.25 * (1.0 if is_downbeat else 0.5)
+            strength += 0.35 * min(2.0, ioi / max(0.25, local_median_ioi)) / 2.0
+            if has_rest:
+                strength += 0.2
             if is_final_event:
-                strength += 0.3
-            strength = min(1.0, strength)
+                strength += 0.2
+            strength = min(1.0, max(0.0, strength))
 
             bc = BoundaryCandidate(
                 measure_index=m_idx,
                 offset_fraction=off_frac,
-                duration_quarters=dur,
+                global_onset=t,
+                ioi_quarters=round(ioi, 6),
                 strength_score=round(strength, 6),
                 bass_pitch=bass_p,
                 pc_set=pcs,
                 is_downbeat=is_downbeat,
             )
-            boundary_candidates.append(bc)
+            raw_candidates.append((i, bc))
 
-            # Evaluate harmonic resolution at boundary if preceding onset exists
-            res_score = 0.0
-            if i > 0:
-                prev_k = sorted_onsets[i - 1]
-                prev_notes = onsets_map[prev_k]
-                prev_pitches = sorted([n.midi for n in prev_notes if n.midi is not None])
-                if prev_pitches:
-                    prev_bass = prev_pitches[0]
-                    prev_pcs = frozenset(p % 12 for p in prev_pitches)
+    # 3. Filter candidates by min_measure_boundary_gap
+    filtered_candidates: list[tuple[int, BoundaryCandidate]] = []
+    for idx_i, cand in raw_candidates:
+        if not filtered_candidates:
+            filtered_candidates.append((idx_i, cand))
+        else:
+            _prev_idx, prev_cand = filtered_candidates[-1]
+            measure_diff = float(cand.measure_index - prev_cand.measure_index) + float(cand.offset_fraction - prev_cand.offset_fraction)
+            if measure_diff < policy.min_measure_boundary_gap:
+                if cand.strength_score > prev_cand.strength_score:
+                    filtered_candidates[-1] = (idx_i, cand)
+            else:
+                filtered_candidates.append((idx_i, cand))
 
-                    bass_motion = (bass_p - prev_bass) % 12
-                    # Tonic relative scale degrees
-                    curr_bass_deg = (bass_p - g_tonic) % 12
-                    prev_bass_deg = (prev_bass - g_tonic) % 12
+    # 4. Evaluate harmonic resolution using LOCAL key proxy
+    tonic_resolutions = 0
+    dominant_tonic_proxies = 0
+    deceptive_proxies = 0
+    resolution_scores: list[float] = []
 
-                    # 5 -> 1 or 7 -> 1 resolution
-                    if prev_bass_deg == 7 and curr_bass_deg == 0:
-                        tonic_resolutions += 1
-                        res_score += 0.6
-                    elif prev_bass_deg == 11 and curr_bass_deg == 0:
-                        tonic_resolutions += 1
-                        res_score += 0.5
-                    elif bass_motion == 5 or bass_motion == 7:  # Fourth up / Fifth down
-                        tonic_resolutions += 1
-                        res_score += 0.4
+    for onset_idx, cand in filtered_candidates:
+        res_score = 0.0
+        if onset_idx > 0:
+            prev_t = sorted_onsets[onset_idx - 1]
+            prev_notes = onsets_map[prev_t]
+            prev_pitches = sorted({n.midi for n in prev_notes if n.midi is not None})
 
-                    # Dominant-type to Tonic-type sonority proxy
-                    # Dominant-type: contains (g_tonic + 7)%12 or (g_tonic + 11)%12
-                    # Tonic-type: contains g_tonic and (g_tonic + 4 or 3)%12
-                    has_dom_element = ((g_tonic + 7) % 12 in prev_pcs) or ((g_tonic + 11) % 12 in prev_pcs)
-                    has_tonic_element = (g_tonic in pcs) and (((g_tonic + 4) % 12 in pcs) or ((g_tonic + 3) % 12 in pcs))
+            if prev_pitches:
+                prev_bass = prev_pitches[0]
+                prev_pcs = frozenset(p % 12 for p in prev_pitches)
 
-                    if has_dom_element and has_tonic_element:
-                        dominant_tonic_proxies += 1
-                        res_score += 0.4
+                # Local key estimation
+                local_tonic = _estimate_local_key_at_measure(
+                    notes, cand.measure_index, policy.local_window_measures
+                )
 
-                    # Deceptive motion: 5 -> 6 (prev bass deg == 7, curr bass deg == 8 or 9)
-                    if prev_bass_deg == 7 and (curr_bass_deg in {8, 9}):
-                        deceptive_proxies += 1
-                        res_score += 0.5
+                curr_bass_deg = (cand.bass_pitch - local_tonic) % 12
+                prev_bass_deg = (prev_bass - local_tonic) % 12
+                bass_interval = (cand.bass_pitch - prev_bass) % 12
 
-            resolution_scores.append(min(1.0, res_score))
+                # Authentic resolution: 5 -> 1 or 7 -> 1
+                if prev_bass_deg == 7 and curr_bass_deg == 0:
+                    tonic_resolutions += 1
+                    res_score += 0.6
+                elif prev_bass_deg == 11 and curr_bass_deg == 0:
+                    tonic_resolutions += 1
+                    res_score += 0.5
+                elif bass_interval == 5 or bass_interval == 7:  # Fourth up / Fifth down
+                    tonic_resolutions += 1
+                    res_score += 0.4
 
-    candidate_rate = len(boundary_candidates) / float(span_measures)
-    mean_strength = (sum(bc.strength_score for bc in boundary_candidates) / float(len(boundary_candidates))) if boundary_candidates else 0.0
+                # Dominant-to-Tonic chord type proxy relative to local tonic
+                has_dom_element = ((local_tonic + 7) % 12 in prev_pcs) or ((local_tonic + 11) % 12 in prev_pcs)
+                has_tonic_element = (local_tonic in cand.pc_set) and (
+                    ((local_tonic + 4) % 12 in cand.pc_set) or ((local_tonic + 3) % 12 in cand.pc_set)
+                )
+                if has_dom_element and has_tonic_element:
+                    dominant_tonic_proxies += 1
+                    res_score += 0.4
+
+                # Deceptive motion: 5 -> 6 (prev degree 7, curr degree 8 or 9)
+                if prev_bass_deg == 7 and (curr_bass_deg in {8, 9}):
+                    deceptive_proxies += 1
+                    res_score += 0.5
+
+        resolution_scores.append(min(1.0, res_score))
+
+    candidate_rate = len(filtered_candidates) / float(span_measures)
+    mean_strength = (
+        sum(c.strength_score for _, c in filtered_candidates) / float(len(filtered_candidates))
+    ) if filtered_candidates else 0.0
 
     tonic_rate = tonic_resolutions / float(span_measures)
     dom_tonic_rate = dominant_tonic_proxies / float(span_measures)
@@ -185,7 +252,7 @@ def extract_cadence_features(
         "cadence_boundary_candidate_rate": FeatureValue(round(candidate_rate, 6), AvailabilityStatus.AVAILABLE),
         "cadence_boundary_strength_mean": FeatureValue(
             round(mean_strength, 6),
-            AvailabilityStatus.AVAILABLE if boundary_candidates else AvailabilityStatus.STRUCTURAL_ZERO,
+            AvailabilityStatus.AVAILABLE if filtered_candidates else AvailabilityStatus.STRUCTURAL_ZERO,
         ),
         "cadence_tonic_resolution_rate": FeatureValue(round(tonic_rate, 6), AvailabilityStatus.AVAILABLE),
         "cadence_dominant_tonic_proxy_rate": FeatureValue(round(dom_tonic_rate, 6), AvailabilityStatus.AVAILABLE),

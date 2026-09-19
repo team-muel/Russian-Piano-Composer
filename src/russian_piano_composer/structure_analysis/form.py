@@ -1,18 +1,28 @@
 """
 Family D: Formal Recurrence & Sectional Architecture for RC-011.
 
-Implements measure-level Self-Similarity Matrices (SSM), Foote novelty curves,
-recapitulation return proxies, and CTU-derived positional recurrence features.
+Implements 12-dimensional measure-level Self-Similarity Matrices (SSM),
+Foote novelty curves, late return strength proxies, and full-piece CTU recurrence features.
 """
 
 import hashlib
 import json
 import math
 from dataclasses import dataclass
+from fractions import Fraction
 
-from russian_piano_composer.ctu.models import CTUCandidate
+from russian_piano_composer.ctu.models import (
+    CTUCandidate,
+    SegmentPosition,
+    SegmentSpan,
+)
+from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy
+from russian_piano_composer.ctu.representation import extract_segment_representation
+from russian_piano_composer.ctu.similarity import compute_segment_similarity
 from russian_piano_composer.domain.score import CanonicalScore, EventKind
 from russian_piano_composer.structure_analysis.schema import AvailabilityStatus, FeatureValue
+
+FORM_SSM_MEASURE_EMBED_DIM: int = 12
 
 
 @dataclass(frozen=True, slots=True)
@@ -22,14 +32,17 @@ class FormPolicy:
     similarity_threshold: float = 0.80
     novelty_kernel_size: int = 4
     late_return_start_fraction: float = 0.70
-    exposition_end_fraction: float = 0.20
+    initial_reference_end_fraction: float = 0.20
+    ctu_match_similarity_threshold: float = 0.82
 
     def compute_policy_hash(self) -> str:
         canonical = {
             "similarity_threshold": self.similarity_threshold,
             "novelty_kernel_size": self.novelty_kernel_size,
             "late_return_start_fraction": self.late_return_start_fraction,
-            "exposition_end_fraction": self.exposition_end_fraction,
+            "initial_reference_end_fraction": self.initial_reference_end_fraction,
+            "ctu_match_similarity_threshold": self.ctu_match_similarity_threshold,
+            "measure_embed_dim": FORM_SSM_MEASURE_EMBED_DIM,
         }
         encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
         return hashlib.sha256(encoded).hexdigest()
@@ -62,6 +75,7 @@ def extract_form_features(
     measures = score.measures
     span_measures = max(1, max(m.measure_index for m in measures) - min(m.measure_index for m in measures) + 1) if measures else 1
     measure_indices = sorted({m.measure_index for m in measures}) if measures else []
+    min_m_idx = min(measure_indices) if measure_indices else 0
 
     if not notes or not measure_indices:
         return {
@@ -75,15 +89,14 @@ def extract_form_features(
             "form_ctu_late_return_presence": FeatureValue(0.0, AvailabilityStatus.STRUCTURAL_ZERO, "No CTUs"),
         }
 
-    # 1. Build measure-level feature embeddings (12-PC duration vector + density)
-    measure_embeddings: dict[int, list[float]] = {m: [0.0] * 13 for m in measure_indices}
+    # 1. Build measure-level feature embeddings (strictly 12-dimensional PC duration vector)
+    measure_embeddings: dict[int, list[float]] = {m: [0.0] * FORM_SSM_MEASURE_EMBED_DIM for m in measure_indices}
     for n in notes:
         m_idx = n.measure_index
         if m_idx in measure_embeddings and n.midi is not None:
             pc = n.midi % 12
             dur = float(n.duration * 4)
             measure_embeddings[m_idx][pc] += dur
-            measure_embeddings[m_idx][12] += 1.0  # note attack count
 
     ordered_embeddings = [measure_embeddings[m] for m in measure_indices]
     n_embeds = len(ordered_embeddings)
@@ -107,12 +120,12 @@ def extract_form_features(
     rec_density = (recurrence_count / float(total_off_diag)) if total_off_diag > 0 else 0.0
     rec_dist_mean = (sum(recurrence_distances) / float(len(recurrence_distances))) if recurrence_distances else 0.0
 
-    # 3. Late Formal Return Strength (ABA return proxy)
-    n_expo = max(1, int(n_embeds * policy.exposition_end_fraction))
-    n_recap_start = int(n_embeds * policy.late_return_start_fraction)
+    # 3. Late Formal Return Strength
+    n_init_ref = max(1, int(n_embeds * policy.initial_reference_end_fraction))
+    n_late_start = int(n_embeds * policy.late_return_start_fraction)
     late_return_sims = []
-    for i in range(min(n_expo, n_embeds)):
-        for j in range(max(0, n_recap_start), n_embeds):
+    for i in range(min(n_init_ref, n_embeds)):
+        for j in range(max(0, n_late_start), n_embeds):
             late_return_sims.append(ssm[i][j])
 
     late_return_strength = max(late_return_sims) if late_return_sims else 0.0
@@ -122,7 +135,6 @@ def extract_form_features(
     novelty_curve: list[float] = []
     if 2 * k_size <= n_embeds:
         for i in range(k_size, n_embeds - k_size):
-            # Compute cross-similarity vs within-similarity across kernel quadrants
             quad1 = sum(ssm[i - k][i - q] for k in range(1, k_size + 1) for q in range(1, k_size + 1))
             quad2 = sum(ssm[i + k][i + q] for k in range(1, k_size + 1) for q in range(1, k_size + 1))
             cross1 = sum(ssm[i - k][i + q] for k in range(1, k_size + 1) for q in range(1, k_size + 1))
@@ -132,7 +144,6 @@ def extract_form_features(
 
     novelty_mean = (sum(novelty_curve) / float(len(novelty_curve))) if novelty_curve else 0.0
 
-    # Novelty peaks (simple local maxima above mean)
     novelty_peaks = 0
     for idx in range(1, len(novelty_curve) - 1):
         if (
@@ -143,20 +154,51 @@ def extract_form_features(
             novelty_peaks += 1
     novelty_peak_rate = novelty_peaks / float(span_measures)
 
-    # 5. CTU-derived formal features
+    # 5. CTU-derived formal features across the FULL score
     if retained_ctus:
-        first_positions = [
-            float(c.span.start.measure_index - min(measure_indices)) / float(max(1, span_measures))
-            for c in retained_ctus
-        ]
+        discovery_policy = CTUDiscoveryPolicy()
+        first_positions: list[float] = []
+        all_occurrence_positions: list[float] = []
+        late_recurrence_found = False
+
+        max_m_idx = max(measure_indices)
+
+        for ctu in retained_ctus:
+            span_len = ctu.span.end.measure_index - ctu.span.start.measure_index
+            ctu_start_m = ctu.span.start.measure_index
+            ctu_end_m = ctu.span.end.measure_index
+
+            pos_norm = float(ctu_start_m - min_m_idx) / float(span_measures)
+            first_positions.append(pos_norm)
+            all_occurrence_positions.append(pos_norm)
+
+            # Scan full piece for non-overlapping matching occurrences
+            for m in range(min_m_idx, max_m_idx - span_len + 2):
+                cand_span = SegmentSpan(
+                    start=SegmentPosition(measure_index=m, offset=Fraction(0, 1)),
+                    end=SegmentPosition(measure_index=m + span_len, offset=Fraction(0, 1)),
+                )
+
+                # Non-overlapping check with discovery region of this CTU
+                is_non_overlapping = (m + span_len <= ctu_start_m) or (m >= ctu_end_m)
+                if not is_non_overlapping:
+                    continue
+
+                cand_rep = extract_segment_representation(score, cand_span)
+                sim = compute_segment_similarity(ctu.representation, cand_rep, policy=discovery_policy)
+
+                if sim is not None and sim >= policy.ctu_match_similarity_threshold:
+                    match_pos_norm = float(m - min_m_idx) / float(span_measures)
+                    all_occurrence_positions.append(match_pos_norm)
+                    if match_pos_norm >= policy.late_return_start_fraction:
+                        late_recurrence_found = True
+
         first_occ_mean = sum(first_positions) / float(len(first_positions))
+        has_late_return = 1.0 if late_recurrence_found else 0.0
 
-        # Check late return in final 30% of piece
-        has_late_return = 1.0 if any(pos >= policy.late_return_start_fraction for pos in first_positions) else 0.0
-
-        if len(first_positions) > 1:
-            mean_pos = sum(first_positions) / float(len(first_positions))
-            pos_var = sum((x - mean_pos) ** 2 for x in first_positions) / float(len(first_positions) - 1)
+        if len(all_occurrence_positions) > 1:
+            mean_pos = sum(all_occurrence_positions) / float(len(all_occurrence_positions))
+            pos_var = sum((x - mean_pos) ** 2 for x in all_occurrence_positions) / float(len(all_occurrence_positions) - 1)
             pos_disp = math.sqrt(pos_var)
         else:
             pos_disp = 0.0

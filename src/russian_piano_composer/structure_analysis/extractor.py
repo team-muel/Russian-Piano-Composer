@@ -50,7 +50,6 @@ class StructuralExtractionPolicy:
     ctu_discovery_policy: CTUDiscoveryPolicy = field(default_factory=CTUDiscoveryPolicy)
 
 
-
 @dataclass(frozen=True, slots=True)
 class PieceStructuralRepresentation:
     """Computed structural representation for a single piece across all 56 descriptors."""
@@ -58,6 +57,9 @@ class PieceStructuralRepresentation:
     piece_id: str
     manifest_hash: str
     features: dict[str, FeatureValue]
+
+    def __getitem__(self, item: str) -> FeatureValue:
+        return self.features[item]
 
     def get_vector(self) -> tuple[float, ...]:
         """Return the sorted canonical feature vector of floats."""

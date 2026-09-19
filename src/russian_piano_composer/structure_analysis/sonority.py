@@ -1,8 +1,8 @@
 """
 Family B: Sonority & Harmonic Motion for RC-011.
 
-Implements sounding pitch-class simultaneity analysis, interval class vectors,
-bass-relative intervals, sonority transitions, and harmonic rhythm volatility.
+Implements sounding pitch-class simultaneity analysis (including sustained notes),
+interval class vectors, bass-relative intervals, sonority transitions, and harmonic rhythm volatility.
 """
 
 import hashlib
@@ -11,7 +11,7 @@ import math
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
-from russian_piano_composer.domain.score import CanonicalScore, CanonicalScoreEvent, EventKind
+from russian_piano_composer.domain.score import CanonicalScore, EventKind
 from russian_piano_composer.structure_analysis.schema import AvailabilityStatus, FeatureValue
 
 if TYPE_CHECKING:
@@ -49,6 +49,9 @@ def extract_sonority_features(
         if ev.event_kind == EventKind.NOTE and ev.pitch is not None and ev.midi is not None
     ]
 
+    measures = score.measures
+    span_measures = max(1, max(m.measure_index for m in measures) - min(m.measure_index for m in measures) + 1) if measures else 1
+
     if not notes:
         return {
             "sonority_pc_cardinality_mean": FeatureValue(0.0, AvailabilityStatus.UNAVAILABLE, "No sounding notes"),
@@ -61,54 +64,61 @@ def extract_sonority_features(
             "sonority_harmonic_rhythm_volatility": FeatureValue(0.0, AvailabilityStatus.UNAVAILABLE, "No sounding notes"),
         }
 
-    # Group notes by unique onset timepoint
-    # Timepoint sorting by (measure_index, offset_in_measure)
-    onsets_map: dict[tuple[int, Fraction], list[CanonicalScoreEvent]] = {}
-    for n in notes:
-        key = (n.measure_index, n.offset_in_measure)
-        onsets_map.setdefault(key, []).append(n)
+    # Unique global onset timepoints
+    sorted_unique_onsets: list[Fraction] = sorted({n.global_onset for n in notes})
+    n_onsets = len(sorted_unique_onsets)
 
-    sorted_onsets = sorted(onsets_map.keys())
-    n_onsets = len(sorted_onsets)
-
-    # 1. Pitch-class cardinalities and vertical dyads
+    # 1. At every onset timepoint t, construct the ACTIVE sounding note set
+    # Active notes: note.global_onset <= t < note.global_onset + note.duration
     cardinalities: list[int] = []
     total_dyads = 0
     ic1_count = 0
     ic6_count = 0
     bass_rel_intervals: set[int] = set()
 
-    onset_pc_sets: list[tuple[frozenset[int], float, float]] = []  # (pc_set, dur_quarters, measure_float)
+    # Store (pc_set, slice_duration_quarters, measure_float)
+    slice_pc_sets: list[tuple[frozenset[int], float, float]] = []
 
-    for onset_k in sorted_onsets:
-        m_idx, offset = onset_k
+    for i, t in enumerate(sorted_unique_onsets):
+        active_notes = [
+            n for n in notes
+            if n.global_onset <= t < (n.global_onset + n.duration) and n.midi is not None
+        ]
 
-        onset_notes = onsets_map[onset_k]
-        pitches = sorted([n.midi for n in onset_notes if n.midi is not None])
-        pcs = frozenset(p % 12 for p in pitches)
-        cardinalities.append(len(pcs))
+        sounding_pitches = sorted({n.midi for n in active_notes if n.midi is not None})
+        sounding_pcs = frozenset(p % 12 for p in sounding_pitches)
+        cardinalities.append(len(sounding_pcs))
 
-        # Bass-relative intervals
-        if pitches:
-            bass_pitch = pitches[0]
-            for p in pitches[1:]:
-                bass_rel_intervals.add(interval_class(p - bass_pitch))
+        # Bass-relative intervals (from lowest sounding pitch)
+        if sounding_pitches:
+            bass_p = sounding_pitches[0]
+            for p in sounding_pitches[1:]:
+                bass_rel_intervals.add(interval_class(p - bass_p))
 
-        # Vertical dyads across all sounding notes at this onset
-        for idx1 in range(len(pitches)):
-            for idx2 in range(idx1 + 1, len(pitches)):
-                ic = interval_class(pitches[idx2] - pitches[idx1])
+        # Vertical dyads across all active sounding pitches
+        for idx1 in range(len(sounding_pitches)):
+            for idx2 in range(idx1 + 1, len(sounding_pitches)):
+                ic = interval_class(sounding_pitches[idx2] - sounding_pitches[idx1])
                 total_dyads += 1
                 if ic == 1:
                     ic1_count += 1
                 elif ic == 6:
                     ic6_count += 1
 
-        # Calculate onset duration until next onset (or note duration if last)
-        onset_dur = float(max(n.duration * 4 for n in onset_notes))
+        # Duration slice until next onset or end of sounding notes at this onset
+        if i + 1 < n_onsets:
+            slice_dur_quarters = float((sorted_unique_onsets[i + 1] - t) * 4)
+        else:
+            max_release = max(n.global_onset + n.duration for n in active_notes)
+            slice_dur_quarters = float((max_release - t) * 4)
 
-        measure_pos = float(m_idx) + float(offset)
-        onset_pc_sets.append((pcs, onset_dur, measure_pos))
+        # Measure float position
+        # Find measure index corresponding to t
+        active_m_idx = active_notes[0].measure_index if active_notes else 0
+        active_off = float(active_notes[0].offset_in_measure) if active_notes else 0.0
+        measure_pos = float(active_m_idx) + active_off
+
+        slice_pc_sets.append((sounding_pcs, max(0.0, slice_dur_quarters), measure_pos))
 
     card_mean = sum(cardinalities) / float(len(cardinalities))
     if len(cardinalities) > 1:
@@ -117,26 +127,23 @@ def extract_sonority_features(
     else:
         card_std = 0.0
 
-    ic1_share = (ic1_count / float(total_dyads)) if total_dyads > 0 else 0.0
-    ic6_share = (ic6_count / float(total_dyads)) if total_dyads > 0 else 0.0
-    bass_variety = (len(bass_rel_intervals) / float(n_onsets)) if n_onsets > 0 else 0.0
+    ic1_share = max(0.0, min(1.0, (ic1_count / float(total_dyads)) if total_dyads > 0 else 0.0))
+    ic6_share = max(0.0, min(1.0, (ic6_count / float(total_dyads)) if total_dyads > 0 else 0.0))
+    bass_variety = max(0.0, min(1.0, (len(bass_rel_intervals) / float(n_onsets)) if n_onsets > 0 else 0.0))
 
     # 2. Sonority transitions & Harmonic rhythm
-    measures = score.measures
-    span_measures = max(1, max(m.measure_index for m in measures) - min(m.measure_index for m in measures) + 1) if measures else 1
-
     distinct_transitions = 0
     pc_set_durations: dict[frozenset[int], float] = {}
     total_sounding_dur = 0.0
 
     measures_between_changes: list[float] = []
-    last_change_measure = onset_pc_sets[0][2]
-    prev_set = onset_pc_sets[0][0]
-    pc_set_durations[prev_set] = pc_set_durations.get(prev_set, 0.0) + onset_pc_sets[0][1]
-    total_sounding_dur += onset_pc_sets[0][1]
+    last_change_measure = slice_pc_sets[0][2]
+    prev_set = slice_pc_sets[0][0]
+    pc_set_durations[prev_set] = pc_set_durations.get(prev_set, 0.0) + slice_pc_sets[0][1]
+    total_sounding_dur += slice_pc_sets[0][1]
 
-    for i in range(1, len(onset_pc_sets)):
-        curr_set, dur, m_pos = onset_pc_sets[i]
+    for i in range(1, len(slice_pc_sets)):
+        curr_set, dur, m_pos = slice_pc_sets[i]
         pc_set_durations[curr_set] = pc_set_durations.get(curr_set, 0.0) + dur
         total_sounding_dur += dur
 
@@ -153,7 +160,7 @@ def extract_sonority_features(
     sorted_durations = sorted(pc_set_durations.items(), key=lambda item: item[1], reverse=True)
     top_3_sets = sorted_durations[:policy.top_pc_sets_count]
     top_dur = sum(cnt for _, cnt in top_3_sets)
-    stable_share = (top_dur / total_sounding_dur) if total_sounding_dur > 0 else 0.0
+    stable_share = max(0.0, min(1.0, (top_dur / total_sounding_dur) if total_sounding_dur > 0 else 0.0))
 
     # Harmonic rhythm volatility
     if len(measures_between_changes) > 1:

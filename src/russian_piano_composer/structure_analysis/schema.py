@@ -38,6 +38,17 @@ class InvarianceClass(StrEnum):
     NOT_APPLICABLE = "NOT_APPLICABLE"
 
 
+class TransformationType(StrEnum):
+    """Transformation types evaluated in metamorphic invariance testing."""
+
+    TRANSPOSITION = "TRANSPOSITION"
+    TIME_DILATION = "TIME_DILATION"
+    PIECE_ID_RENAME = "PIECE_ID_RENAME"
+    SOURCE_PATH_RENAME = "SOURCE_PATH_RENAME"
+    VOICE_ID_RENAME = "VOICE_ID_RENAME"
+    STAFF_SWAP = "STAFF_SWAP"
+
+
 class AvailabilityStatus(StrEnum):
     """Explicit availability status distinguishing valid zeros from missing preconditions."""
 
@@ -727,7 +738,7 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
         missing_value_rule="UNAVAILABLE if 0 measures",
         invariance_class=InvarianceClass.INVARIANT,
         provenance=Provenance.HYPOTHESIS,
-        known_confounds="scale runs (filtered by interval span)",
+        known_confounds="scale runs (filtered by interval span and step uniformity)",
         interpretation_limitations="Pianistic figurative sweep rate",
     ),
     StructuralFeatureDefinition(
@@ -874,7 +885,60 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
 )
 
 
-def compute_structural_schema_hash(catalog: tuple[StructuralFeatureDefinition, ...] = STRUCTURAL_FEATURE_CATALOG) -> str:
+def get_feature_invariance_contract(
+    feature_id: str,
+    transformation: TransformationType,
+) -> InvarianceClass:
+    """Return the expected invariance behavior for a feature under a specific transformation."""
+    if transformation == TransformationType.TRANSPOSITION:
+        if feature_id == "texture_register_centroid_mean":
+            return InvarianceClass.EQUIVARIANT
+        return InvarianceClass.INVARIANT
+
+    if transformation == TransformationType.TIME_DILATION:
+        return InvarianceClass.INVARIANT
+
+    if transformation in (
+        TransformationType.PIECE_ID_RENAME,
+        TransformationType.SOURCE_PATH_RENAME,
+        TransformationType.VOICE_ID_RENAME,
+    ):
+        return InvarianceClass.INVARIANT
+
+    if transformation == TransformationType.STAFF_SWAP:
+        if feature_id == "texture_interstaff_gap_mean":
+            return InvarianceClass.SENSITIVE_BY_DESIGN
+        return InvarianceClass.INVARIANT
+
+    return InvarianceClass.NOT_APPLICABLE
+
+
+def compute_invariance_contract_hash(
+    catalog: tuple[StructuralFeatureDefinition, ...] = STRUCTURAL_FEATURE_CATALOG,
+) -> str:
+    """Deterministic SHA-256 hash of the complete metamorphic invariance contract across all features."""
+    transformations = sorted(t.value for t in TransformationType)
+    canonical = {
+        "version": "INVARIANCE_CONTRACT_V1",
+        "feature_count": len(catalog),
+        "contracts": [
+            {
+                "feature_id": d.feature_id,
+                "behaviors": {
+                    t: get_feature_invariance_contract(d.feature_id, TransformationType(t)).value
+                    for t in transformations
+                },
+            }
+            for d in sorted(catalog, key=lambda x: x.feature_id)
+        ],
+    }
+    encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def compute_structural_schema_hash(
+    catalog: tuple[StructuralFeatureDefinition, ...] = STRUCTURAL_FEATURE_CATALOG,
+) -> str:
     """Deterministic SHA-256 hash of the complete Structural Feature Schema V1."""
     canonical = {
         "version": "STRUCTURAL_REPRESENTATION_SCHEMA_V1",

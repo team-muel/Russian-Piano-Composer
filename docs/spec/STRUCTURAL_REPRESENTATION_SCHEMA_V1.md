@@ -4,7 +4,7 @@
 The **`STRUCTURAL_REPRESENTATION_SCHEMA_V1`** defines 56 frozen symbolic music descriptors across 7 foundational families of music theory, cognitive musicology, and piano performance.
 
 Schema Version: `1`  
-Structural Schema Hash: `c2eaf6d08d423603035e5a3e00dece3cf40771ce995fdccea5fa199d4dcf8ef7`
+Structural Schema Hash: `547406a0836da4182310dfb6f2049481fe134ecfff58894d2f7c2beef19db189`
 
 ---
 
