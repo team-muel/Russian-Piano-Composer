@@ -418,6 +418,63 @@ def fixture_t_dense_to_sparse() -> CanonicalScore:
     return build_synthetic_score(notes, 8, "fixture_t_dense_to_sparse")
 
 
+def fixture_u_registral_span_and_cardinality() -> CanonicalScore:
+    """Fixture U: Registral span and sonority cardinality expansion trajectory across 8 measures."""
+    notes = []
+    for m in range(8):
+        card = min(m + 1, 4)
+        low_p = 60 - m * 4
+        high_p = 60 + m * 4
+        for c in range(card):
+            p = low_p if c == 0 else (high_p if c == 1 else 60 + c)
+            notes.append((p, m, Fraction(0, 1), Fraction(1, 1)))
+    return build_synthetic_score(notes, 8, "fixture_u_registral_span_and_cardinality")
+
+
+def fixture_v_density_curvature_and_chromaticity() -> CanonicalScore:
+    """Fixture V: Parabolic attack density curvature and increasing chromaticity across 8 measures."""
+    notes = []
+    density = [2, 4, 6, 8, 8, 6, 4, 2]
+    for m in range(8):
+        cnt = density[m]
+        notes.append((48, m, Fraction(0, 1), Fraction(1, 1)))
+        for i in range(cnt):
+            p = [60, 64, 67, 72][i % 4] if m < 4 else ([61, 66, 68, 70][i % 4] if (i % 2 == 1) else 60)
+            notes.append((p, m, Fraction(i, cnt), Fraction(1, cnt)))
+    return build_synthetic_score(notes, 8, "fixture_v_density_curvature_and_chromaticity")
+
+
+def fixture_w_register_volatility() -> CanonicalScore:
+    """Fixture W: High registral volatility alternating extreme registers across 8 measures."""
+    notes = []
+    for m in range(8):
+        p = 84 if m % 2 == 0 else 36
+        notes.append((p, m, Fraction(0, 1), Fraction(1, 1)))
+    return build_synthetic_score(notes, 8, "fixture_w_register_volatility")
+
+
+def fixture_x_cadence_dilation_counterexample() -> CanonicalScore:
+    """Fixture X: Cadence time-dilation adversarial fixture with sub-threshold rest gaps."""
+    gap = Fraction(3, 32)
+    dur_lead = Fraction(5, 8)
+    dur_boundary = Fraction(9, 32)
+    off_boundary = Fraction(5, 8) + gap
+    notes_x = [
+        # M0: C major leading into G dominant at offset 23/32
+        (48, 0, Fraction(0, 1), dur_lead), (60, 0, Fraction(0, 1), dur_lead), (64, 0, Fraction(0, 1), dur_lead),
+        (55, 0, off_boundary, dur_boundary), (59, 0, off_boundary, dur_boundary), (62, 0, off_boundary, dur_boundary),
+        # M1: Resolves to C major (I) (Authentic) -> boundary candidate at offset 23/32
+        (48, 1, Fraction(0, 1), dur_lead), (60, 1, Fraction(0, 1), dur_lead), (64, 1, Fraction(0, 1), dur_lead),
+        (55, 1, off_boundary, dur_boundary), (59, 1, off_boundary, dur_boundary), (62, 1, off_boundary, dur_boundary),
+        # M2: Resolves to A minor (vi) (Deceptive) -> boundary candidate at offset 23/32
+        (45, 2, Fraction(0, 1), dur_lead), (57, 2, Fraction(0, 1), dur_lead), (60, 2, Fraction(0, 1), dur_lead),
+        (55, 2, off_boundary, dur_boundary), (59, 2, off_boundary, dur_boundary), (62, 2, off_boundary, dur_boundary),
+        # M3: Resolves to C major (I)
+        (48, 3, Fraction(0, 1), Fraction(1, 1)), (60, 3, Fraction(0, 1), Fraction(1, 1)), (64, 3, Fraction(0, 1), Fraction(1, 1)),
+    ]
+    return build_synthetic_score(notes_x, 4, "fixture_x_cadence_dilation_counterexample")
+
+
 @dataclass(frozen=True, slots=True)
 class SyntheticFixture:
     """Immutable record for a canonical synthetic fixture."""
@@ -428,7 +485,7 @@ class SyntheticFixture:
     builder: Callable[[], CanonicalScore]
 
 
-# Immutable Registry of all 20 Fixtures
+# Immutable Registry of all 24 Fixtures (A through X)
 FIXTURE_REGISTRY: tuple[SyntheticFixture, ...] = (
     SyntheticFixture("A", "stable_c_major_progression", FeatureFamily.TONAL, fixture_a_c_major),
     SyntheticFixture("B", "transposed_progression", FeatureFamily.TONAL, fixture_b_transposed),
@@ -450,11 +507,15 @@ FIXTURE_REGISTRY: tuple[SyntheticFixture, ...] = (
     SyntheticFixture("R", "stable_register_trajectory", FeatureFamily.TEMPORAL_TRAJECTORY, fixture_r_stable_register),
     SyntheticFixture("S", "sparse_to_dense_trajectory", FeatureFamily.TEMPORAL_TRAJECTORY, fixture_s_sparse_to_dense),
     SyntheticFixture("T", "dense_to_sparse_trajectory", FeatureFamily.TEMPORAL_TRAJECTORY, fixture_t_dense_to_sparse),
+    SyntheticFixture("U", "registral_span_and_cardinality", FeatureFamily.TEMPORAL_TRAJECTORY, fixture_u_registral_span_and_cardinality),
+    SyntheticFixture("V", "density_curvature_and_chromaticity", FeatureFamily.TEMPORAL_TRAJECTORY, fixture_v_density_curvature_and_chromaticity),
+    SyntheticFixture("W", "register_volatility", FeatureFamily.TEMPORAL_TRAJECTORY, fixture_w_register_volatility),
+    SyntheticFixture("X", "cadence_dilation_counterexample", FeatureFamily.CADENCE, fixture_x_cadence_dilation_counterexample),
 )
 
 
 def compute_synthetic_fixture_suite_hash(fixtures: tuple[SyntheticFixture, ...] = FIXTURE_REGISTRY) -> str:
-    """Deterministic SHA-256 hash of the complete 20-fixture suite binding all note/measure data."""
+    """Deterministic SHA-256 hash of the complete 24-fixture suite binding all note/measure data."""
     records = []
     for f in sorted(fixtures, key=lambda x: x.fixture_id):
         score = f.builder()
@@ -481,7 +542,7 @@ def compute_synthetic_fixture_suite_hash(fixtures: tuple[SyntheticFixture, ...] 
             "semantic_hash": compute_fixture_semantic_hash(score),
         })
     canonical = {
-        "version": "SYNTHETIC_FIXTURE_SUITE_V2",
+        "version": "SYNTHETIC_FIXTURE_SUITE_V3",
         "fixture_count": len(fixtures),
         "fixtures": records,
     }
@@ -866,48 +927,97 @@ class ValidationResult:
     invariance_contract_hash: str
     fixture_suite_hash: str
     assertion_contract_hash: str
+    metamorphic_test_matrix_hash: str
     overall_status: str
     validation_hash: str
 
 
-_METAMORPHIC_FEATURE_FIXTURE_MAP: dict[str, str] = {
+# Explicit Non-Vacuous Metamorphic Test Matrix covering all 56 features
+METAMORPHIC_FEATURE_FIXTURE_MAP: dict[str, str] = {
+    # FAMILY A: TONAL / HARMONIC CENTER PROXIES (8 features)
+    "tonal_global_confidence": "A",
+    "tonal_local_confidence_mean": "A",
+    "tonal_local_confidence_std": "C",
     "tonal_center_change_rate": "C",
-    "tonal_modulatory_index": "C",
     "tonal_circle5_distance_mean": "C",
     "tonal_circle5_distance_max": "C",
-    "tonal_local_confidence_std": "C",
     "tonal_chromatic_duration_share": "D",
+    "tonal_mode_switch_rate": "C",
+    # FAMILY B: SONORITY & HARMONIC MOTION (8 features)
+    "sonority_pc_cardinality_mean": "G",
+    "sonority_pc_cardinality_std": "G",
+    "sonority_change_rate": "A",
+    "sonority_stable_duration_share": "A",
     "sonority_ic1_semitone_share": "D",
     "sonority_ic6_tritone_share": "D",
-    "sonority_harmonic_change_rate": "A",
-    "cadence_deceptive_proxy_rate": "F",
+    "sonority_bass_interval_variety": "A",
+    "sonority_harmonic_rhythm_volatility": "A",
+    # FAMILY C: CADENTIAL / BOUNDARY PROXIES (6 features - bound to adversarial dilation counterexample X)
+    "cadence_boundary_candidate_rate": "X",
+    "cadence_boundary_strength_mean": "X",
+    "cadence_tonic_resolution_rate": "X",
+    "cadence_dominant_tonic_proxy_rate": "X",
+    "cadence_deceptive_proxy_rate": "X",
+    "cadence_resolution_strength_mean": "X",
+    # FAMILY D: FORMAL RECURRENCE & SECTIONAL ARCHITECTURE (8 features)
+    "form_ssm_recurrence_density": "N",
+    "form_novelty_peak_rate": "O",
     "form_novelty_mean": "O",
+    "form_return_late_strength": "N",
+    "form_recurrence_distance_mean": "N",
+    "form_ctu_first_occurrence_mean": "N",
+    "form_ctu_recurrence_dispersion": "N",
+    "form_ctu_late_return_presence": "N",
+    # FAMILY E: VOICE-LEADING GEOMETRY (8 features)
+    "vl_outer_parallel_motion_share": "K",
     "vl_outer_contrary_motion_share": "L",
     "vl_outer_oblique_motion_share": "M",
+    "vl_soprano_step_resolution_share": "A",
+    "vl_bass_step_motion_share": "A",
     "vl_semitone_approach_rate": "D",
     "vl_common_tone_retention_rate": "A",
+    "vl_min_voice_leading_distance_mean": "A",
+    # FAMILY F: PIANO TEXTURE & REGISTRAL ARCHITECTURE (10 features)
+    "texture_register_centroid_mean": "G",
+    "texture_register_centroid_std": "G",
+    "texture_register_span_mean": "G",
+    "texture_register_span_max": "G",
+    "texture_interstaff_gap_mean": "G",
+    "texture_simultaneity_attack_mean": "G",
+    "texture_block_chord_share": "G",
     "texture_arpeggiation_proxy_rate": "H",
-    "texture_repeated_note_attack_rate": "I",
     "texture_octave_doubling_share": "J",
+    "texture_repeated_note_attack_rate": "I",
+    # FAMILY G: NORMALIZED TEMPORAL TRAJECTORIES (8 features - bound to non-vacuous trajectory fixtures)
+    "traj_register_center_slope": "P",
+    "traj_register_span_slope": "U",
     "traj_attack_density_slope": "S",
+    "traj_attack_density_curvature": "V",
+    "traj_chromaticity_slope": "V",
+    "traj_sonority_cardinality_slope": "U",
+    "traj_density_early_late_contrast": "S",
+    "traj_register_volatility": "W",
 }
 
-_METAMORPHIC_FAMILY_DEFAULT_FIXTURE: dict[FeatureFamily, str] = {
-    FeatureFamily.TONAL: "A",
-    FeatureFamily.SONORITY: "G",
-    FeatureFamily.CADENCE: "E",
-    FeatureFamily.FORM: "N",
-    FeatureFamily.VOICE_LEADING: "K",
-    FeatureFamily.TEXTURE_REGISTER: "G",
-    FeatureFamily.TEMPORAL_TRAJECTORY: "P",
-}
+
+def compute_metamorphic_test_matrix_hash(mapping: dict[str, str] | None = None) -> str:
+    """Deterministic SHA-256 hash of the complete 56-feature metamorphic test matrix."""
+    mp = mapping if mapping is not None else METAMORPHIC_FEATURE_FIXTURE_MAP
+    records = [{"feature_id": k, "fixture_id": mp[k]} for k in sorted(mp.keys())]
+    canonical = {
+        "version": "METAMORPHIC_TEST_MATRIX_V1",
+        "feature_count": len(records),
+        "mapping": records,
+    }
+    encoded = json.dumps(canonical, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def get_metamorphic_fixture_id(feature_id: str, family: FeatureFamily) -> str:
     """Map each feature to its optimal non-vacuous fixture for metamorphic testing."""
-    if feature_id in _METAMORPHIC_FEATURE_FIXTURE_MAP:
-        return _METAMORPHIC_FEATURE_FIXTURE_MAP[feature_id]
-    return _METAMORPHIC_FAMILY_DEFAULT_FIXTURE.get(family, "A")
+    if feature_id in METAMORPHIC_FEATURE_FIXTURE_MAP:
+        return METAMORPHIC_FEATURE_FIXTURE_MAP[feature_id]
+    raise KeyError(f"Feature {feature_id} missing from METAMORPHIC_FEATURE_FIXTURE_MAP")
 
 
 def run_synthetic_and_metamorphic_validation(
@@ -1267,14 +1377,30 @@ def run_synthetic_and_metamorphic_validation(
                     passed = (orig_obj.value > 0 and trans_obj.value == 0.0)
                     expected_rel = "orig > 0 and trans == 0.0"
                     actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}"
-                else:
-                    passed = True
-                    expected_rel = "sensitive by design"
+                elif trans_type == TransformationType.TIME_DILATION and fid in (
+                    "cadence_boundary_candidate_rate",
+                    "cadence_tonic_resolution_rate",
+                    "cadence_dominant_tonic_proxy_rate",
+                    "cadence_deceptive_proxy_rate",
+                ):
+                    passed = trans_obj.value > orig_obj.value
+                    expected_rel = "trans > orig (adversarial rest gap dilation crosses threshold)"
                     actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}"
+                elif trans_type == TransformationType.TIME_DILATION and fid in (
+                    "cadence_boundary_strength_mean",
+                    "cadence_resolution_strength_mean",
+                ):
+                    passed = abs(trans_obj.value - orig_obj.value) > 0.05
+                    expected_rel = "abs(trans - orig) > 0.05"
+                    actual_rel = f"orig={orig_obj.value:.4f}, trans={trans_obj.value:.4f}, diff={abs(trans_obj.value - orig_obj.value):.4f}"
+                else:
+                    passed = False
+                    expected_rel = "explicit sensitive assertion required"
+                    actual_rel = f"unhandled sensitive combination: {fid} under {trans_type.value}"
             else:
-                passed = True
-                expected_rel = "not applicable"
-                actual_rel = "skipped"
+                passed = False
+                expected_rel = "valid invariance class required"
+                actual_rel = f"unhandled invariance class: {expected_behavior}"
 
             metamorphic_records.append(
                 MetamorphicCheckRecord(
@@ -1335,14 +1461,16 @@ def run_synthetic_and_metamorphic_validation(
     fixture_suite_hash = compute_synthetic_fixture_suite_hash()
     invariance_contract_hash = compute_invariance_contract_hash()
     assertion_contract_hash = compute_synthetic_assertion_contract_hash()
+    metamorphic_test_matrix_hash = compute_metamorphic_test_matrix_hash()
 
     # 4. Compute deterministic validation hash binding all per-record metamorphic & assertion records
     canonical = {
-        "version": "STRUCTURAL_VALIDATION_RESULT_V2",
+        "version": "STRUCTURAL_VALIDATION_RESULT_V3",
         "fixture_count": len(FIXTURE_REGISTRY),
         "fixture_suite_hash": fixture_suite_hash,
         "assertion_contract_hash": assertion_contract_hash,
         "invariance_contract_hash": invariance_contract_hash,
+        "metamorphic_test_matrix_hash": metamorphic_test_matrix_hash,
         "exclusion_ledger_hash": exclusion_ledger_hash,
         "overall_status": overall_status,
         "assertions": [
@@ -1407,6 +1535,7 @@ def run_synthetic_and_metamorphic_validation(
         invariance_contract_hash=invariance_contract_hash,
         fixture_suite_hash=fixture_suite_hash,
         assertion_contract_hash=assertion_contract_hash,
+        metamorphic_test_matrix_hash=metamorphic_test_matrix_hash,
         overall_status=overall_status,
         validation_hash=val_hash,
     )

@@ -327,9 +327,9 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
         normalization="measure_count",
         availability_rule="available if >= 1 measure",
         missing_value_rule="UNAVAILABLE if 0 measures",
-        invariance_class=InvarianceClass.INVARIANT,
+        invariance_class=InvarianceClass.SENSITIVE_BY_DESIGN,
         provenance=Provenance.HYPOTHESIS,
-        known_confounds="fermatas, rest patterns",
+        known_confounds="fermatas, rest patterns, time dilation crossing rest threshold",
         interpretation_limitations="Rhythmic boundary proxy, not syntactic phrase end",
     ),
     StructuralFeatureDefinition(
@@ -341,9 +341,9 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
         normalization="none",
         availability_rule="available if >= 1 boundary candidate",
         missing_value_rule="STRUCTURAL_ZERO if 0 candidates",
-        invariance_class=InvarianceClass.INVARIANT,
+        invariance_class=InvarianceClass.SENSITIVE_BY_DESIGN,
         provenance=Provenance.HYPOTHESIS,
-        known_confounds="texture shifts",
+        known_confounds="texture shifts, time dilation crossing rest threshold",
         interpretation_limitations="Acoustic boundary salience",
     ),
     StructuralFeatureDefinition(
@@ -355,9 +355,9 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
         normalization="measure_count",
         availability_rule="available if >= 1 measure",
         missing_value_rule="UNAVAILABLE if 0 measures",
-        invariance_class=InvarianceClass.INVARIANT,
+        invariance_class=InvarianceClass.SENSITIVE_BY_DESIGN,
         provenance=Provenance.HYPOTHESIS,
-        known_confounds="bass voice identification accuracy",
+        known_confounds="bass voice identification accuracy, time dilation crossing rest threshold",
         interpretation_limitations="Syntactic closure proxy relative to local key",
     ),
     StructuralFeatureDefinition(
@@ -369,9 +369,9 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
         normalization="measure_count",
         availability_rule="available if >= 1 measure",
         missing_value_rule="UNAVAILABLE if 0 measures",
-        invariance_class=InvarianceClass.INVARIANT,
+        invariance_class=InvarianceClass.SENSITIVE_BY_DESIGN,
         provenance=Provenance.HYPOTHESIS,
-        known_confounds="inversions, embellishments",
+        known_confounds="inversions, embellishments, time dilation crossing rest threshold",
         interpretation_limitations="Heuristic V-I progression proxy",
     ),
     StructuralFeatureDefinition(
@@ -383,9 +383,9 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
         normalization="measure_count",
         availability_rule="available if >= 1 measure",
         missing_value_rule="UNAVAILABLE if 0 measures",
-        invariance_class=InvarianceClass.INVARIANT,
+        invariance_class=InvarianceClass.SENSITIVE_BY_DESIGN,
         provenance=Provenance.HYPOTHESIS,
-        known_confounds="submediant chord inversions",
+        known_confounds="submediant chord inversions, time dilation crossing rest threshold",
         interpretation_limitations="Deceptive cadence motion proxy",
     ),
     StructuralFeatureDefinition(
@@ -397,10 +397,10 @@ STRUCTURAL_FEATURE_CATALOG: tuple[StructuralFeatureDefinition, ...] = (
         normalization="none",
         availability_rule="available if >= 1 boundary candidate",
         missing_value_rule="STRUCTURAL_ZERO if 0 candidates",
-        invariance_class=InvarianceClass.INVARIANT,
+        invariance_class=InvarianceClass.SENSITIVE_BY_DESIGN,
         provenance=Provenance.HYPOTHESIS,
-        known_confounds="harmonic ambiguity",
-        interpretation_limitations="Mean tonal/metric closure score",
+        known_confounds="harmonic context ambiguities, time dilation crossing rest threshold",
+        interpretation_limitations="Composite closure strength metric",
     ),
     # FAMILY D: FORMAL RECURRENCE & SECTIONAL ARCHITECTURE (8 features)
     StructuralFeatureDefinition(
@@ -899,6 +899,12 @@ def get_feature_invariance_contract(
         if feature_id in (
             "texture_arpeggiation_proxy_rate",
             "texture_repeated_note_attack_rate",
+            "cadence_boundary_candidate_rate",
+            "cadence_boundary_strength_mean",
+            "cadence_tonic_resolution_rate",
+            "cadence_dominant_tonic_proxy_rate",
+            "cadence_deceptive_proxy_rate",
+            "cadence_resolution_strength_mean",
         ):
             return InvarianceClass.SENSITIVE_BY_DESIGN
         return InvarianceClass.INVARIANT

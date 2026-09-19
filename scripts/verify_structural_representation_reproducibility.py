@@ -23,7 +23,11 @@ from russian_piano_composer.ctu.models import compute_candidate_set_hash
 from russian_piano_composer.structure_analysis.extractor import StructuralExtractionPolicy, extract_structural_representation
 from russian_piano_composer.structure_analysis.matrix import build_structural_representation_matrix
 from russian_piano_composer.structure_analysis.schema import AvailabilityStatus
-from russian_piano_composer.structure_analysis.validation import run_synthetic_and_metamorphic_validation
+from russian_piano_composer.structure_analysis.validation import (
+    FIXTURE_REGISTRY,
+    compute_fixture_semantic_hash,
+    run_synthetic_and_metamorphic_validation,
+)
 from russian_piano_composer.structure_analysis.lineage import (
     compute_structural_representation_lineage,
     verify_prior_milestone_hashes_fail_closed,
@@ -88,20 +92,75 @@ lineage = compute_structural_representation_lineage(
     dynamically_computed_candidate_set_hash=dyn_candidate_set_hash,
 )
 
+fixture_records = []
+for f in FIXTURE_REGISTRY:
+    sc = f.builder()
+    ev_list = [
+        {
+            "measure": e.measure_index,
+            "onset": str(e.global_onset),
+            "offset": str(e.offset_in_measure),
+            "duration": str(e.duration),
+            "midi": e.midi,
+            "staff": e.staff,
+            "voice": e.voice,
+        }
+        for e in sc.events
+    ]
+    fixture_records.append({
+        "fixture_id": f.fixture_id,
+        "name": f.name,
+        "family": f.family_owner.value,
+        "semantic_hash": compute_fixture_semantic_hash(sc),
+        "events": ev_list,
+    })
+
+prior_dynamic_hashes = {
+    "manifest_hash": manifest_hash,
+    "rc009a_feature_schema_semantic_hash": lineage.rc009a_feature_schema_semantic_hash,
+    "rc009a_feature_policy_hash": lineage.rc009a_feature_policy_hash,
+    "rc009b_discovery_policy_hash": lineage.rc009b_discovery_policy_hash,
+    "rc009b_candidate_set_hash": lineage.rc009b_candidate_set_hash,
+    "rc009b_ctu_schema_semantic_hash": lineage.ctu_schema_semantic_hash,
+    "rc009b_representation_semantic_hash": lineage.representation_semantic_hash,
+    "rc009b_similarity_semantic_hash": lineage.similarity_semantic_hash,
+    "dynamically_regenerated_candidate_set_hash": dyn_candidate_set_hash,
+}
+
+parameter_policy_hashes = {
+    "tonal_policy_hash": lineage.tonal_policy_hash,
+    "sonority_policy_hash": lineage.sonority_policy_hash,
+    "cadence_policy_hash": lineage.cadence_policy_hash,
+    "form_policy_hash": lineage.form_policy_hash,
+    "vl_policy_hash": lineage.vl_policy_hash,
+    "texture_policy_hash": lineage.texture_policy_hash,
+    "trajectory_policy_hash": lineage.trajectory_policy_hash,
+}
+
+semantic_hashes = {
+    "tonal_semantic_hash": lineage.tonal_semantic_hash,
+    "sonority_semantic_hash": lineage.sonority_semantic_hash,
+    "cadence_semantic_hash": lineage.cadence_semantic_hash,
+    "form_semantic_hash": lineage.form_semantic_hash,
+    "vl_semantic_hash": lineage.vl_semantic_hash,
+    "texture_semantic_hash": lineage.texture_semantic_hash,
+    "trajectory_semantic_hash": lineage.trajectory_semantic_hash,
+    "metamorphic_test_matrix_hash": lineage.metamorphic_test_matrix_hash,
+    "structure_analysis_source_hash": lineage.structure_analysis_source_hash,
+    "rc011_implementation_commit_sha": lineage.rc011_implementation_commit_sha,
+}
+
 payload = {
     "manifest_hash": manifest_hash,
     "structural_schema_hash": lineage.structural_schema_hash,
     "structural_matrix_hash": lineage.structural_matrix_hash,
     "validation_result_hash": lineage.validation_result_hash,
     "lineage_bundle_hash": lineage.compute_bundle_hash(),
-    "lineage_hashes": {
-        "tonal_policy_hash": lineage.tonal_policy_hash,
-        "sonority_policy_hash": lineage.sonority_policy_hash,
-        "cadence_policy_hash": lineage.cadence_policy_hash,
-        "form_policy_hash": lineage.form_policy_hash,
-        "vl_policy_hash": lineage.vl_policy_hash,
-        "texture_policy_hash": lineage.texture_policy_hash,
-        "trajectory_policy_hash": lineage.trajectory_policy_hash,
+    "fixture_records": fixture_records,
+    "prior_dynamic_hashes": prior_dynamic_hashes,
+    "parameter_policy_hashes": parameter_policy_hashes,
+    "semantic_hashes": semantic_hashes,
+    "contract_hashes": {
         "synthetic_fixture_suite_hash": lineage.synthetic_fixture_suite_hash,
         "assertion_contract_hash": lineage.assertion_contract_hash,
         "invariance_contract_hash": lineage.invariance_contract_hash,

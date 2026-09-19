@@ -4,7 +4,8 @@
 The **`STRUCTURAL_REPRESENTATION_SCHEMA_V1`** defines 56 frozen symbolic music descriptors across 7 foundational families of music theory, cognitive musicology, and piano performance.
 
 Schema Version: `1`  
-Structural Schema Hash: `547406a0836da4182310dfb6f2049481fe134ecfff58894d2f7c2beef19db189`
+Structural Schema Hash: `924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282`  
+Invariance Contract Hash: `31ce0651691d6c21edd28cc3d6a4abdee8e6dd9145efd18eeea67fd1b2b8fa10`
 
 ---
 
@@ -28,12 +29,12 @@ Structural Schema Hash: `547406a0836da4182310dfb6f2049481fe134ecfff58894d2f7c2be
 | **SONORITY** | `sonority_ic6_tritone_share` | Ratio $[0, 1]$ | Invariant | OBSERVED | $\ge 1$ dyad |
 | **SONORITY** | `sonority_bass_interval_variety` | Ratio $[0, 1]$ | Invariant | HYPOTHESIS | $\ge 1$ onset |
 | **SONORITY** | `sonority_harmonic_rhythm_volatility` | Measures (std) | Invariant | HYPOTHESIS | $\ge 2$ transitions |
-| **CADENCE** | `cadence_boundary_candidate_rate` | Candidates / measure | Invariant | HYPOTHESIS | $\ge 1$ onset |
-| **CADENCE** | `cadence_boundary_strength_mean` | Score $[0, 1]$ | Invariant | HYPOTHESIS | $\ge 1$ candidate |
-| **CADENCE** | `cadence_tonic_resolution_rate` | Resolutions / measure | Invariant | HYPOTHESIS | $\ge 1$ onset |
-| **CADENCE** | `cadence_dominant_tonic_proxy_rate` | Resolutions / measure | Invariant | HYPOTHESIS | $\ge 1$ onset |
-| **CADENCE** | `cadence_deceptive_proxy_rate` | Motions / measure | Invariant | HYPOTHESIS | $\ge 1$ onset |
-| **CADENCE** | `cadence_resolution_strength_mean` | Score $[0, 1]$ | Invariant | HYPOTHESIS | $\ge 1$ candidate |
+| **CADENCE** | `cadence_boundary_candidate_rate` | Candidates / measure | Sensitive by design (dilated: rest threshold) | HYPOTHESIS | $\ge 1$ onset |
+| **CADENCE** | `cadence_boundary_strength_mean` | Score $[0, 1]$ | Sensitive by design (dilated: rest threshold) | HYPOTHESIS | $\ge 1$ candidate |
+| **CADENCE** | `cadence_tonic_resolution_rate` | Resolutions / measure | Sensitive by design (dilated: rest threshold) | HYPOTHESIS | $\ge 1$ onset |
+| **CADENCE** | `cadence_dominant_tonic_proxy_rate` | Resolutions / measure | Sensitive by design (dilated: rest threshold) | HYPOTHESIS | $\ge 1$ onset |
+| **CADENCE** | `cadence_deceptive_proxy_rate` | Motions / measure | Sensitive by design (dilated: rest threshold) | HYPOTHESIS | $\ge 1$ onset |
+| **CADENCE** | `cadence_resolution_strength_mean` | Score $[0, 1]$ | Sensitive by design (dilated: rest threshold) | HYPOTHESIS | $\ge 1$ candidate |
 | **FORM** | `form_ssm_recurrence_density` | Density $[0, 1]$ | Invariant | HEURISTIC | $\ge 2$ measures |
 | **FORM** | `form_novelty_peak_rate` | Peaks / measure | Invariant | LITERATURE | $\ge 8$ measures |
 | **FORM** | `form_novelty_mean` | Score $[0, 1]$ | Invariant | LITERATURE | $\ge 8$ measures |

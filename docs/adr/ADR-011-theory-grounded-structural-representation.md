@@ -23,9 +23,9 @@ We implemented **`STRUCTURAL_REPRESENTATION_SCHEMA_V1`**, a frozen 56-feature st
 - **Strict Label-Blindness**: Feature extraction operates strictly on notation and symbolic score geometry without awareness of composer nationality, corpus roles (`GENERATIVE_RUSSIAN`, `CONTROL_NON_RUSSIAN`), or classifier weights.
 - **Pre-Registration**: Complete mathematical formulas, schemas, policies, and metamorphic contracts were committed (`ad3299e0f36f4fb028a2f5125a88b19361504d27`) prior to executing corpus extraction.
 - **Explicit Missingness**: Features return explicit `AvailabilityStatus` (`AVAILABLE`, `STRUCTURAL_ZERO`, `UNAVAILABLE`) with zero silent zero imputation.
-- **Metamorphic Validation**: Validated against 20 synthetic test fixtures with 100% pass rate across 20 deterministic directional assertions (Assertion Contract Hash: `2e048976d9f2a126358d5b87ec67de6ce7f2c44ba258bf70e0418ee6e6fd5ce9`) and 504 metamorphic invariance relations (Validation Result Hash: `7998e22780c674ed026d0168cc7b15e28baaec35f7df94d51b3c2cda23865639`).
+- **Metamorphic Validation**: Validated against 24 synthetic test fixtures with 100% pass rate across 20 deterministic directional assertions (Assertion Contract Hash: `2e048976d9f2a126358d5b87ec67de6ce7f2c44ba258bf70e0418ee6e6fd5ce9`) and 504 metamorphic invariance relations (Validation Result Hash: `d4f574048f950b964425a8b812b75038bff8a40f858394c28c63c8573449ffbc`).
 
 ## Consequences
-- 141 of 141 canonical scores in the corpus are fully represented across the 56 structural features (Structural Matrix Hash: `245034bfb0c0018d80324fd941713b8ee868e0e9a679e5836edeb72fd3459db2`, Lineage Bundle Hash: `fab7fa898d1823a97146c1976c85e29ebc7e472b647b4af6cd0b62c0728f2d42`).
+- 141 of 141 canonical scores in the corpus are fully represented across the 56 structural features (Structural Matrix Hash: `7e141a62bed72d10a894d7fa3123619aacce85797b1953423fd8de2b5b069bc0`, Lineage Bundle Hash: `a135eb60732a3a49f4e3c953c96f6002e93fcc9e0d9b041a27723af87a8ac1ac`).
 - Zero style/label leakage exists across the extraction modules.
 - The resulting representation provides the structural foundation for both generative constraints (RC-013+) and confirmatory structural comparison (RC-012).

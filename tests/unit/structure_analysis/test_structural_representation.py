@@ -20,6 +20,7 @@ Verifies:
 """
 
 from fractions import Fraction
+from pathlib import Path
 
 import pytest
 
@@ -43,6 +44,7 @@ from russian_piano_composer.structure_analysis.schema import (
     STRUCTURAL_FEATURE_CATALOG,
     AvailabilityStatus,
     FeatureValue,
+    InvarianceClass,
     TransformationType,
     compute_structural_schema_hash,
 )
@@ -74,10 +76,10 @@ def test_structural_schema_hash_determinism() -> None:
 
 
 def test_fixture_registry_completeness_and_dynamic_count() -> None:
-    """Verify fixture registry contains exactly 20 distinct fixtures A through T."""
-    assert len(FIXTURE_REGISTRY) == 20
+    """Verify fixture registry contains exactly 24 distinct fixtures A through X."""
+    assert len(FIXTURE_REGISTRY) == 24
     fixture_ids = [f.fixture_id for f in FIXTURE_REGISTRY]
-    expected_ids = [chr(ord("A") + i) for i in range(20)]
+    expected_ids = [chr(ord("A") + i) for i in range(24)]
     assert fixture_ids == expected_ids
 
 
@@ -438,3 +440,277 @@ def test_assertion_contract_hash_determinism() -> None:
     h2 = compute_synthetic_assertion_contract_hash(tuple(reversed(ASSERTION_REGISTRY)))
     assert len(h1) == 64
     assert h1 == h2
+
+
+def test_cadence_rest_threshold_time_dilation_counterexample() -> None:
+    """Verify adversarial rest-threshold time-dilation fixture exhibits deterministic sensitivity."""
+    from russian_piano_composer.structure_analysis.validation import (
+        TransformationType,
+        apply_metamorphic_transformation,
+        fixture_x_cadence_dilation_counterexample,
+    )
+    sc_orig = fixture_x_cadence_dilation_counterexample()
+    sc_dil = apply_metamorphic_transformation(sc_orig, TransformationType.TIME_DILATION)
+
+    feats_orig = extract_cadence_features(sc_orig)
+    feats_dil = extract_cadence_features(sc_dil)
+
+    # Rest gap expands from 0.375 quarters (sub-threshold) to 0.75 quarters (above-threshold)
+    assert feats_dil["cadence_boundary_candidate_rate"].value > feats_orig["cadence_boundary_candidate_rate"].value
+    assert feats_dil["cadence_tonic_resolution_rate"].value > feats_orig["cadence_tonic_resolution_rate"].value
+    assert feats_dil["cadence_dominant_tonic_proxy_rate"].value > feats_orig["cadence_dominant_tonic_proxy_rate"].value
+    assert feats_dil["cadence_deceptive_proxy_rate"].value > feats_orig["cadence_deceptive_proxy_rate"].value
+    assert abs(feats_dil["cadence_boundary_strength_mean"].value - feats_orig["cadence_boundary_strength_mean"].value) > 0.05
+
+
+def test_cadence_time_dilation_contract_all_sensitive() -> None:
+    """Verify all 6 cadence features are declared SENSITIVE_BY_DESIGN under TIME_DILATION."""
+    from russian_piano_composer.structure_analysis.schema import (
+        InvarianceClass,
+        TransformationType,
+        get_feature_invariance_contract,
+    )
+    cadence_features = [
+        "cadence_boundary_candidate_rate",
+        "cadence_boundary_strength_mean",
+        "cadence_tonic_resolution_rate",
+        "cadence_dominant_tonic_proxy_rate",
+        "cadence_deceptive_proxy_rate",
+        "cadence_resolution_strength_mean",
+    ]
+    for fid in cadence_features:
+        contract = get_feature_invariance_contract(fid, TransformationType.TIME_DILATION)
+        assert contract == InvarianceClass.SENSITIVE_BY_DESIGN
+
+
+def test_zero_generic_sensitive_by_design_autopass() -> None:
+    """Verify metamorphic runner contains zero generic passed=True auto-passes for SENSITIVE_BY_DESIGN."""
+    res = run_synthetic_and_metamorphic_validation()
+    sensitive_records = [
+        m for m in res.metamorphic_records
+        if m.expected_behavior == InvarianceClass.SENSITIVE_BY_DESIGN
+    ]
+    # Exactly 9 sensitive records (1 staff swap, 2 texture dilation, 6 cadence dilation)
+    assert len(sensitive_records) == 9
+    for rec in sensitive_records:
+        assert rec.passed is True
+        assert rec.expected_relation != "sensitive by design"
+        assert rec.actual_relation != "skipped"
+
+
+def test_non_vacuous_trajectory_fixture_mapping() -> None:
+    """Verify trajectory features are bound to active, non-vacuous synthetic fixtures."""
+    from russian_piano_composer.structure_analysis.validation import (
+        METAMORPHIC_FEATURE_FIXTURE_MAP,
+        fixture_u_registral_span_and_cardinality,
+        fixture_v_density_curvature_and_chromaticity,
+        fixture_w_register_volatility,
+    )
+    assert METAMORPHIC_FEATURE_FIXTURE_MAP["traj_register_span_slope"] == "U"
+    assert METAMORPHIC_FEATURE_FIXTURE_MAP["traj_sonority_cardinality_slope"] == "U"
+    assert METAMORPHIC_FEATURE_FIXTURE_MAP["traj_attack_density_curvature"] == "V"
+    assert METAMORPHIC_FEATURE_FIXTURE_MAP["traj_chromaticity_slope"] == "V"
+    assert METAMORPHIC_FEATURE_FIXTURE_MAP["traj_register_volatility"] == "W"
+
+    u_feats = extract_trajectory_features(fixture_u_registral_span_and_cardinality())
+    assert u_feats["traj_register_span_slope"].value > 0.0
+    assert u_feats["traj_sonority_cardinality_slope"].value > 0.0
+
+    v_feats = extract_trajectory_features(fixture_v_density_curvature_and_chromaticity())
+    assert v_feats["traj_attack_density_curvature"].value < 0.0
+    assert v_feats["traj_chromaticity_slope"].value > 0.0
+
+    w_feats = extract_trajectory_features(fixture_w_register_volatility())
+    assert w_feats["traj_register_volatility"].value > 20.0
+
+
+def test_metamorphic_test_matrix_hash_mutation() -> None:
+    """Verify modifying any feature-fixture mapping alters compute_metamorphic_test_matrix_hash."""
+    from russian_piano_composer.structure_analysis.validation import (
+        METAMORPHIC_FEATURE_FIXTURE_MAP,
+        compute_metamorphic_test_matrix_hash,
+    )
+    h_orig = compute_metamorphic_test_matrix_hash()
+    mutated_map = dict(METAMORPHIC_FEATURE_FIXTURE_MAP)
+    mutated_map["traj_register_span_slope"] = "P"
+    h_mut = compute_metamorphic_test_matrix_hash(mutated_map)
+    assert h_orig != h_mut
+    assert len(h_orig) == 64
+
+
+def test_cadence_semantic_hash_mutation() -> None:
+    """Verify modifying cadence algorithm semantics alters compute_cadence_semantic_hash."""
+    import hashlib
+    import json
+
+    from russian_piano_composer.structure_analysis.lineage import compute_cadence_semantic_hash
+    h_orig = compute_cadence_semantic_hash()
+    assert len(h_orig) == 64
+
+    # Mutate rest gap threshold
+    tampered = {
+        "family": "CADENCE",
+        "semantic_version": "1.0.0",
+        "boundary_criteria": {"rest_gap_threshold_quarters": 0.75},
+    }
+    h_mut = hashlib.sha256(json.dumps(tampered, sort_keys=True).encode("utf-8")).hexdigest()
+    assert h_orig != h_mut
+
+
+def test_form_semantic_hash_mutation() -> None:
+    """Verify modifying form algorithm semantics alters compute_form_semantic_hash."""
+    import hashlib
+    import json
+
+    from russian_piano_composer.structure_analysis.lineage import compute_form_semantic_hash
+    h_orig = compute_form_semantic_hash()
+    assert len(h_orig) == 64
+
+    tampered = {
+        "family": "FORM",
+        "semantic_version": "1.0.0",
+        "ssm_representation": "24_dimensional_chroma_cosine_similarity",
+    }
+    h_mut = hashlib.sha256(json.dumps(tampered, sort_keys=True).encode("utf-8")).hexdigest()
+    assert h_orig != h_mut
+
+
+def test_voice_leading_semantic_hash_mutation() -> None:
+    """Verify modifying voice leading semantics alters compute_voice_leading_semantic_hash."""
+    import hashlib
+    import json
+
+    from russian_piano_composer.structure_analysis.lineage import (
+        compute_voice_leading_semantic_hash,
+    )
+    h_orig = compute_voice_leading_semantic_hash()
+    assert len(h_orig) == 64
+
+    tampered = {
+        "family": "VOICE_LEADING",
+        "semantic_version": "1.0.0",
+        "minimal_voice_leading_distance": {"assignment_algorithm": "greedy"},
+    }
+    h_mut = hashlib.sha256(json.dumps(tampered, sort_keys=True).encode("utf-8")).hexdigest()
+    assert h_orig != h_mut
+
+
+def test_structure_analysis_source_hash_mutation(tmp_path: Path) -> None:
+    """Verify compute_structure_analysis_source_hash binds source bytes and mutates on changes."""
+    from russian_piano_composer.structure_analysis.lineage import (
+        compute_structure_analysis_source_hash,
+    )
+    h_orig = compute_structure_analysis_source_hash()
+    assert len(h_orig) == 64
+
+    # Create synthetic directory mimicking package
+    modules = [
+        "cadence.py", "extractor.py", "form.py", "schema.py",
+        "sonority.py", "texture.py", "tonal.py", "trajectory.py", "voice_leading.py"
+    ]
+    for m in modules:
+        (tmp_path / m).write_text("# code\n", encoding="utf-8")
+    h_tmp = compute_structure_analysis_source_hash(tmp_path)
+    assert len(h_tmp) == 64
+    assert h_tmp != h_orig
+
+    # Mutate one file in tmp
+    (tmp_path / "cadence.py").write_text("# modified code\n", encoding="utf-8")
+    h_tmp_mut = compute_structure_analysis_source_hash(tmp_path)
+    assert h_tmp != h_tmp_mut
+
+
+def test_implementation_commit_lineage_binding() -> None:
+    """Verify StructuralRepresentationLineage binds rc011_implementation_commit_sha and mutates bundle hash."""
+    from russian_piano_composer.structure_analysis.lineage import (
+        RC011_IMPLEMENTATION_COMMIT_SHA,
+    )
+    from russian_piano_composer.structure_analysis.matrix import (
+        build_structural_representation_matrix,
+    )
+    sc = FIXTURE_REGISTRY[0].builder()
+    rep = extract_structural_representation(sc)
+    mat = build_structural_representation_matrix({"SYNTHETIC:test": rep.features}, manifest_hash="0" * 64)
+    val = run_synthetic_and_metamorphic_validation()
+
+    from russian_piano_composer.structure_analysis.lineage import (
+        compute_structural_representation_lineage,
+    )
+    lin1 = compute_structural_representation_lineage(
+        manifest_hash=ACCEPTED_CANONICAL_MANIFEST_HASH,
+        matrix=mat,
+        val_result=val,
+        rc011_implementation_commit_sha=RC011_IMPLEMENTATION_COMMIT_SHA,
+    )
+    lin2 = compute_structural_representation_lineage(
+        manifest_hash=ACCEPTED_CANONICAL_MANIFEST_HASH,
+        matrix=mat,
+        val_result=val,
+        rc011_implementation_commit_sha="f" * 40,
+    )
+    assert lin1.rc011_implementation_commit_sha == RC011_IMPLEMENTATION_COMMIT_SHA
+    assert lin2.rc011_implementation_commit_sha == "f" * 40
+    assert lin1.compute_bundle_hash() != lin2.compute_bundle_hash()
+
+
+def test_complete_fixture_records_in_two_process_payload() -> None:
+    """Verify two-process worker script payload contains complete records for all 24 fixtures."""
+    from russian_piano_composer.structure_analysis.validation import (
+        FIXTURE_REGISTRY,
+        compute_fixture_semantic_hash,
+    )
+    fixture_records = []
+    for f in FIXTURE_REGISTRY:
+        sc = f.builder()
+        ev_list = [
+            {
+                "measure": e.measure_index,
+                "onset": str(e.global_onset),
+                "offset": str(e.offset_in_measure),
+                "duration": str(e.duration),
+                "midi": e.midi,
+                "staff": e.staff,
+                "voice": e.voice,
+            }
+            for e in sc.events
+        ]
+        fixture_records.append({
+            "fixture_id": f.fixture_id,
+            "name": f.name,
+            "family": f.family_owner.value,
+            "semantic_hash": compute_fixture_semantic_hash(sc),
+            "events": ev_list,
+        })
+    assert len(fixture_records) == 24
+    ids = [r["fixture_id"] for r in fixture_records]
+    assert ids == [chr(ord("A") + i) for i in range(24)]
+
+
+def test_complete_prior_dynamic_hashes_in_two_process_payload() -> None:
+    """Verify two-process worker script binds all prior dynamic milestone hashes."""
+    from russian_piano_composer.ctu.models import (
+        compute_ctu_schema_semantic_hash,
+        compute_segment_representation_semantic_hash,
+        compute_similarity_semantic_hash,
+    )
+    from russian_piano_composer.ctu.policy import CTUDiscoveryPolicy
+    from russian_piano_composer.domain.features import (
+        compute_schema_semantic_hash as compute_rc009a_schema_hash,
+    )
+    from russian_piano_composer.features import FEATURE_REGISTRY
+    from russian_piano_composer.features.policy import FeatureExtractionPolicy
+    from russian_piano_composer.structure_analysis.lineage import (
+        ACCEPTED_RC009A_POLICY_HASH,
+        ACCEPTED_RC009A_SCHEMA_HASH,
+        ACCEPTED_RC009B_CTU_SCHEMA_HASH,
+        ACCEPTED_RC009B_DISCOVERY_POLICY_HASH,
+        ACCEPTED_RC009B_REPRESENTATION_HASH,
+        ACCEPTED_RC009B_SIMILARITY_HASH,
+    )
+    assert compute_rc009a_schema_hash(FEATURE_REGISTRY) == ACCEPTED_RC009A_SCHEMA_HASH
+    assert FeatureExtractionPolicy().compute_policy_hash() == ACCEPTED_RC009A_POLICY_HASH
+    assert CTUDiscoveryPolicy().compute_policy_hash() == ACCEPTED_RC009B_DISCOVERY_POLICY_HASH
+    assert compute_ctu_schema_semantic_hash() == ACCEPTED_RC009B_CTU_SCHEMA_HASH
+    assert compute_segment_representation_semantic_hash() == ACCEPTED_RC009B_REPRESENTATION_HASH
+    assert compute_similarity_semantic_hash() == ACCEPTED_RC009B_SIMILARITY_HASH
+
