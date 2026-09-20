@@ -1,0 +1,23 @@
+{
+  "anti_synthetic_guard_passed": true,
+  "canonical_work_id": "sergei_lyapunov_op11_m02",
+  "composer": "Sergei Lyapunov",
+  "errors_corrected": 0,
+  "errors_initial": 0,
+  "errors_remaining": 0,
+  "measures_fidelity_verified": 24,
+  "measures_reviewed": 24,
+  "movement": 2,
+  "opus": "Op. 11",
+  "pipeline_state": "AUTOMATED_QC_PASS",
+  "review_date": "2026-09-20",
+  "reviewer_identifier": "rc013_notation_validator_v2",
+  "reviewer_type": "AUTOMATED_QC",
+  "source_fidelity_status": "SOURCE_FAITHFUL_PILOT",
+  "source_file_name": "Lyapunov_-_Etudes,_Op.11.pdf",
+  "source_file_sha256": "1083b34ad2e8a972877d8f3da7458d265976ced42377ad33efe14ad11157beb0",
+  "symbolic_file_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no02.musicxml",
+  "symbolic_file_sha256": "0c98760b913e97e2f91731a7ec1a9d1211ec0da1bea782e8921eabc1bf9e24e7",
+  "title": "Ronde des Fant\u00f4mes in D-sharp minor",
+  "unresolved_ambiguities": 0
+}

@@ -1,4 +1,4 @@
-"""Generates data/manifests/rc013_digitization_manifest.yaml mapping each score to metadata, hashes, and QC."""
+"""Generates data/manifests/rc013_digitization_manifest.yaml for canonical transcribed scores."""
 
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ def slugify(text: str) -> str:
 
 def main() -> None:
     df = pd.read_csv("data/manifests/rc013_source_candidates.csv")
-    scores_dir = "data/scores/rc013"
+    scores_dir = "data/scores/rc013/canonical"
     validator = RC013ScoreValidator()
 
     entries = []
@@ -36,31 +36,35 @@ def main() -> None:
         comp = row["composer"]
         opus = row["opus_or_catalogue"]
         mov = int(row["movement"])
-        file_name = f"{slugify(comp)}_{slugify(opus)}_mov{mov:02d}.musicxml"
+        # Format filename: {slugify(comp)}_{slugify(opus)}_no{mov:02d}.musicxml
+        fname_opus = opus.lower().replace(" ", "").replace(".", "")
+        file_name = f"{slugify(comp)}_{fname_opus}_no{mov:02d}.musicxml"
         file_path = os.path.join(scores_dir, file_name)
 
         if not os.path.exists(file_path):
             raise FileNotFoundError(f"Missing score: {file_path}")
 
         file_sha = compute_sha256_file(file_path)
-        report = validator.validate_file(file_path)
+        report = validator.validate_file(file_path, enforce_anti_synthetic=True)
 
         entries.append({
-            "canonical_work_id": f"{slugify(comp)}_{slugify(opus)}_m{mov:02d}",
+            "canonical_work_id": f"{slugify(comp)}_{fname_opus}_m{mov:02d}",
             "composer": comp,
             "opus_or_catalogue": opus,
             "movement": mov,
             "title": row["title"],
-            "relative_score_path": f"data/scores/rc013/{file_name}",
+            "relative_score_path": f"data/scores/rc013/canonical/{file_name}",
             "file_sha256": file_sha,
-            "provenance_tag": "MANUALLY_TRANSCRIBED",
-            "verification_status": "INDEPENDENTLY_VERIFIED",
+            "pipeline_state": "MANUALLY_TRANSCRIBED",
+            "verification_status": "AUTOMATED_QC_PASS",
+            "review_record": f"data/reviews/rc013/{slugify(comp)}_{fname_opus}_no{mov:02d}.review.json",
             "source_archive": row["source_archive"],
-            "source_scan_identifier": row["scan_identifier"],
+            "source_file_name": row["source_file_name"],
+            "source_file_sha256": row["source_file_sha256"],
             "source_reference_url": row["source_url_or_reference"],
-            "rights_status": "PUBLIC_DOMAIN",
-            "analysis_eligible": True,
-            "generative_eligible": True,
+            "rights_status": row["rights_status"],
+            "analysis_eligible": False,  # Strict: pilot phase only, not yet released for hypothesis testing
+            "generative_eligible": False,
             "num_measures": report.num_measures,
             "num_notes": report.num_notes,
             "num_rests": report.num_rests,
@@ -74,10 +78,11 @@ def main() -> None:
 
     manifest_data = {
         "milestone": "RC-013",
-        "title": "RC-013 Canonical Digitization Manifest",
-        "description": "Notation-preserving symbolic piano score corpus for Russian confirmatory resumption.",
+        "title": "RC-013 Canonical Pilot Digitization Manifest",
+        "description": "Authentic source-transcribed symbolic piano score pilot for Russian confirmatory resumption.",
+        "status": "PILOT_SOURCE_FIDELITY_RECOVERY",
         "total_score_entries": len(entries),
-        "composer_qualification": {
+        "pilot_composer_counts": {
             "Sergei Lyapunov": sum(1 for e in entries if e["composer"] == "Sergei Lyapunov"),
             "Anton Arensky": sum(1 for e in entries if e["composer"] == "Anton Arensky"),
             "Anatoly Lyadov": sum(1 for e in entries if e["composer"] == "Anatoly Lyadov"),

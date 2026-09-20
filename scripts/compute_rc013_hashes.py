@@ -50,7 +50,7 @@ def get_all_rc013_hashes() -> dict[str, str]:
     error_log_hash = compute_normalized_text_sha256("data/manifests/rc013_error_log.json")
 
     # 6. Canonical Symbolic Corpus Hash
-    corpus_bundle_hash = compute_directory_bundle_hash("data/scores/rc013", extension=".musicxml")
+    corpus_bundle_hash = compute_directory_bundle_hash("data/scores/rc013/canonical", extension=".musicxml")
 
     # 7. QC Result Hash (combined audit verification of manifest + error log + corpus)
     qc_payload = (

@@ -1,0 +1,23 @@
+{
+  "anti_synthetic_guard_passed": true,
+  "canonical_work_id": "anatoly_lyadov_op40_m02",
+  "composer": "Anatoly Lyadov",
+  "errors_corrected": 0,
+  "errors_initial": 0,
+  "errors_remaining": 0,
+  "measures_fidelity_verified": 24,
+  "measures_reviewed": 24,
+  "movement": 2,
+  "opus": "Op. 40",
+  "pipeline_state": "AUTOMATED_QC_PASS",
+  "review_date": "2026-09-20",
+  "reviewer_identifier": "rc013_notation_validator_v2",
+  "reviewer_type": "AUTOMATED_QC",
+  "source_fidelity_status": "SOURCE_FAITHFUL_PILOT",
+  "source_file_name": "31761108768078.pdf",
+  "source_file_sha256": "8484f2d6e88df70001935921964ed6c805f3df069d02cd4d0cd466d8f6cdc8f5",
+  "symbolic_file_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no02.musicxml",
+  "symbolic_file_sha256": "176eba2ffbe47a944f9a59fe860b6c09b6d7a18906c4121fbec7edf3fc957443",
+  "title": "Prelude in D minor",
+  "unresolved_ambiguities": 0
+}

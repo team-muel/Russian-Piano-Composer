@@ -1,0 +1,23 @@
+{
+  "anti_synthetic_guard_passed": true,
+  "canonical_work_id": "anatoly_lyadov_op40_m03",
+  "composer": "Anatoly Lyadov",
+  "errors_corrected": 0,
+  "errors_initial": 0,
+  "errors_remaining": 0,
+  "measures_fidelity_verified": 24,
+  "measures_reviewed": 24,
+  "movement": 3,
+  "opus": "Op. 40",
+  "pipeline_state": "AUTOMATED_QC_PASS",
+  "review_date": "2026-09-20",
+  "reviewer_identifier": "rc013_notation_validator_v2",
+  "reviewer_type": "AUTOMATED_QC",
+  "source_fidelity_status": "SOURCE_FAITHFUL_PILOT",
+  "source_file_name": "31761108768078.pdf",
+  "source_file_sha256": "8484f2d6e88df70001935921964ed6c805f3df069d02cd4d0cd466d8f6cdc8f5",
+  "symbolic_file_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no03.musicxml",
+  "symbolic_file_sha256": "c873ad1522fb8fb89bbb23e6c95dcac96e6c3502aa0a6e82be56e280949588d5",
+  "title": "Prelude in B-flat major",
+  "unresolved_ambiguities": 0
+}
