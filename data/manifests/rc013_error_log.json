@@ -1,0 +1,655 @@
+{
+  "milestone": "RC-013",
+  "reports": [
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_31_mov01.musicxml",
+      "file_sha256": "18941effd21dff1706ca90d2a82d64b9575a550ebe60fde7d2c1e5c3de0ac778",
+      "key_signatures": [
+        "D- major",
+        "D- major"
+      ],
+      "num_measures": 26,
+      "num_notes": 156,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_31_mov02.musicxml",
+      "file_sha256": "7461740a063d3113a766e4345d1b761b4944acf2c425e3b1d565a12de2e5a8b6",
+      "key_signatures": [
+        "b- minor",
+        "b- minor"
+      ],
+      "num_measures": 32,
+      "num_notes": 256,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "2/4",
+        "2/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_40_mov01.musicxml",
+      "file_sha256": "4315d891842583b5c0091722405b023f02aef8ab952a96cd94a283a3a30f4cc5",
+      "key_signatures": [
+        "C major",
+        "C major"
+      ],
+      "num_measures": 24,
+      "num_notes": 192,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_40_mov02.musicxml",
+      "file_sha256": "43cf38c003d24c6f97241014ecc621200571bffcef169ab1aed72389b3961e6b",
+      "key_signatures": [
+        "d minor",
+        "d minor"
+      ],
+      "num_measures": 28,
+      "num_notes": 168,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_40_mov03.musicxml",
+      "file_sha256": "8ee29050499364640f6d9b9e8194af84516f29172bfc0613991a330af766d3f2",
+      "key_signatures": [
+        "B- major",
+        "B- major"
+      ],
+      "num_measures": 24,
+      "num_notes": 192,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_46_mov01.musicxml",
+      "file_sha256": "54b1ccd609ff9db5063d44c3b7c1903ff9109b86402084a4f0af4c69d7f7678f",
+      "key_signatures": [
+        "B- major",
+        "B- major"
+      ],
+      "num_measures": 26,
+      "num_notes": 156,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_46_mov02.musicxml",
+      "file_sha256": "e110986542e66fec3291f80c5528bb0c866dad3a6978eedc0b857313c1f5ee72",
+      "key_signatures": [
+        "g minor",
+        "g minor"
+      ],
+      "num_measures": 32,
+      "num_notes": 256,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "2/4",
+        "2/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_46_mov03.musicxml",
+      "file_sha256": "c7415318993815627b93191918d040cdf3c2eb84d438b80c3a3ed9ccbc42ca2a",
+      "key_signatures": [
+        "G major",
+        "G major"
+      ],
+      "num_measures": 26,
+      "num_notes": 156,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_46_mov04.musicxml",
+      "file_sha256": "ca8f1f9df35d1a2e2258ab36c52e17b17bf0f91ef02581fa86c824e2783ec0e0",
+      "key_signatures": [
+        "e minor",
+        "e minor"
+      ],
+      "num_measures": 24,
+      "num_notes": 192,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anatoly_lyadov_op_57_mov01.musicxml",
+      "file_sha256": "a676f19563316feb47f454f7c2179488779638602aa4387b135f8543680d2325",
+      "key_signatures": [
+        "D- major",
+        "D- major"
+      ],
+      "num_measures": 28,
+      "num_notes": 168,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov01.musicxml",
+      "file_sha256": "53f29213bf32f762bdddb5a2302c26adf277d1b36f5c57d926df32e5b5292943",
+      "key_signatures": [
+        "F major",
+        "F major"
+      ],
+      "num_measures": 28,
+      "num_notes": 224,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov02.musicxml",
+      "file_sha256": "ad0dd10b70593c8c0cc7cbd4509920b5091bfa581e4058e7c353e86d00f593dd",
+      "key_signatures": [
+        "a minor",
+        "a minor"
+      ],
+      "num_measures": 30,
+      "num_notes": 180,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov03.musicxml",
+      "file_sha256": "3e123a623390e8162e8b43cf1c8fb633f5cc668fdad1c10780706dd798a87a33",
+      "key_signatures": [
+        "d# minor",
+        "d# minor"
+      ],
+      "num_measures": 26,
+      "num_notes": 208,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov04.musicxml",
+      "file_sha256": "c3e87796aa9527bfa82dd52c3af06f8b5f45a80c6b6bce262b48839e1a417161",
+      "key_signatures": [
+        "E- major",
+        "E- major"
+      ],
+      "num_measures": 36,
+      "num_notes": 216,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov05.musicxml",
+      "file_sha256": "493c3d8d42c199813458a7ba18df62d4f0182c5431283fa7a72777eddfebe47d",
+      "key_signatures": [
+        "g minor",
+        "g minor"
+      ],
+      "num_measures": 24,
+      "num_notes": 192,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov06.musicxml",
+      "file_sha256": "2eeb6f39548a3bf06e42e29e18a5715dab09afa211cc67bceb34e1474bd81dae",
+      "key_signatures": [
+        "D major",
+        "D major"
+      ],
+      "num_measures": 28,
+      "num_notes": 168,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov07.musicxml",
+      "file_sha256": "6c9d948e0b38f6f03dc720c99cd53e814914af5bf4f2e5fca7678f5db925d009",
+      "key_signatures": [
+        "g# minor",
+        "g# minor"
+      ],
+      "num_measures": 34,
+      "num_notes": 204,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov08.musicxml",
+      "file_sha256": "e58ff5a1269a5c3e7273ff69afbdfdcf6e3ca96efcabe221ef710af0a95b23b7",
+      "key_signatures": [
+        "F# major",
+        "F# major"
+      ],
+      "num_measures": 32,
+      "num_notes": 256,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "2/4",
+        "2/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov09.musicxml",
+      "file_sha256": "c635bc895d1ab7fa633bfd627011f6dfef5a917675f93ff52494d13389f1e69d",
+      "key_signatures": [
+        "E major",
+        "E major"
+      ],
+      "num_measures": 36,
+      "num_notes": 216,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/8",
+        "3/8"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov13.musicxml",
+      "file_sha256": "91991eaf7bd390ff4e566a9e0fcc18c7678061f2868cb5c1986b2e74bcb9da96",
+      "key_signatures": [
+        "e minor",
+        "e minor"
+      ],
+      "num_measures": 28,
+      "num_notes": 280,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov15.musicxml",
+      "file_sha256": "13a0f3a7fb737805bebf740fabeb2f133f21115e588e1f325f3a01db66c8463d",
+      "key_signatures": [
+        "F# major",
+        "F# major"
+      ],
+      "num_measures": 28,
+      "num_notes": 224,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "6/8",
+        "6/8"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\anton_arensky_op_36_mov16.musicxml",
+      "file_sha256": "22ae14985099cabc8eb7a1ad1119df97207fd8ce3d2e818eed5599de239e684c",
+      "key_signatures": [
+        "g minor",
+        "g minor"
+      ],
+      "num_measures": 26,
+      "num_notes": 156,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov01.musicxml",
+      "file_sha256": "5cab011fdbb9c395c4c9edacad0386e2f64a305b18d55585a2473837352e2918",
+      "key_signatures": [
+        "F# major",
+        "F# major"
+      ],
+      "num_measures": 32,
+      "num_notes": 256,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "6/8",
+        "6/8"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov02.musicxml",
+      "file_sha256": "5579d8525b9e682dfb823953f3305b165e92351b9db955f1546a71f71939d81a",
+      "key_signatures": [
+        "d# minor",
+        "d# minor"
+      ],
+      "num_measures": 40,
+      "num_notes": 400,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "2/4",
+        "2/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov03.musicxml",
+      "file_sha256": "3045be69d546bfd7b8351ff7d58742a4092fc91322844371dae6392858c2c1af",
+      "key_signatures": [
+        "B major",
+        "B major"
+      ],
+      "num_measures": 36,
+      "num_notes": 216,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov04.musicxml",
+      "file_sha256": "5ae08d224de4534fb7bf600f31510b277f1d13cf00065b90d4c7aa2207ec757d",
+      "key_signatures": [
+        "g# minor",
+        "g# minor"
+      ],
+      "num_measures": 38,
+      "num_notes": 380,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "2/4",
+        "2/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov05.musicxml",
+      "file_sha256": "e42ea166bc48ecea947775e9800f93d454c7de89c33221a1515d9a83826327ca",
+      "key_signatures": [
+        "E major",
+        "E major"
+      ],
+      "num_measures": 28,
+      "num_notes": 336,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "9/8",
+        "9/8"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov06.musicxml",
+      "file_sha256": "f0f54d7b08616ad0ec80359e8d577cd2981c15bf73fad8082f847223922e8dfd",
+      "key_signatures": [
+        "c# minor",
+        "c# minor"
+      ],
+      "num_measures": 36,
+      "num_notes": 504,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov07.musicxml",
+      "file_sha256": "43fdf9bdf8ba78aef9eb760a2d50720c868d4aa31d49d636510000328baed99a",
+      "key_signatures": [
+        "A major",
+        "A major"
+      ],
+      "num_measures": 30,
+      "num_notes": 270,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "6/8",
+        "6/8"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov08.musicxml",
+      "file_sha256": "3467f4adc0ad5ebeb42b243620c1c116d98f6a6fa074cef01e2f0d7420d2e979",
+      "key_signatures": [
+        "f# minor",
+        "f# minor"
+      ],
+      "num_measures": 34,
+      "num_notes": 204,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/4",
+        "3/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov09.musicxml",
+      "file_sha256": "6388c63c021d1a0a2a10b99316f9c8e4c79e8c042bdc436c622e27021288496d",
+      "key_signatures": [
+        "D major",
+        "D major"
+      ],
+      "num_measures": 24,
+      "num_notes": 384,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "12/8",
+        "12/8"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov10.musicxml",
+      "file_sha256": "66d96d5960eb16ed17623e83b052a278d11efd4a6db5f2dfcfab3b95fdcb0a22",
+      "key_signatures": [
+        "b minor",
+        "b minor"
+      ],
+      "num_measures": 48,
+      "num_notes": 480,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "2/4",
+        "2/4"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov11.musicxml",
+      "file_sha256": "d0657fdc5d02b71541136ba71fe58ec674e7bfcb9ef07fb18dd8023ade3cbcf6",
+      "key_signatures": [
+        "G major",
+        "G major"
+      ],
+      "num_measures": 42,
+      "num_notes": 252,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "3/8",
+        "3/8"
+      ],
+      "valid": true
+    },
+    {
+      "error_count": 0,
+      "errors": [],
+      "file_path": "data/scores/rc013\\sergei_lyapunov_op_11_mov12.musicxml",
+      "file_sha256": "505bde21d1a4b0fc7c730fab3578eff99bf8eab9ecfb1d99b8b7d26cf55a247b",
+      "key_signatures": [
+        "e minor",
+        "e minor"
+      ],
+      "num_measures": 32,
+      "num_notes": 256,
+      "num_parts_or_staves": 2,
+      "num_rests": 0,
+      "time_signatures": [
+        "4/4",
+        "4/4"
+      ],
+      "valid": true
+    }
+  ],
+  "scores_failed": 0,
+  "scores_passed": 34,
+  "total_errors": 0,
+  "total_scores_audited": 34
+}
