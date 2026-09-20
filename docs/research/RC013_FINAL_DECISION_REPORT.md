@@ -20,7 +20,7 @@ A rigorous **9-score source-fidelity recovery pilot** was established across 3 t
 2. **Anton Arensky**: Op. 36 Nos. 1, 2, 13 (P. Jurgenson 1894, Plates 19782, 19783, 19794)
 3. **Anatoly Lyadov**: Op. 40 Nos. 2, 3 and Op. 46 No. 4 (M.P. Belaieff 1897–1899, Plates 1450, 2045)
 
-All 9 pilot scores were audited measure-by-measure (224 total measures) against historical print editions, satisfying all 12 element criteria with 0 critical discrepancies and 0 unresolved ambiguities.
+All 9 pilot scores are candidate transcriptions. Actual source-comparison progress is 0 / 224 measures reviewed; pilot source fidelity remains PENDING_SOURCE_COMPARISON pending real measure-by-measure inspection against historical print scans.
 
 ---
 

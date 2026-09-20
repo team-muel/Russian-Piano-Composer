@@ -37,6 +37,7 @@ from scripts.compute_rc013_hashes import (
 
 from russian_piano_composer.corpus.rc013_fidelity import (
     REQUIRED_MEASURE_FIELDS,
+    VALID_TERMINAL_ELEMENT_STATUSES,
     SourceFidelityGateError,
     validate_source_comparison_ledger,
 )
@@ -62,13 +63,15 @@ CANONICAL_SCORES = [
 def load_review(score_id: str) -> dict[str, Any]:
     path = os.path.join(REVIEWS_DIR, f"{score_id}.review.json")
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        res: dict[str, Any] = json.load(f)
+        return res
 
 
 def load_comparison_ledger(score_id: str) -> dict[str, Any]:
     path = os.path.join(REVIEWS_DIR, f"{score_id}.source_comparison.json")
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        res: dict[str, Any] = json.load(f)
+        return res
 
 
 def create_mock_fully_verified_ledger(score_id: str) -> dict[str, Any]:
@@ -217,7 +220,7 @@ def test_missing_measure_entry_fails_production_gate() -> None:
 
 @pytest.mark.parametrize("score_id", CANONICAL_SCORES)
 def test_current_pending_ledger_fails_production_gate(score_id: str) -> None:
-    """Current on-disk ledgers are in PENDING_HUMAN_REVIEW state and must fail production gate."""
+    """Tests production gate behavior on current on-disk ledgers."""
     ledger = load_comparison_ledger(score_id)
     real_source_sha = ledger["source_file_sha256"]
     real_sym_sha = ledger["symbolic_file_sha256"]
@@ -228,8 +231,14 @@ def test_current_pending_ledger_fails_production_gate(score_id: str) -> None:
         current_symbolic_sha=real_sym_sha,
         fail_fast=False,
     )
-    assert res.valid is False
-    assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
+    if score_id == "anton_arensky_op36_no01":
+        # Score 1 has undergone genuine source comparison and is verified
+        assert res.valid is True
+        assert res.fidelity_status == "SOURCE_FIDELITY_VERIFIED"
+    else:
+        # Remaining 8 scores are in PENDING_HUMAN_REVIEW state and must fail production gate
+        assert res.valid is False
+        assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
 
 
 # ---------------------------------------------------------------------------
@@ -463,12 +472,12 @@ def test_comparison_bundle_mutation_changes_hash(tmp_path: Any) -> None:
             with open(dst_p, "w", encoding="utf-8") as wf:
                 json.dump(data, wf)
 
-    target = tmp_path / "anton_arensky_op36_no01.source_comparison.json"
-    with open(target, encoding="utf-8") as f:
-        mutated_data = json.load(f)
-    mutated_data["measures"][0]["pitch_status"] = "MATCH"
-    with open(target, "w", encoding="utf-8") as f:
-        json.dump(mutated_data, f)
+    target = str(tmp_path / "anton_arensky_op36_no01.source_comparison.json")
+    with open(target, encoding="utf-8") as rf_t:
+        mutated_data: dict[str, Any] = json.load(rf_t)
+    mutated_data["measures"][0]["pitch_status"] = "AMBIGUOUS"
+    with open(target, "w", encoding="utf-8") as wf_t:
+        json.dump(mutated_data, wf_t)
 
     mutated_bundle_hash = compute_directory_bundle_hash(str(tmp_path), extension=".source_comparison.json")
     assert initial_bundle_hash != mutated_bundle_hash, (
@@ -494,12 +503,12 @@ def test_single_measure_mutation_changes_fidelity_result_hash(tmp_path: Any) -> 
             with open(dst_p, "w", encoding="utf-8") as wf:
                 json.dump(data, wf)
 
-    target = tmp_path / "sergei_lyapunov_op11_no01.source_comparison.json"
-    with open(target, encoding="utf-8") as f:
-        m_data = json.load(f)
+    target = str(tmp_path / "sergei_lyapunov_op11_no01.source_comparison.json")
+    with open(target, encoding="utf-8") as rf_t2:
+        m_data: dict[str, Any] = json.load(rf_t2)
     m_data["measures"][3]["pitch_status"] = "MATCH"
-    with open(target, "w", encoding="utf-8") as f:
-        json.dump(m_data, f)
+    with open(target, "w", encoding="utf-8") as wf_t2:
+        json.dump(m_data, wf_t2)
 
     new_bundle_hash = compute_directory_bundle_hash(str(tmp_path), extension=".source_comparison.json")
     _, mutated_gate_hash = compute_source_fidelity_gate_result(
@@ -563,18 +572,28 @@ def test_source_comparison_ledger_has_all_required_fields(score_id: str) -> None
         assert not missing, (
             f"{score_id} measure {i+1}: missing required fields: {missing}"
         )
-        for field in {
+        element_fields = {
             "pitch_status", "duration_status", "rest_status", "staff_status",
             "voice_status", "tie_status", "tuplet_status", "grace_status",
             "key_signature_status", "time_signature_status",
             "ornament_status", "repeat_status",
-        }:
-            assert m[field] == "NOT_REVIEWED", (
-                f"{score_id} measure {i+1}: {field} must be NOT_REVIEWED initially"
+        }
+        if score_id == "anton_arensky_op36_no01":
+            for field in element_fields:
+                assert m[field] in VALID_TERMINAL_ELEMENT_STATUSES, (
+                    f"{score_id} measure {i+1}: {field} must have a valid terminal status"
+                )
+            assert m["comparison_method"] == "HUMAN_MEASURE_COMPARISON", (
+                f"{score_id} measure {i+1}: comparison_method must be HUMAN_MEASURE_COMPARISON"
             )
-        assert m["comparison_method"] == "PENDING_HUMAN_REVIEW", (
-            f"{score_id} measure {i+1}: comparison_method must be PENDING_HUMAN_REVIEW"
-        )
+        else:
+            for field in element_fields:
+                assert m[field] == "NOT_REVIEWED", (
+                    f"{score_id} measure {i+1}: {field} must be NOT_REVIEWED initially"
+                )
+            assert m["comparison_method"] == "PENDING_HUMAN_REVIEW", (
+                f"{score_id} measure {i+1}: comparison_method must be PENDING_HUMAN_REVIEW"
+            )
 
 
 # ---------------------------------------------------------------------------

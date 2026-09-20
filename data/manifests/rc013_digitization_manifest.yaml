@@ -96,7 +96,7 @@ score_entries:
   movement: 1
   title: Prélude in F major
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml
-  file_sha256: c06555360ee8dbe4f90c2f2a155a78fb52f35c99473b796095268948ddc89fb1
+  file_sha256: 63b9f54725798b8760f1107fded76355f96ef23c04d6b7cbd7ba09b2401fb364
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/anton_arensky_op36_no01.review.json
@@ -107,9 +107,9 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 163
-  num_rests: 0
+  num_measures: 36
+  num_notes: 407
+  num_rests: 33
   time_signatures:
   - 4/4
   - 4/4

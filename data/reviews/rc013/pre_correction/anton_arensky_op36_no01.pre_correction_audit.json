@@ -1,0 +1,45 @@
+{
+  "score_id": "anton_arensky_op36_no01",
+  "canonical_work_id": "anton_arensky_op36_m01",
+  "status": "REJECTED_SOURCE_MISMATCH",
+  "audit_type": "PRE_CORRECTION_DISCREPANCY_RECORD",
+  "candidate_symbolic_sha256": "c06555360ee8dbe4f90c2f2a155a78fb52f35c99473b796095268948ddc89fb1",
+  "candidate_measures": 24,
+  "source_edition": "P. Jurgenson (1894), Plate 19782, pp. 4-6 (work-local 1-3)",
+  "source_file_name": "Arensky_morceaux_op36-1.pdf",
+  "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+  "source_total_measures": 36,
+  "audit_summary": {
+    "measure_count_mismatch": {
+      "candidate": 24,
+      "source": 36,
+      "description": "Candidate truncated by 12 measures; missing mm.30-36 (Recapitulation and grand Coda) and intermediate developmental measures."
+    },
+    "metadata_mismatches": {
+      "tempo": {
+        "candidate": "Allegro moderato",
+        "source": "Adagio non troppo. (half note = 76), Maestoso, ff"
+      },
+      "meter": {
+        "candidate": "4/4",
+        "source": "Common time C (4/4, half note = 76)"
+      }
+    },
+    "structural_and_element_discrepancies": {
+      "mm_01_07": "Candidate used uniform quarter-note arpeggiated outline. Source contains grand maestoso fanfare chords with dotted rhythms, low pedal octaves, ties, and descending sextuplet bass cadential flourish.",
+      "mm_08_15": "Candidate lacked continuous 16th-note wave arpeggios passing across both staves and sustained top-voice melody.",
+      "mm_16_29": "Candidate substituted simplified harmonic patterns. Source contains D-flat major / B-flat minor fanfare, second lyric arpeggio Cantabile, and grand C7 cadential fermata.",
+      "mm_30_36": "Entirely missing from candidate score (Recapitulation of fanfare theme and fff final cadence with fermata)."
+    },
+    "element_error_counts": {
+      "pitch": 36,
+      "duration": 36,
+      "rests": 36,
+      "staff": 36,
+      "voice": 36,
+      "ties": 28,
+      "tuplets": 6,
+      "tempo_expression": 36
+    }
+  }
+}

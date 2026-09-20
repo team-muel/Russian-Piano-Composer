@@ -52,6 +52,8 @@ data/interim/*
 !data/interim/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+data/scans/**/*.pdf
+data/scans/*.pdf
 
 # Model artifacts (keep .gitkeep)
 models/*
