@@ -47,13 +47,13 @@ def load_identity_map(
     if not os.path.exists(path):
         return {}
     with open(path, encoding="utf-8") as f:
-        return cast(dict[str, Any], json.load(f))
+        return cast("dict[str, Any]", json.load(f))
 
 
 def _find_identity(identity_map: dict[str, Any], score_id: str) -> dict[str, Any] | None:
     for item in identity_map.get("movements", {}).values():
         if item.get("score_id") == score_id:
-            return cast(dict[str, Any], item)
+            return cast("dict[str, Any]", item)
     return None
 
 
