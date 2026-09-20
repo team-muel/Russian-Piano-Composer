@@ -20,7 +20,11 @@ A rigorous **9-score source-fidelity recovery pilot** was established across 3 t
 2. **Anton Arensky**: Op. 36 Nos. 1, 2, 13 (P. Jurgenson 1894, Plates 19782, 19783, 19794)
 3. **Anatoly Lyadov**: Op. 40 Nos. 2, 3 and Op. 46 No. 4 (M.P. Belaieff 1897–1899, Plates 1450, 2045)
 
-All 9 pilot scores are candidate transcriptions. Actual source-comparison progress is 0 / 224 measures reviewed; pilot source fidelity remains PENDING_SOURCE_COMPARISON pending real measure-by-measure inspection against historical print scans.
+**Source-to-Symbolic Fidelity Review Progress**:
+- **Score 1 (Anton Arensky Op. 36 No. 1)**: `SOURCE_FIDELITY_VERIFIED` (36 / 36 measures reviewed by `PRIMARY_TRANSCRIBER_SOURCE_CHECK`, 0 critical discrepancies remaining).
+- **Score 2 (Anton Arensky Op. 36 No. 2)**: `SOURCE_FIDELITY_VERIFIED` (102 / 102 measures reviewed by `PRIMARY_TRANSCRIBER_SOURCE_CHECK`, 0 critical discrepancies remaining).
+- **Scores 3–9**: `PENDING_SOURCE_COMPARISON` (candidate transcriptions pending source comparison).
+- **Overall Pilot Progress**: 2 / 9 scores verified, 138 / 314 total measures source-reviewed; overall pilot source fidelity remains `PENDING_SOURCE_COMPARISON`.
 
 ---
 
@@ -56,25 +60,25 @@ RC013_DIGITIZATION_POLICY_HASH:
 8bd6651352a159fc8c6f6b9207263e4beac1945b3b8de542bec86633df3af147
 
 RC013_DIGITIZATION_MANIFEST_HASH:
-635d46f547240039671e7b2061ecd6fdb4ce90df3e182171f4fd409b9fa70035
+920700fc4f3f2cec4ce11831a69b45abbe01573ea65961122ba18257cd0dde6d
 
 RC013_ERROR_LOG_HASH:
-2562448536f7a4924b76dd45e09e4573e800669b3ea629c1da0538315df3e80f
+5f9f9978029b78269830777383701ea1c33add6c596680cc359cc5c6e8f1c302
 
 RC013_CANONICAL_SYMBOLIC_CORPUS_HASH:
-9e97c1fd2d03693c0ca9c660d0839a07c1ccec22bcf416c8dbf900cda6e18cdb
+810cb82f726b62ab62f9fd5246b9d1bd0c0558cc7bf80e78e44dc5984ce63313
 
 RC013_QC_RESULT_HASH:
-ce328662498267cf4bc02d91496d29f3d46429d4322038b0d1cf32f9ae69d3f6
+9ac612aa2f28d003cad629e52090d790e44208baad1ba0eb1ac88e8fe89fd067
 
 RC013_AUTOMATED_REVIEW_BUNDLE_HASH:
-12f7325f9cea78129099f831b34396a6a2a74c541dbc86a18170ffcd6964a4f5
+42a28749870c426827171630e0b3028ddb167625cfb1fee5e52f9ef9185c75dd
 
 RC013_SOURCE_COMPARISON_BUNDLE_HASH:
-c65de231f7ea8da045e66432676d0547a0bd78f8fb1951298bc0ab98fb253bc4
+5d43f79657766eede0f9b99d39a64930f04ab798435935c8b4f0574baaeb3523
 
 RC013_SOURCE_FIDELITY_GATE_RESULT_HASH:
-db2fc1e5dec09aa8d3dd05a0a10cabc37a730687c02b0074977ede5a545f49f8
+ee565a319aac0689ffc73f39a8468770cb8d17e51c0aa134ece21c935b45d9ec
 ```
 
 - **Two-Process Verification**: `Process A == Process B` (100% Cryptographic Match across all 10 hashes).

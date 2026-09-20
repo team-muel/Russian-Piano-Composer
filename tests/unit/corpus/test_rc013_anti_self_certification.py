@@ -231,12 +231,12 @@ def test_current_pending_ledger_fails_production_gate(score_id: str) -> None:
         current_symbolic_sha=real_sym_sha,
         fail_fast=False,
     )
-    if score_id == "anton_arensky_op36_no01":
-        # Score 1 has undergone genuine source comparison and is verified
+    if score_id in ("anton_arensky_op36_no01", "anton_arensky_op36_no02"):
+        # Scores 1 & 2 have undergone genuine source comparison and are verified
         assert res.valid is True
         assert res.fidelity_status == "SOURCE_FIDELITY_VERIFIED"
     else:
-        # Remaining 8 scores are in PENDING_HUMAN_REVIEW state and must fail production gate
+        # Remaining 7 scores are in PENDING_HUMAN_REVIEW state and must fail production gate
         assert res.valid is False
         assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
 
@@ -578,7 +578,7 @@ def test_source_comparison_ledger_has_all_required_fields(score_id: str) -> None
             "key_signature_status", "time_signature_status",
             "ornament_status", "repeat_status",
         }
-        if score_id == "anton_arensky_op36_no01":
+        if score_id in ("anton_arensky_op36_no01", "anton_arensky_op36_no02"):
             for field in element_fields:
                 assert m[field] in VALID_TERMINAL_ELEMENT_STATUSES, (
                     f"{score_id} measure {i+1}: {field} must have a valid terminal status"

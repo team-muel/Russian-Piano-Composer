@@ -2,13 +2,13 @@
   "anti_synthetic_guard_passed": true,
   "canonical_work_id": "anton_arensky_op36_m02",
   "composer": "Anton Arensky",
-  "measures_in_musicxml": 24,
+  "measures_in_musicxml": 102,
   "movement": 2,
   "notation_errors": [],
-  "notes_in_musicxml": 129,
+  "notes_in_musicxml": 1298,
   "opus": "Op. 36",
   "pipeline_state": "AUTOMATED_QC_PASS",
-  "rests_in_musicxml": 0,
+  "rests_in_musicxml": 14,
   "review_date": "2026-09-20",
   "reviewer_identifier": "rc013_notation_validator_v3",
   "reviewer_type": "AUTOMATED_QC",
@@ -17,6 +17,6 @@
   "source_file_name": "Arensky_morceaux_op36-2.pdf",
   "source_file_sha256": "f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136",
   "symbolic_file_path": "data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml",
-  "symbolic_file_sha256": "a4b50caba2bb7ffde9173fbd7bc527ab23ad92f79c4a50242e5d37526bf77460",
-  "title": "Pr\u00e9lude in A minor"
+  "symbolic_file_sha256": "ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240",
+  "title": "Prélude in A minor"
 }

@@ -123,7 +123,7 @@ score_entries:
   movement: 2
   title: Prélude in A minor
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml
-  file_sha256: a4b50caba2bb7ffde9173fbd7bc527ab23ad92f79c4a50242e5d37526bf77460
+  file_sha256: f20e276a4ac87e9e82272754b5e9a771cfca7891fe931d6ac30b05defa63cbbb
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/anton_arensky_op36_no02.review.json
@@ -134,15 +134,15 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 129
-  num_rests: 0
+  num_measures: 102
+  num_notes: 1184
+  num_rests: 14
   time_signatures:
   - 3/4
   - 3/4
   key_signatures:
-  - a minor
-  - a minor
+  - f minor
+  - f minor
   qc_passed: true
 - canonical_work_id: anton_arensky_op36_m13
   composer: Anton Arensky

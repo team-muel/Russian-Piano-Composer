@@ -1,0 +1,53 @@
+{
+  "score_id": "anton_arensky_op36_no02",
+  "canonical_work_id": "anton_arensky_op36_m02",
+  "status": "REJECTED_SOURCE_MISMATCH",
+  "audit_type": "PRE_CORRECTION_DISCREPANCY_RECORD",
+  "candidate_symbolic_sha256": "a4b50caba2bb7ffde9173fbd7bc527ab23ad92f79c4a50242e5d37526bf77460",
+  "candidate_measures": 24,
+  "source_edition": "P. Jurgenson (1894), Plate 19783, pp. 8-15 (work-local pp. 1-8)",
+  "source_file_name": "Arensky_morceaux_op36-1.pdf",
+  "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+  "source_total_measures": 102,
+  "audit_summary": {
+    "measure_count_mismatch": {
+      "candidate": 24,
+      "source": 102,
+      "description": "Candidate truncated by 78 measures; missing mm.25-102 (virtuosic development, modulation sequences, chromatic accelerando, and final decay cadence)."
+    },
+    "metadata_mismatches": {
+      "title": {
+        "candidate": "Prélude in A minor",
+        "source": "La Toupie (The Spinning Top / Kreisel) in F minor, Op. 36 No. 2"
+      },
+      "tempo": {
+        "candidate": "Andante sostenuto (quarter = 92)",
+        "source": "Vivace (dotted half = 120)"
+      },
+      "meter": {
+        "candidate": "3/4 (simple quarter note pulse)",
+        "source": "3/4 (moto perpetuo with 12 16th-notes per measure)"
+      },
+      "key_signature": {
+        "candidate": "0 (A minor)",
+        "source": "4 flats (-4, F minor)"
+      }
+    },
+    "structural_and_element_discrepancies": {
+      "mm_01_14": "Candidate contained generic slow chordal melody in A minor. Source contains lightning-fast moto perpetuo ostinato on G5-F#5-G5-Ab5 in 16th notes over F minor bass pedal and climbing staccato counter-melodies.",
+      "mm_15_26": "Candidate continued slow 3/4 quarter notes. Source features chromatic modulation across G-flat, D-flat, A-flat, and C major with shifting accents, crescendo hairpin dynamics, and low register sforzandi.",
+      "mm_27_66": "Entirely missing from candidate (extensive middle development section traversing remote tonal centres, rapid pedal point alternations, and virtuosic double-staff arpeggios).",
+      "mm_67_102": "Entirely missing from candidate (dramatic recapitulation, accelerando trill flourish, and quiet dying away of the spinning top into low F minor pizzicato-style cadence)."
+    },
+    "element_error_counts": {
+      "pitch": 102,
+      "duration": 102,
+      "rests": 102,
+      "staff": 102,
+      "voice": 102,
+      "ties": 44,
+      "tuplets": 12,
+      "tempo_expression": 102
+    }
+  }
+}
