@@ -123,8 +123,12 @@ def test_automated_qc_cannot_claim_source_fidelity_verified(score_id: str) -> No
         f"{score_id}: AUTOMATED_QC review must not claim SOURCE_FAITHFUL_PILOT; "
         f"got {fidelity_status!r}"
     )
-    assert fidelity_status == "PENDING_SOURCE_COMPARISON", (
-        f"{score_id}: expected PENDING_SOURCE_COMPARISON, got {fidelity_status!r}"
+    assert fidelity_status in {
+        "PENDING_SOURCE_COMPARISON",
+        "IDENTITY_REVALIDATION_REQUIRED",
+    }, (
+        f"{score_id}: expected fail-closed pending or identity-revalidation status, "
+        f"got {fidelity_status!r}"
     )
 
 
