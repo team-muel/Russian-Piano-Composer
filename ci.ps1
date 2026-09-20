@@ -31,7 +31,7 @@ Write-Host ""
 
 # Step 1: Lint
 Write-Host "[1/3] Running ruff lint..." -ForegroundColor Yellow
-& $venvPython -m ruff check src/ tests/
+& $venvPython -m ruff check src/ tests/ scripts/
 if ($LASTEXITCODE -ne 0) {
     Write-Host "FAIL: ruff lint failed." -ForegroundColor Red
     exit 1
