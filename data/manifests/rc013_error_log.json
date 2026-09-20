@@ -81,15 +81,15 @@
       "error_count": 0,
       "errors": [],
       "file_path": "data/scores/rc013/canonical\\anton_arensky_op36_no02.musicxml",
-      "file_sha256": "ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240",
+      "file_sha256": "35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee",
       "key_signatures": [
-        "<music21.key.KeySignature of 4 flats>",
-        "<music21.key.KeySignature of 4 flats>"
+        "c minor",
+        "c minor"
       ],
       "num_measures": 102,
-      "num_notes": 1298,
+      "num_notes": 1315,
       "num_parts_or_staves": 2,
-      "num_rests": 14,
+      "num_rests": 4,
       "time_signatures": [
         "3/4",
         "3/4"
@@ -100,18 +100,18 @@
       "error_count": 0,
       "errors": [],
       "file_path": "data/scores/rc013/canonical\\anton_arensky_op36_no13.musicxml",
-      "file_sha256": "ed75e0eee14dacfc7ba234557317be2c616e5a44d1b2e638df77ad07a256ed5b",
+      "file_sha256": "13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8",
       "key_signatures": [
-        "e minor",
-        "e minor"
+        "F# major",
+        "F# major"
       ],
-      "num_measures": 24,
-      "num_notes": 205,
+      "num_measures": 60,
+      "num_notes": 758,
       "num_parts_or_staves": 2,
       "num_rests": 0,
       "time_signatures": [
-        "4/4",
-        "4/4"
+        "3/4",
+        "3/4"
       ],
       "valid": true
     },

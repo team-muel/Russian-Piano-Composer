@@ -1,7 +1,9 @@
 milestone: RC-013
 title: RC-013 Canonical Pilot Digitization Manifest
-description: Authentic source-transcribed symbolic piano score pilot for Russian confirmatory
-  resumption.
+description: 'Authentic source-transcribed symbolic piano score pilot for Russian
+  confirmatory
+
+  resumption.'
 status: PILOT_SOURCE_FIDELITY_RECOVERY
 total_score_entries: 9
 pilot_composer_counts:
@@ -13,7 +15,7 @@ score_entries:
   composer: Anatoly Lyadov
   opus_or_catalogue: Op. 40
   movement: 2
-  title: Prelude in D minor
+  title: Prélude
   relative_score_path: data/scores/rc013/canonical/anatoly_lyadov_op40_no02.musicxml
   file_sha256: 176eba2ffbe47a944f9a59fe860b6c09b6d7a18906c4121fbec7edf3fc957443
   pipeline_state: MANUALLY_TRANSCRIBED
@@ -40,7 +42,7 @@ score_entries:
   composer: Anatoly Lyadov
   opus_or_catalogue: Op. 40
   movement: 3
-  title: Prelude in B-flat major
+  title: Prélude
   relative_score_path: data/scores/rc013/canonical/anatoly_lyadov_op40_no03.musicxml
   file_sha256: c873ad1522fb8fb89bbb23e6c95dcac96e6c3502aa0a6e82be56e280949588d5
   pipeline_state: MANUALLY_TRANSCRIBED
@@ -67,7 +69,7 @@ score_entries:
   composer: Anatoly Lyadov
   opus_or_catalogue: Op. 46
   movement: 4
-  title: Prelude in E minor
+  title: Prélude
   relative_score_path: data/scores/rc013/canonical/anatoly_lyadov_op46_no04.musicxml
   file_sha256: d07c6528f2253f6d379644c0913e6a0617ae02d48cc65f3dac96f6485f83363c
   pipeline_state: MANUALLY_TRANSCRIBED
@@ -124,10 +126,9 @@ score_entries:
   movement: 2
   title: La toupie
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml
-  file_sha256: ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240
+  file_sha256: 35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
-  source_fidelity_status: IDENTITY_REVALIDATION_REQUIRED
   review_record: data/reviews/rc013/anton_arensky_op36_no02.review.json
   source_archive: Internet Archive / IMSLP
   source_file_name: Arensky_morceaux_op36-1.pdf
@@ -137,14 +138,14 @@ score_entries:
   analysis_eligible: false
   generative_eligible: false
   num_measures: 102
-  num_notes: 1298
-  num_rests: 14
+  num_notes: 1315
+  num_rests: 4
   time_signatures:
   - 3/4
   - 3/4
   key_signatures:
-  - <music21.key.KeySignature of 4 flats>
-  - <music21.key.KeySignature of 4 flats>
+  - c minor
+  - c minor
   qc_passed: true
 - canonical_work_id: anton_arensky_op36_m13
   composer: Anton Arensky
@@ -152,10 +153,9 @@ score_entries:
   movement: 13
   title: Étude
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no13.musicxml
-  file_sha256: ed75e0eee14dacfc7ba234557317be2c616e5a44d1b2e638df77ad07a256ed5b
+  file_sha256: 13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
-  identity_status: IDENTITY_REVALIDATION_REQUIRED
   review_record: data/reviews/rc013/anton_arensky_op36_no13.review.json
   source_archive: Internet Archive / IMSLP
   source_file_name: Arensky_Morceaux_op.36_No.13-18.pdf
@@ -164,15 +164,15 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 205
+  num_measures: 60
+  num_notes: 758
   num_rests: 0
   time_signatures:
-  - 4/4
-  - 4/4
+  - 3/4
+  - 3/4
   key_signatures:
-  - e minor
-  - e minor
+  - F# major
+  - F# major
   qc_passed: true
 - canonical_work_id: sergei_lyapunov_op11_m01
   composer: Sergei Lyapunov
