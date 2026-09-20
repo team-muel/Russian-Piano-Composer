@@ -7,7 +7,13 @@ Ensures:
 """
 
 import json
+import sys
 from pathlib import Path
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8")
 
 DEVELOPMENT_COMPOSERS: set[str] = {
     "Frédéric Chopin",
@@ -20,12 +26,23 @@ DEVELOPMENT_COMPOSERS: set[str] = {
 
 CONFIRMATORY_CANDIDATE_COMPOSERS: set[str] = {
     "Alexander Scriabin",
+    "Modest Mussorgsky",
+    "Sergei Prokofiev",
+    "Mily Balakirev",
+    "Sergei Lyapunov",
+    "Anton Rubinstein",
+    "Anton Arensky",
+    "Alexander Glazunov",
+    "Anatoly Lyadov",
+    "Sergei Taneyev",
+    "César Cui",
     "Edvard Grieg",
     "Claude Debussy",
     "Antonín Dvořák",
     "Béla Bartók",
     "Ludwig van Beethoven",
 }
+
 
 
 def audit_rc012_leakage() -> None:

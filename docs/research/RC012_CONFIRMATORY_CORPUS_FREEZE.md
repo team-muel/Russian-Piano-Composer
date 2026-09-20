@@ -10,7 +10,7 @@
 
 This document records the exact frozen configuration and hashes for the RC-012 Confirmatory Corpus and Predictor Freeze (Commit B).
 
-Because the external corpus landscape failed the preregistered minimum sample size standard of $\ge 4$ independent Russian composers with $\ge 10$ pieces each ($N_{\text{Russian}} = 1$ vs. required $\ge 4$), the confirmatory manifest records the audited eligible corpus state and locks the pipeline fail-closed to prevent uncontrolled execution on an underpowered, pseudoreplicated sample.
+Because the external corpus landscape failed the preregistered minimum sample size standard of $\ge 4$ independent Russian composers with $\ge 10$ pieces each ($N_{\text{Russian}} = 2$ vs. required $\ge 4$), the confirmatory manifest records the audited eligible corpus state and locks the pipeline fail-closed to prevent uncontrolled execution on an underpowered, pseudoreplicated sample.
 
 ---
 
@@ -32,11 +32,14 @@ The primary development predictor was fitted on the 141 canonical development pi
 ## 3. Confirmatory Candidate Inventory & Manifest State
 
 The surveyed candidate corpus comprises:
-- **Russian Candidate**: Alexander Scriabin (`craigsapp/scriabin` / CCARH, 207 works, commit `7daa1136a4edfaf8d2bfadee973c33f3b76b6760`)
-- **Control Candidates**:
+- **Russian Candidates ($N_{\text{Russian}} = 2 < 4$)**:
+  - Alexander Scriabin (`craigsapp/scriabin` / CCARH / PERiScoPe, 207 works, commit `7daa1136a4edfaf8d2bfadee973c33f3b76b6760`)
+  - Modest Mussorgsky (PERiScoPe / ATEPP / CCARH, 18 works: 15 movements from *Pictures at an Exhibition* + 3 standalone scores)
+- **Control Candidates ($N_{\text{Control}} = 5 \ge 4$)**:
   - Edvard Grieg (`DCMLab/grieg_lyric_pieces`, 66 works, commit `91a304563521f3f273b8c0aadec1ce2ede2d1384`)
-  - Claude Debussy (`DCMLab/debussy_suite_bergamasque` + `debussy_preludes`, 28 works)
+  - Claude Debussy (`DCMLab/debussy_suite_bergamasque` + `debussy_preludes` + `debussy_etudes`, 53 works)
   - Antonín Dvořák (`DCMLab/dvorak_silhouettes`, 12 works, commit `f228006fcd8696c809cfc8e701ed215cec3d07f1`)
-  - Béla Bartók (`DCMLab/bartok_bagatelles`, 14 works, commit `c6221f6ecb4dbcd476e827f6bf8705bdcb15c8a9`)
+  - Béla Bartók (`DCMLab/bartok_bagatelles` + PERiScoPe, 40 works)
+  - Ludwig van Beethoven (`DCMLab/beethoven_piano_sonatas`, 91 works)
 
-Because $N_{\text{Russian}} = 1 < 4$, the confirmatory data contract halts ex ante, and no scores are unblinded or evaluated for hypothesis testing.
+Because $N_{\text{Russian}} = 2 < 4$, the confirmatory data contract halts ex ante due to **DATA AVAILABILITY FAILURE**, and the primary confirmatory hypothesis remains **NOT TESTED**. No scores are unblinded or evaluated for hypothesis testing.

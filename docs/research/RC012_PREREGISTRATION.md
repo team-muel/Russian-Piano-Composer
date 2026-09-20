@@ -34,21 +34,23 @@ To ensure statistical power and guard against pseudoreplication:
 
 ## 3. Pre-Condition Audit Result
 
-As documented in [`RC012_CONFIRMATORY_CORPUS_INVENTORY.md`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/docs/research/RC012_CONFIRMATORY_CORPUS_INVENTORY.md):
+As documented in [`RC012_CONFIRMATORY_CORPUS_INVENTORY.md`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/docs/research/RC012_CONFIRMATORY_CORPUS_INVENTORY.md) and [`RC012A_EXHAUSTIVE_CORPUS_AUDIT.md`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/docs/research/RC012A_EXHAUSTIVE_CORPUS_AUDIT.md):
 - **Eligible Independent Control Composers ($\ge 10$ pieces)**:
   - *Edvard Grieg* ($M = 66$)
   - *Claude Debussy* ($M = 53$)
   - *Antonín Dvořák* ($M = 12$)
-  - *Béla Bartók* ($M = 14$)
+  - *Béla Bartók* ($M = 40$)
   - *Ludwig van Beethoven* ($M = 91$)
   - $\implies N_{\text{Control}} = 5 \ge 4$ (**SATISFIED**)
 - **Eligible Independent Russian Composers ($\ge 10$ pieces)**:
   - *Alexander Scriabin* ($M = 207$)
-  - *Anton Arensky*, *Mily Balakirev*, *Sergei Lyapunov*, *Aleksandr Glazunov*, *César Cui*, *Modest Mussorgsky*, *Sergei Prokofiev*: Surveyed across open symbolic repositories; none contain $\ge 10$ verified, machine-readable solo piano scores.
-  - $\implies N_{\text{Russian}} = 1 < 4$ (**FAILED**)
+  - *Modest Mussorgsky* ($M = 18$)
+  - *Sergei Prokofiev* ($M = 4$), *Mily Balakirev* ($M = 2$), *Sergei Lyapunov* ($M = 1$), *Anton Rubinstein* ($M = 1$), *Anton Arensky* ($M = 0$), *Aleksandr Glazunov* ($M = 0$), *Anatoly Lyadov* ($M = 0$), *Sergei Taneyev* ($M = 0$), *César Cui* ($M = 0$): Surveyed across open symbolic repositories; none contain $\ge 10$ verified, machine-readable solo piano scores.
+  - $\implies N_{\text{Russian}} = 2 < 4$ (**FAILED**)
 
 **Formal Contract Decision**:
 $$\mathbf{CONFIRMATORY\_DATA\_CONTRACT\_FAILED}$$
+The primary external confirmatory hypothesis is **NOT TESTED** due to **DATA AVAILABILITY FAILURE**.
 
 ---
 

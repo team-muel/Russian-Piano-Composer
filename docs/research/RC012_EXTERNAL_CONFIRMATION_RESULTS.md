@@ -17,20 +17,21 @@ To prevent false discovery, data leakage, and pseudoreplication, the pre-registe
    - Minimum piece count per composer: $\ge 10$ eligible symbolic scores.
    - Fail-closed gate rule: If fewer than 4 composers per class satisfy the data contract, declare `CONFIRMATORY_DATA_CONTRACT_FAILED` ex ante and stop prior to hypothesis testing.
 2. **Empirical Inventory & Feasibility Findings**:
-   - **Control Candidates**: 5 distinct composers satisfied all criteria:
+   - **Control Candidates**: 5 distinct composers satisfied all criteria ($N_{\text{Control}} = 5 \ge 4$):
      - Edvard Grieg ($M=66$, `DCMLab/grieg_lyric_pieces`)
-     - Claude Debussy ($M=53$, `DCMLab/debussy_suite_bergamasque` + `debussy_preludes`)
+     - Claude Debussy ($M=53$, `DCMLab/debussy_suite_bergamasque` + `debussy_preludes` + `debussy_etudes`)
      - Antonín Dvořák ($M=12$, `DCMLab/dvorak_silhouettes`)
-     - Béla Bartók ($M=14$, `DCMLab/bartok_bagatelles`)
+     - Béla Bartók ($M=40$, `DCMLab/bartok_bagatelles` + PERiScoPe)
      - Ludwig van Beethoven ($M=91$, `DCMLab/beethoven_piano_sonatas`)
-     - Total Control: $N_{\text{Control}} = 5 \ge 4$.
-   - **Russian Candidates**: Only 1 composer satisfied all criteria:
-     - Alexander Scriabin ($M=207$, CCARH `craigsapp/scriabin`)
-     - All other Russian late-Romantic / early-modern candidates (*Arensky*, *Balakirev*, *Lyapunov*, *Glazunov*, *Cui*, *Mussorgsky*, *Prokofiev*) lack curated, machine-readable open symbolic score collections with $\ge 10$ pieces in public repositories.
-     - Total Russian: $N_{\text{Russian}} = 1 < 4$.
+   - **Russian Candidates**: 2 distinct composers satisfied all criteria ($N_{\text{Russian}} = 2 < 4$):
+     - Alexander Scriabin ($M=207$, CCARH `craigsapp/scriabin` / PERiScoPe)
+     - Modest Mussorgsky ($M=18$, PERiScoPe / ATEPP / KernScores: 15 movements of *Pictures at an Exhibition* + 3 standalone pieces: *Impromptu passionné*, *Memories of Childhood*, *The Seamstress*)
+     - All other Russian late-Romantic / early-modern candidates (*Prokofiev* $M=4$, *Balakirev* $M=2$, *Lyapunov* $M=1$, *Rubinstein* $M=1$, *Arensky* $M=0$, *Glazunov* $M=0$, *Lyadov* $M=0$, *Taneyev* $M=0$, *Cui* $M=0$) lack curated, machine-readable open symbolic score collections with $\ge 10$ pieces in public repositories.
 3. **Formal Precondition Gate Decision**:
    $$\mathbf{CONFIRMATORY\_DATA\_CONTRACT\_FAILED}$$
-   Per Section 3 of the pre-registration, the confirmatory evaluation halted ex ante to preserve scientific integrity, avoiding post-hoc threshold relaxation or single-composer pseudoreplication.
+   Per Section 3 of the pre-registration, the confirmatory evaluation halted ex ante due to **DATA AVAILABILITY FAILURE** ($N_{\text{Russian}} = 2 < 4$).
+   The primary external hypothesis is **NOT TESTED**.
+   This is NOT a negative scientific finding about music or the absence of a Russian structural signal; it is strictly a data availability failure under open symbolic corpus constraints.
 
 ---
 
@@ -57,9 +58,11 @@ For archival completeness, the primary development predictor was fitted on the 1
 
 ## 4. Scientific Significance for Russian Piano Composer Project
 
-1. **Negative / Inconclusive Results Preserved**:
-   A negative or unfulfilled data contract is an essential scientific result. By refusing to compromise sample size thresholds ($N \ge 4$), the study prevents false positive claims based on a sample of $N=1$ Russian composer.
+1. **Strict Data Contract Preserved**:
+   A data availability contract failure prevents false discovery. By refusing to compromise sample size thresholds ($N \ge 4$), the study prevents false positive or pseudoreplicated claims based on an underpowered sample of $N_{\text{Russian}}=2$ composers.
+   The primary confirmatory hypothesis remains strictly **NOT TESTED**.
 2. **Corpus Ecosystem Discovery**:
-   Highlights a critical structural limitation in computational musicology: open, machine-readable symbolic piano corpora are heavily Euro-centric / German-French dominated, while late-Romantic Russian masters beyond Tchaikovsky, Rachmaninoff, Medtner, and Scriabin remain severely under-digitized.
-3. **Readiness for Generative Milestones**:
-   The RC-011 56-feature structural representation remains fully validated (`STRUCTURAL_REPRESENTATION_VALIDATED`) for descriptive analysis and stylistic guidance within the verified Russian late-Romantic reference space.
+   Highlights a critical structural limitation in computational musicology: open, machine-readable symbolic piano corpora are heavily Euro-centric / German-French dominated, while late-Romantic Russian masters beyond Tchaikovsky, Rachmaninoff, Medtner, Scriabin, and Mussorgsky remain severely under-digitized.
+3. **Relation to Prior Milestones**:
+   RC-010 established `RUSSIAN_CONTROL_SIGNAL_NOT_SUPPORTED` on the exploratory set. RC-011 established `STRUCTURAL_REPRESENTATION_VALIDATED` for mathematical and structural representation integrity across the canonical 141-piece development corpus. RC-011 is not validated for Russian stylistic guidance or classification, as confirmatory testing was halted due to data availability failure.
+
