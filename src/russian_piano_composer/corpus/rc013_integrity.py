@@ -8,7 +8,7 @@ import os
 import re
 import unicodedata
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, cast
 
 import music21 as m21
 import yaml
@@ -47,13 +47,13 @@ def load_identity_map(
     if not os.path.exists(path):
         return {}
     with open(path, encoding="utf-8") as f:
-        return json.load(f)
+        return cast(dict[str, Any], json.load(f))
 
 
 def _find_identity(identity_map: dict[str, Any], score_id: str) -> dict[str, Any] | None:
     for item in identity_map.get("movements", {}).values():
         if item.get("score_id") == score_id:
-            return item
+            return cast(dict[str, Any], item)
     return None
 
 
