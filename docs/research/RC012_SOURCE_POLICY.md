@@ -53,7 +53,44 @@ Any record bearing `UNKNOWN`, `REVIEW_REQUIRED`, `CONFLICT`, `NONE`, or empty li
 
 ---
 
-## 4. Composer Qualification & Deduplication Rules
+## 4. Fail-Closed Row-Level Policy Eligibility Derivation
+
+Row-level eligibility is derived directly and deterministically from intrinsic row metadata fields.
+A source inventory record is defined as **semantically eligible** if and only if all policy preconditions hold simultaneously:
+```python
+is_semantically_eligible = (
+    row["original_solo_piano"] == "True"
+    and row["parseable"] == "True"
+    and row["license_status"] in ALLOWED_CLEAN_LICENSES
+    and row["rc011_compatible"] == "True"
+    and row["canonical_work_id"] != "none"
+    and row["actual_source_item_id"] != "none"
+    and row["source_version_or_commit"] not in {"none", "", "exhausted_audit_2026"}
+)
+```
+
+For every row in the inventory:
+$$\text{declared eligible} == (\text{is\_semantically\_eligible} \land \text{is\_canonical\_selected})$$
+
+Where:
+- **Canonical-Selected Primary Work**: If a work satisfies semantic eligibility and is chosen as the canonical primary record for its `duplicate_group`, it is marked `eligible=True` and `exclusion_reason="NONE"`.
+- **Secondary Duplicate Record**: If a work is semantically eligible but duplicate evidence exists in another repository, the duplicate record is marked `eligible=False` under `exclusion_reason="DUPLICATE_PRIORITIZED_PRIMARY_RECORD_ACCEPTED"`.
+- **Tombstone / Ineligible Record**: If semantic eligibility is false, the row is strictly `eligible=False` with an explicit reason (`ZERO_SYMBOLIC_SOLO_PIANO_PIECES_AVAILABLE`, etc.).
+
+---
+
+## 5. Source Version Hygiene
+
+To prevent upstream drift or non-reproducible mutations:
+1. **Canonical-Selected Rows**:
+   - Every canonical-selected row (`eligible=True`) must point to an immutable source identity: a concrete Git commit SHA (e.g. `craigsapp/scriabin` at `7daa1136a4edfaf8d2bfadee973c33f3b76b6760`, DCMLab commit SHAs), a formal tagged/versioned dataset release (e.g. `PERiScoPe` at `v1.1`), or an explicit static snapshot.
+   - Mutable branch references (such as `master`, `main`, `HEAD`, `latest`) are strictly forbidden for canonical-selected rows.
+2. **Non-Canonical Duplicate Rows**:
+   - Non-canonical duplicate records (`eligible=False`) may reference upstream repository branches (e.g., `fosfrancesco/asap-dataset` at `master`), provided they are explicitly marked as non-canonical duplicates (`DUPLICATE_PRIORITIZED_PRIMARY_RECORD_ACCEPTED`) and do not contribute to $M_c$.
+
+---
+
+## 6. Composer Qualification & Deduplication Rules
 
 1. **Independent Composer Isolation**:
    - Zero overlap with development composers (*Medtner*, *Rachmaninoff*, *Tchaikovsky*, *Chopin*, *Liszt*, *Schumann*).
@@ -72,7 +109,7 @@ Any record bearing `UNKNOWN`, `REVIEW_REQUIRED`, `CONFLICT`, `NONE`, or empty li
 
 ---
 
-## 5. Raw Matching vs. Evidence Row Counts
+## 7. Raw Matching vs. Evidence Row Counts
 
 For complete auditing clarity:
 - `source_evidence_row_count`: Total number of physical evidence rows in the source inventory for composer $c$ (including duplicates and tombstones).
@@ -82,7 +119,7 @@ For complete auditing clarity:
 
 ---
 
-## 6. Primary Precondition Fail-Closed Rule
+## 8. Primary Precondition Fail-Closed Rule
 
 If $N_{\text{Russian}} < 4$ or $N_{\text{Control}} < 4$:
 - The pipeline evaluation halts ex ante.

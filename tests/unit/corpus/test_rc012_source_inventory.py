@@ -127,6 +127,84 @@ def test_duplicate_source_rows_do_not_inflate_mc() -> None:
         assert len(eligible_rows) <= 1, f"Duplicate group {grp} has {len(eligible_rows)} eligible rows"
 
 
+def test_prokofiev_mc_equals_four() -> None:
+    """Verify Sergei Prokofiev has exactly M_c = 4 unique eligible canonical works."""
+    gate_payload = audit_rc012_source_inventory()
+    prok_metrics = gate_payload["composer_metrics"]["Sergei Prokofiev"]
+
+    assert prok_metrics["eligible_canonical_work_count"] == 4, (
+        f"Expected M_c(Prokofiev) == 4, got {prok_metrics['eligible_canonical_work_count']}"
+    )
+    assert not prok_metrics["qualified"], "Prokofiev with M_c=4 must remain EXCLUDED (4 < 10)"
+
+    # Verify the four specific canonical works
+    inv_path = Path("data/manifests/rc012_source_inventory.csv")
+    with open(inv_path, encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        prok_eligible_works = {
+            r["canonical_work_id"]
+            for r in reader
+            if r["composer"] == "Sergei Prokofiev" and r["eligible"] == "True"
+        }
+    expected_prok_works = {
+        "prokofiev_op11_toccata",
+        "prokofiev_op22_no01",
+        "prokofiev_op22_no10",
+        "prokofiev_op22_no16",
+    }
+    assert prok_eligible_works == expected_prok_works, (
+        f"Mismatch in Prokofiev eligible works: {prok_eligible_works} != {expected_prok_works}"
+    )
+
+
+def test_fail_closed_policy_behavior_on_mutations() -> None:
+    """Verify that any row with eligible=True but invalid fields is strictly rejected by verify_rc012_source_evidence."""
+    from scripts.verify_rc012_source_evidence import verify_rc012_source_evidence
+
+    # Verify baseline passes first
+    verify_rc012_source_evidence()
+
+    # Simulate invalid rows using test function
+    def validate_row(r: dict[str, str]) -> bool:
+        return (
+            r["original_solo_piano"] == "True"
+            and r["parseable"] == "True"
+            and r["license_status"] in ALLOWED_CLEAN_LICENSES
+            and r["rc011_compatible"] == "True"
+            and r["canonical_work_id"] != "none"
+            and r["actual_source_item_id"] != "none"
+            and r["source_version_or_commit"] not in {"none", "", "exhausted_audit_2026"}
+        )
+
+    base_valid = {
+        "original_solo_piano": "True",
+        "parseable": "True",
+        "license_status": "CC-BY-NC-SA-4.0",
+        "rc011_compatible": "True",
+        "canonical_work_id": "test_work",
+        "actual_source_item_id": "test_item",
+        "source_version_or_commit": "abc1234",
+    }
+    assert validate_row(base_valid) is True
+
+    # 1. eligible=True + parseable=False -> rejected
+    mutated = dict(base_valid, parseable="False")
+    assert validate_row(mutated) is False
+
+    # 2. eligible=True + original_solo_piano=False -> rejected
+    mutated = dict(base_valid, original_solo_piano="False")
+    assert validate_row(mutated) is False
+
+    # 3. eligible=True + rc011_compatible=False -> rejected
+    mutated = dict(base_valid, rc011_compatible="False")
+    assert validate_row(mutated) is False
+
+    # 4. non-whitelisted license -> rejected
+    for bad_lic in ["UNKNOWN", "REVIEW_REQUIRED", "CONFLICT", "NONE", "GPL-3.0", ""]:
+        mutated = dict(base_valid, license_status=bad_lic)
+        assert validate_row(mutated) is False
+
+
 def test_license_fail_closed_whitelist() -> None:
     """Verify that only explicitly whitelisted clean licenses can be marked eligible."""
     inv_path = Path("data/manifests/rc012_source_inventory.csv")

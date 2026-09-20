@@ -34,6 +34,24 @@ FORBIDDEN_PLACEHOLDER_REGEXES = [
 ]
 
 
+ALLOWED_CLEAN_LICENSES: set[str] = {
+    "CC0-1.0",
+    "CC-BY-4.0",
+    "CC-BY-SA-4.0",
+    "CC-BY-NC-4.0",
+    "CC-BY-NC-SA-4.0",
+    "PUBLIC_DOMAIN",
+    "ACADEMIC_RESEARCH_ONLY",
+}
+
+FORBIDDEN_MUTABLE_VERSIONS: set[str] = {
+    "master",
+    "main",
+    "head",
+    "latest",
+}
+
+
 def verify_rc012_source_evidence() -> None:
     print("--- Running RC-012 Source Evidence Integrity Verification ---")
 
@@ -76,6 +94,7 @@ def verify_rc012_source_evidence() -> None:
         canon_id = r["canonical_work_id"]
         dup_grp = r["duplicate_group"]
         elig = r["eligible"] == "True"
+        reason = r["exclusion_reason"]
 
         composer_rows[comp].append(r)
 
@@ -86,16 +105,39 @@ def verify_rc012_source_evidence() -> None:
             if pattern.match(title):
                 raise ValueError(f"Forbidden placeholder title detected at row {i}: '{title}'")
 
+        # Derive fail-closed semantic eligibility from intrinsic fields
+        is_semantically_eligible = (
+            r["original_solo_piano"] == "True"
+            and r["parseable"] == "True"
+            and r["license_status"] in ALLOWED_CLEAN_LICENSES
+            and r["rc011_compatible"] == "True"
+            and canon_id != "none"
+            and item_id != "none"
+            and ver not in {"none", "", "exhausted_audit_2026"}
+        )
+
         if elig:
-            if item_id == "none" or not item_id:
-                raise ValueError(f"Eligible row {i} cannot have 'none' or empty source ID")
+            # An eligible row MUST be semantically eligible
+            if not is_semantically_eligible:
+                raise ValueError(
+                    f"Row {i} ({comp} - {item_id}) declared eligible=True but fails policy semantic eligibility"
+                )
+            # Source version hygiene: canonical-selected rows MUST have immutable source identity
+            if ver.lower() in FORBIDDEN_MUTABLE_VERSIONS:
+                raise ValueError(
+                    f"Row {i} ({comp} - {item_id}) is eligible=True but uses forbidden mutable version '{ver}'"
+                )
+            if reason != "NONE":
+                raise ValueError(f"Eligible row {i} must have exclusion_reason='NONE', got '{reason}'")
             if path_id == "none" or not path_id:
                 raise ValueError(f"Eligible row {i} cannot have 'none' or empty source path")
-            if ver == "none" or not ver:
-                raise ValueError(f"Eligible row {i} cannot have 'none' or empty source version")
-            if canon_id == "none" or not canon_id:
-                raise ValueError(f"Eligible row {i} cannot have 'none' or empty canonical work ID")
             dup_group_eligible[dup_grp] += 1
+        else:
+            # If ineligible, either it is not semantically eligible OR it is an explicitly documented duplicate
+            if is_semantically_eligible and reason != "DUPLICATE_PRIORITIZED_PRIMARY_RECORD_ACCEPTED":
+                raise ValueError(
+                    f"Row {i} is semantically eligible but ineligible with non-duplicate reason: '{reason}'"
+                )
 
         if canon_id != "none":
             canonical_work_rows[canon_id].append(r)
@@ -107,11 +149,12 @@ def verify_rc012_source_evidence() -> None:
             seen_triplets.add(quadruplet)
 
     # 3. Check duplicate group determinism
-
     for grp, count in dup_group_eligible.items():
         if count > 1:
             raise ValueError(f"Duplicate group '{grp}' has {count} eligible rows (must be at most 1)")
     print("  Duplicate Group Deduplication: PASS (At most 1 eligible row per duplicate group)")
+    print("  Fail-Closed Policy Eligibility Derivation: PASS (All rows strictly policy-consistent)")
+    print("  Source Version Hygiene: PASS (Zero mutable branch references on canonical-selected rows)")
 
     # 4. Check zero-result composers have query log records
     zero_composers = [c for c, c_rows in composer_rows.items() if all(r["eligible"] == "False" for r in c_rows)]

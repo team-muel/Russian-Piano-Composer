@@ -27,7 +27,7 @@ Per the strict scientific contract governing RC-012:
      - *Alexander Scriabin*: Fully satisfied. Complete solo piano works Op. 1 to Op. 74 (207 pieces in CCARH Humdrum `**kern`, `craigsapp/scriabin`, commit `7daa1136a4edfaf8d2bfadee973c33f3b76b6760`).
      - *Modest Mussorgsky*: Satisfied with 18 pieces (PERiScoPe / ATEPP / KernScores: 15 movements of *Pictures at an Exhibition* + 3 standalone pieces: *Impromptu passionné*, *Memories of Childhood*, *The Seamstress*).
      - *Sergei Prokofiev*, *Mily Balakirev*, *Sergei Lyapunov*, *Anton Rubinstein*, *Anton Arensky*, *Aleksandr Glazunov*, *Anatoly Lyadov*, *Sergei Taneyev*, *César Cui*:
-       - Exhaustive survey of open repositories (DCMLab, kernScores, ASAP, ATEPP, PERiScoPe, music21, PianoCoRe) revealed only isolated single pieces or small fragments below the 10-piece threshold (*Prokofiev* $M_c=3$, *Balakirev* $M_c=2$, *Lyapunov* $M_c=1$, *Rubinstein* $M_c=1$; others $M_c=0$).
+       - Exhaustive survey of open repositories (DCMLab, kernScores, ASAP, ATEPP, PERiScoPe, music21, PianoCoRe) revealed only isolated single pieces or small fragments below the 10-piece threshold (*Prokofiev* $M_c=4$, *Balakirev* $M_c=2$, *Lyapunov* $M_c=1$, *Rubinstein* $M_c=1$; others $M_c=0$).
        - PianoCoRe 2026 was audited: while it provides performance/score MIDI, score MIDI files lacking explicit measure, key signature, staff, and voice notation are classified as `SOURCE_INCOMPATIBLE_FOR_RC011`.
 
 3. **Definitive Contract Evaluation**:
@@ -47,7 +47,7 @@ Per the strict scientific contract governing RC-012:
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Alexander Scriabin** | Russian | `craigsapp/scriabin` / ASAP / PERiScoPe | `**kern`/MusicXML | 207 | **YES** | **ELIGIBLE** |
 | **Modest Mussorgsky** | Russian | PERiScoPe / ATEPP / CCARH KernScores | MusicXML/`**kern` | 18 | **YES** | **ELIGIBLE** |
-| **Sergei Prokofiev** | Russian | ASAP / PERiScoPe / CCARH KernScores | `**kern`/MusicXML | 3 | NO | INELIGIBLE ($M_c < 10$) |
+| **Sergei Prokofiev** | Russian | ASAP / PERiScoPe / CCARH KernScores | `**kern`/MusicXML | 4 | NO | INELIGIBLE ($M_c < 10$) |
 | **Mily Balakirev** | Russian | ASAP dataset / PERiScoPe | MusicXML | 2 | NO | INELIGIBLE ($M_c < 10$) |
 | **Sergei Lyapunov** | Russian | PERiScoPe | MusicXML | 1 | NO | INELIGIBLE ($M_c < 10$) |
 | **Anton Rubinstein** | Russian | PERiScoPe | MusicXML | 1 | NO | INELIGIBLE ($M_c < 10$) |

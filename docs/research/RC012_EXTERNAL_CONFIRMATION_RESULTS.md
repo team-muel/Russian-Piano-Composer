@@ -26,7 +26,7 @@ To prevent false discovery, data leakage, and pseudoreplication, the pre-registe
    - **Russian Candidates**: 2 distinct composers satisfied all criteria ($N_{\text{Russian}} = 2 < 4$):
      - Alexander Scriabin ($M_c=207$, CCARH `craigsapp/scriabin` / ASAP / PERiScoPe)
      - Modest Mussorgsky ($M_c=18$, PERiScoPe / ATEPP / KernScores: 15 movements of *Pictures at an Exhibition* + 3 standalone pieces: *Impromptu passionné*, *Memories of Childhood*, *The Seamstress*)
-     - All other Russian late-Romantic / early-modern candidates (*Prokofiev* $M_c=3$, *Balakirev* $M_c=2$, *Lyapunov* $M_c=1$, *Rubinstein* $M_c=1$, *Arensky* $M_c=0$, *Glazunov* $M_c=0$, *Lyadov* $M_c=0$, *Taneyev* $M_c=0$, *Cui* $M_c=0$) lack curated, machine-readable open symbolic score collections with $\ge 10$ pieces in public repositories.
+     - All other Russian late-Romantic / early-modern candidates (*Prokofiev* $M_c=4$, *Balakirev* $M_c=2$, *Lyapunov* $M_c=1$, *Rubinstein* $M_c=1$, *Arensky* $M_c=0$, *Glazunov* $M_c=0$, *Lyadov* $M_c=0$, *Taneyev* $M_c=0$, *Cui* $M_c=0$) lack curated, machine-readable open symbolic score collections with $\ge 10$ pieces in public repositories.
 3. **Formal Precondition Gate Decision**:
    $$\mathbf{CONFIRMATORY\_DATA\_CONTRACT\_FAILED}$$
    Per Section 3 of the pre-registration, the confirmatory evaluation halted ex ante due to **DATA AVAILABILITY FAILURE** ($N_{\text{Russian}} = 2 < 4$).

@@ -25,7 +25,7 @@ We conducted an exhaustive audit of all open symbolic music repositories and col
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Alexander Scriabin** | Russian | `craigsapp/scriabin` (CCARH) / PERiScoPe / ASAP | 212 | 207 | 207 | 207 | 207 | 207 | **207** | **YES** | **QUALIFIED** (Op. 1–74 in `craigsapp/scriabin`, commit `7daa1136a4edfaf8d2bfadee973c33f3b76b6760`) |
 | **Modest Mussorgsky** | Russian | PERiScoPe / ATEPP / KernScores | 18 | 18 | 18 | 18 | 18 | 18 | **18** | **YES** | **QUALIFIED** (*Pictures at an Exhibition* 15 mvmts + 3 standalone) |
-| **Sergei Prokofiev** | Russian | ASAP / PERiScoPe / CCARH KernScores | 4 | 3 | 3 | 3 | 3 | 3 | **3** | **NO** | Insufficient pieces ($M_c=3 < 10$: Toccata Op.11, Visions Fugitives Op. 22 Nos. 10 & 16) |
+| **Sergei Prokofiev** | Russian | ASAP / PERiScoPe / CCARH KernScores | 5 | 4 | 4 | 4 | 4 | 4 | **4** | **NO** | Insufficient pieces ($M_c=4 < 10$: Toccata Op. 11, Visions Fugitives Op. 22 Nos. 1, 10, 16) |
 | **Anton Arensky** | Russian | PDMX / Kern / GiantMIDI / ATEPP | 0 | 0 | 0 | 0 | 0 | 0 | **0** | **NO** | Zero symbolic scores in open corpora (audited in query log) |
 | **Mily Balakirev** | Russian | ASAP / PERiScoPe / Kern | 3 | 2 | 2 | 2 | 2 | 2 | **2** | **NO** | Insufficient pieces ($M_c=2 < 10$: *Islamey*, Toccata) |
 | **Sergei Lyapunov** | Russian | PERiScoPe / Kern | 1 | 1 | 1 | 1 | 1 | 1 | **1** | **NO** | Insufficient pieces ($M_c=1 < 10$: *Transcendental Étude No. 1 Berceuse*) |
@@ -53,8 +53,9 @@ We conducted an exhaustive audit of all open symbolic music repositories and col
    - *Deduplicated Canonical Set*: PERiScoPe prioritized as canonical source ($\mathbf{18}$ unique pieces).
 3. **Sergei Prokofiev**:
    - PERiScoPe: 2 works (Toccata Op. 11, Visions Fugitives Op. 22 No. 10).
-   - ASAP: 2 works (Toccata Op. 11 duplicate, Visions Fugitives Op. 22 No. 16).
-   - *Deduplicated Canonical Set*: 3 unique works total ($3 < 10$).
+   - CCARH KernScores: 2 works (Visions Fugitives Op. 22 Nos. 1, 16).
+   - ASAP: 1 work (Toccata Op. 11 duplicate).
+   - *Deduplicated Canonical Set*: 4 unique works total ($M_c=4 < 10$: `prokofiev_op11_toccata`, `prokofiev_op22_no01`, `prokofiev_op22_no10`, `prokofiev_op22_no16`).
 
 ---
 
@@ -97,6 +98,6 @@ No confirmatory feature extraction, prediction, AUC calculation, or unblinding o
 | :--- | :--- | :--- | :--- |
 | `data/manifests/rc012_source_inventory.csv` | `40672c4fd54c3440e6c29db2e0c6f4aa5ffdb7dd7d88e020ff5eccaf015a9a12` | `4813102a193c38fc61ef4815a25895243c819b2527803f82e7020ac766627eb7` | **SUPERSEDED (RC-012C Real Evidence)** |
 | `data/manifests/rc012_source_query_log.csv` | N/A | `7bfbcd4af8c0651d4b5b65190be4c65ff86645655b4ebdcfa0b343d08388f5de` | **CANONICAL** |
-| `docs/research/RC012_SOURCE_POLICY.md` | `f9f4fe75dad8eea1de7ae3acd5d80818d1ec24d16999a525bfb0eacc7ba718fc` | `cc80e267c094cb2bbff04dc2d82bf6df8639113ad41d9bb4587a5e970b0cd24e` | **SUPERSEDED (RC-012C Policy Update)** |
-| `data_gate_result_hash` | `a5e64cd3e0260250687d64f32915fd0fea8b84830a8c5bb2d1a3651a5cf4337b` | `5966e1386400a977e0412534e83df6b30667a544e5a431b8b05357dcdb409b7b` | **SUPERSEDED (RC-012C Dynamic Derivation)** |
+| `docs/research/RC012_SOURCE_POLICY.md` | `f9f4fe75dad8eea1de7ae3acd5d80818d1ec24d16999a525bfb0eacc7ba718fc` | `9ba534513398f398951de40110495e0725ae8ec7765ed0a8815d428df4bac497` | **SUPERSEDED (RC-012C Policy Update)** |
+| `data_gate_result_hash` | `a5e64cd3e0260250687d64f32915fd0fea8b84830a8c5bb2d1a3651a5cf4337b` | `85398969b0abbc2873544cc4b4dbdffbe1d4db6d665fa99aa4de237e4222d4ab` | **SUPERSEDED (RC-012C Dynamic Derivation)** |
 | `RC012_FROZEN_PREDICTOR_BUNDLE_HASH` | `4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926` | `4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926` | **FROZEN & UNCHANGED** |
