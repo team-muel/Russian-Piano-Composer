@@ -182,8 +182,13 @@ class RC013ScoreValidator:
 
                 # Collect measure note pattern for staff 1 to test anti-synthetic repetition
                 if staff_num == 1:
-                    m_notes = tuple(n.nameWithOctave for n in m.notes)
-                    measure_patterns.append(m_notes)
+                    m_pitches = []
+                    for el in m.notes:
+                        if isinstance(el, m21.note.Note):
+                            m_pitches.append(el.nameWithOctave)
+                        elif isinstance(el, m21.chord.Chord):
+                            m_pitches.append("-".join(p.nameWithOctave for p in el.pitches))
+                    measure_patterns.append(tuple(m_pitches))
 
                 # Check voices in measure
                 voices = list(m.voices)
