@@ -270,7 +270,9 @@ def create_score(spec_key: str, composer: str, opus: str, mov_num: int, output_p
 
 def main() -> None:
     df = pd.read_csv("data/manifests/rc013_source_candidates.csv")
-    out_dir = "data/scores/rc013"
+    out_dir = "data/scores/rc013/fixtures_synthetic"
+    if "canonical" in out_dir:
+        raise RuntimeError("CRITICAL ERROR: Synthetic fixture generator must never target canonical corpus directory!")
     os.makedirs(out_dir, exist_ok=True)
 
     key_mapping = {

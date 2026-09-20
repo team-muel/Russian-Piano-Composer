@@ -2,7 +2,7 @@
 
 Enforces strict notation-level syntax, metric bar integrity, pitch spelling,
 rest completeness, staff distribution, and polyphonic voice consistency
-for digitized Russian piano works.
+for digitized Russian piano works, with anti-synthetic guard rails.
 """
 
 from __future__ import annotations
@@ -67,7 +67,7 @@ class RC013ScoreValidator:
     def __init__(self, tolerance_quarter: float = 0.001) -> None:
         self.tolerance = tolerance_quarter
 
-    def validate_file(self, file_path: str) -> ValidationReport:
+    def validate_file(self, file_path: str, enforce_anti_synthetic: bool = True) -> ValidationReport:
         if not os.path.exists(file_path):
             return ValidationReport(
                 file_path=file_path,
@@ -119,6 +119,7 @@ class RC013ScoreValidator:
             parts = list(score.parts)
         else:
             parts = list(score.getElementsByClass(m21.stream.Part))
+
         num_parts = len(parts)
         if num_parts == 0:
             errors.append(
@@ -149,8 +150,25 @@ class RC013ScoreValidator:
                 )
             )
 
-        # 4. Detailed Measure-level duration & voice checks
+        # Check part measure-count alignment
+        if num_parts > 1:
+            for p_idx, part in enumerate(parts[1:], start=2):
+                p_m_count = len(list(part.getElementsByClass(m21.stream.Measure)))
+                if p_m_count != num_measures:
+                    errors.append(
+                        NotationValidationError(
+                            code="STAFF_MEASURE_COUNT_MISMATCH",
+                            measure=0,
+                            staff=p_idx,
+                            voice=1,
+                            message=f"Staff {p_idx} measure count ({p_m_count}) differs from Staff 1 ({num_measures}).",
+                        )
+                    )
+
+        # 4. Detailed Measure-level duration, voice, underflow/overflow checks
         current_ts = m21.meter.TimeSignature("4/4")
+        measure_patterns: list[tuple[str, ...]] = []
+
         for p_idx, part in enumerate(parts):
             staff_num = p_idx + 1
             part_measures = list(part.getElementsByClass(m21.stream.Measure))
@@ -160,34 +178,45 @@ class RC013ScoreValidator:
                     current_ts = m.timeSignature
 
                 expected_bar_length = current_ts.barDuration.quarterLength
-
-                # Check for pickup / anacrusis measure (measure 0)
                 is_pickup = (m_num == 0)
+
+                # Collect measure note pattern for staff 1 to test anti-synthetic repetition
+                if staff_num == 1:
+                    m_notes = tuple(n.nameWithOctave for n in m.notes)
+                    measure_patterns.append(m_notes)
 
                 # Check voices in measure
                 voices = list(m.voices)
                 if not voices:
-                    # Single stream in measure
                     total_dur = float(m.duration.quarterLength)
-                    if (
-                        not is_pickup
-                        and abs(total_dur - expected_bar_length) > self.tolerance
-                        and total_dur > 0
-                        and m_num != num_measures
-                        and total_dur > expected_bar_length + self.tolerance
-                    ):
+                    # Check overflow
+                    if not is_pickup and total_dur > expected_bar_length + self.tolerance:
                         errors.append(
-                                NotationValidationError(
-                                    code="NOTE_DURATION_OVERFLOW",
-                                    measure=m_num,
-                                    staff=staff_num,
-                                    voice=1,
-                                    message=(
-                                        f"Measure duration {total_dur} exceeds "
-                                        f"time signature {current_ts.ratioString} ({expected_bar_length})"
-                                    ),
-                                )
+                            NotationValidationError(
+                                code="NOTE_DURATION_OVERFLOW",
+                                measure=m_num,
+                                staff=staff_num,
+                                voice=1,
+                                message=(
+                                    f"Measure duration {total_dur} exceeds "
+                                    f"time signature {current_ts.ratioString} ({expected_bar_length})"
+                                ),
                             )
+                        )
+                    # Check underflow (except for pickup or final measure)
+                    elif not is_pickup and m_num < num_measures and total_dur < expected_bar_length - self.tolerance and total_dur > 0:
+                        errors.append(
+                            NotationValidationError(
+                                code="NOTE_DURATION_UNDERFLOW",
+                                measure=m_num,
+                                staff=staff_num,
+                                voice=1,
+                                message=(
+                                    f"Measure duration {total_dur} is less than "
+                                    f"time signature {current_ts.ratioString} ({expected_bar_length})"
+                                ),
+                            )
+                        )
                 else:
                     for v_idx, voice in enumerate(voices):
                         v_dur = float(voice.duration.quarterLength)
@@ -205,7 +234,24 @@ class RC013ScoreValidator:
                                 )
                             )
 
-        # 5. Note, Rest, and Pitch Integrity
+        # 5. Anti-Synthetic Pattern Guard: reject scores where identical patterns repeat uniformly
+        if enforce_anti_synthetic and num_measures >= 10:
+            unique_patterns = len(set(measure_patterns))
+            if unique_patterns <= 1:
+                errors.append(
+                    NotationValidationError(
+                        code="SYNTHETIC_REPETITIVE_PATTERN_DETECTED",
+                        measure=0,
+                        staff=1,
+                        voice=1,
+                        message=(
+                            f"Suspicious synthetic pattern: entire score of {num_measures} measures "
+                            f"contains only {unique_patterns} unique measure pattern(s)."
+                        ),
+                    )
+                )
+
+        # 6. Note, Rest, and Pitch Integrity
         notes = list(score.recurse().notes)
         rests = list(score.recurse().getElementsByClass(m21.note.Rest))
         num_notes = len(notes)
@@ -238,14 +284,14 @@ class RC013ScoreValidator:
                         )
             elif n.isNote and (n.pitch.name == "" or n.pitch.octave is None):
                 errors.append(
-                        NotationValidationError(
-                            code="NOTE_PITCH_MALFORMED",
-                            measure=n.measureNumber or 0,
-                            staff=None,
-                            voice=None,
-                            message=f"Note pitch lacks name or octave: {n.pitch}",
-                        )
+                    NotationValidationError(
+                        code="NOTE_PITCH_MALFORMED",
+                        measure=n.measureNumber or 0,
+                        staff=None,
+                        voice=None,
+                        message=f"Note pitch lacks name or octave: {n.pitch}",
                     )
+                )
 
         valid = (len(errors) == 0)
         return ValidationReport(
