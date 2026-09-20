@@ -21,11 +21,21 @@ Current scientific status:
 - Score 1 = `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (C major, 36 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`)
 - Score 2 = `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (C minor, 102 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`)
 - Score 13 = `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (F-sharp major, 60 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`)
-- All 9 pilot scores = `PENDING_SOURCE_COMPARISON` (human source comparison pending)
+- All 9 pilot scores = `PENDING_SOURCE_COMPARISON` (independent human source comparison pending)
 - `RC-013 SCIENTIFIC CORPUS = NOT ACCEPTED`
 - `RC-012 RESUMPTION = BLOCKED (N_Russian = 2 < 4)`
 
-Authentic source-faithful transcriptions have been recovered for all three Arensky targets directly from the historical P. Jurgenson (1894) first-edition scans. All three scores satisfy automated notation QC, cross-artifact synchronization, and frozen identity validation. Anti-self-certification is strictly enforced: `PRIMARY_TRANSCRIBER_SOURCE_CHECK` cannot grant `SOURCE_FIDELITY_VERIFIED`. All candidate scores remain quarantined from downstream analysis until independent human source verification is conducted.
+### Canonical Composer Pool Provenance (`N_Russian = 2`)
+The baseline `N_Russian = 2` count is strictly derived from:
+1. **Alexander Scriabin** (207 verified canonical works meeting data contract) -> `QUALIFIED`
+2. **Modest Mussorgsky** (18 verified canonical works meeting data contract) -> `QUALIFIED`
+
+The three RC-013 pilot composers remain:
+- **Anton Arensky** (0 / 3 verified by independent human review) -> `UNQUALIFIED`
+- **Sergei Lyapunov** (0 / 3 verified by independent human review) -> `UNQUALIFIED`
+- **Anatoly Lyadov** (0 / 3 verified by independent human review) -> `UNQUALIFIED`
+
+`N_Russian = 2` therefore represents Scriabin + Mussorgsky. Neither Lyadov nor Lyapunov is qualified. When Arensky achieves genuine independent human review for all 3 movements, `N_Russian` will increment from 2 to 3, remaining fail-closed (`BLOCKED`) until `N_Russian >= 4`.
 
 
 ## Integrity-gate integration
