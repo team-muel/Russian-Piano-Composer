@@ -81,15 +81,15 @@
       "error_count": 0,
       "errors": [],
       "file_path": "data/scores/rc013/canonical\\anton_arensky_op36_no02.musicxml",
-      "file_sha256": "a4b50caba2bb7ffde9173fbd7bc527ab23ad92f79c4a50242e5d37526bf77460",
+      "file_sha256": "ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240",
       "key_signatures": [
-        "a minor",
-        "a minor"
+        "<music21.key.KeySignature of 4 flats>",
+        "<music21.key.KeySignature of 4 flats>"
       ],
-      "num_measures": 24,
-      "num_notes": 129,
+      "num_measures": 102,
+      "num_notes": 1298,
       "num_parts_or_staves": 2,
-      "num_rests": 0,
+      "num_rests": 14,
       "time_signatures": [
         "3/4",
         "3/4"

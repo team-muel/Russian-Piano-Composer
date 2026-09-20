@@ -64,24 +64,24 @@
     "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
     "source_file_size_bytes": 1506575,
     "source_url_or_reference": "https://archive.org/details/imslp-morceaux-caractristiques-op36-arensky-anton",
-    "title": "Pr\u00e9lude in F major",
+    "title": "Pr\u00e9lude in C major",
     "work": "24 Morceaux caract\u00e9ristiques"
   },
   {
     "composer": "Anton Arensky",
-    "download_url": "https://archive.org/download/imslp-morceaux-caractristiques-op36-arensky-anton/Arensky_morceaux_op36-2.pdf",
+    "download_url": "https://archive.org/download/imslp-morceaux-caractristiques-op36-arensky-anton/Arensky_morceaux_op36-1.pdf",
     "edition": "P. Jurgenson (1894)",
     "movement": 2,
     "opus": "Op. 36",
-    "page_range": "1-4",
+    "page_range": "5-12",
     "plate_number": "19783",
     "rights_status": "PUBLIC_DOMAIN",
     "source_archive": "Internet Archive / IMSLP",
-    "source_file_name": "Arensky_morceaux_op36-2.pdf",
-    "source_file_sha256": "f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136",
-    "source_file_size_bytes": 1831534,
+    "source_file_name": "Arensky_morceaux_op36-1.pdf",
+    "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+    "source_file_size_bytes": 1506575,
     "source_url_or_reference": "https://archive.org/details/imslp-morceaux-caractristiques-op36-arensky-anton",
-    "title": "Pr\u00e9lude in A minor",
+    "title": "La Toupie in C minor",
     "work": "24 Morceaux caract\u00e9ristiques"
   },
   {
@@ -98,7 +98,7 @@
     "source_file_sha256": "eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5",
     "source_file_size_bytes": 2571253,
     "source_url_or_reference": "https://archive.org/details/imslp-morceaux-caractristiques-op36-arensky-anton",
-    "title": "\u00c9tude in E minor",
+    "title": "\u00c9tude in F-sharp major",
     "work": "24 Morceaux caract\u00e9ristiques"
   },
   {

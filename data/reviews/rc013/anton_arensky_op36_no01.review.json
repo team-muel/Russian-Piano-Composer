@@ -2,13 +2,13 @@
   "anti_synthetic_guard_passed": true,
   "canonical_work_id": "anton_arensky_op36_m01",
   "composer": "Anton Arensky",
-  "measures_in_musicxml": 24,
+  "measures_in_musicxml": 36,
   "movement": 1,
   "notation_errors": [],
-  "notes_in_musicxml": 163,
+  "notes_in_musicxml": 407,
   "opus": "Op. 36",
   "pipeline_state": "AUTOMATED_QC_PASS",
-  "rests_in_musicxml": 0,
+  "rests_in_musicxml": 33,
   "review_date": "2026-09-20",
   "reviewer_identifier": "rc013_notation_validator_v3",
   "reviewer_type": "AUTOMATED_QC",
@@ -17,6 +17,6 @@
   "source_file_name": "Arensky_morceaux_op36-1.pdf",
   "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
   "symbolic_file_path": "data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml",
-  "symbolic_file_sha256": "c06555360ee8dbe4f90c2f2a155a78fb52f35c99473b796095268948ddc89fb1",
-  "title": "Pr\u00e9lude in F major"
+  "symbolic_file_sha256": "63b9f54725798b8760f1107fded76355f96ef23c04d6b7cbd7ba09b2401fb364",
+  "title": "Pr\u00e9lude in C major"
 }

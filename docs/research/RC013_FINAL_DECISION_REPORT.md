@@ -21,10 +21,11 @@ A rigorous **9-score source-fidelity recovery pilot** was established across 3 t
 3. **Anatoly Lyadov**: Op. 40 Nos. 2, 3 and Op. 46 No. 4 (M.P. Belaieff 1897–1899, Plates 1450, 2045)
 
 **Source-to-Symbolic Fidelity Review Progress**:
-- **Score 1 (Anton Arensky Op. 36 No. 1)**: `SOURCE_FIDELITY_VERIFIED` (36 / 36 measures reviewed by `PRIMARY_TRANSCRIBER_SOURCE_CHECK`, 0 critical discrepancies remaining).
-- **Score 2 (Anton Arensky Op. 36 No. 2)**: `SOURCE_FIDELITY_VERIFIED` (102 / 102 measures reviewed by `PRIMARY_TRANSCRIBER_SOURCE_CHECK`, 0 critical discrepancies remaining).
-- **Scores 3–9**: `PENDING_SOURCE_COMPARISON` (candidate transcriptions pending source comparison).
-- **Overall Pilot Progress**: 2 / 9 scores verified, 138 / 314 total measures source-reviewed; overall pilot source fidelity remains `PENDING_SOURCE_COMPARISON`.
+- **Score 1 (Anton Arensky Op. 36 No. 1)**: `IDENTITY_REVALIDATION_REQUIRED` (Reopened for authoritative work identity and scan pagination binding; 36 measures in C major).
+- **Score 2 (Anton Arensky Op. 36 No. 2)**: `IDENTITY_REVALIDATION_REQUIRED` (Reopened for authoritative work identity and scan pagination binding; 102 measures in C minor / *La Toupie*, bound to `Arensky_morceaux_op36-1.pdf` pp. 5–12).
+- **Score 3 (Anton Arensky Op. 36 No. 13)**: `PENDING_SOURCE_COMPARISON` (Work identity resolved to *Étude in F-sharp major*, bound to `Arensky_Morceaux_op.36_No.13-18.pdf` pp. 1–5).
+- **Scores 4–9 (Lyapunov Op. 11 & Lyadov Op. 40/46)**: `PENDING_SOURCE_COMPARISON` (Candidate transcriptions pending source comparison).
+- **Overall Pilot Progress**: 0 / 9 scores verified (Scores 1 & 2 reopened pending identity revalidation, Scores 3–9 pending review); overall pilot source fidelity remains `PENDING_SOURCE_COMPARISON`.
 
 ---
 
@@ -51,34 +52,34 @@ $$\mathbf{RC\text{-}012\ RESUMPTION\ =\ BLOCKED}$$
 
 ```text
 RC013_SOURCE_INVENTORY_HASH:
-e7b865449d75feb254dff4a026bafe334e1a182281544b30730e12b789b7d55a
+45ecf2bf20ac332977420267b45d2e778468ce7322f24318109b1a22b23bedf7
 
 RC013_SOURCE_IMAGE_BUNDLE_HASH:
-440c5ede7b1d8b4dd29ab26508363eae05a26f62c6cbdb0b53e3a7888ccc46cc
+6170cb5a5ebcc3468385edb4d52d154cd101dd68edd57690f17075f299ea1445
 
 RC013_DIGITIZATION_POLICY_HASH:
 8bd6651352a159fc8c6f6b9207263e4beac1945b3b8de542bec86633df3af147
 
 RC013_DIGITIZATION_MANIFEST_HASH:
-920700fc4f3f2cec4ce11831a69b45abbe01573ea65961122ba18257cd0dde6d
+5b82f443b410363b2d83b32b5fb37fb2d14dcfb9a7d0686d8987e2acaf36c070
 
 RC013_ERROR_LOG_HASH:
-5f9f9978029b78269830777383701ea1c33add6c596680cc359cc5c6e8f1c302
+9b9dac42b8f2a6348bafb7e1e3d79d0f962f420584057350c7f34578ce7645a1
 
 RC013_CANONICAL_SYMBOLIC_CORPUS_HASH:
-810cb82f726b62ab62f9fd5246b9d1bd0c0558cc7bf80e78e44dc5984ce63313
+d0a4c717c01d38e89bf14b4195bc4f3fda749f8ca16b02b3824f9cde3bcddc72
 
 RC013_QC_RESULT_HASH:
-9ac612aa2f28d003cad629e52090d790e44208baad1ba0eb1ac88e8fe89fd067
+e18dc02c655606415045ffd7ca54ef9a67b4a06c3ebcdf4b1618168442983513
 
 RC013_AUTOMATED_REVIEW_BUNDLE_HASH:
-42a28749870c426827171630e0b3028ddb167625cfb1fee5e52f9ef9185c75dd
+2d203323178ceb590fa4b2c596e9f9a1131849bf7dd8b2b7dafcbedb9b77a7d3
 
 RC013_SOURCE_COMPARISON_BUNDLE_HASH:
-5d43f79657766eede0f9b99d39a64930f04ab798435935c8b4f0574baaeb3523
+34087b72c4eb7cd27b43b67d0573dac15cdffbee56711e6b381a19ed71385699
 
 RC013_SOURCE_FIDELITY_GATE_RESULT_HASH:
-ee565a319aac0689ffc73f39a8468770cb8d17e51c0aa134ece21c935b45d9ec
+c04e3e4cc430fbe04446b82af6d6f7f01e1eb37946d213e5e1a0faaccad6bcc4
 ```
 
 - **Two-Process Verification**: `Process A == Process B` (100% Cryptographic Match across all 10 hashes).

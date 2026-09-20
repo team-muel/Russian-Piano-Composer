@@ -1,9 +1,15 @@
-"""Transcribe Anton Arensky Op. 36 No. 2 (La Toupie / The Spinning Top) directly from historical scan.
+"""TRANSCRIPTION CANDIDATE GENERATOR ONLY (QUARANTINED FOR RC-013 ARENSKY RECOVERY).
 
-Edition: P. Jurgenson (1894), Plate 19783, pp. 8-15
-Key: F minor (4 flats)
-Meter: 3/4 (dotted half = 120, Vivace)
-Measures: 102
+WARNING: This module is an algorithmic candidate generator / template synthesizer.
+Per the RC-013 Scientific Integrity Gate and Anti-Self-Certification Rules:
+- This generator DOES NOT establish or certify historical source fidelity.
+- Synthetic loop patterns and measure templates are quarantined and NOT authoritative.
+- Authoritative scientific acceptance requires measure-by-measure comparison ledgers
+  independently reviewed and verified against historical scans.
+
+Work Identity: Anton Arensky, Op. 36 No. 2 (La Toupie / The Spinning Top)
+Source Scan: Arensky_morceaux_op36-1.pdf (pp. 8-15 / PDF pp. 5-12), Plate 19783
+Key: C minor (3 flats in authentic edition)
 """
 
 from __future__ import annotations

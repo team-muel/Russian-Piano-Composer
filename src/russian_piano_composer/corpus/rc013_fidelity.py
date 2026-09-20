@@ -257,10 +257,26 @@ def validate_source_comparison_ledger(
             if sev == "CRITICAL":
                 unresolved_critical_ambiguities += 1
                 errors.append(f"Measure {m_num}: unresolved CRITICAL ambiguity present")
-                error_categories.append("CRITICAL_AMBIGUITY")
+    # 6. Ledger Status & Identity Integrity checks
+    ledger_status = ledger.get("ledger_status")
+    if ledger_status == "IDENTITY_REVALIDATION_REQUIRED":
+        errors.append(
+            "Ledger status is IDENTITY_REVALIDATION_REQUIRED: score identity/source binding requires revalidation"
+        )
+        error_categories.append("IDENTITY_REVALIDATION_REQUIRED")
+    elif ledger_status == "REJECTED_SOURCE_MISMATCH":
+        errors.append("Ledger status is REJECTED_SOURCE_MISMATCH")
+        error_categories.append("REJECTED_SOURCE_MISMATCH")
 
-    # 6. Summary checks
+    # 7. Summary checks
     summary = ledger.get("summary", {})
+    summary_verdict = summary.get("source_fidelity_verdict")
+    if summary_verdict == "IDENTITY_REVALIDATION_REQUIRED":
+        errors.append(
+            "Summary source_fidelity_verdict is IDENTITY_REVALIDATION_REQUIRED"
+        )
+        error_categories.append("IDENTITY_REVALIDATION_REQUIRED")
+
     summary_compared = summary.get("measures_compared", 0)
     if summary_compared != total_measures:
         errors.append(
@@ -282,7 +298,12 @@ def validate_source_comparison_ledger(
         error_categories.append("CRITICAL_AMBIGUITY")
 
     valid = len(errors) == 0
-    verdict = "SOURCE_FIDELITY_VERIFIED" if valid else "PENDING_SOURCE_COMPARISON"
+    if not valid and "IDENTITY_REVALIDATION_REQUIRED" in error_categories:
+        verdict = "IDENTITY_REVALIDATION_REQUIRED"
+    elif valid:
+        verdict = "SOURCE_FIDELITY_VERIFIED"
+    else:
+        verdict = "PENDING_SOURCE_COMPARISON"
     primary_category = error_categories[0] if error_categories else None
 
     if not valid and fail_fast:

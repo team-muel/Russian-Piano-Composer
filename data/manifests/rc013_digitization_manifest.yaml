@@ -94,7 +94,7 @@ score_entries:
   composer: Anton Arensky
   opus_or_catalogue: Op. 36
   movement: 1
-  title: Prélude in F major
+  title: Prélude in C major
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml
   file_sha256: 63b9f54725798b8760f1107fded76355f96ef23c04d6b7cbd7ba09b2401fb364
   pipeline_state: MANUALLY_TRANSCRIBED
@@ -114,41 +114,41 @@ score_entries:
   - 4/4
   - 4/4
   key_signatures:
-  - F major
-  - F major
+  - <music21.key.KeySignature of 1 flat>
+  - <music21.key.KeySignature of 1 flat>
   qc_passed: true
 - canonical_work_id: anton_arensky_op36_m02
   composer: Anton Arensky
   opus_or_catalogue: Op. 36
   movement: 2
-  title: Prélude in A minor
+  title: La Toupie in C minor
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml
-  file_sha256: f20e276a4ac87e9e82272754b5e9a771cfca7891fe931d6ac30b05defa63cbbb
+  file_sha256: ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/anton_arensky_op36_no02.review.json
   source_archive: Internet Archive / IMSLP
-  source_file_name: Arensky_morceaux_op36-2.pdf
-  source_file_sha256: f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136
+  source_file_name: Arensky_morceaux_op36-1.pdf
+  source_file_sha256: d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855
   source_reference_url: https://archive.org/details/imslp-morceaux-caractristiques-op36-arensky-anton
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
   num_measures: 102
-  num_notes: 1184
+  num_notes: 1298
   num_rests: 14
   time_signatures:
   - 3/4
   - 3/4
   key_signatures:
-  - f minor
-  - f minor
+  - <music21.key.KeySignature of 4 flats>
+  - <music21.key.KeySignature of 4 flats>
   qc_passed: true
 - canonical_work_id: anton_arensky_op36_m13
   composer: Anton Arensky
   opus_or_catalogue: Op. 36
   movement: 13
-  title: Étude in E minor
+  title: Étude in F-sharp major
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no13.musicxml
   file_sha256: ed75e0eee14dacfc7ba234557317be2c616e5a44d1b2e638df77ad07a256ed5b
   pipeline_state: MANUALLY_TRANSCRIBED
