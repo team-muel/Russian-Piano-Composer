@@ -13,7 +13,6 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
-from sklearn.preprocessing import StandardScaler
 
 from russian_piano_composer.structure_analysis.schema import STRUCTURAL_FEATURE_CATALOG
 
@@ -50,31 +49,31 @@ def build_and_freeze_development_predictor() -> dict:
     if unique_composers != EXPECTED_COMPOSERS:
         raise ValueError(f"Unexpected composers: {unique_composers}")
 
-    X = df[feature_cols].values.astype(float)
+    x_features = df[feature_cols].values.astype(float)
     y = (df["corpus_role"] == "GENERATIVE_RUSSIAN").astype(int).values
 
     # Compute composer-balanced weights: w_{c, i} = 1 / (6 * N_c)
     unique_c, counts = np.unique(composers, return_counts=True)
-    c_count_map = dict(zip(unique_c, counts))
+    c_count_map = dict(zip(unique_c, counts, strict=True))
     weights = np.array([1.0 / (6.0 * c_count_map[c]) for c in composers], dtype=float)
 
     # Weighted mean and variance for explicit, reproducible standardization
-    weighted_mean = np.average(X, axis=0, weights=weights)
-    weighted_var = np.average((X - weighted_mean) ** 2, axis=0, weights=weights)
+    weighted_mean = np.average(x_features, axis=0, weights=weights)
+    weighted_var = np.average((x_features - weighted_mean) ** 2, axis=0, weights=weights)
     weighted_scale = np.sqrt(weighted_var)
 
     # Standardize X using weighted moments
-    X_scaled = (X - weighted_mean) / weighted_scale
+    x_scaled = (x_features - weighted_mean) / weighted_scale
 
     # Fit LogisticRegression
     clf = LogisticRegression(C=1.0, penalty="l2", solver="lbfgs", random_state=42)
-    clf.fit(X_scaled, y, sample_weight=weights)
+    clf.fit(x_scaled, y, sample_weight=weights)
 
-    train_acc_weighted = float(clf.score(X_scaled, y, sample_weight=weights))
-    train_acc_unweighted = float(clf.score(X_scaled, y))
+    train_acc_weighted = float(clf.score(x_scaled, y, sample_weight=weights))
+    train_acc_unweighted = float(clf.score(x_scaled, y))
 
     print("--- RC-012 Development Predictor Fitting Summary ---")
-    print(f"  Training Pieces:            {len(X)}")
+    print(f"  Training Pieces:            {len(x_features)}")
     print(f"  Training Composers:         {len(unique_composers)}")
     print(f"  Features Count:             {len(feature_cols)}")
     print(f"  Weighted Training Accuracy: {train_acc_weighted * 100:.2f}%")
@@ -99,7 +98,7 @@ def build_and_freeze_development_predictor() -> dict:
         },
         "coefficients": [round(float(v), 10) for v in clf.coef_[0]],
         "intercept": round(float(clf.intercept_[0]), 10),
-        "training_sample_count": int(len(X)),
+        "training_sample_count": len(x_features),
         "training_composers": unique_composers,
         "training_weighted_accuracy": round(train_acc_weighted, 6),
         "training_unweighted_accuracy": round(train_acc_unweighted, 6),
