@@ -714,3 +714,55 @@ def test_complete_prior_dynamic_hashes_in_two_process_payload() -> None:
     assert compute_segment_representation_semantic_hash() == ACCEPTED_RC009B_REPRESENTATION_HASH
     assert compute_similarity_semantic_hash() == ACCEPTED_RC009B_SIMILARITY_HASH
 
+
+def test_document_line_ending_hash_invariance(tmp_path: Path) -> None:
+    """Verify LF, CRLF, and CR line endings produce bit-for-bit identical scientific document hashes."""
+    from russian_piano_composer.structure_analysis.lineage import (
+        compute_exclusion_ledger_hash,
+        compute_preregistration_amendment_hash,
+    )
+
+    sample_doc = "# Sample Title\r\n\r\nContent line 1.\r\nContent line 2.\r\n"
+    sample_lf = sample_doc.replace("\r\n", "\n")
+    sample_cr = sample_doc.replace("\r\n", "\r")
+
+    # 1. Preregistration amendment hash invariance
+    p_crlf = tmp_path / "amend_crlf.md"
+    p_lf = tmp_path / "amend_lf.md"
+    p_cr = tmp_path / "amend_cr.md"
+
+    p_crlf.write_bytes(sample_doc.encode("utf-8"))
+    p_lf.write_bytes(sample_lf.encode("utf-8"))
+    p_cr.write_bytes(sample_cr.encode("utf-8"))
+
+    h_crlf = compute_preregistration_amendment_hash(p_crlf)
+    h_lf = compute_preregistration_amendment_hash(p_lf)
+    h_cr = compute_preregistration_amendment_hash(p_cr)
+
+    assert h_crlf == h_lf == h_cr
+
+    # 2. Exclusion ledger hash invariance
+    p_excl_crlf = tmp_path / "excl_crlf.md"
+    p_excl_lf = tmp_path / "excl_lf.md"
+    p_excl_cr = tmp_path / "excl_cr.md"
+
+    p_excl_crlf.write_bytes(sample_doc.encode("utf-8"))
+    p_excl_lf.write_bytes(sample_lf.encode("utf-8"))
+    p_excl_cr.write_bytes(sample_cr.encode("utf-8"))
+
+    h_excl_crlf = compute_exclusion_ledger_hash(p_excl_crlf)
+    h_excl_lf = compute_exclusion_ledger_hash(p_excl_lf)
+    h_excl_cr = compute_exclusion_ledger_hash(p_excl_cr)
+
+    assert h_excl_crlf == h_excl_lf == h_excl_cr
+
+    # 3. Live document canonical values
+    assert (
+        compute_exclusion_ledger_hash()
+        == "28b142e1bbef5eeff65ee3a62a94b55e55f88841c3b5954d763d098579eac9b3"
+    )
+    assert (
+        compute_preregistration_amendment_hash()
+        == "abe9e25d6604fc24253a302f3185af0526a9eb924a42e50fef31c051883c32e7"
+    )
+
