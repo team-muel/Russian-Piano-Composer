@@ -1,10 +1,11 @@
 """Transcription Engine for RC-013 Pilot Works.
 
-Encodes authentic, measure-by-measure musical transcriptions directly reflecting
-the verified historical Zimmermann, Jurgenson, and Belaieff print editions:
-- Sergei Lyapunov: Op. 11 Nos. 1, 2, 3
-- Anton Arensky: Op. 36 Nos. 1, 2, 13
-- Anatoly Lyadov: Op. 40 Nos. 2, 3 and Op. 46 No. 4
+Generates pilot transcription candidates derived against identified historical source scans:
+- Sergei Lyapunov: Op. 11 Nos. 1, 2, 3 (Zimmermann 1897-1899)
+- Anton Arensky: Op. 36 Nos. 1, 2, 13 (P. Jurgenson 1894)
+- Anatoly Lyadov: Op. 40 Nos. 2, 3 and Op. 46 No. 4 (Belaieff 1897-1899)
+
+Notation QC passed; source fidelity pending measure-level comparison.
 """
 
 from __future__ import annotations

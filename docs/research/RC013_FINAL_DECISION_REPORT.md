@@ -20,7 +20,7 @@ A rigorous **9-score source-fidelity recovery pilot** was established across 3 t
 2. **Anton Arensky**: Op. 36 Nos. 1, 2, 13 (P. Jurgenson 1894, Plates 19782, 19783, 19794)
 3. **Anatoly Lyadov**: Op. 40 Nos. 2, 3 and Op. 46 No. 4 (M.P. Belaieff 1897–1899, Plates 1450, 2045)
 
-All 9 pilot scores were genuinely transcribed measure-by-measure from authentic source scans, verified against byte-level source SHA256 checksums, and audited by automated quality control and anti-synthetic guards.
+All 9 pilot scores are pilot transcription candidates derived against identified historical source scans; notation QC passed; source fidelity pending measure-level comparison.
 
 ---
 
@@ -66,8 +66,17 @@ RC013_CANONICAL_SYMBOLIC_CORPUS_HASH:
 
 RC013_QC_RESULT_HASH:
 ce328662498267cf4bc02d91496d29f3d46429d4322038b0d1cf32f9ae69d3f6
+
+RC013_AUTOMATED_REVIEW_BUNDLE_HASH:
+12f7325f9cea78129099f831b34396a6a2a74c541dbc86a18170ffcd6964a4f5
+
+RC013_SOURCE_COMPARISON_BUNDLE_HASH:
+9f5b086cdca7e6d74abb544c84d3ba99372eb7d6bcc10408394c729debeb5821
+
+RC013_SOURCE_FIDELITY_GATE_RESULT_HASH:
+3bda82b01dda974e1099c0e96f8e24245f260080dcb1534d9a6328decc4649fe
 ```
 
-- **Two-Process Verification**: `Process A == Process B` (100% Cryptographic Match).
-- **Test Suite**: `tests/unit/corpus/test_rc013_digitization.py`: 5/5 PASSED.
-- **Local CI (`ci.ps1`)**: 316/316 PASSED, ruff clean, mypy clean.
+- **Two-Process Verification**: `Process A == Process B` (100% Cryptographic Match across all 10 hashes).
+- **Test Suite**: `tests/unit/corpus/test_rc013_digitization.py` and `tests/unit/corpus/test_rc013_anti_self_certification.py`.
+- **Local CI (`ci.ps1`)**: ALL PASSED, ruff clean, mypy clean.

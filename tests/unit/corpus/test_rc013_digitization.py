@@ -93,7 +93,11 @@ def test_rc013_cryptographic_hashes_present_and_reproducible() -> None:
         "RC013_ERROR_LOG_HASH",
         "RC013_CANONICAL_SYMBOLIC_CORPUS_HASH",
         "RC013_QC_RESULT_HASH",
+        "RC013_AUTOMATED_REVIEW_BUNDLE_HASH",
+        "RC013_SOURCE_COMPARISON_BUNDLE_HASH",
+        "RC013_SOURCE_FIDELITY_GATE_RESULT_HASH",
     ]
+    assert len(hashes) == 10
     for k in expected_keys:
         assert k in hashes
         assert len(hashes[k]) == 64

@@ -4,8 +4,13 @@ from __future__ import annotations
 
 import subprocess
 import sys
+from pathlib import Path
 
-from scripts.compute_rc013_hashes import get_all_rc013_hashes
+REPO_ROOT = str(Path(__file__).resolve().parent.parent)
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
+from scripts.compute_rc013_hashes import get_all_rc013_hashes  # noqa: E402
 
 
 def run_process_hashes() -> dict[str, str]:
@@ -52,9 +57,11 @@ def main() -> int:
             print(f"  {k}: Process A = {va}, Process B = {vb}")
         return 1
 
-    print("PASS: Process A == Process B (100% Cryptographic Reproducibility across all 7 hashes)")
+    print("PASS: Process A == Process B (100% Cryptographic Reproducibility across all 10 hashes)")
     return 0
 
 
 if __name__ == "__main__":
+    if "." not in sys.path:
+        sys.path.insert(0, ".")
     sys.exit(main())
