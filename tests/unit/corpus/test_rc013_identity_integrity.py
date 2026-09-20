@@ -9,7 +9,6 @@ from russian_piano_composer.corpus.rc013_integrity import (
     validate_identity_fields,
 )
 
-
 IDENTITY_MAP = "data/manifests/rc013_arensky_identity_map.json"
 
 
