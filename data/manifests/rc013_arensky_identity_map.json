@@ -1,0 +1,142 @@
+{
+  "schema_version": "rc013_arensky_identity_v1",
+  "status": "FROZEN_IDENTITY_AUTHORITY",
+  "frozen_at": "2026-09-20",
+  "scope": "Anton Arensky, 24 Morceaux caractéristiques, Op.36 — RC-013 movements 1, 2, 13",
+  "first_edition": {
+    "publisher": "P. Jurgenson, Moscow",
+    "publication_year": 1894,
+    "plate_range": "19599-19624",
+    "movement_specific_plate_status": "UNVERIFIED_DO_NOT_INFER",
+    "legacy_movement_plate_claims": [
+      "19782",
+      "19783",
+      "19794"
+    ],
+    "legacy_plate_claim_status": "SUPERSEDED_UNSUPPORTED"
+  },
+  "authority_sources": [
+    {
+      "id": "IMSLP_OP36",
+      "url": "https://imslp.org/wiki/24_Characteristic_Pieces%2C_Op.36_%28Arensky%2C_Anton_Stepanovich%29",
+      "supports": [
+        "movement title",
+        "tempo",
+        "key",
+        "first publication",
+        "plate range",
+        "bundle membership"
+      ]
+    },
+    {
+      "id": "JURGENSON_CATALOGUE",
+      "url": "https://ks15.imslp.org/files/imglnks/usimg/9/92/IMSLP06471-Arensky_Six_Caprices_op.43.pdf",
+      "supports": [
+        "No.1 Prélude C-dur",
+        "No.2 La toupie C-moll"
+      ]
+    },
+    {
+      "id": "PTNA_NO13",
+      "url": "https://enc.piano.or.jp/musics/38691",
+      "supports": [
+        "No.13 Étude",
+        "Moderato"
+      ]
+    },
+    {
+      "id": "BNF_NO13",
+      "url": "https://catalogue.bnf.fr/ark:/12148/cb38339723c",
+      "supports": [
+        "No.13 Étude in F-sharp major"
+      ]
+    }
+  ],
+  "source_bundles": {
+    "NOS_1_6": {
+      "imslp_id": "#06297",
+      "file": "Arensky_morceaux_op36-1.pdf",
+      "sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+      "bytes": 1506575,
+      "status": "AUTHORITATIVE_FOR_1_AND_2"
+    },
+    "NOS_7_12": {
+      "imslp_id": "#06298",
+      "file": "Arensky_morceaux_op36-2.pdf",
+      "sha256": "f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136",
+      "bytes": 1831534,
+      "status": "SUPERSEDED_WRONG_SOURCE_BINDING_FOR_2"
+    },
+    "NOS_13_18": {
+      "imslp_id": "#06466",
+      "file": "Arensky_Morceaux_op.36_No.13-18.pdf",
+      "sha256": "eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5",
+      "bytes": 2571253,
+      "status": "AUTHORITATIVE_FOR_13"
+    }
+  },
+  "movements": {
+    "1": {
+      "score_id": "anton_arensky_op36_no01",
+      "canonical_work_id": "anton_arensky_op36_m01",
+      "movement": 1,
+      "title": "Prélude",
+      "tempo": "Adagio non troppo",
+      "key": "C major",
+      "key_fifths": 0,
+      "source_bundle": "NOS_1_6",
+      "source_file_name": "Arensky_morceaux_op36-1.pdf",
+      "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+      "pdf_page_range": "1-4 (1-based bundle pages)",
+      "printed_page_range": "4-7",
+      "current_candidate_observation": {
+        "key": "F major",
+        "key_fifths": -1,
+        "status": "IDENTITY_MISMATCH"
+      }
+    },
+    "2": {
+      "score_id": "anton_arensky_op36_no02",
+      "canonical_work_id": "anton_arensky_op36_m02",
+      "movement": 2,
+      "title": "La toupie",
+      "tempo": "Vivace",
+      "key": "C minor",
+      "key_fifths": -3,
+      "source_bundle": "NOS_1_6",
+      "source_file_name": "Arensky_morceaux_op36-1.pdf",
+      "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+      "pdf_page_range": "5-12 (1-based bundle pages)",
+      "printed_page_range": "8-15",
+      "current_candidate_observation": {
+        "key": "F minor",
+        "key_fifths": -4,
+        "status": "IDENTITY_MISMATCH"
+      },
+      "superseded_wrong_binding": {
+        "file": "Arensky_morceaux_op36-2.pdf",
+        "sha256": "f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136",
+        "reason": "IMSLP #06298 is Nos.7-12, not movement No.2."
+      }
+    },
+    "13": {
+      "score_id": "anton_arensky_op36_no13",
+      "canonical_work_id": "anton_arensky_op36_m13",
+      "movement": 13,
+      "title": "Étude",
+      "tempo": "Moderato",
+      "key": "F-sharp major",
+      "key_fifths": 6,
+      "source_bundle": "NOS_13_18",
+      "source_file_name": "Arensky_Morceaux_op.36_No.13-18.pdf",
+      "source_file_sha256": "eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5",
+      "pdf_page_range": "starts in Nos.13-18 bundle; exact movement end not frozen",
+      "printed_page_range": "UNVERIFIED_PENDING_DIRECT_BOUNDARY_AUDIT",
+      "current_candidate_observation": {
+        "key": "E minor",
+        "key_fifths": 1,
+        "status": "IDENTITY_MISMATCH"
+      }
+    }
+  }
+}

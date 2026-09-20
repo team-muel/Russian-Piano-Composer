@@ -13,10 +13,14 @@
   "reviewer_identifier": "rc013_notation_validator_v3",
   "reviewer_type": "AUTOMATED_QC",
   "source_comparison_record": "data/reviews/rc013/anton_arensky_op36_no02.source_comparison.json",
-  "source_fidelity_status": "PENDING_SOURCE_COMPARISON",
+  "source_fidelity_status": "IDENTITY_REVALIDATION_REQUIRED",
   "source_file_name": "Arensky_morceaux_op36-1.pdf",
   "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
   "symbolic_file_path": "data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml",
   "symbolic_file_sha256": "ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240",
-  "title": "La Toupie in C minor"
+  "title": "La toupie",
+  "identity_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "expected_key": "C minor",
+  "observed_key": "F minor",
+  "identity_authority": "data/manifests/rc013_arensky_identity_map.json"
 }

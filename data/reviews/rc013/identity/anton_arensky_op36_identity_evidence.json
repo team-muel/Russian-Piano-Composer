@@ -1,0 +1,16 @@
+{
+  "schema_version": "rc013_arensky_identity_evidence_v1",
+  "status": "IDENTITY_RECOVERY_EVIDENCE",
+  "frozen_at": "2026-09-20",
+  "conclusions": [
+    "No.1 = Prélude, Adagio non troppo, C major.",
+    "No.2 = La toupie, Vivace, C minor.",
+    "No.13 = Étude, Moderato, F-sharp major.",
+    "No.1 and No.2 both belong to IMSLP Nos.1-6 (#06297, d14e77...).",
+    "No.2's former f98061... binding is Nos.7-12 and is superseded."
+  ],
+  "legacy_conflicts": [
+    "RC-013 had wrong keys/titles for Nos.1,2,13.",
+    "Movement-specific plate claims 19782/19783/19794 are not supported by recovered first-edition metadata; only set range 19599-19624 is frozen."
+  ]
+}

@@ -94,12 +94,12 @@ score_entries:
   composer: Anton Arensky
   opus_or_catalogue: Op. 36
   movement: 1
-  title: Prélude in C major
+  title: Prélude
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml
   file_sha256: 63b9f54725798b8760f1107fded76355f96ef23c04d6b7cbd7ba09b2401fb364
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
-  review_record: data/reviews/rc013/anton_arensky_op36_no01.review.json
+  source_fidelity_status: IDENTITY_REVALIDATION_REQUIRED\n  review_record: data/reviews/rc013/anton_arensky_op36_no01.review.json
   source_archive: Internet Archive / IMSLP
   source_file_name: Arensky_morceaux_op36-1.pdf
   source_file_sha256: d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855
@@ -121,12 +121,12 @@ score_entries:
   composer: Anton Arensky
   opus_or_catalogue: Op. 36
   movement: 2
-  title: La Toupie in C minor
+  title: La toupie
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml
   file_sha256: ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
-  review_record: data/reviews/rc013/anton_arensky_op36_no02.review.json
+  source_fidelity_status: IDENTITY_REVALIDATION_REQUIRED\n  review_record: data/reviews/rc013/anton_arensky_op36_no02.review.json
   source_archive: Internet Archive / IMSLP
   source_file_name: Arensky_morceaux_op36-1.pdf
   source_file_sha256: d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855
@@ -148,12 +148,12 @@ score_entries:
   composer: Anton Arensky
   opus_or_catalogue: Op. 36
   movement: 13
-  title: Étude in F-sharp major
+  title: Étude
   relative_score_path: data/scores/rc013/canonical/anton_arensky_op36_no13.musicxml
   file_sha256: ed75e0eee14dacfc7ba234557317be2c616e5a44d1b2e638df77ad07a256ed5b
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
-  review_record: data/reviews/rc013/anton_arensky_op36_no13.review.json
+  identity_status: IDENTITY_REVALIDATION_REQUIRED\n  review_record: data/reviews/rc013/anton_arensky_op36_no13.review.json
   source_archive: Internet Archive / IMSLP
   source_file_name: Arensky_Morceaux_op.36_No.13-18.pdf
   source_file_sha256: eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5

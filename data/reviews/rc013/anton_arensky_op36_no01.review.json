@@ -13,10 +13,14 @@
   "reviewer_identifier": "rc013_notation_validator_v3",
   "reviewer_type": "AUTOMATED_QC",
   "source_comparison_record": "data/reviews/rc013/anton_arensky_op36_no01.source_comparison.json",
-  "source_fidelity_status": "PENDING_SOURCE_COMPARISON",
+  "source_fidelity_status": "IDENTITY_REVALIDATION_REQUIRED",
   "source_file_name": "Arensky_morceaux_op36-1.pdf",
   "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
   "symbolic_file_path": "data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml",
   "symbolic_file_sha256": "63b9f54725798b8760f1107fded76355f96ef23c04d6b7cbd7ba09b2401fb364",
-  "title": "Pr\u00e9lude in C major"
+  "title": "Prélude",
+  "identity_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "expected_key": "C major",
+  "observed_key": "F major",
+  "identity_authority": "data/manifests/rc013_arensky_identity_map.json"
 }

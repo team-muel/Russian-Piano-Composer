@@ -4,14 +4,19 @@
   "edition": "P. Jurgenson (1894)",
   "movement": 13,
   "opus": "Op. 36",
-  "page_range": "1-5",
-  "plate_number": "19794",
+  "page_range": "Nos.13-18 bundle; exact movement boundary pending direct audit",
+  "plate_number": "19599-19624",
   "rights_status": "PUBLIC_DOMAIN",
   "source_archive": "Internet Archive / IMSLP",
   "source_file_name": "Arensky_Morceaux_op.36_No.13-18.pdf",
   "source_file_sha256": "eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5",
   "source_file_size_bytes": 2571253,
   "source_url_or_reference": "https://archive.org/details/imslp-morceaux-caractristiques-op36-arensky-anton",
-  "title": "\u00c9tude in E minor",
-  "work": "24 Morceaux caract\u00e9ristiques"
+  "title": "Étude",
+  "work": "24 Morceaux caractéristiques",
+  "movement_specific_plate_status": "UNVERIFIED_DO_NOT_INFER",
+  "legacy_plate_claim_status": "SUPERSEDED_UNSUPPORTED",
+  "identity_authority": "data/manifests/rc013_arensky_identity_map.json",
+  "expected_key": "F-sharp major",
+  "expected_tempo": "Moderato"
 }

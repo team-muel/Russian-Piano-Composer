@@ -41,5 +41,11 @@
       "tuplets": 6,
       "tempo_expression": 36
     }
+  },
+  "identity_recovery_resolution": {
+    "status": "SUPERSEDED_WRONG_WORK_IDENTITY",
+    "source_bundle_status": "CORRECT",
+    "authoritative_identity": "Op.36 No.1 = Prélude, C major, Adagio non troppo",
+    "plate_policy": "Movement-specific 19782 claim superseded; set range 19599-19624 frozen."
   }
 }

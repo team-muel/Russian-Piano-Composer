@@ -49,5 +49,19 @@
       "tuplets": 12,
       "tempo_expression": 102
     }
+  },
+  "identity_recovery_resolution": {
+    "status": "PRE_CORRECTION_SOURCE_BUNDLE_RETAINED_AS_CORRECT",
+    "authoritative_identity": "Op.36 No.2 = La toupie, C minor, Vivace",
+    "correct_source": {
+      "file": "Arensky_morceaux_op36-1.pdf",
+      "sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855"
+    },
+    "later_wrong_binding": {
+      "file": "Arensky_morceaux_op36-2.pdf",
+      "sha256": "f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136",
+      "status": "SUPERSEDED_WRONG_SOURCE_BINDING"
+    },
+    "plate_policy": "Movement-specific 19783 claim superseded; set range 19599-19624 frozen."
   }
 }
