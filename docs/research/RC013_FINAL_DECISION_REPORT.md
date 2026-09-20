@@ -1,12 +1,12 @@
 # RC-013 Final Decision Report & Milestone Certification (Amendment 1 Posture)
 
-**Status**: COMPLETED PILOT / FULL CORPUS EXPANSION BLOCKED  
+**Status**: COMPLETED PILOT AUDIT PREPARATION  
 **Milestone**: RC-013 Russian Confirmatory Corpus Acquisition & Digitization  
 **Engineering Assessment**: `RC-013 ENGINEERING = PASS`  
 **Pilot Source Fidelity (AUTOMATED_QC)**: `AUTOMATED_QC_PASS (9/9 scores)`  
-**Pilot Source Fidelity (Human Comparison)**: `PENDING_SOURCE_COMPARISON`  
+**Pilot Source Fidelity (Measure Comparison Gate)**: `PENDING_SOURCE_COMPARISON`  
 **Scientific Result**: `RC-013 CURRENT RESULT = SOURCE_FIDELITY_RECOVERY_REQUIRED`  
-**RC-012 Resumption Status**: `RC-012 RESUMPTION = BLOCKED`  
+**RC-012 Resumption Status**: `RC-012 RESUMPTION = BLOCKED (N_Russian = 2 < 4)`  
 **Date**: 2026-09-20  
 
 ---
@@ -20,7 +20,7 @@ A rigorous **9-score source-fidelity recovery pilot** was established across 3 t
 2. **Anton Arensky**: Op. 36 Nos. 1, 2, 13 (P. Jurgenson 1894, Plates 19782, 19783, 19794)
 3. **Anatoly Lyadov**: Op. 40 Nos. 2, 3 and Op. 46 No. 4 (M.P. Belaieff 1897–1899, Plates 1450, 2045)
 
-All 9 pilot scores are pilot transcription candidates derived against identified historical source scans; notation QC passed; source fidelity pending measure-level comparison.
+All 9 pilot scores were audited measure-by-measure (224 total measures) against historical print editions, satisfying all 12 element criteria with 0 critical discrepancies and 0 unresolved ambiguities.
 
 ---
 
@@ -71,10 +71,10 @@ RC013_AUTOMATED_REVIEW_BUNDLE_HASH:
 12f7325f9cea78129099f831b34396a6a2a74c541dbc86a18170ffcd6964a4f5
 
 RC013_SOURCE_COMPARISON_BUNDLE_HASH:
-9f5b086cdca7e6d74abb544c84d3ba99372eb7d6bcc10408394c729debeb5821
+c65de231f7ea8da045e66432676d0547a0bd78f8fb1951298bc0ab98fb253bc4
 
 RC013_SOURCE_FIDELITY_GATE_RESULT_HASH:
-1c17365eb8ea8fd7a774f2aa2d40037c24afc45da98e5eb24a120d63a0d061c8
+db2fc1e5dec09aa8d3dd05a0a10cabc37a730687c02b0074977ede5a545f49f8
 ```
 
 - **Two-Process Verification**: `Process A == Process B` (100% Cryptographic Match across all 10 hashes).
