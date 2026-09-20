@@ -123,10 +123,8 @@ def main() -> None:
     print(f"  UNAVAILABLE:        {unavail_cnt} ({unavail_cnt / tot_cells * 100:.2f}%)")
 
     # 5. Run Synthetic Fixture Suite & Metamorphic Invariance Validation
-    print("\n--- Running Synthetic Fixture Suite & Metamorphic Invariance ---")
-    exclusion_ledger_path = Path("docs/research/RC011_EXCLUSION_LEDGER.md")
-    import hashlib
-    excl_hash = hashlib.sha256(exclusion_ledger_path.read_bytes()).hexdigest() if exclusion_ledger_path.exists() else "0" * 64
+    from russian_piano_composer.structure_analysis.lineage import compute_exclusion_ledger_hash
+    excl_hash = compute_exclusion_ledger_hash()
 
     val_result = run_synthetic_and_metamorphic_validation(
         available_cells=avail_cnt,

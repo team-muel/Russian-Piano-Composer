@@ -73,8 +73,8 @@ avail_cnt = sum(1 for row in matrix.availability_matrix for st in row if st == A
 sz_cnt = sum(1 for row in matrix.availability_matrix for st in row if st == AvailabilityStatus.STRUCTURAL_ZERO)
 unavail_cnt = sum(1 for row in matrix.availability_matrix for st in row if st == AvailabilityStatus.UNAVAILABLE)
 
-excl_path = Path("docs/research/RC011_EXCLUSION_LEDGER.md")
-excl_hash = hashlib.sha256(excl_path.read_bytes()).hexdigest() if excl_path.exists() else "0" * 64
+from russian_piano_composer.structure_analysis.lineage import compute_exclusion_ledger_hash
+excl_hash = compute_exclusion_ledger_hash()
 
 val_result = run_synthetic_and_metamorphic_validation(
     available_cells=avail_cnt,

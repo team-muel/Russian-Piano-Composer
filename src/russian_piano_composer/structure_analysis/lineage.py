@@ -54,13 +54,25 @@ def get_rc011_implementation_commit_sha(sha: str | None = None) -> str:
 
 
 def compute_preregistration_amendment_hash(path: Path | None = None) -> str:
-    """Dynamically compute SHA-256 hash of RC011_PREREGISTRATION_AMENDMENT_3.md."""
+    """Dynamically compute SHA-256 hash of RC011_PREREGISTRATION_AMENDMENT_3.md with canonical line-ending normalization."""
     if path is None:
         p = Path("docs/research/RC011_PREREGISTRATION_AMENDMENT_3.md")
         if not p.exists():
             p = Path(__file__).resolve().parent.parent.parent.parent / "docs" / "research" / "RC011_PREREGISTRATION_AMENDMENT_3.md"
         path = p
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+    data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
+def compute_exclusion_ledger_hash(path: Path | None = None) -> str:
+    """Dynamically compute SHA-256 hash of RC011_EXCLUSION_LEDGER.md with canonical line-ending normalization."""
+    if path is None:
+        p = Path("docs/research/RC011_EXCLUSION_LEDGER.md")
+        if not p.exists():
+            p = Path(__file__).resolve().parent.parent.parent.parent / "docs" / "research" / "RC011_EXCLUSION_LEDGER.md"
+        path = p
+    data = path.read_bytes().replace(b"\r\n", b"\n").replace(b"\r", b"\n")
+    return hashlib.sha256(data).hexdigest()
 
 
 # ---------------------------------------------------------------------------
