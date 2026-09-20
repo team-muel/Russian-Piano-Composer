@@ -1,8 +1,24 @@
-"""RC-013 Score Notation Validator and Quality Control Audit Engine.
+"""RC-013 Score Notation Validator — AUTOMATED_QC scope only.
 
-Enforces strict notation-level syntax, metric bar integrity, pitch spelling,
-rest completeness, staff distribution, and polyphonic voice consistency
-for digitized Russian piano works, with anti-synthetic guard rails.
+Checks properties derivable from the MusicXML file itself:
+  - File existence and XML/music21 parse success
+  - Structural parts / staves presence
+  - Measure count (deficiency guard)
+  - Staff measure-count alignment across parts
+  - Measure duration overflow / underflow (single-stream measures)
+  - Voice duration overflow (voiced measures)
+  - Anti-synthetic repetitive pattern guard
+  - Note / pitch presence and pitch-spelling validity
+
+Does NOT check (requires human source comparison):
+  - Rest completeness vs. source scan
+  - Tie fidelity vs. source scan
+  - Tuplet fidelity vs. source scan
+  - Source-scan fidelity of any kind
+  - Ornament fidelity
+  - Repeat / dal segno fidelity
+
+SOURCE_FIDELITY_VERIFIED status cannot be granted by this validator.
 """
 
 from __future__ import annotations
@@ -62,7 +78,11 @@ class ValidationReport:
 
 
 class RC013ScoreValidator:
-    """Validates MusicXML scores against RC-013 notation preservation criteria."""
+    """Validates MusicXML scores against RC-013 AUTOMATED_QC notation criteria.
+
+    Only checks properties derivable from the MusicXML file itself.
+    Does NOT verify source-scan fidelity; that requires human review.
+    """
 
     def __init__(self, tolerance_quarter: float = 0.001) -> None:
         self.tolerance = tolerance_quarter
