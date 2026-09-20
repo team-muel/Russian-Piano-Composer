@@ -1,9 +1,10 @@
 # RC-013 Final Decision Report & Milestone Certification (Amendment 1 Posture)
 
-**Status**: COMPLETED PILOT / FULL CORPUS EXPANSION IN PROGRESS  
+**Status**: COMPLETED PILOT / FULL CORPUS EXPANSION BLOCKED  
 **Milestone**: RC-013 Russian Confirmatory Corpus Acquisition & Digitization  
 **Engineering Assessment**: `RC-013 ENGINEERING = PASS`  
-**Source Fidelity Assessment**: `RC-013 SOURCE FIDELITY = PASS (PILOT 9 SCORES)`  
+**Pilot Source Fidelity (AUTOMATED_QC)**: `AUTOMATED_QC_PASS (9/9 scores)`  
+**Pilot Source Fidelity (Human Comparison)**: `PENDING_SOURCE_COMPARISON`  
 **Scientific Result**: `RC-013 CURRENT RESULT = SOURCE_FIDELITY_RECOVERY_REQUIRED`  
 **RC-012 Resumption Status**: `RC-012 RESUMPTION = BLOCKED`  
 **Date**: 2026-09-20  
