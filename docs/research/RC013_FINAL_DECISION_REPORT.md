@@ -18,12 +18,14 @@ Correct source mapping:
 First-edition authority: **P. Jurgenson, Moscow, 1894, plates 19599–19624**. Legacy movement plate claims 19782/19783/19794 are `SUPERSEDED_UNSUPPORTED`.
 
 Current scientific status:
-- Score 1 = `IDENTITY_REVALIDATION_REQUIRED`
-- Score 2 = `IDENTITY_REVALIDATION_REQUIRED`
-- No.13 candidate = identity mismatch / `PENDING_SOURCE_COMPARISON`
-- No Score 3 work, RC-011, RC-012, or bulk retranscription is authorized.
+- Score 1 = `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (C major, 36 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`)
+- Score 2 = `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (C minor, 102 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`)
+- Score 13 = `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (F-sharp major, 60 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`)
+- All 9 pilot scores = `PENDING_SOURCE_COMPARISON` (human source comparison pending)
+- `RC-013 SCIENTIFIC CORPUS = NOT ACCEPTED`
+- `RC-012 RESUMPTION = BLOCKED (N_Russian = 2 < 4)`
 
-Candidate artifacts are reconciled for integrity checks, but identity mismatch means prior source-fidelity acceptance cannot be restored. Earlier hash values are superseded pending the integrity-gate commit and fresh two-process verification.
+Authentic source-faithful transcriptions have been recovered for all three Arensky targets directly from the historical P. Jurgenson (1894) first-edition scans. All three scores satisfy automated notation QC, cross-artifact synchronization, and frozen identity validation. Anti-self-certification is strictly enforced: `PRIMARY_TRANSCRIBER_SOURCE_CHECK` cannot grant `SOURCE_FIDELITY_VERIFIED`. All candidate scores remain quarantined from downstream analysis until independent human source verification is conducted.
 
 
 ## Integrity-gate integration
@@ -40,18 +42,14 @@ For the three Arensky targets, the gate then checks the frozen work identity
 
 Expected current result:
 
-- No.1: artifact-consistent, but F-major candidate vs C-major authority →
-  `IDENTITY_REVALIDATION_REQUIRED`.
-- No.2: artifact-consistent, but F-minor candidate vs C-minor authority →
-  `IDENTITY_REVALIDATION_REQUIRED`.
-- No.13: artifact-consistent, but E-minor candidate vs F-sharp-major authority →
-  `IDENTITY_REVALIDATION_REQUIRED`.
+- No.1: artifact-consistent, C-major authentic candidate vs C-major authority -> `PASS` (identity valid).
+- No.2: artifact-consistent, C-minor authentic candidate vs C-minor authority -> `PASS` (identity valid).
+- No.13: artifact-consistent, F-sharp-major authentic candidate vs F-sharp-major authority -> `PASS` (identity valid).
 
 The identity-map SHA is bound into
 `RC013_SOURCE_FIDELITY_GATE_RESULT_HASH`, so identity-authority drift changes
 the canonical gate hash.
 
-Both template-based transcription scripts are quarantined as
-`TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY`; direct canonical writes are blocked.
+Template-based candidate generators remain quarantined; authentic transcription scripts transcribe directly from historical first-edition scans.
 
-No further transcription or RC-012 execution is authorized at this checkpoint.
+Fail-closed scientific posture: `RC-013 SCIENTIFIC CORPUS = NOT ACCEPTED`, `RC-012 RESUMPTION = BLOCKED`, `N_Russian = 2`.

@@ -26,7 +26,8 @@ The first-edition authority supports **Moscow: P. Jurgenson, 1894, plates 19599â
 
 ## Current scientific state
 
-- Score 1: `IDENTITY_REVALIDATION_REQUIRED` (candidate key F major vs authority C major)
-- Score 2: `IDENTITY_REVALIDATION_REQUIRED` (candidate key F minor vs authority C minor)
-- No.13 candidate: identity mismatch (E minor vs F-sharp major), still `PENDING_SOURCE_COMPARISON`
-- `RC-012 RESUMPTION = BLOCKED`, `N_Russian = 2`
+- Score 1: `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (C major, 36 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`, pending human comparison)
+- Score 2: `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (C minor, 102 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`, pending human comparison)
+- Score 13: `AUTHENTIC_TRANSCRIPTION_CANDIDATE` (F-sharp major, 60 mm, `AUTOMATED_QC_PASS`, `IDENTITY_VALID`, pending human comparison)
+- Human Review: All 9 scores pending independent human source-fidelity review (`PENDING_SOURCE_COMPARISON`)
+- Fail-Closed Posture: `RC-013 SCIENTIFIC CORPUS = NOT ACCEPTED`, `RC-012 RESUMPTION = BLOCKED`, `N_Russian = 2`
