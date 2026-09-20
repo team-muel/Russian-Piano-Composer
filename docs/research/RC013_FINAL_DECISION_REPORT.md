@@ -74,7 +74,7 @@ RC013_SOURCE_COMPARISON_BUNDLE_HASH:
 9f5b086cdca7e6d74abb544c84d3ba99372eb7d6bcc10408394c729debeb5821
 
 RC013_SOURCE_FIDELITY_GATE_RESULT_HASH:
-3bda82b01dda974e1099c0e96f8e24245f260080dcb1534d9a6328decc4649fe
+1c17365eb8ea8fd7a774f2aa2d40037c24afc45da98e5eb24a120d63a0d061c8
 ```
 
 - **Two-Process Verification**: `Process A == Process B` (100% Cryptographic Match across all 10 hashes).

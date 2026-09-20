@@ -1,4 +1,4 @@
-"""Anti-self-certification tests for RC-013A.1 and RC-013A.1b.
+"""Anti-self-certification and fidelity gate integrity tests for RC-013A.1b.
 
 Proves that:
 1. AUTOMATED_QC cannot set SOURCE_FIDELITY_VERIFIED in review records.
@@ -6,13 +6,19 @@ Proves that:
 3. Incomplete measure coverage (e.g. 23/24) causes production fidelity gate to fail.
 4. Missing measure entry causes production fidelity gate to fail.
 5. PENDING_HUMAN_REVIEW measure causes production fidelity gate to fail.
-6. Source SHA mismatch (PDF) causes production fidelity gate to fail.
-7. Symbolic SHA changed after review causes production fidelity gate to fail.
-8. Unresolved critical ambiguity causes production fidelity gate to fail.
-9. Comparison bundle mutation changes RC013_SOURCE_COMPARISON_BUNDLE_HASH.
-10. Single measure status mutation changes RC013_SOURCE_FIDELITY_GATE_RESULT_HASH.
-11. Generated review records cannot claim source fidelity.
-12. Per-measure schema completeness contains all 26 required fields.
+6. Missing canonical source authority causes production fidelity gate to fail.
+7. Missing current symbolic SHA authority causes production fidelity gate to fail.
+8. Source SHA mismatch (PDF) causes production fidelity gate to fail.
+9. Symbolic SHA changed after review causes production fidelity gate to fail.
+10. Unresolved critical ambiguity causes production fidelity gate to fail.
+11. HUMAN_MEASURE_COMPARISON with AUTOMATED_QC / invalid reviewer causes gate to fail.
+12. Empty reviewer_identifier or review_timestamp causes gate to fail.
+13. Duplicate or disordered measure numbers cause gate to fail.
+14. CRITICAL REGRESSION TEST: Editing only summary.source_fidelity_verdict on pending ledger CANNOT achieve SOURCE_FIDELITY_VERIFIED.
+15. Comparison bundle mutation changes RC013_SOURCE_COMPARISON_BUNDLE_HASH.
+16. Single measure status mutation changes RC013_SOURCE_FIDELITY_GATE_RESULT_HASH.
+17. Generated review records cannot claim source fidelity.
+18. Per-measure schema completeness contains all 26 required fields.
 """
 
 from __future__ import annotations
@@ -114,7 +120,6 @@ def test_automated_qc_cannot_claim_source_fidelity_verified(score_id: str) -> No
         f"{score_id}: AUTOMATED_QC review must not claim SOURCE_FAITHFUL_PILOT; "
         f"got {fidelity_status!r}"
     )
-    # Must be PENDING_SOURCE_COMPARISON
     assert fidelity_status == "PENDING_SOURCE_COMPARISON", (
         f"{score_id}: expected PENDING_SOURCE_COMPARISON, got {fidelity_status!r}"
     )
@@ -158,18 +163,28 @@ def test_missing_comparison_ledger_causes_fidelity_gate_to_fail() -> None:
 def test_incomplete_measure_coverage_fails_production_gate() -> None:
     """23 out of 24 measures compared must fail the production fidelity gate."""
     verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
-    # Make measure 24 PENDING_HUMAN_REVIEW
     verified["measures"][23]["comparison_method"] = "PENDING_HUMAN_REVIEW"
     verified["summary"]["measures_compared"] = 23
 
     real_source_sha = verified["source_file_sha256"]
     real_sym_sha = verified["symbolic_file_sha256"]
 
-    with pytest.raises(SourceFidelityGateError, match=r"comparison_method is PENDING_HUMAN_REVIEW|Summary measures_compared"):
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
+    assert "PENDING_HUMAN_REVIEW" in res.errors[0] or "Summary measures_compared" in res.errors[0]
+
+    with pytest.raises(SourceFidelityGateError):
         validate_source_comparison_ledger(
             verified,
             canonical_source_sha=real_source_sha,
             current_symbolic_sha=real_sym_sha,
+            fail_fast=True,
         )
 
 
@@ -180,19 +195,20 @@ def test_incomplete_measure_coverage_fails_production_gate() -> None:
 def test_missing_measure_entry_fails_production_gate() -> None:
     """If a measure is missing from the ledger array (e.g. 23 elements vs total_measures=24), gate fails."""
     verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
-    # Remove last measure entirely
     verified["measures"].pop()
     verified["summary"]["measures_compared"] = 23
 
     real_source_sha = verified["source_file_sha256"]
     real_sym_sha = verified["symbolic_file_sha256"]
 
-    with pytest.raises(SourceFidelityGateError, match="Measure count mismatch"):
-        validate_source_comparison_ledger(
-            verified,
-            canonical_source_sha=real_source_sha,
-            current_symbolic_sha=real_sym_sha,
-        )
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("Measure count mismatch" in e for e in res.errors)
 
 
 # ---------------------------------------------------------------------------
@@ -206,35 +222,77 @@ def test_current_pending_ledger_fails_production_gate(score_id: str) -> None:
     real_source_sha = ledger["source_file_sha256"]
     real_sym_sha = ledger["symbolic_file_sha256"]
 
-    with pytest.raises(SourceFidelityGateError):
-        validate_source_comparison_ledger(
-            ledger,
-            canonical_source_sha=real_source_sha,
-            current_symbolic_sha=real_sym_sha,
-        )
+    res = validate_source_comparison_ledger(
+        ledger,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
 
 
 # ---------------------------------------------------------------------------
-# Test 6: Production gate: Source SHA mismatch → FAIL
+# Test 6: Missing canonical source authority → FAIL
+# ---------------------------------------------------------------------------
+
+def test_missing_canonical_source_authority_fails_production_gate() -> None:
+    """If canonical source SHA authority is None or empty, production gate fails closed."""
+    verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
+    real_sym_sha = verified["symbolic_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=None,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert res.error_category == "MISSING_SOURCE_AUTHORITY"
+    assert any("Missing canonical source SHA authority" in e for e in res.errors)
+
+
+# ---------------------------------------------------------------------------
+# Test 7: Missing current symbolic SHA authority → FAIL
+# ---------------------------------------------------------------------------
+
+def test_missing_current_symbolic_sha_fails_production_gate() -> None:
+    """If current symbolic SHA authority is None or empty, production gate fails closed."""
+    verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
+    real_source_sha = verified["source_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=None,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("Missing current symbolic SHA authority" in e for e in res.errors)
+
+
+# ---------------------------------------------------------------------------
+# Test 8: Production gate: Source SHA mismatch → FAIL
 # ---------------------------------------------------------------------------
 
 def test_source_sha_mismatch_fails_production_gate() -> None:
     """Tampered or mismatched source PDF SHA must fail the production fidelity gate."""
     verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
     tampered_canonical_sha = "0" * 64
-
     real_sym_sha = verified["symbolic_file_sha256"]
 
-    with pytest.raises(SourceFidelityGateError, match="Source SHA mismatch"):
-        validate_source_comparison_ledger(
-            verified,
-            canonical_source_sha=tampered_canonical_sha,
-            current_symbolic_sha=real_sym_sha,
-        )
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=tampered_canonical_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("Source SHA mismatch" in e for e in res.errors)
 
 
 # ---------------------------------------------------------------------------
-# Test 7: Production gate: Symbolic SHA changed after review → FAIL
+# Test 9: Production gate: Symbolic SHA changed after review → FAIL
 # ---------------------------------------------------------------------------
 
 def test_symbolic_sha_drift_fails_production_gate() -> None:
@@ -243,16 +301,18 @@ def test_symbolic_sha_drift_fails_production_gate() -> None:
     real_source_sha = verified["source_file_sha256"]
     drifted_current_sha = "a" * 64
 
-    with pytest.raises(SourceFidelityGateError, match="Symbolic SHA mismatch"):
-        validate_source_comparison_ledger(
-            verified,
-            canonical_source_sha=real_source_sha,
-            current_symbolic_sha=drifted_current_sha,
-        )
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=drifted_current_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("Symbolic SHA mismatch" in e for e in res.errors)
 
 
 # ---------------------------------------------------------------------------
-# Test 8: Production gate: Unresolved CRITICAL ambiguity → FAIL
+# Test 10: Production gate: Unresolved CRITICAL ambiguity → FAIL
 # ---------------------------------------------------------------------------
 
 def test_unresolved_critical_ambiguity_fails_production_gate() -> None:
@@ -264,23 +324,92 @@ def test_unresolved_critical_ambiguity_fails_production_gate() -> None:
     real_source_sha = verified["source_file_sha256"]
     real_sym_sha = verified["symbolic_file_sha256"]
 
-    with pytest.raises(SourceFidelityGateError, match="CRITICAL ambiguity"):
-        validate_source_comparison_ledger(
-            verified,
-            canonical_source_sha=real_source_sha,
-            current_symbolic_sha=real_sym_sha,
-        )
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("CRITICAL ambiguity" in e for e in res.errors)
 
 
 # ---------------------------------------------------------------------------
-# Test 9: Comparison bundle mutation changes hash
+# Test 11: Human review semantics: AUTOMATED_QC / invalid reviewer → FAIL
 # ---------------------------------------------------------------------------
 
-def test_comparison_bundle_mutation_changes_hash(tmp_path: Any) -> None:
-    """Mutating any source comparison ledger changes RC013_SOURCE_COMPARISON_BUNDLE_HASH."""
-    initial_bundle_hash = compute_directory_bundle_hash(REVIEWS_DIR, extension=".source_comparison.json")
+def test_automated_qc_reviewer_type_for_human_comparison_fails() -> None:
+    """If comparison_method is HUMAN_MEASURE_COMPARISON but reviewer_type is AUTOMATED_QC, gate fails."""
+    verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
+    verified["measures"][0]["reviewer_type"] = "AUTOMATED_QC"
 
-    # Re-compute in temp dir with a mutated file
+    real_source_sha = verified["source_file_sha256"]
+    real_sym_sha = verified["symbolic_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("invalid reviewer_type 'AUTOMATED_QC'" in e for e in res.errors)
+
+
+# ---------------------------------------------------------------------------
+# Test 12: Human review semantics: Empty reviewer identifier or timestamp → FAIL
+# ---------------------------------------------------------------------------
+
+def test_empty_reviewer_id_or_timestamp_fails() -> None:
+    """Empty reviewer_identifier or review_timestamp for human comparison fails."""
+    verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
+    verified["measures"][0]["reviewer_identifier"] = ""
+    verified["measures"][1]["review_timestamp"] = None
+
+    real_source_sha = verified["source_file_sha256"]
+    real_sym_sha = verified["symbolic_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("empty reviewer_identifier" in e for e in res.errors)
+    assert any("empty review_timestamp" in e for e in res.errors)
+
+
+# ---------------------------------------------------------------------------
+# Test 13: Measure identity integrity: duplicate or disordered measure numbers → FAIL
+# ---------------------------------------------------------------------------
+
+def test_duplicate_measure_numbers_fail_gate() -> None:
+    """Duplicate measure numbers (e.g. measure 1 repeated 24 times) fails measure sequence integrity."""
+    verified = create_mock_fully_verified_ledger("anton_arensky_op36_no01")
+    for m in verified["measures"]:
+        m["measure_number"] = 1
+
+    real_source_sha = verified["source_file_sha256"]
+    real_sym_sha = verified["symbolic_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("Measure sequence violation" in e for e in res.errors)
+
+
+# ---------------------------------------------------------------------------
+# Test 14: CRITICAL REGRESSION TEST: Summary verdict mutation cannot bypass gate
+# ---------------------------------------------------------------------------
+
+def test_summary_verdict_mutation_cannot_bypass_production_validation(tmp_path: Any) -> None:
+    """Editing only summary.source_fidelity_verdict on a pending ledger CANNOT yield SOURCE_FIDELITY_VERIFIED."""
+    # Copy all ledgers to temp dir
     for f in os.listdir(REVIEWS_DIR):
         if f.endswith(".source_comparison.json"):
             src_p = os.path.join(REVIEWS_DIR, f)
@@ -290,7 +419,50 @@ def test_comparison_bundle_mutation_changes_hash(tmp_path: Any) -> None:
             with open(dst_p, "w", encoding="utf-8") as wf:
                 json.dump(data, wf)
 
-    # Mutate one file in temp dir
+    # Mutate all 9 ledgers in temp dir to claim SOURCE_FIDELITY_VERIFIED in summary ONLY
+    for f in os.listdir(tmp_path):
+        if f.endswith(".source_comparison.json"):
+            p = tmp_path / f
+            with open(p, encoding="utf-8") as rf:
+                data = json.load(rf)
+            data["summary"]["source_fidelity_verdict"] = "SOURCE_FIDELITY_VERIFIED"
+            # Leave all measures PENDING_HUMAN_REVIEW and NOT_REVIEWED
+            with open(p, "w", encoding="utf-8") as wf:
+                json.dump(data, wf)
+
+    # Recompute gate result
+    new_bundle_hash = compute_directory_bundle_hash(str(tmp_path), extension=".source_comparison.json")
+    hashes = get_all_rc013_hashes()
+
+    overall_verdict, _ = compute_source_fidelity_gate_result(
+        source_comparison_bundle_hash=new_bundle_hash,
+        source_img_bundle_hash=hashes["RC013_SOURCE_IMAGE_BUNDLE_HASH"],
+        corpus_bundle_hash=hashes["RC013_CANONICAL_SYMBOLIC_CORPUS_HASH"],
+        reviews_dir=str(tmp_path),
+    )
+
+    assert overall_verdict == "PENDING_SOURCE_COMPARISON", (
+        "CRITICAL REGRESSION: Self-declared summary verdict bypassed production validation!"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Test 15: Comparison bundle mutation changes hash
+# ---------------------------------------------------------------------------
+
+def test_comparison_bundle_mutation_changes_hash(tmp_path: Any) -> None:
+    """Mutating any source comparison ledger changes RC013_SOURCE_COMPARISON_BUNDLE_HASH."""
+    initial_bundle_hash = compute_directory_bundle_hash(REVIEWS_DIR, extension=".source_comparison.json")
+
+    for f in os.listdir(REVIEWS_DIR):
+        if f.endswith(".source_comparison.json"):
+            src_p = os.path.join(REVIEWS_DIR, f)
+            dst_p = tmp_path / f
+            with open(src_p, encoding="utf-8") as rf:
+                data = json.load(rf)
+            with open(dst_p, "w", encoding="utf-8") as wf:
+                json.dump(data, wf)
+
     target = tmp_path / "anton_arensky_op36_no01.source_comparison.json"
     with open(target, encoding="utf-8") as f:
         mutated_data = json.load(f)
@@ -305,7 +477,7 @@ def test_comparison_bundle_mutation_changes_hash(tmp_path: Any) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Test 10: Single measure status mutation changes fidelity-result hash
+# Test 16: Single measure status mutation changes fidelity-result hash
 # ---------------------------------------------------------------------------
 
 def test_single_measure_mutation_changes_fidelity_result_hash(tmp_path: Any) -> None:
@@ -313,7 +485,6 @@ def test_single_measure_mutation_changes_fidelity_result_hash(tmp_path: Any) -> 
     hashes = get_all_rc013_hashes()
     original_gate_hash = hashes["RC013_SOURCE_FIDELITY_GATE_RESULT_HASH"]
 
-    # Copy ledgers to temp dir
     for f in os.listdir(REVIEWS_DIR):
         if f.endswith(".source_comparison.json"):
             src_p = os.path.join(REVIEWS_DIR, f)
@@ -323,7 +494,6 @@ def test_single_measure_mutation_changes_fidelity_result_hash(tmp_path: Any) -> 
             with open(dst_p, "w", encoding="utf-8") as wf:
                 json.dump(data, wf)
 
-    # Mutate one measure in temp dir
     target = tmp_path / "sergei_lyapunov_op11_no01.source_comparison.json"
     with open(target, encoding="utf-8") as f:
         m_data = json.load(f)
@@ -345,7 +515,7 @@ def test_single_measure_mutation_changes_fidelity_result_hash(tmp_path: Any) -> 
 
 
 # ---------------------------------------------------------------------------
-# Test 11: Generated review records must not self-certify fidelity
+# Test 17: Generated review records must not self-certify fidelity
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("score_id", CANONICAL_SCORES)
@@ -359,22 +529,19 @@ def test_generated_review_record_is_not_self_certified(score_id: str) -> None:
         f"{score_id}: review contains forbidden self-certifying status: {actual_status!r}"
     )
 
-    # Must not contain fields that imply source comparison was performed
     assert "measures_fidelity_verified" not in review, (
         f"{score_id}: review must not contain measures_fidelity_verified"
     )
     assert "errors_initial" not in review, (
-        f"{score_id}: review must not contain errors_initial "
-        "(this requires source comparison)"
+        f"{score_id}: review must not contain errors_initial (requires source comparison)"
     )
     assert "unresolved_ambiguities" not in review, (
-        f"{score_id}: review must not contain unresolved_ambiguities "
-        "(this requires source comparison)"
+        f"{score_id}: review must not contain unresolved_ambiguities (requires source comparison)"
     )
 
 
 # ---------------------------------------------------------------------------
-# Test 12: Ledger per-measure schema completeness (all 26 required fields)
+# Test 18: Ledger per-measure schema completeness (all 26 required fields)
 # ---------------------------------------------------------------------------
 
 @pytest.mark.parametrize("score_id", CANONICAL_SCORES)
@@ -396,7 +563,6 @@ def test_source_comparison_ledger_has_all_required_fields(score_id: str) -> None
         assert not missing, (
             f"{score_id} measure {i+1}: missing required fields: {missing}"
         )
-        # All initial element statuses must be NOT_REVIEWED
         for field in {
             "pitch_status", "duration_status", "rest_status", "staff_status",
             "voice_status", "tie_status", "tuplet_status", "grace_status",
@@ -412,7 +578,7 @@ def test_source_comparison_ledger_has_all_required_fields(score_id: str) -> None
 
 
 # ---------------------------------------------------------------------------
-# Test 13: Decision report does not claim source fidelity pass
+# Test 19: Decision report does not claim source fidelity pass
 # ---------------------------------------------------------------------------
 
 def test_final_decision_report_does_not_claim_source_fidelity_pass() -> None:

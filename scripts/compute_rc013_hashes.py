@@ -6,6 +6,13 @@ import hashlib
 import json
 import os
 
+import yaml
+
+from russian_piano_composer.corpus.rc013_fidelity import (
+    load_canonical_source_manifest,
+    validate_source_comparison_ledger,
+)
+
 
 def compute_sha256_file(file_path: str) -> str:
     hasher = hashlib.sha256()
@@ -33,25 +40,73 @@ def compute_directory_bundle_hash(dir_path: str, extension: str = ".musicxml") -
     return bundle_hasher.hexdigest()
 
 
+def load_canonical_symbolic_paths(manifest_yaml_path: str) -> dict[str, str]:
+    """Loads mapping of canonical_work_id to relative_score_path from digitization manifest."""
+    mapping: dict[str, str] = {}
+    if os.path.exists(manifest_yaml_path):
+        with open(manifest_yaml_path, encoding="utf-8") as yf:
+            data = yaml.safe_load(yf)
+        for entry in data.get("score_entries", []):
+            c_id = entry.get("canonical_work_id")
+            path = entry.get("relative_score_path")
+            if c_id and path:
+                mapping[c_id] = path
+    return mapping
+
+
 def compute_source_fidelity_gate_result(
     source_comparison_bundle_hash: str,
     source_img_bundle_hash: str,
     corpus_bundle_hash: str,
     reviews_dir: str = "data/reviews/rc013",
+    source_manifest_csv: str = "data/manifests/rc013_source_candidates.csv",
+    digitization_manifest_yaml: str = "data/manifests/rc013_digitization_manifest.yaml",
 ) -> tuple[str, str]:
-    """Computes overall pilot source fidelity verdict and the gate result hash."""
+    """Computes overall pilot source fidelity verdict and gate result hash via production gate."""
     files = sorted([f for f in os.listdir(reviews_dir) if f.endswith(".source_comparison.json")])
-    per_score_verdicts: list[str] = []
+    source_sha_map = load_canonical_source_manifest(source_manifest_csv) if os.path.exists(source_manifest_csv) else {}
+    sym_path_map = load_canonical_symbolic_paths(digitization_manifest_yaml)
+
+    per_score_records: list[str] = []
     overall_all_verified = bool(files)
 
     for f in files:
         full_path = os.path.join(reviews_dir, f)
         with open(full_path, encoding="utf-8") as jf:
             ledger_data = json.load(jf)
-        verdict = ledger_data.get("summary", {}).get("source_fidelity_verdict", "PENDING_SOURCE_COMPARISON")
-        score_id = ledger_data.get("score_id", f)
-        per_score_verdicts.append(f"{score_id}:{verdict}")
-        if verdict != "SOURCE_FIDELITY_VERIFIED":
+
+        score_id = str(ledger_data.get("score_id", f.replace(".source_comparison.json", "")))
+        c_work_id = str(ledger_data.get("canonical_work_id", ""))
+
+        # Resolve canonical source SHA
+        canonical_source_sha = source_sha_map.get(c_work_id) or source_sha_map.get(score_id)
+
+        # Resolve symbolic file path and current symbolic SHA
+        sym_path = sym_path_map.get(c_work_id)
+        if not sym_path:
+            # Fallback path by score_id
+            sym_path = f"data/scores/rc013/canonical/{score_id}.musicxml"
+
+        current_sym_sha = compute_sha256_file(sym_path) if os.path.exists(sym_path) else None
+
+        # Execute authoritative production gate
+        res = validate_source_comparison_ledger(
+            ledger=ledger_data,
+            canonical_source_sha=canonical_source_sha,
+            current_symbolic_sha=current_sym_sha,
+            fail_fast=False,
+        )
+
+        verdict = res.fidelity_status
+        category = res.error_category or "NONE"
+        src_sha_str = canonical_source_sha or "MISSING"
+        sym_sha_str = current_sym_sha or "MISSING"
+
+        per_score_records.append(
+            f"{score_id}|SRC_SHA:{src_sha_str}|SYM_SHA:{sym_sha_str}|VERDICT:{verdict}|REASON:{category}"
+        )
+
+        if not res.valid:
             overall_all_verified = False
 
     overall_pilot_verdict = (
@@ -63,8 +118,8 @@ def compute_source_fidelity_gate_result(
         f"SOURCE_IMAGE_BUNDLE_HASH:{source_img_bundle_hash}",
         f"CANONICAL_SYMBOLIC_CORPUS_HASH:{corpus_bundle_hash}",
         f"OVERALL_PILOT_VERDICT:{overall_pilot_verdict}",
-        "PER_SCORE_VERDICTS:",
-        *per_score_verdicts,
+        "PER_SCORE_RESULTS:",
+        *per_score_records,
     ]
 
     payload = "\n".join(payload_lines) + "\n"
@@ -106,12 +161,14 @@ def get_all_rc013_hashes() -> dict[str, str]:
     # 9. Source Comparison Bundle Hash (all *.source_comparison.json)
     source_comparison_bundle_hash = compute_directory_bundle_hash("data/reviews/rc013", extension=".source_comparison.json")
 
-    # 10. Source Fidelity Gate Result Hash
+    # 10. Source Fidelity Gate Result Hash (derived from production gate)
     _, source_fidelity_gate_result_hash = compute_source_fidelity_gate_result(
         source_comparison_bundle_hash=source_comparison_bundle_hash,
         source_img_bundle_hash=source_img_bundle_hash,
         corpus_bundle_hash=corpus_bundle_hash,
         reviews_dir="data/reviews/rc013",
+        source_manifest_csv="data/manifests/rc013_source_candidates.csv",
+        digitization_manifest_yaml="data/manifests/rc013_digitization_manifest.yaml",
     )
 
     return {
