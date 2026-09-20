@@ -18,9 +18,10 @@ if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
 EXPECTED_BUNDLE_HASH: str = "4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926"
-EXPECTED_INVENTORY_HASH: str = "40672c4fd54c3440e6c29db2e0c6f4aa5ffdb7dd7d88e020ff5eccaf015a9a12"
-EXPECTED_POLICY_HASH: str = "f9f4fe75dad8eea1de7ae3acd5d80818d1ec24d16999a525bfb0eacc7ba718fc"
-EXPECTED_GATE_RESULT_HASH: str = "a5e64cd3e0260250687d64f32915fd0fea8b84830a8c5bb2d1a3651a5cf4337b"
+EXPECTED_INVENTORY_HASH: str = "4813102a193c38fc61ef4815a25895243c819b2527803f82e7020ac766627eb7"
+EXPECTED_QUERY_LOG_HASH: str = "7bfbcd4af8c0651d4b5b65190be4c65ff86645655b4ebdcfa0b343d08388f5de"
+EXPECTED_POLICY_HASH: str = "cc80e267c094cb2bbff04dc2d82bf6df8639113ad41d9bb4587a5e970b0cd24e"
+EXPECTED_GATE_RESULT_HASH: str = "5966e1386400a977e0412534e83df6b30667a544e5a431b8b05357dcdb409b7b"
 
 
 def main() -> None:
@@ -51,11 +52,22 @@ def main() -> None:
         raise RuntimeError(f"Leakage audit failed:\n{res_leakage.stderr}")
     print("  Leakage Audit Subprocess: PASS")
 
-    # 3. Run source inventory audit subprocess
+    # 3. Run source evidence referential integrity verifier subprocess
+    res_evidence = subprocess.run(
+        [sys.executable, "-m", "scripts.verify_rc012_source_evidence"],
+        capture_output=True,
+        text=True,
+    )
+    if res_evidence.returncode != 0:
+        raise RuntimeError(f"Source evidence verification failed:\n{res_evidence.stderr}")
+    print("  Source Evidence Verification Subprocess: PASS")
+
+    # 4. Run source inventory audit subprocess
     from scripts.audit_rc012_source_inventory import audit_rc012_source_inventory
     gate_payload = audit_rc012_source_inventory()
 
     actual_inv_hash = gate_payload.get("source_inventory_hash")
+    actual_query_hash = gate_payload.get("source_query_log_hash")
     actual_pol_hash = gate_payload.get("source_policy_hash")
     actual_gate_hash = gate_payload.get("data_gate_result_hash")
 
@@ -63,6 +75,11 @@ def main() -> None:
     print(f"  Actual Source Inventory Hash:   {actual_inv_hash}")
     if actual_inv_hash != EXPECTED_INVENTORY_HASH:
         raise RuntimeError("Source inventory hash mismatch!")
+
+    print(f"  Expected Source Query Log Hash: {EXPECTED_QUERY_LOG_HASH}")
+    print(f"  Actual Source Query Log Hash:   {actual_query_hash}")
+    if actual_query_hash != EXPECTED_QUERY_LOG_HASH:
+        raise RuntimeError("Source query log hash mismatch!")
 
     print(f"  Expected Source Policy Hash:    {EXPECTED_POLICY_HASH}")
     print(f"  Actual Source Policy Hash:      {actual_pol_hash}")

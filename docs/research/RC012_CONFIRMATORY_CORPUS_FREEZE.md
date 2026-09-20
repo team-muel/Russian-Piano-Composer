@@ -37,9 +37,9 @@ The surveyed candidate corpus comprises:
   - Modest Mussorgsky (PERiScoPe / ATEPP / CCARH, 18 works: 15 movements from *Pictures at an Exhibition* + 3 standalone scores)
 - **Control Candidates ($N_{\text{Control}} = 5 \ge 4$)**:
   - Edvard Grieg (`DCMLab/grieg_lyric_pieces`, 66 works, commit `91a304563521f3f273b8c0aadec1ce2ede2d1384`)
-  - Claude Debussy (`DCMLab/debussy_suite_bergamasque` + `debussy_preludes` + `debussy_etudes`, 53 works)
+  - Claude Debussy (DCMLab 7 repos: `suite_bergamasque`, `preludes`, `etudes`, `pour_le_piano`, `estampes`, `deux_arabesques`, `childrens_corner`, 54 works)
   - Antonín Dvořák (`DCMLab/dvorak_silhouettes`, 12 works, commit `f228006fcd8696c809cfc8e701ed215cec3d07f1`)
-  - Béla Bartók (`DCMLab/bartok_bagatelles` + PERiScoPe, 40 works)
+  - Béla Bartók (`DCMLab/bartok_bagatelles`, 14 works, commit `8209355be326f582ae446e1e813a8f1ffb853e5e`)
   - Ludwig van Beethoven (`DCMLab/beethoven_piano_sonatas`, 91 works)
 
 Because $N_{\text{Russian}} = 2 < 4$, the confirmatory data contract halts ex ante due to **DATA AVAILABILITY FAILURE**, and the primary confirmatory hypothesis remains **NOT TESTED**. No scores are unblinded or evaluated for hypothesis testing.

@@ -2,10 +2,12 @@
 Audit script for RC-012 Confirmatory Source Inventory and Data Contract Gate.
 
 Parses data/manifests/rc012_source_inventory.csv, verifies policy adherence,
-derives composer-level metrics dynamically, and computes cryptographic hashes:
+derives composer-level metrics dynamically from deduplicated canonical work IDs,
+and computes cryptographic hashes:
 1. RC012_SOURCE_INVENTORY_HASH
-2. RC012_SOURCE_POLICY_HASH
-3. RC012_DATA_GATE_RESULT_HASH
+2. RC012_SOURCE_QUERY_LOG_HASH
+3. RC012_SOURCE_POLICY_HASH
+4. RC012_DATA_GATE_RESULT_HASH
 
 Enforces:
 - Fail-closed gate evaluation (N_Russian >= 4 and N_Control >= 4).
@@ -25,9 +27,20 @@ if hasattr(sys.stdout, "reconfigure"):
 if hasattr(sys.stderr, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8")
 
-EXPECTED_POLICY_HASH: str = "f9f4fe75dad8eea1de7ae3acd5d80818d1ec24d16999a525bfb0eacc7ba718fc"
-EXPECTED_INVENTORY_HASH: str = "40672c4fd54c3440e6c29db2e0c6f4aa5ffdb7dd7d88e020ff5eccaf015a9a12"
+EXPECTED_INVENTORY_HASH: str = "4813102a193c38fc61ef4815a25895243c819b2527803f82e7020ac766627eb7"
+EXPECTED_QUERY_LOG_HASH: str = "7bfbcd4af8c0651d4b5b65190be4c65ff86645655b4ebdcfa0b343d08388f5de"
+EXPECTED_POLICY_HASH: str = "cc80e267c094cb2bbff04dc2d82bf6df8639113ad41d9bb4587a5e970b0cd24e"
+EXPECTED_GATE_RESULT_HASH: str = "5966e1386400a977e0412534e83df6b30667a544e5a431b8b05357dcdb409b7b"
 
+ALLOWED_CLEAN_LICENSES: set[str] = {
+    "CC0-1.0",
+    "CC-BY-4.0",
+    "CC-BY-SA-4.0",
+    "CC-BY-NC-4.0",
+    "CC-BY-NC-SA-4.0",
+    "PUBLIC_DOMAIN",
+    "ACADEMIC_RESEARCH_ONLY",
+}
 
 
 def compute_normalized_file_hash(path: Path) -> str:
@@ -37,18 +50,22 @@ def compute_normalized_file_hash(path: Path) -> str:
     return hashlib.sha256(normalized).hexdigest()
 
 
-def audit_rc012_source_inventory() -> dict:
+def audit_rc012_source_inventory() -> dict[str, object]:
     print("--- Running RC-012 Confirmatory Source Inventory Audit ---")
 
     inventory_path = Path("data/manifests/rc012_source_inventory.csv")
     if not inventory_path.exists():
         raise FileNotFoundError(f"Source inventory not found: {inventory_path}")
 
+    query_log_path = Path("data/manifests/rc012_source_query_log.csv")
+    if not query_log_path.exists():
+        raise FileNotFoundError(f"Source query log not found: {query_log_path}")
+
     policy_path = Path("docs/research/RC012_SOURCE_POLICY.md")
     if not policy_path.exists():
         raise FileNotFoundError(f"Source policy not found: {policy_path}")
 
-    # 1. Compute and verify inventory hash
+    # 1. Verify inventory hash
     actual_inventory_hash = compute_normalized_file_hash(inventory_path)
     print(f"  RC012_SOURCE_INVENTORY_HASH: {actual_inventory_hash}")
     if actual_inventory_hash != EXPECTED_INVENTORY_HASH:
@@ -56,7 +73,15 @@ def audit_rc012_source_inventory() -> dict:
             f"Inventory hash mismatch! Expected {EXPECTED_INVENTORY_HASH}, got {actual_inventory_hash}"
         )
 
-    # 2. Compute and verify policy hash
+    # 2. Verify query log hash
+    actual_query_log_hash = compute_normalized_file_hash(query_log_path)
+    print(f"  RC012_SOURCE_QUERY_LOG_HASH: {actual_query_log_hash}")
+    if actual_query_log_hash != EXPECTED_QUERY_LOG_HASH:
+        raise ValueError(
+            f"Query log hash mismatch! Expected {EXPECTED_QUERY_LOG_HASH}, got {actual_query_log_hash}"
+        )
+
+    # 3. Verify policy hash
     actual_policy_hash = compute_normalized_file_hash(policy_path)
     print(f"  RC012_SOURCE_POLICY_HASH:    {actual_policy_hash}")
     if actual_policy_hash != EXPECTED_POLICY_HASH:
@@ -64,7 +89,7 @@ def audit_rc012_source_inventory() -> dict:
             f"Policy hash mismatch! Expected {EXPECTED_POLICY_HASH}, got {actual_policy_hash}"
         )
 
-    # 3. Parse inventory and derive metrics
+    # 4. Parse inventory and derive metrics
     rows: list[dict[str, str]] = []
     with open(inventory_path, encoding="utf-8") as f:
         reader = csv.DictReader(f)
@@ -78,24 +103,33 @@ def audit_rc012_source_inventory() -> dict:
     for r in rows:
         composer_rows[r["composer"]].append(r)
 
-    composer_metrics: dict[str, dict] = {}
+    composer_metrics: dict[str, dict[str, object]] = {}
     qualified_russian: list[str] = []
     qualified_control: list[str] = []
 
     for composer, comp_rows in sorted(composer_rows.items()):
         comp_class = comp_rows[0]["class"]
-        raw_count = len(comp_rows)
-        # Deduplicate by canonical_work_id (excluding 'none' for tombstone rows)
+        source_evidence_row_count = len(comp_rows)
+        raw_matching_item_count = sum(1 for r in comp_rows if r["actual_source_item_id"] != "none")
         work_ids = {r["canonical_work_id"] for r in comp_rows if r["canonical_work_id"] != "none"}
-        unique_work_count = len(work_ids) if work_ids else 0
+        unique_canonical_work_count = len(work_ids)
 
         solo_count = sum(1 for r in comp_rows if r["original_solo_piano"] == "True")
         parseable_count = sum(1 for r in comp_rows if r["parseable"] == "True")
-        license_count = sum(1 for r in comp_rows if r["license_status"] != "none")
+        license_count = sum(1 for r in comp_rows if r["license_status"] in ALLOWED_CLEAN_LICENSES)
         compatible_count = sum(1 for r in comp_rows if r["rc011_compatible"] == "True")
-        eligible_count = sum(1 for r in comp_rows if r["eligible"] == "True")
 
-        is_qualified = eligible_count >= 10
+        # Deduplicated eligible canonical work IDs drive composer qualification M_c
+        eligible_canonical_work_ids = {
+            r["canonical_work_id"]
+            for r in comp_rows
+            if r["eligible"] == "True"
+            and r["canonical_work_id"] != "none"
+            and r["license_status"] in ALLOWED_CLEAN_LICENSES
+        }
+        m_c = len(eligible_canonical_work_ids)
+
+        is_qualified = m_c >= 10
         if is_qualified:
             if comp_class == "Russian":
                 qualified_russian.append(composer)
@@ -104,23 +138,24 @@ def audit_rc012_source_inventory() -> dict:
 
         composer_metrics[composer] = {
             "class": comp_class,
-            "raw_count": raw_count,
-            "unique_work_count": unique_work_count,
+            "source_evidence_row_count": source_evidence_row_count,
+            "raw_matching_item_count": raw_matching_item_count,
+            "unique_canonical_work_count": unique_canonical_work_count,
             "solo_piano_count": solo_count,
             "parseable_count": parseable_count,
             "license_clean_count": license_count,
             "rc011_compatible_count": compatible_count,
-            "eligible_count": eligible_count,
+            "eligible_canonical_work_count": m_c,
             "qualified": is_qualified,
         }
 
     n_russian = len(qualified_russian)
     n_control = len(qualified_control)
 
-    print(f"\n  Derived Qualified Russian Composers (M >= 10): {n_russian} ({qualified_russian})")
-    print(f"  Derived Qualified Control Composers (M >= 10): {n_control} ({qualified_control})")
+    print(f"\n  Derived Qualified Russian Composers (M_c >= 10): {n_russian} ({qualified_russian})")
+    print(f"  Derived Qualified Control Composers (M_c >= 10): {n_control} ({qualified_control})")
 
-    # 4. Evaluate Data Contract Gate
+    # 5. Evaluate Data Contract Gate
     contract_passed = (n_russian >= 4) and (n_control >= 4)
     gate_status = "CONFIRMATORY_DATA_CONTRACT_PASSED" if contract_passed else "CONFIRMATORY_DATA_CONTRACT_FAILED"
     failure_reason = "NONE" if contract_passed else "DATA AVAILABILITY FAILURE"
@@ -134,6 +169,7 @@ def audit_rc012_source_inventory() -> dict:
         "qualified_russian_composers": sorted(qualified_russian),
         "qualified_control_composers": sorted(qualified_control),
         "source_inventory_hash": actual_inventory_hash,
+        "source_query_log_hash": actual_query_log_hash,
         "source_policy_hash": actual_policy_hash,
         "composer_metrics": composer_metrics,
     }
@@ -147,6 +183,11 @@ def audit_rc012_source_inventory() -> dict:
     print(f" RC012_DATA_GATE_RESULT_HASH    = {gate_result_hash}")
     print(" PRIMARY HYPOTHESIS STATUS       = NOT TESTED")
     print("==========================================================================")
+
+    if gate_result_hash != EXPECTED_GATE_RESULT_HASH:
+        raise ValueError(
+            f"Data gate result hash mismatch! Expected {EXPECTED_GATE_RESULT_HASH}, got {gate_result_hash}"
+        )
 
     gate_result_payload["data_gate_result_hash"] = gate_result_hash
     return gate_result_payload

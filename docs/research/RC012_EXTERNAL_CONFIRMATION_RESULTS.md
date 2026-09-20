@@ -18,15 +18,15 @@ To prevent false discovery, data leakage, and pseudoreplication, the pre-registe
    - Fail-closed gate rule: If fewer than 4 composers per class satisfy the data contract, declare `CONFIRMATORY_DATA_CONTRACT_FAILED` ex ante and stop prior to hypothesis testing.
 2. **Empirical Inventory & Feasibility Findings**:
    - **Control Candidates**: 5 distinct composers satisfied all criteria ($N_{\text{Control}} = 5 \ge 4$):
-     - Edvard Grieg ($M=66$, `DCMLab/grieg_lyric_pieces`)
-     - Claude Debussy ($M=53$, `DCMLab/debussy_suite_bergamasque` + `debussy_preludes` + `debussy_etudes`)
-     - Antonín Dvořák ($M=12$, `DCMLab/dvorak_silhouettes`)
-     - Béla Bartók ($M=40$, `DCMLab/bartok_bagatelles` + PERiScoPe)
-     - Ludwig van Beethoven ($M=91$, `DCMLab/beethoven_piano_sonatas`)
+     - Edvard Grieg ($M_c=66$, `DCMLab/grieg_lyric_pieces`)
+     - Claude Debussy ($M_c=54$, DCMLab 7 repos: `suite_bergamasque`, `preludes`, `etudes`, `pour_le_piano`, `estampes`, `deux_arabesques`, `childrens_corner`)
+     - Antonín Dvořák ($M_c=12$, `DCMLab/dvorak_silhouettes`)
+     - Béla Bartók ($M_c=14$, `DCMLab/bartok_bagatelles`)
+     - Ludwig van Beethoven ($M_c=91$, `DCMLab/beethoven_piano_sonatas`)
    - **Russian Candidates**: 2 distinct composers satisfied all criteria ($N_{\text{Russian}} = 2 < 4$):
-     - Alexander Scriabin ($M=207$, CCARH `craigsapp/scriabin` / PERiScoPe)
-     - Modest Mussorgsky ($M=18$, PERiScoPe / ATEPP / KernScores: 15 movements of *Pictures at an Exhibition* + 3 standalone pieces: *Impromptu passionné*, *Memories of Childhood*, *The Seamstress*)
-     - All other Russian late-Romantic / early-modern candidates (*Prokofiev* $M=4$, *Balakirev* $M=2$, *Lyapunov* $M=1$, *Rubinstein* $M=1$, *Arensky* $M=0$, *Glazunov* $M=0$, *Lyadov* $M=0$, *Taneyev* $M=0$, *Cui* $M=0$) lack curated, machine-readable open symbolic score collections with $\ge 10$ pieces in public repositories.
+     - Alexander Scriabin ($M_c=207$, CCARH `craigsapp/scriabin` / ASAP / PERiScoPe)
+     - Modest Mussorgsky ($M_c=18$, PERiScoPe / ATEPP / KernScores: 15 movements of *Pictures at an Exhibition* + 3 standalone pieces: *Impromptu passionné*, *Memories of Childhood*, *The Seamstress*)
+     - All other Russian late-Romantic / early-modern candidates (*Prokofiev* $M_c=3$, *Balakirev* $M_c=2$, *Lyapunov* $M_c=1$, *Rubinstein* $M_c=1$, *Arensky* $M_c=0$, *Glazunov* $M_c=0$, *Lyadov* $M_c=0$, *Taneyev* $M_c=0$, *Cui* $M_c=0$) lack curated, machine-readable open symbolic score collections with $\ge 10$ pieces in public repositories.
 3. **Formal Precondition Gate Decision**:
    $$\mathbf{CONFIRMATORY\_DATA\_CONTRACT\_FAILED}$$
    Per Section 3 of the pre-registration, the confirmatory evaluation halted ex ante due to **DATA AVAILABILITY FAILURE** ($N_{\text{Russian}} = 2 < 4$).

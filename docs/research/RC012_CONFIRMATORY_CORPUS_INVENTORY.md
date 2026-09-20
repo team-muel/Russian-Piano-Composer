@@ -19,15 +19,15 @@ Per the strict scientific contract governing RC-012:
 2. **Empirical Survey of Available Open Repositories**:
    - **Control Candidates**: Abundantly satisfied across academic corpora ($N_{\text{Control}} = 5 \ge 4$):
      - *Edvard Grieg*: 66 pieces (`DCMLab/grieg_lyric_pieces`, commit `91a304563521f3f273b8c0aadec1ce2ede2d1384`).
-     - *Claude Debussy*: 53 pieces (`DCMLab/debussy_suite_bergamasque`, `DCMLab/debussy_preludes`, `DCMLab/debussy_etudes`).
+     - *Claude Debussy*: 54 pieces across 7 DCMLab repositories (Suite Bergamasque, Preludes, Études, Pour le piano, Estampes, Deux Arabesques, Children's Corner).
      - *Antonín Dvořák*: 12 pieces (`DCMLab/dvorak_silhouettes`, commit `f228006fcd8696c809cfc8e701ed215cec3d07f1`).
-     - *Béla Bartók*: 40 pieces (`DCMLab/bartok_bagatelles` + PERiScoPe).
+     - *Béla Bartók*: 14 pieces (`DCMLab/bartok_bagatelles`, commit `8209355be326f582ae446e1e813a8f1ffb853e5e`).
      - *Ludwig van Beethoven*: 91 movements (`DCMLab/beethoven_piano_sonatas`, commit `ea7181bff88abc8713257234f7ec4033178c57a9`).
    - **Russian Candidates**: Only 2 composers satisfied all eligibility criteria ($N_{\text{Russian}} = 2 < 4$):
-     - *Alexander Scriabin*: Fully satisfied. Complete solo piano works Op. 1 to Op. 74 (207 pieces in CCARH Humdrum `**kern`, `craigsapp/scriabin` / `bel28kent/Mysterium` / PERiScoPe).
+     - *Alexander Scriabin*: Fully satisfied. Complete solo piano works Op. 1 to Op. 74 (207 pieces in CCARH Humdrum `**kern`, `craigsapp/scriabin`, commit `7daa1136a4edfaf8d2bfadee973c33f3b76b6760`).
      - *Modest Mussorgsky*: Satisfied with 18 pieces (PERiScoPe / ATEPP / KernScores: 15 movements of *Pictures at an Exhibition* + 3 standalone pieces: *Impromptu passionné*, *Memories of Childhood*, *The Seamstress*).
      - *Sergei Prokofiev*, *Mily Balakirev*, *Sergei Lyapunov*, *Anton Rubinstein*, *Anton Arensky*, *Aleksandr Glazunov*, *Anatoly Lyadov*, *Sergei Taneyev*, *César Cui*:
-       - Exhaustive survey of open repositories (DCMLab, kernScores, ASAP, ATEPP, PERiScoPe, music21, PianoCoRe) revealed only isolated single pieces or small fragments below the 10-piece threshold (*Prokofiev* $M=4$, *Balakirev* $M=2$, *Lyapunov* $M=1$, *Rubinstein* $M=1$; others $M=0$).
+       - Exhaustive survey of open repositories (DCMLab, kernScores, ASAP, ATEPP, PERiScoPe, music21, PianoCoRe) revealed only isolated single pieces or small fragments below the 10-piece threshold (*Prokofiev* $M_c=3$, *Balakirev* $M_c=2$, *Lyapunov* $M_c=1$, *Rubinstein* $M_c=1$; others $M_c=0$).
        - PianoCoRe 2026 was audited: while it provides performance/score MIDI, score MIDI files lacking explicit measure, key signature, staff, and voice notation are classified as `SOURCE_INCOMPATIBLE_FOR_RC011`.
 
 3. **Definitive Contract Evaluation**:
@@ -43,23 +43,23 @@ Per the strict scientific contract governing RC-012:
 
 ## 2. Exhaustive Source Verification Table
 
-| Composer | Tradition | Repository / Source | Format | Piece Count | $\ge 10$ Pieces? | Status |
+| Composer | Tradition | Repository / Source | Format | Piece Count ($M_c$) | $\ge 10$ Pieces? | Status |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Alexander Scriabin** | Russian | `craigsapp/scriabin` / `bel28kent/Mysterium` / PERiScoPe | `**kern`/MusicXML | 207 | **YES** | **ELIGIBLE** |
+| **Alexander Scriabin** | Russian | `craigsapp/scriabin` / ASAP / PERiScoPe | `**kern`/MusicXML | 207 | **YES** | **ELIGIBLE** |
 | **Modest Mussorgsky** | Russian | PERiScoPe / ATEPP / CCARH KernScores | MusicXML/`**kern` | 18 | **YES** | **ELIGIBLE** |
-| **Sergei Prokofiev** | Russian | CCARH KernScores / ASAP / PERiScoPe | `**kern`/MusicXML | 4 | NO | INELIGIBLE ($M < 10$) |
-| **Mily Balakirev** | Russian | ASAP dataset / PERiScoPe | MusicXML | 2 | NO | INELIGIBLE ($M < 10$) |
-| **Sergei Lyapunov** | Russian | PERiScoPe | MusicXML | 1 | NO | INELIGIBLE ($M < 10$) |
-| **Anton Rubinstein** | Russian | PERiScoPe | MusicXML | 1 | NO | INELIGIBLE ($M < 10$) |
-| **Anton Arensky** | Russian | GiantMIDI (MIDI only), no symbolic corpus | MIDI/None | 0 | NO | INELIGIBLE ($M=0$) |
-| **Aleksandr Glazunov** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M=0$) |
-| **Anatoly Lyadov** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M=0$) |
-| **Sergei Taneyev** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M=0$) |
-| **César Cui** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M=0$) |
+| **Sergei Prokofiev** | Russian | ASAP / PERiScoPe / CCARH KernScores | `**kern`/MusicXML | 3 | NO | INELIGIBLE ($M_c < 10$) |
+| **Mily Balakirev** | Russian | ASAP dataset / PERiScoPe | MusicXML | 2 | NO | INELIGIBLE ($M_c < 10$) |
+| **Sergei Lyapunov** | Russian | PERiScoPe | MusicXML | 1 | NO | INELIGIBLE ($M_c < 10$) |
+| **Anton Rubinstein** | Russian | PERiScoPe | MusicXML | 1 | NO | INELIGIBLE ($M_c < 10$) |
+| **Anton Arensky** | Russian | GiantMIDI (MIDI only), no symbolic corpus | MIDI/None | 0 | NO | INELIGIBLE ($M_c=0$) |
+| **Aleksandr Glazunov** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M_c=0$) |
+| **Anatoly Lyadov** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M_c=0$) |
+| **Sergei Taneyev** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M_c=0$) |
+| **César Cui** | Russian | KernScores / PDMX / ATEPP | None | 0 | NO | INELIGIBLE ($M_c=0$) |
 | **Edvard Grieg** | Control | `DCMLab/grieg_lyric_pieces` | MuseScore | 66 | **YES** | **ELIGIBLE** |
-| **Claude Debussy** | Control | `DCMLab/debussy_suite_bergamasque` + `preludes` + `etudes` | MuseScore | 53 | **YES** | **ELIGIBLE** |
+| **Claude Debussy** | Control | DCMLab (7 repos) | MuseScore | 54 | **YES** | **ELIGIBLE** |
 | **Antonín Dvořák** | Control | `DCMLab/dvorak_silhouettes` | MuseScore | 12 | **YES** | **ELIGIBLE** |
-| **Béla Bartók** | Control | `DCMLab/bartok_bagatelles` + PERiScoPe | MuseScore/MusicXML | 40 | **YES** | **ELIGIBLE** |
+| **Béla Bartók** | Control | `DCMLab/bartok_bagatelles` | MuseScore | 14 | **YES** | **ELIGIBLE** |
 | **Ludwig van Beethoven** | Control | `DCMLab/beethoven_piano_sonatas` | MuseScore | 91 | **YES** | **ELIGIBLE** |
 
 ---

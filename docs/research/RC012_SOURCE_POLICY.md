@@ -34,21 +34,55 @@ Any format or representation that lacks these notation primitives cannot be pars
 
 ---
 
-## 3. Composer Qualification & Deduplication Rules
+## 3. License Clean Criteria & Fail-Closed Whitelist
+
+License status evaluation is strictly fail-closed.
+Only explicitly approved open and research licenses are recognized as `license_clean`:
+```python
+ALLOWED_CLEAN_LICENSES = {
+    "CC0-1.0",
+    "CC-BY-4.0",
+    "CC-BY-SA-4.0",
+    "CC-BY-NC-4.0",
+    "CC-BY-NC-SA-4.0",
+    "PUBLIC_DOMAIN",
+    "ACADEMIC_RESEARCH_ONLY",
+}
+```
+Any record bearing `UNKNOWN`, `REVIEW_REQUIRED`, `CONFLICT`, `NONE`, or empty license status is strictly classified as not license clean and is excluded.
+
+---
+
+## 4. Composer Qualification & Deduplication Rules
 
 1. **Independent Composer Isolation**:
    - Zero overlap with development composers (*Medtner*, *Rachmaninoff*, *Tchaikovsky*, *Chopin*, *Liszt*, *Schumann*).
 2. **Movements & Multi-Movement Cycles**:
    - For multi-movement piano cycles (e.g. Mussorgsky's *Pictures at an Exhibition*, Beethoven Sonatas, Grieg *Lyric Pieces*), individual movements published and performed as distinct musical units are counted as individual score entries ($M$).
-   - Duplicate records across cross-corpus holdings (e.g., CCARH KernScores vs. PERiScoPe vs. ATEPP) are deduplicated to a single canonical score entry per work/movement.
-3. **Threshold Gate**:
-   - A composer is **QUALIFIED** if and only if their deduplicated, solo-piano, parseable, license-clean, RC-011-compatible piece count $M_c \ge 10$.
-   - A composer with $0 < M_c < 10$ is **EXCLUDED** under `INSUFFICIENT_PIECES_BELOW_10`.
-   - A candidate composer with $M_c = 0$ is recorded as a tombstone under `ZERO_SYMBOLIC_SOLO_PIANO_PIECES_AVAILABLE` to certify inventory exhaustion.
+3. **Cross-Source Evidence & Work Deduplication**:
+   - If the same work exists across multiple upstream repositories (e.g., CCARH KernScores vs. PERiScoPe vs. ASAP), an individual evidence row is created for each source item, sharing the same `canonical_work_id` and `duplicate_group`.
+   - Exactly one source record per `canonical_work_id` is marked `eligible=True`; all duplicate rows are marked `eligible=False` under `DUPLICATE_PRIORITIZED_PRIMARY_RECORD_ACCEPTED`.
+   - Composer qualification $M_c$ is derived exclusively as:
+     $$M_c = |\{ \text{canonical\_work\_id} \mid \text{row is eligible} \}|$$
+   - Counting raw rows or multiple duplicate rows is strictly prohibited.
+4. **Threshold Gate**:
+   - A composer is **QUALIFIED** if and only if their deduplicated eligible canonical work count $M_c \ge 10$.
+   - A candidate composer with $0 < M_c < 10$ is **EXCLUDED** under `INSUFFICIENT_PIECES_BELOW_10`.
+   - A candidate composer with $M_c = 0$ is documented via query ledger audit records under `ZERO_SYMBOLIC_SOLO_PIANO_PIECES_AVAILABLE`.
 
 ---
 
-## 4. Primary Precondition Fail-Closed Rule
+## 5. Raw Matching vs. Evidence Row Counts
+
+For complete auditing clarity:
+- `source_evidence_row_count`: Total number of physical evidence rows in the source inventory for composer $c$ (including duplicates and tombstones).
+- `raw_matching_item_count`: Number of genuine matching score items located in audited repositories. For zero-result tombstones, `raw_matching_item_count = 0`.
+- `unique_canonical_work_count`: Number of distinct works identified across all sources.
+- `eligible_canonical_work_count` ($M_c$): Number of distinct eligible works satisfying all criteria.
+
+---
+
+## 6. Primary Precondition Fail-Closed Rule
 
 If $N_{\text{Russian}} < 4$ or $N_{\text{Control}} < 4$:
 - The pipeline evaluation halts ex ante.
