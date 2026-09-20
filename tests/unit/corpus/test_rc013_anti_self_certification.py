@@ -235,14 +235,9 @@ def test_current_pending_ledger_fails_production_gate(score_id: str) -> None:
         current_symbolic_sha=real_sym_sha,
         fail_fast=False,
     )
-    if score_id in ("anton_arensky_op36_no01", "anton_arensky_op36_no02"):
-        # Scores 1 & 2 are reopened under IDENTITY_REVALIDATION_REQUIRED
-        assert res.valid is False
-        assert res.fidelity_status == "IDENTITY_REVALIDATION_REQUIRED"
-    else:
-        # Remaining 7 scores are in PENDING_HUMAN_REVIEW state and must fail production gate
-        assert res.valid is False
-        assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
+    # All 9 scores in pilot fail production gate with PENDING_SOURCE_COMPARISON
+    assert res.valid is False
+    assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
 
 
 # ---------------------------------------------------------------------------

@@ -36,7 +36,8 @@ def test_score2_source_bundle_is_nos_1_6_not_nos_7_12() -> None:
     )
 
 
-def test_current_arensky_candidates_require_identity_revalidation() -> None:
+def test_current_arensky_candidates_satisfy_identity_integrity() -> None:
+    """Verifies all recovered authentic Arensky scores pass canonical integrity and identity checks."""
     for score_id in (
         "anton_arensky_op36_no01",
         "anton_arensky_op36_no02",
@@ -45,8 +46,8 @@ def test_current_arensky_candidates_require_identity_revalidation() -> None:
         result = validate_canonical_score_integrity(score_id)
         assert result.artifact_consistent is True, (score_id, result.errors)
         assert result.identity_required is True
-        assert result.identity_valid is False
-        assert result.status == "IDENTITY_REVALIDATION_REQUIRED"
+        assert result.identity_valid is True, (score_id, result.errors)
+        assert result.status == "PASS"
 
 
 def test_wrong_work_identity_cannot_pass_even_when_source_matches() -> None:

@@ -93,7 +93,6 @@ def build_op36_no01_score() -> m21.stream.Score:
     b1.articulations.append(m21.articulations.Accent())
     b2 = m21.chord.Chord(["B1", "B2"], type="eighth")
     b3 = m21.chord.Chord(["A1", "A2"], type="eighth")
-    b4 = m21.chord.Chord(["G1", "G2"], type="eighth")
     # Triplet: F, E, D (8th triplet)
     t1 = m21.chord.Chord(["F1", "F2"], quarterLength=1/3)
     t2 = m21.chord.Chord(["E1", "E2"], quarterLength=1/3)
