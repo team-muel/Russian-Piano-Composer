@@ -123,6 +123,7 @@ def validate_source_comparison_ledger(
     ledger: dict[str, Any],
     canonical_source_sha: str | None = None,
     current_symbolic_sha: str | None = None,
+    transcriber_identifier: str | None = None,
     manifest_csv_path: str | None = None,
     fail_fast: bool = False,
 ) -> FidelityValidationResult:
@@ -132,6 +133,7 @@ def validate_source_comparison_ledger(
       - If canonical source SHA authority is missing or cannot be resolved: FAIL.
       - If current symbolic SHA is missing or empty: FAIL.
       - If any measure or element violates integrity: FAIL.
+      - If reviewer is primary transcriber or self-certifying: FAIL.
     """
     errors: list[str] = []
     error_categories: list[str] = []
@@ -140,6 +142,7 @@ def validate_source_comparison_ledger(
     c_work_id = str(ledger.get("canonical_work_id", ""))
     total_measures = int(ledger.get("total_measures", 0))
     measures = ledger.get("measures", [])
+    ledger_transcriber_id = transcriber_identifier or ledger.get("transcriber_identifier")
 
     if manifest_csv_path and not canonical_source_sha:
         manifest_map = load_canonical_source_manifest(manifest_csv_path)
@@ -217,7 +220,7 @@ def validate_source_comparison_ledger(
             error_categories.append("PENDING_HUMAN_REVIEW")
         elif comp_method in {"HUMAN_MEASURE_COMPARISON", "HUMAN_NOTE_BY_NOTE"}:
             compared_count += 1
-            # Human Review Semantics verification
+            # Human Review Semantics and Anti-Self-Certification verification
             r_type = m.get("reviewer_type")
             if r_type not in ALLOWED_HUMAN_REVIEWER_TYPES:
                 errors.append(
@@ -234,6 +237,20 @@ def validate_source_comparison_ledger(
             if not r_ts or not str(r_ts).strip():
                 errors.append(f"Measure {m_num}: empty review_timestamp")
                 error_categories.append("EMPTY_REVIEW_TIMESTAMP")
+
+            # Anti-self-certification: primary transcriber check cannot certify final fidelity
+            if r_type == "PRIMARY_TRANSCRIBER_SOURCE_CHECK":
+                errors.append(
+                    f"Measure {m_num}: reviewer_type 'PRIMARY_TRANSCRIBER_SOURCE_CHECK' is a preliminary self-check and cannot certify SOURCE_FIDELITY_VERIFIED"
+                )
+                error_categories.append("SELF_CERTIFICATION_DISALLOWED")
+
+            t_id = m.get("transcriber_identifier") or ledger_transcriber_id
+            if r_id and t_id and str(r_id).strip().lower() == str(t_id).strip().lower():
+                errors.append(
+                    f"Measure {m_num}: reviewer_identifier '{r_id}' matches transcriber_identifier '{t_id}' (self-certification disallowed)"
+                )
+                error_categories.append("SELF_CERTIFICATION_DISALLOWED")
         else:
             errors.append(f"Measure {m_num}: invalid comparison_method: {comp_method}")
             error_categories.append("INVALID_COMPARISON_METHOD")

@@ -7,7 +7,7 @@
 |---|---|---|---|
 | No.1 | **Prélude — Adagio non troppo — C major** | IMSLP Nos.1–6 #06297, `Arensky_morceaux_op36-1.pdf`, SHA `d14e77d7...` | PDF 1–4 / printed 4–7 |
 | No.2 | **La toupie — Vivace — C minor** | same Nos.1–6 bundle / SHA | PDF 5–12 / printed 8–15 |
-| No.13 | **Étude — Moderato — F-sharp major** | IMSLP Nos.13–18 #06466, SHA `eaf21776...` | exact movement end **not frozen** pending direct boundary audit |
+| No.13 | **Étude — Moderato — F-sharp major** | IMSLP Nos.13–18 #06466, SHA `eaf21776...` | PDF 1–7 / printed 61–67 (60 measures, boundary verified) |
 
 ## Independent authority
 

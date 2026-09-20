@@ -95,3 +95,52 @@ def test_candidate_generators_are_quarantined() -> None:
     assert "TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY = True" in pilot
     assert "CANONICAL_RC013_DIR" in pilot
     assert "template-generated candidates may not be written" in pilot
+
+
+def test_cross_document_identity_consistency() -> None:
+    """Verifies all RC-013 manifests and docs strictly agree on frozen identity metadata."""
+    # 1. Identity Map
+    id_map = json.loads(Path(IDENTITY_MAP).read_text(encoding="utf-8"))
+    assert id_map["first_edition"]["plate_range"] == "19599-19624"
+    assert id_map["movements"]["1"]["key"] == "C major"
+    assert id_map["movements"]["1"]["pdf_page_range"] == "1-4 (1-based bundle pages)"
+    assert id_map["movements"]["1"]["printed_page_range"] == "4-7"
+    assert id_map["movements"]["2"]["key"] == "C minor"
+    assert id_map["movements"]["2"]["pdf_page_range"] == "5-12 (1-based bundle pages)"
+    assert id_map["movements"]["2"]["printed_page_range"] == "8-15"
+    assert id_map["movements"]["13"]["key"] == "F-sharp major"
+    assert id_map["movements"]["13"]["pdf_page_range"] == "1-7 (1-based bundle pages)"
+    assert id_map["movements"]["13"]["printed_page_range"] == "61-67"
+    assert id_map["movements"]["13"]["boundary_audit"]["measure_count"] == 60
+
+    # 2. Source Candidates CSV
+    csv_text = Path("data/manifests/rc013_source_candidates.csv").read_text(encoding="utf-8")
+    assert "Arensky_morceaux_op36-1.pdf,d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855,1506575,\"PDF 1-4 / printed 4-7\"" in csv_text
+    assert "Arensky_morceaux_op36-1.pdf,d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855,1506575,\"PDF 5-12 / printed 8-15\"" in csv_text
+    assert "Arensky_Morceaux_op.36_No.13-18.pdf,eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5,2571253,\"PDF 1-7 / printed 61-67\"" in csv_text
+
+    # 3. Scans Manifest JSON
+    scans_manifest = json.loads(Path("data/scans/rc013/rc013_scans_manifest.json").read_text(encoding="utf-8"))
+    arensky_scans = {m["movement"]: m for m in scans_manifest if m.get("composer") == "Anton Arensky"}
+    assert arensky_scans[1]["expected_key"] == "C major"
+    assert arensky_scans[1]["page_range"] == "PDF 1-4 / printed 4-7"
+    assert arensky_scans[2]["expected_key"] == "C minor"
+    assert arensky_scans[2]["page_range"] == "PDF 5-12 / printed 8-15"
+    assert arensky_scans[13]["expected_key"] == "F-sharp major"
+    assert arensky_scans[13]["page_range"] == "PDF 1-7 / printed 61-67"
+
+    # 4. Source Inventory Markdown
+    inv_text = Path("docs/research/RC013_SOURCE_INVENTORY.md").read_text(encoding="utf-8")
+    assert "Prélude* in C major" in inv_text
+    assert "La toupie* in C minor" in inv_text
+    assert "Étude* in F-sharp major" in inv_text
+    assert "pp. 61\u201367 (PDF 1\u20137" in inv_text
+
+    # 5. Final Decision Report Markdown
+    dec_text = Path("docs/research/RC013_FINAL_DECISION_REPORT.md").read_text(encoding="utf-8")
+    assert "C major" in dec_text
+    assert "C minor" in dec_text
+    assert "F-sharp major" in dec_text
+    assert "NOT ACCEPTED" in dec_text
+    assert "BLOCKED (N_Russian = 2 < 4)" in dec_text
+

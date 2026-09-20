@@ -606,3 +606,83 @@ def test_final_decision_report_does_not_claim_source_fidelity_pass() -> None:
         "RC013_FINAL_DECISION_REPORT must not claim SOURCE_FIDELITY = PASS; "
         "pilot fidelity is PENDING_SOURCE_COMPARISON"
     )
+
+
+# ---------------------------------------------------------------------------
+# Test 20: PRIMARY_TRANSCRIBER_SOURCE_CHECK cannot grant SOURCE_FIDELITY_VERIFIED
+# ---------------------------------------------------------------------------
+
+def test_primary_transcriber_source_check_cannot_grant_fidelity_verified() -> None:
+    """PRIMARY_TRANSCRIBER_SOURCE_CHECK is a self-check and cannot certify fidelity."""
+    verified = create_mock_fully_verified_ledger("sergei_lyapunov_op11_no01")
+    for m in verified["measures"]:
+        m["reviewer_type"] = "PRIMARY_TRANSCRIBER_SOURCE_CHECK"
+        m["reviewer_identifier"] = "transcriber_self"
+
+    real_source_sha = verified["source_file_sha256"]
+    real_sym_sha = verified["symbolic_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert res.fidelity_status == "PENDING_SOURCE_COMPARISON"
+    assert "SELF_CERTIFICATION_DISALLOWED" in res.errors[0] or any(
+        "PRIMARY_TRANSCRIBER_SOURCE_CHECK" in e for e in res.errors
+    )
+
+
+# ---------------------------------------------------------------------------
+# Test 21: Reviewer identical to transcriber fails closed (Self-Certification)
+# ---------------------------------------------------------------------------
+
+def test_transcriber_self_certification_cannot_grant_fidelity_verified() -> None:
+    """If reviewer_identifier matches transcriber_identifier, gate fails closed."""
+    verified = create_mock_fully_verified_ledger("sergei_lyapunov_op11_no01")
+    verified["transcriber_identifier"] = "alice_transcriber"
+    for m in verified["measures"]:
+        m["reviewer_type"] = "INDEPENDENT_HUMAN_REVIEWER"
+        m["reviewer_identifier"] = "alice_transcriber"  # Self-certification attempt
+
+    real_source_sha = verified["source_file_sha256"]
+    real_sym_sha = verified["symbolic_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        fail_fast=False,
+    )
+    assert res.valid is False
+    assert any("matches transcriber_identifier" in e for e in res.errors)
+
+
+# ---------------------------------------------------------------------------
+# Test 22: Independent reviewer with distinct transcriber passes
+# ---------------------------------------------------------------------------
+
+def test_independent_human_reviewer_with_distinct_transcriber_passes() -> None:
+    """Distinct independent reviewer satisfies anti-self-certification."""
+    verified = create_mock_fully_verified_ledger("sergei_lyapunov_op11_no01")
+    verified["transcriber_identifier"] = "alice_transcriber"
+    for m in verified["measures"]:
+        m["reviewer_type"] = "INDEPENDENT_HUMAN_REVIEWER"
+        m["reviewer_identifier"] = "bob_independent_reviewer"
+        m["review_timestamp"] = "2026-09-20T14:00:00Z"
+
+    real_source_sha = verified["source_file_sha256"]
+    real_sym_sha = verified["symbolic_file_sha256"]
+
+    res = validate_source_comparison_ledger(
+        verified,
+        canonical_source_sha=real_source_sha,
+        current_symbolic_sha=real_sym_sha,
+        transcriber_identifier="alice_transcriber",
+        fail_fast=False,
+    )
+    assert res.valid is True
+    assert res.fidelity_status == "SOURCE_FIDELITY_VERIFIED"
+

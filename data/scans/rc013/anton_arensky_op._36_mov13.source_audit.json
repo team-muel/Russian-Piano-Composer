@@ -4,7 +4,7 @@
   "edition": "P. Jurgenson (1894)",
   "movement": 13,
   "opus": "Op. 36",
-  "page_range": "Nos.13-18 bundle; exact movement boundary pending direct audit",
+  "page_range": "PDF 1-7 / printed 61-67",
   "plate_number": "19599-19624",
   "rights_status": "PUBLIC_DOMAIN",
   "source_archive": "Internet Archive / IMSLP",
@@ -18,5 +18,8 @@
   "legacy_plate_claim_status": "SUPERSEDED_UNSUPPORTED",
   "identity_authority": "data/manifests/rc013_arensky_identity_map.json",
   "expected_key": "F-sharp major",
-  "expected_tempo": "Moderato"
+  "expected_tempo": "Moderato",
+  "measure_count": 60,
+  "boundary_verified": true,
+  "boundary_notes": "PDF pages 1-7 (printed pp. 61-67), 60 measures, ending with double bar on p. 67; Scherzino No. 14 begins on p. 68."
 }

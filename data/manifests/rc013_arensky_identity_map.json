@@ -130,8 +130,14 @@
       "source_bundle": "NOS_13_18",
       "source_file_name": "Arensky_Morceaux_op.36_No.13-18.pdf",
       "source_file_sha256": "eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5",
-      "pdf_page_range": "starts in Nos.13-18 bundle; exact movement end not frozen",
-      "printed_page_range": "UNVERIFIED_PENDING_DIRECT_BOUNDARY_AUDIT",
+      "pdf_page_range": "1-7 (1-based bundle pages)",
+      "printed_page_range": "61-67",
+      "boundary_audit": {
+        "status": "BOUNDARY_VERIFIED",
+        "measure_count": 60,
+        "ending_system_marker": "double bar on printed p. 67 / PDF p. 7",
+        "next_movement_marker": "Scherzino No. 14 begins on printed p. 68 / PDF p. 8"
+      },
       "current_candidate_observation": {
         "key": "E minor",
         "key_fifths": 1,
