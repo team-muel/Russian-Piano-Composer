@@ -1,4 +1,9 @@
-"""Transcription Engine for RC-013 Pilot Works.
+"""QUARANTINED candidate-generation engine for RC-013 Pilot Works.
+
+This module contains hand-authored motif templates. It is not source evidence
+and MUST NOT write the canonical RC-013 research corpus.
+
+Former description: Transcription Engine for RC-013 Pilot Works.
 
 Generates pilot transcription candidates derived against identified historical source scans:
 - Sergei Lyapunov: Op. 11 Nos. 1, 2, 3 (Zimmermann 1897-1899)
@@ -13,6 +18,9 @@ from __future__ import annotations
 import os
 
 import music21 as m21
+
+TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY = True
+CANONICAL_RC013_DIR = os.path.abspath("data/scores/rc013/canonical")
 
 # ==============================================================================
 # LYAPUNOV OP. 11 TRANSCRIBED MOTIFS & MEASURE PROGRESSIONS
@@ -328,6 +336,15 @@ PILOT_REGISTRY = {
 
 
 def build_score(composer: str, opus: str, mov: int, output_path: str) -> None:
+    absolute_output = os.path.abspath(output_path)
+    if (
+        absolute_output == CANONICAL_RC013_DIR
+        or absolute_output.startswith(CANONICAL_RC013_DIR + os.sep)
+    ):
+        raise RuntimeError(
+            "QUARANTINED: template-generated candidates may not be written "
+            "to data/scores/rc013/canonical."
+        )
     title, key_str, meter_str, tempo_str, bars = PILOT_REGISTRY[(composer, opus, mov)]
 
     score = m21.stream.Score()
@@ -390,24 +407,10 @@ def build_score(composer: str, opus: str, mov: int, output_path: str) -> None:
 
 
 def main() -> None:
-    target_dir = "data/scores/rc013/canonical"
-    os.makedirs(target_dir, exist_ok=True)
-
-    pilot_items = [
-        ("Sergei Lyapunov", "Op. 11", 1, "sergei_lyapunov_op11_no01.musicxml"),
-        ("Sergei Lyapunov", "Op. 11", 2, "sergei_lyapunov_op11_no02.musicxml"),
-        ("Sergei Lyapunov", "Op. 11", 3, "sergei_lyapunov_op11_no03.musicxml"),
-        ("Anton Arensky", "Op. 36", 1, "anton_arensky_op36_no01.musicxml"),
-        ("Anton Arensky", "Op. 36", 2, "anton_arensky_op36_no02.musicxml"),
-        ("Anton Arensky", "Op. 36", 13, "anton_arensky_op36_no13.musicxml"),
-        ("Anatoly Lyadov", "Op. 40", 2, "anatoly_lyadov_op40_no02.musicxml"),
-        ("Anatoly Lyadov", "Op. 40", 3, "anatoly_lyadov_op40_no03.musicxml"),
-        ("Anatoly Lyadov", "Op. 46", 4, "anatoly_lyadov_op46_no04.musicxml"),
-    ]
-
-    for comp, opus, mov, fname in pilot_items:
-        out_path = os.path.join(target_dir, fname)
-        build_score(comp, opus, mov, out_path)
+    raise RuntimeError(
+        "QUARANTINED: transcribe_rc013_pilot_scores.py is "
+        "TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY."
+    )
 
 
 if __name__ == "__main__":

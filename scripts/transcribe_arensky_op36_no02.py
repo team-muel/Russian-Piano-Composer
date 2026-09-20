@@ -16,6 +16,8 @@ from __future__ import annotations
 
 import music21 as m21
 
+TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY = True
+
 
 def create_arensky_op36_no02() -> m21.stream.Score:
     score = m21.stream.Score()
@@ -284,7 +286,7 @@ def create_arensky_op36_no02() -> m21.stream.Score:
 
 
 if __name__ == "__main__":
-    s = create_arensky_op36_no02()
-    out_file = "data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml"
-    s.write("musicxml", fp=out_file)
-    print(f"Successfully transcribed {out_file}")
+    raise RuntimeError(
+        "QUARANTINED: this candidate generator may not write "
+        "data/scores/rc013/canonical."
+    )

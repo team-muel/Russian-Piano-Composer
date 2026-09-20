@@ -1,0 +1,98 @@
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from russian_piano_composer.corpus.rc013_integrity import (
+    load_identity_map,
+    validate_canonical_score_integrity,
+    validate_identity_fields,
+)
+
+
+IDENTITY_MAP = "data/manifests/rc013_arensky_identity_map.json"
+
+
+def test_authoritative_arensky_identities_are_frozen() -> None:
+    identity = load_identity_map(IDENTITY_MAP)
+    assert identity["movements"]["1"]["title"] == "Prélude"
+    assert identity["movements"]["1"]["key"] == "C major"
+    assert identity["movements"]["1"]["tempo"] == "Adagio non troppo"
+    assert identity["movements"]["2"]["title"] == "La toupie"
+    assert identity["movements"]["2"]["key"] == "C minor"
+    assert identity["movements"]["2"]["tempo"] == "Vivace"
+    assert identity["movements"]["13"]["title"] == "Étude"
+    assert identity["movements"]["13"]["key"] == "F-sharp major"
+    assert identity["movements"]["13"]["tempo"] == "Moderato"
+
+
+def test_score2_source_bundle_is_nos_1_6_not_nos_7_12() -> None:
+    identity = load_identity_map(IDENTITY_MAP)
+    no2 = identity["movements"]["2"]
+    assert no2["source_file_sha256"] == (
+        "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855"
+    )
+    assert no2["superseded_wrong_binding"]["sha256"] == (
+        "f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136"
+    )
+
+
+def test_current_arensky_candidates_require_identity_revalidation() -> None:
+    for score_id in (
+        "anton_arensky_op36_no01",
+        "anton_arensky_op36_no02",
+        "anton_arensky_op36_no13",
+    ):
+        result = validate_canonical_score_integrity(score_id)
+        assert result.artifact_consistent is True, (score_id, result.errors)
+        assert result.identity_required is True
+        assert result.identity_valid is False
+        assert result.status == "IDENTITY_REVALIDATION_REQUIRED"
+
+
+def test_wrong_work_identity_cannot_pass_even_when_source_matches() -> None:
+    expected = load_identity_map(IDENTITY_MAP)["movements"]["2"]
+    errors = validate_identity_fields(
+        expected,
+        movement=2,
+        title="La toupie",
+        key_fifths=-4,
+        source_file_sha256=expected["source_file_sha256"],
+    )
+    assert any(e.startswith("IDENTITY_KEY_MISMATCH") for e in errors)
+
+
+def test_cross_artifact_symbolic_sha_drift_fails(tmp_path: Path) -> None:
+    src = Path("data/reviews/rc013/anton_arensky_op36_no02.review.json")
+    review = json.loads(src.read_text(encoding="utf-8"))
+    review["symbolic_file_sha256"] = "0" * 64
+    mutated = tmp_path / "review.json"
+    mutated.write_text(
+        json.dumps(review, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+    result = validate_canonical_score_integrity(
+        "anton_arensky_op36_no02",
+        review_path=str(mutated),
+    )
+    assert result.artifact_consistent is False
+    assert result.status == "CROSS_ARTIFACT_INTEGRITY_FAILED"
+    assert any(
+        e.startswith("CROSS_SYMBOLIC_SHA_MISMATCH:review")
+        for e in result.errors
+    )
+
+
+def test_candidate_generators_are_quarantined() -> None:
+    score2 = Path("scripts/transcribe_arensky_op36_no02.py").read_text(
+        encoding="utf-8"
+    )
+    pilot = Path("scripts/transcribe_rc013_pilot_scores.py").read_text(
+        encoding="utf-8"
+    )
+    assert "TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY = True" in score2
+    assert "QUARANTINED: this candidate generator may not write" in score2
+    assert "TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY = True" in pilot
+    assert "CANONICAL_RC013_DIR" in pilot
+    assert "template-generated candidates may not be written" in pilot

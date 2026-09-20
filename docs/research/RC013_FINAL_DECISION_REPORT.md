@@ -24,3 +24,34 @@ Current scientific status:
 - No Score 3 work, RC-011, RC-012, or bulk retranscription is authorized.
 
 Candidate artifacts are reconciled for integrity checks, but identity mismatch means prior source-fidelity acceptance cannot be restored. Earlier hash values are superseded pending the integrity-gate commit and fresh two-process verification.
+
+
+## Integrity-gate integration
+
+A canonical cross-artifact integrity gate now runs before source-fidelity
+acceptance. For every score it requires the live MusicXML SHA and
+measure/note/rest counts to agree with the digitization manifest, automated
+review, error log, and source-comparison ledger. Work ID, movement, title, and
+source SHA must also agree.
+
+For the three Arensky targets, the gate then checks the frozen work identity
+(movement/title/key/source) from
+`data/manifests/rc013_arensky_identity_map.json`.
+
+Expected current result:
+
+- No.1: artifact-consistent, but F-major candidate vs C-major authority →
+  `IDENTITY_REVALIDATION_REQUIRED`.
+- No.2: artifact-consistent, but F-minor candidate vs C-minor authority →
+  `IDENTITY_REVALIDATION_REQUIRED`.
+- No.13: artifact-consistent, but E-minor candidate vs F-sharp-major authority →
+  `IDENTITY_REVALIDATION_REQUIRED`.
+
+The identity-map SHA is bound into
+`RC013_SOURCE_FIDELITY_GATE_RESULT_HASH`, so identity-authority drift changes
+the canonical gate hash.
+
+Both template-based transcription scripts are quarantined as
+`TRANSCRIPTION_CANDIDATE_GENERATOR_ONLY`; direct canonical writes are blocked.
+
+No further transcription or RC-012 execution is authorized at this checkpoint.

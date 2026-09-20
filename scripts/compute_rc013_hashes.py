@@ -12,6 +12,9 @@ from russian_piano_composer.corpus.rc013_fidelity import (
     load_canonical_source_manifest,
     validate_source_comparison_ledger,
 )
+from russian_piano_composer.corpus.rc013_integrity import (
+    validate_canonical_score_integrity,
+)
 
 
 def compute_sha256_file(file_path: str) -> str:
@@ -69,6 +72,12 @@ def compute_source_fidelity_gate_result(
 
     per_score_records: list[str] = []
     overall_all_verified = bool(files)
+    identity_map_path = "data/manifests/rc013_arensky_identity_map.json"
+    identity_map_hash = (
+        compute_normalized_text_sha256(identity_map_path)
+        if os.path.exists(identity_map_path)
+        else "MISSING"
+    )
 
     for f in files:
         full_path = os.path.join(reviews_dir, f)
@@ -89,25 +98,48 @@ def compute_source_fidelity_gate_result(
 
         current_sym_sha = compute_sha256_file(sym_path) if os.path.exists(sym_path) else None
 
-        # Execute authoritative production gate
-        res = validate_source_comparison_ledger(
-            ledger=ledger_data,
-            canonical_source_sha=canonical_source_sha,
-            current_symbolic_sha=current_sym_sha,
-            fail_fast=False,
+        # Cross-artifact integrity and work identity are prerequisites to fidelity.
+        integrity = validate_canonical_score_integrity(
+            score_id,
+            identity_map_path=identity_map_path,
+            digitization_manifest_path=digitization_manifest_yaml,
+            reviews_dir=reviews_dir,
+            score_path=sym_path,
         )
 
-        verdict = res.fidelity_status
-        category = res.error_category or "NONE"
+        if not integrity.artifact_consistent:
+            verdict = "CROSS_ARTIFACT_INTEGRITY_FAILED"
+            category = (
+                integrity.errors[0]
+                if integrity.errors
+                else "CROSS_ARTIFACT_INTEGRITY_FAILED"
+            )
+            overall_all_verified = False
+        elif integrity.identity_required and not integrity.identity_valid:
+            verdict = "IDENTITY_REVALIDATION_REQUIRED"
+            category = (
+                integrity.errors[0]
+                if integrity.errors
+                else "IDENTITY_REVALIDATION_REQUIRED"
+            )
+            overall_all_verified = False
+        else:
+            res = validate_source_comparison_ledger(
+                ledger=ledger_data,
+                canonical_source_sha=canonical_source_sha,
+                current_symbolic_sha=current_sym_sha,
+                fail_fast=False,
+            )
+            verdict = res.fidelity_status
+            category = res.error_category or "NONE"
+            if not res.valid:
+                overall_all_verified = False
+
         src_sha_str = canonical_source_sha or "MISSING"
         sym_sha_str = current_sym_sha or "MISSING"
-
         per_score_records.append(
             f"{score_id}|SRC_SHA:{src_sha_str}|SYM_SHA:{sym_sha_str}|VERDICT:{verdict}|REASON:{category}"
         )
-
-        if not res.valid:
-            overall_all_verified = False
 
     overall_pilot_verdict = (
         "SOURCE_FIDELITY_VERIFIED" if overall_all_verified else "PENDING_SOURCE_COMPARISON"
@@ -117,6 +149,7 @@ def compute_source_fidelity_gate_result(
         f"SOURCE_COMPARISON_BUNDLE_HASH:{source_comparison_bundle_hash}",
         f"SOURCE_IMAGE_BUNDLE_HASH:{source_img_bundle_hash}",
         f"CANONICAL_SYMBOLIC_CORPUS_HASH:{corpus_bundle_hash}",
+        f"IDENTITY_MAP_HASH:{identity_map_hash}",
         f"OVERALL_PILOT_VERDICT:{overall_pilot_verdict}",
         "PER_SCORE_RESULTS:",
         *per_score_records,
