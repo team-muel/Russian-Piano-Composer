@@ -1,0 +1,43 @@
+{
+  "score_id": "anton_arensky_op36_no13",
+  "canonical_work_id": "anton_arensky_op36_m13",
+  "audit_timestamp": "2026-09-20T23:45:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/anton_arensky_op36_no13.musicxml",
+  "symbolic_file_sha256": "ed75e0eee14dacfc7ba234557317be2c616e5a44d1b2e638df77ad07a256ed5b",
+  "num_measures": 24,
+  "num_notes": 205,
+  "num_rests": 0,
+  "key_signatures_observed": ["e minor"],
+  "observed_fifths": 1,
+  "observed_key_str": "E minor",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Étude",
+  "authoritative_identity": {
+    "composer": "Anton Arensky",
+    "work": "24 Morceaux caractéristiques, Op.36",
+    "movement": 13,
+    "title": "Étude",
+    "key": "F-sharp major",
+    "key_fifths": 6,
+    "meter": "3/4",
+    "tempo": "Moderato",
+    "measure_count": 60
+  },
+  "source_binding": {
+    "source_file_name": "Arensky_Morceaux_op.36_No.13-18.pdf",
+    "source_file_sha256": "eaf21776599c1069a78cce881a518a40badb604b9061d4ff6d60537dcb3b87f5",
+    "source_archive": "Internet Archive / IMSLP",
+    "pdf_page_range": "1-7 (1-based bundle pages)",
+    "printed_page_range": "61-67",
+    "boundary_audit": {
+      "status": "BOUNDARY_VERIFIED",
+      "measure_count": 60,
+      "ending_marker": "double bar on printed p. 67 / PDF p. 7",
+      "next_movement": "Scherzino No. 14 on printed p. 68 / PDF p. 8"
+    }
+  },
+  "known_identity_mismatch": "Candidate key is E minor (fifths=1, 24 measures), but authoritative first-edition score is F-sharp major (fifths=6, 60 measures, 3/4 meter, Moderato).",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Complete mismatch of key, measure count, meter, and notes against historical first edition. Genuine direct transcription from historical scan is required."
+}

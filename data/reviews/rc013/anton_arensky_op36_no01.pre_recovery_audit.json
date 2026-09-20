@@ -1,0 +1,37 @@
+{
+  "score_id": "anton_arensky_op36_no01",
+  "canonical_work_id": "anton_arensky_op36_m01",
+  "audit_timestamp": "2026-09-20T23:45:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml",
+  "symbolic_file_sha256": "63b9f54725798b8760f1107fded76355f96ef23c04d6b7cbd7ba09b2401fb364",
+  "num_measures": 36,
+  "num_notes": 407,
+  "num_rests": 33,
+  "key_signatures_observed": ["<music21.key.KeySignature of 1 flat>"],
+  "observed_fifths": -1,
+  "observed_key_str": "F major",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Prélude",
+  "authoritative_identity": {
+    "composer": "Anton Arensky",
+    "work": "24 Morceaux caractéristiques, Op.36",
+    "movement": 1,
+    "title": "Prélude",
+    "key": "C major",
+    "key_fifths": 0,
+    "meter": "4/4",
+    "tempo": "Adagio non troppo",
+    "measure_count": 36
+  },
+  "source_binding": {
+    "source_file_name": "Arensky_morceaux_op36-1.pdf",
+    "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+    "source_archive": "Internet Archive / IMSLP",
+    "pdf_page_range": "1-4 (1-based bundle pages)",
+    "printed_page_range": "4-7"
+  },
+  "known_identity_mismatch": "Candidate key is F major (fifths=-1), but authoritative first-edition score is C major (fifths=0). Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical first edition is in C major; candidate MusicXML has wrong key and non-faithful notes. Genuine direct transcription from historical scan is required."
+}

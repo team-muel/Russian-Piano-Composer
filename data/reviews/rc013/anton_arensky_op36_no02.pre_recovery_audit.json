@@ -1,0 +1,42 @@
+{
+  "score_id": "anton_arensky_op36_no02",
+  "canonical_work_id": "anton_arensky_op36_m02",
+  "audit_timestamp": "2026-09-20T23:45:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml",
+  "symbolic_file_sha256": "ac5275c2e6c05f85e694690a2784e05372ec46bc6ea0111c87ba85deb06c9240",
+  "num_measures": 102,
+  "num_notes": 1298,
+  "num_rests": 14,
+  "key_signatures_observed": ["<music21.key.KeySignature of 4 flats>"],
+  "observed_fifths": -4,
+  "observed_key_str": "F minor",
+  "title_in_musicxml": null,
+  "title_in_manifest": "La toupie",
+  "authoritative_identity": {
+    "composer": "Anton Arensky",
+    "work": "24 Morceaux caractéristiques, Op.36",
+    "movement": 2,
+    "title": "La toupie",
+    "key": "C minor",
+    "key_fifths": -3,
+    "meter": "3/4",
+    "tempo": "Vivace",
+    "measure_count": 102
+  },
+  "source_binding": {
+    "source_file_name": "Arensky_morceaux_op36-1.pdf",
+    "source_file_sha256": "d14e77d7af646671c7ddf267b0ba7bebd4f176a6b2fb6e3a7e9cce114919f855",
+    "source_archive": "Internet Archive / IMSLP",
+    "pdf_page_range": "5-12 (1-based bundle pages)",
+    "printed_page_range": "8-15"
+  },
+  "superseded_wrong_binding": {
+    "file": "Arensky_morceaux_op36-2.pdf",
+    "sha256": "f98061b4097b216aa4fa47b985b3c8addd83218358edf1370a8748a67056a136",
+    "reason": "IMSLP #06298 is Nos.7-12, not movement No.2."
+  },
+  "known_identity_mismatch": "Candidate key is F minor (fifths=-4), but authoritative first-edition score is C minor (fifths=-3). Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical first edition is in C minor; candidate MusicXML has wrong key and non-faithful notes. Genuine direct transcription from historical scan is required."
+}
