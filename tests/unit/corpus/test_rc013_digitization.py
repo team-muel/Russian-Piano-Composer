@@ -85,7 +85,8 @@ def test_rc013_anti_synthetic_guard_catches_synthetic_fixtures() -> None:
 
 def test_rc013_cryptographic_hashes_present_and_reproducible() -> None:
     hashes = get_all_rc013_hashes()
-    expected_keys = [
+    assert hashes["RC013_CANONICAL_HASH_SCHEMA_VERSION"] == "2"
+    expected_sha_keys = [
         "RC013_SOURCE_INVENTORY_HASH",
         "RC013_SOURCE_IMAGE_BUNDLE_HASH",
         "RC013_DIGITIZATION_POLICY_HASH",
@@ -95,9 +96,10 @@ def test_rc013_cryptographic_hashes_present_and_reproducible() -> None:
         "RC013_QC_RESULT_HASH",
         "RC013_AUTOMATED_REVIEW_BUNDLE_HASH",
         "RC013_SOURCE_COMPARISON_BUNDLE_HASH",
+        "RC013_HUMAN_REVIEW_RECEIPT_BUNDLE_HASH",
         "RC013_SOURCE_FIDELITY_GATE_RESULT_HASH",
     ]
-    assert len(hashes) == 10
-    for k in expected_keys:
+    assert len(hashes) == 1 + len(expected_sha_keys)
+    for k in expected_sha_keys:
         assert k in hashes
         assert len(hashes[k]) == 64
