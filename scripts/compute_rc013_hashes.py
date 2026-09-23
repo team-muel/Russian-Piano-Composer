@@ -311,6 +311,27 @@ def get_all_rc013_hashes() -> dict[str, str]:
     }
 
 
+def get_machine_triangulation_hashes() -> dict[str, str]:
+    """Computes and returns cryptographic hashes for machine triangulation calibration artifacts."""
+    manifest_p = "data/manifests/rc013_machine_validation_protocol_v1.json"
+    calib_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_registry.json"
+
+    if not os.path.exists(manifest_p):
+        return {}
+
+    with open(manifest_p, encoding="utf-8") as f:
+        manifest_data = json.load(f)
+
+    calib_corpus_hash = compute_sha256_file(calib_reg_p) if os.path.exists(calib_reg_p) else "0" * 64
+
+    return {
+        "RC013_MACHINE_PROTOCOL_HASH": manifest_data.get("protocol_hash", ""),
+        "RC013_CALIBRATION_CORPUS_HASH": calib_corpus_hash,
+        "RC013_MUTATION_SUITE_HASH": manifest_data.get("mutation_suite_hash", ""),
+        "RC013_CALIBRATION_RESULT_HASH": manifest_data.get("calibration_result_hash", ""),
+    }
+
+
 def main() -> None:
     hashes = get_all_rc013_hashes()
     print("==================================================")
@@ -319,6 +340,15 @@ def main() -> None:
     for k, v in hashes.items():
         print(f"{k}: {v}")
     print("==================================================")
+
+    mach_hashes = get_machine_triangulation_hashes()
+    if mach_hashes:
+        print("\n==================================================")
+        print("   RC-013 Machine Validation Protocol Hashes")
+        print("==================================================")
+        for k, v in mach_hashes.items():
+            print(f"{k}: {v}")
+        print("==================================================")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,60 @@
+{
+  "protocol_version": "rc013_machine_triangulation_protocol_v1",
+  "created_at": "2026-09-23T17:00:10.400233+00:00",
+  "status": "FROZEN_PRE_REGISTERED",
+  "calibration_corpus_hash": "a3ea61a87a6359b823b53521bb0548c7d6c3c1761ab2c8c7e10411e5f6aa4283",
+  "mutation_suite_hash": "802be29ddf50353c45212dee7a124ef07b60bf1fb6106c382b182d08e9a6a6d9",
+  "calibration_result_hash": "28eabe65778b630a427c40e37fdcaa925c68ec429fea3403089eff5982bd5408",
+  "engines": {
+    "channel_a": {
+      "name": "StructuredStaffGraphOMR",
+      "version": "1.0.0-rc013",
+      "architecture": "morphological_projection_and_symbol_graph"
+    },
+    "channel_b": {
+      "name": "NeuralVisualFeatureOMR",
+      "version": "1.0.0-rc013",
+      "architecture": "spatial_pyramid_visual_embedding_viterbi_decoder"
+    },
+    "channel_c": {
+      "name": "ScoreScanStructuralAlignment",
+      "version": "1.0.0-rc013",
+      "architecture": "multi_scale_geometric_registration_and_patch_correlation"
+    }
+  },
+  "dimensions": {
+    "critical": [
+      "pitch",
+      "accidental",
+      "octave",
+      "onset",
+      "duration",
+      "rest",
+      "key_signature",
+      "time_signature",
+      "tie",
+      "tuplet",
+      "repeat_structure",
+      "measure_sequence"
+    ],
+    "secondary": [
+      "dynamic",
+      "articulation",
+      "slur",
+      "pedal",
+      "tempo"
+    ]
+  },
+  "acceptance_thresholds": {
+    "max_omr_ned": 0.05,
+    "max_critical_mismatches": 0,
+    "max_image_discrepancy": 0.35,
+    "required_mutation_recall": 1.0
+  },
+  "qualification_policy": {
+    "machine_receipts_can_qualify_composer": false,
+    "current_n_russian": 2,
+    "rc012_resumption_status": "BLOCKED"
+  },
+  "protocol_hash": "da454acced4aab41747d1c83c83bd06d12fc22ab48e0f9769780e88feeec83e9"
+}
