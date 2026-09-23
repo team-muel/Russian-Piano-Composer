@@ -312,24 +312,33 @@ def get_all_rc013_hashes() -> dict[str, str]:
 
 
 def get_machine_triangulation_hashes() -> dict[str, str]:
-    """Computes and returns cryptographic hashes for machine triangulation calibration artifacts."""
-    manifest_p = "data/manifests/rc013_machine_validation_protocol_v1.json"
-    calib_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_registry.json"
+    """Computes and returns cryptographic hashes for machine triangulation calibration artifacts (V1 and V2)."""
+    manifest_v1_p = "data/manifests/rc013_machine_validation_protocol_v1.json"
+    calib_v1_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_registry.json"
+    manifest_v2_p = "data/manifests/rc013_machine_validation_protocol_v2.json"
+    calib_v2_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_v2_registry.json"
 
-    if not os.path.exists(manifest_p):
-        return {}
+    res: dict[str, str] = {}
 
-    with open(manifest_p, encoding="utf-8") as f:
-        manifest_data = json.load(f)
+    if os.path.exists(manifest_v1_p):
+        with open(manifest_v1_p, encoding="utf-8") as f:
+            v1_data = json.load(f)
+        calib_v1_corpus_hash = compute_sha256_file(calib_v1_reg_p) if os.path.exists(calib_v1_reg_p) else "0" * 64
+        res["RC013_MACHINE_PROTOCOL_V1_HASH"] = v1_data.get("protocol_hash", "")
+        res["RC013_CALIBRATION_V1_CORPUS_HASH"] = calib_v1_corpus_hash
+        res["RC013_MUTATION_V1_SUITE_HASH"] = v1_data.get("mutation_suite_hash", "")
+        res["RC013_CALIBRATION_V1_RESULT_HASH"] = v1_data.get("calibration_result_hash", "")
 
-    calib_corpus_hash = compute_sha256_file(calib_reg_p) if os.path.exists(calib_reg_p) else "0" * 64
+    if os.path.exists(manifest_v2_p):
+        with open(manifest_v2_p, encoding="utf-8") as f:
+            v2_data = json.load(f)
+        calib_v2_corpus_hash = compute_sha256_file(calib_v2_reg_p) if os.path.exists(calib_v2_reg_p) else "0" * 64
+        res["RC013_MACHINE_PROTOCOL_V2_HASH"] = v2_data.get("protocol_hash", "")
+        res["RC013_CALIBRATION_V2_CORPUS_HASH"] = calib_v2_corpus_hash
+        res["RC013_END_TO_END_MUTATION_SUITE_HASH"] = v2_data.get("end_to_end_mutation_suite_hash", "")
+        res["RC013_CALIBRATION_V2_RESULT_HASH"] = v2_data.get("calibration_result_hash", "")
 
-    return {
-        "RC013_MACHINE_PROTOCOL_HASH": manifest_data.get("protocol_hash", ""),
-        "RC013_CALIBRATION_CORPUS_HASH": calib_corpus_hash,
-        "RC013_MUTATION_SUITE_HASH": manifest_data.get("mutation_suite_hash", ""),
-        "RC013_CALIBRATION_RESULT_HASH": manifest_data.get("calibration_result_hash", ""),
-    }
+    return res
 
 
 def main() -> None:

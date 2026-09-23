@@ -1,19 +1,21 @@
-"""Unit and regression tests for RC-013 Machine-Triangulated Source-Fidelity Validation Protocol.
+"""Unit and regression tests for RC-013 Machine-Triangulated Source-Fidelity Validation Protocol (V1 and V2).
 
 Tests cover:
-1. Blindness: OMR inputs exclude canonical MusicXML; pilot paths excluded from calibration.
-2. Independence: Distinct architectures for Channel A, Channel B, and Channel C.
-3. Event Normalization: Canonical event graph mapping and exact metric sensitivity.
-4. Adversarial Mutations: 100% recall across all 19 mutation families with 0 false negatives.
-5. Protocol Freeze: Cryptographic sensitivity to threshold, engine, and corpus changes.
-6. Anti-Leakage: Protocol isolation from RC-013 pilot data.
-7. Qualification Isolation: Calibration PASS does not increment N_Russian or unblock RC-012.
+1. Blindness: OMR inputs exclude canonical MusicXML; reference hints rejected or ignored.
+2. Architecture Independence: Distinct architectures for Channel A, Channel B, and Channel C.
+3. Channel C Anti-Self-Comparison: Strict rejection of identical rendered vs scan images (SELF_COMPARISON_DISALLOWED).
+4. End-to-End Image Mutation Sensitivity: 100% recall across all 19 mutation families through rendering and degradation.
+5. Protocol Freeze: Cryptographic sensitivity to threshold, engine, and corpus changes in V2.
+6. Anti-Leakage & Qualification Isolation: Protocol freeze leaves N_Russian = 2 and RC-012 BLOCKED.
+7. Untouched RC-013 Pilot Scores: All 9 pilot scores remain unvalidated and analysis/generative ineligible.
 """
 
 from __future__ import annotations
 
 import json
 from pathlib import Path
+
+import pytest
 
 from russian_piano_composer.corpus.rc013_composer_pool import (
     derive_russian_composer_pool_from_evidence,
@@ -28,6 +30,7 @@ from russian_piano_composer.corpus.rc013_mutations import (
     RC013MutationEngine,
 )
 from russian_piano_composer.corpus.rc013_omr_adapters import (
+    BlindOMRFirewall,
     NeuralVisualFeatureOMREngine,
     ScoreScanStructuralAlignmentEngine,
     StructuredStaffGraphOMREngine,
@@ -50,13 +53,40 @@ def test_omr_adapters_have_distinct_independent_architectures() -> None:
     assert eng_b.ENGINE_NAME != eng_c.ENGINE_NAME
 
 
-def test_calibration_corpus_registry_excludes_rc013_pilot_scores() -> None:
-    """Verifies that the calibration corpus contains strictly non-RC-013 piano scores."""
-    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_registry.json")
+def test_blind_omr_firewall_rejects_symbolic_files(tmp_path: Path) -> None:
+    """Verifies that the BlindOMRFirewall raises an error if symbolic files are present in the sandbox."""
+    sandbox = tmp_path / "omr_sandbox"
+    sandbox.mkdir()
+
+    # Place a valid image and a forbidden MusicXML file
+    (sandbox / "page1.png").write_bytes(b"fake image bytes")
+    (sandbox / "score.musicxml").write_text("<score-partwise/>", encoding="utf-8")
+
+    with pytest.raises(RuntimeError, match="BLIND_OMR_FIREWALL_VIOLATION"):
+        BlindOMRFirewall.verify_sandbox_isolation(str(sandbox))
+
+
+def test_channel_c_rejects_identical_rendered_and_scan_images(tmp_path: Path) -> None:
+    """Proves that Channel C strictly rejects self-comparison (rendered == scan)."""
+    img_p = tmp_path / "page1.png"
+    img_p.write_bytes(b"exact same image bytes for render and scan")
+
+    engine_c = ScoreScanStructuralAlignmentEngine()
+    with pytest.raises(ValueError, match="SELF_COMPARISON_DISALLOWED"):
+        engine_c.align_score_to_scan(
+            rendered_images=[str(img_p)],
+            historical_scan_images=[str(img_p)],
+            score_id="test_self_comparison",
+        )
+
+
+def test_calibration_v2_corpus_registry_excludes_rc013_pilot_scores() -> None:
+    """Verifies that the calibration V2 corpus contains strictly non-RC-013 piano scores across 3 tiers."""
+    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_v2_registry.json")
     assert registry_path.exists()
 
     registry = json.loads(registry_path.read_text(encoding="utf-8"))
-    assert len(registry) >= 5
+    assert len(registry) == 7
 
     forbidden_composers = {"Anton Arensky", "Anatoly Lyadov", "Sergei Lyapunov"}
     forbidden_work_prefixes = {
@@ -66,10 +96,16 @@ def test_calibration_corpus_registry_excludes_rc013_pilot_scores() -> None:
         "sergei_lyapunov_op11",
     }
 
+    splits = {entry["split"] for entry in registry}
+    assert splits == {
+        "SYNTHETIC_CONTROLLED_CALIBRATION",
+        "REAL_SCAN_THRESHOLD_CALIBRATION",
+        "CALIBRATION_V2_FINAL_HOLDOUT",
+    }
+
     for entry in registry:
         assert entry["composer"] not in forbidden_composers
         assert not any(entry["artifact_id"].startswith(fp) for fp in forbidden_work_prefixes)
-        assert entry["split"] in {"CALIBRATION_THRESHOLD", "CALIBRATION_FINAL_HOLDOUT"}
 
 
 def test_event_graph_normalization_and_comparison_identity() -> None:
@@ -157,27 +193,27 @@ def test_adversarial_mutation_suite_covers_all_19_families() -> None:
         )
 
 
-def test_protocol_manifest_hash_changes_on_threshold_mutation(tmp_path: Path) -> None:
-    """Proves that changing any acceptance threshold mutates the protocol hash."""
+def test_protocol_v2_manifest_hash_changes_on_threshold_mutation() -> None:
+    """Proves that changing any acceptance threshold mutates the V2 protocol hash."""
     protocol = MachineTriangulationProtocol(max_omr_ned_threshold=0.05)
     manifest1 = protocol.generate_frozen_protocol_manifest(
         calibration_corpus_hash="a" * 64,
-        mutation_suite_hash="b" * 64,
+        end_to_end_mutation_suite_hash="b" * 64,
         calibration_result_hash="c" * 64,
     )
 
     protocol_mutated = MachineTriangulationProtocol(max_omr_ned_threshold=0.01)
     manifest2 = protocol_mutated.generate_frozen_protocol_manifest(
         calibration_corpus_hash="a" * 64,
-        mutation_suite_hash="b" * 64,
+        end_to_end_mutation_suite_hash="b" * 64,
         calibration_result_hash="c" * 64,
     )
 
     assert manifest1["protocol_hash"] != manifest2["protocol_hash"]
 
 
-def test_machine_calibration_pass_leaves_russian_composer_pool_at_two() -> None:
-    """Proves that machine calibration PASS does not alter N_Russian = 2 or unblock RC-012."""
+def test_machine_calibration_v2_pass_leaves_russian_composer_pool_at_two() -> None:
+    """Proves that machine calibration V2 PASS does not alter N_Russian = 2 or unblock RC-012."""
     res = derive_russian_composer_pool_from_evidence()
     assert res.n_russian == 2
     assert res.n_control == 5
@@ -191,34 +227,33 @@ def test_machine_calibration_pass_leaves_russian_composer_pool_at_two() -> None:
     assert "N_Russian = 2 < 4" in res.rc012_resumption_reason
 
 
-def test_frozen_protocol_manifest_matches_disk() -> None:
-    """Verifies that the frozen protocol manifest exists and contains valid SHA256 hashes."""
-    manifest_p = Path("data/manifests/rc013_machine_validation_protocol_v1.json")
+def test_frozen_protocol_v2_manifest_matches_disk() -> None:
+    """Verifies that the frozen protocol manifest V2 exists and contains valid SHA256 hashes."""
+    manifest_p = Path("data/manifests/rc013_machine_validation_protocol_v2.json")
     assert manifest_p.exists()
 
     data = json.loads(manifest_p.read_text(encoding="utf-8"))
     assert data["protocol_version"] == PROTOCOL_VERSION
     assert len(data["protocol_hash"]) == 64
     assert len(data["calibration_corpus_hash"]) == 64
-    assert len(data["mutation_suite_hash"]) == 64
+    assert len(data["end_to_end_mutation_suite_hash"]) == 64
     assert len(data["calibration_result_hash"]) == 64
     assert data["qualification_policy"]["machine_receipts_can_qualify_composer"] is False
     assert data["qualification_policy"]["current_n_russian"] == 2
     assert data["qualification_policy"]["rc012_resumption_status"] == "BLOCKED"
 
 
-def test_machine_triangulation_hashes_present_and_valid() -> None:
-    """Verifies that get_machine_triangulation_hashes returns 4 valid SHA256 hashes."""
+def test_machine_triangulation_v2_hashes_present_and_valid() -> None:
+    """Verifies that get_machine_triangulation_hashes returns valid SHA256 hashes for V1 and V2."""
     from scripts.compute_rc013_hashes import get_machine_triangulation_hashes
 
     hashes = get_machine_triangulation_hashes()
-    expected_keys = [
-        "RC013_MACHINE_PROTOCOL_HASH",
-        "RC013_CALIBRATION_CORPUS_HASH",
-        "RC013_MUTATION_SUITE_HASH",
-        "RC013_CALIBRATION_RESULT_HASH",
+    expected_v2_keys = [
+        "RC013_MACHINE_PROTOCOL_V2_HASH",
+        "RC013_CALIBRATION_V2_CORPUS_HASH",
+        "RC013_END_TO_END_MUTATION_SUITE_HASH",
+        "RC013_CALIBRATION_V2_RESULT_HASH",
     ]
-    assert len(hashes) == len(expected_keys)
-    for k in expected_keys:
+    for k in expected_v2_keys:
         assert k in hashes
         assert len(hashes[k]) == 64

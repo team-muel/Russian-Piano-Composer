@@ -1,0 +1,93 @@
+[
+  {
+    "artifact_id": "chopin_op28_no07",
+    "composer": "Fr\u00e9d\u00e9ric Chopin",
+    "work": "Pr\u00e9lude in A major, Op. 28 No. 7",
+    "score_type": "piano_solo",
+    "measures_total": 16,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/chopin_op28_no07.musicxml",
+    "ground_truth_sha256": "fb0f145759a03c5fd43ce8f62c3930ff9ee0a9443fd5908f530bc65d6f8d9f9e",
+    "image_path": "data/calibration/rc013_machine_validation/scans/chopin_op28_no07_p1.png",
+    "image_sha256": "2d440abb135b058f3941470e71eb6b9ce57ee780b4e3ff3f17c857318bad014c",
+    "split": "SYNTHETIC_CONTROLLED_CALIBRATION",
+    "license": "PUBLIC_DOMAIN / MUTOPIA"
+  },
+  {
+    "artifact_id": "chopin_op28_no20",
+    "composer": "Fr\u00e9d\u00e9ric Chopin",
+    "work": "Pr\u00e9lude in C minor, Op. 28 No. 20",
+    "score_type": "piano_solo",
+    "measures_total": 13,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/chopin_op28_no20.musicxml",
+    "ground_truth_sha256": "2d1097c335f2d2c82583496a40c0e990e65fcfc6c3d7124ea1f97885e6cf880e",
+    "image_path": "data/calibration/rc013_machine_validation/scans/chopin_op28_no20_p1.png",
+    "image_sha256": "1e17e187a537628418477b7c24956811d0dcab6c86756028fee4e6d882b32c7b",
+    "split": "SYNTHETIC_CONTROLLED_CALIBRATION",
+    "license": "PUBLIC_DOMAIN / MUTOPIA"
+  },
+  {
+    "artifact_id": "bach_bwv846_prelude",
+    "composer": "Johann Sebastian Bach",
+    "work": "Prelude in C major, BWV 846",
+    "score_type": "piano_solo",
+    "measures_total": 35,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/bach_bwv846_prelude.musicxml",
+    "ground_truth_sha256": "18c1773093e8d28e278dd02a13345d9978340789e0c3c8ad048add3df73ec30c",
+    "image_path": "data/calibration/rc013_machine_validation/scans/bach_bwv846_prelude_p1.png",
+    "image_sha256": "6bd230f141219e930cfe36d64ffc1ff86bb009d9c505474a4faac7e268831937",
+    "split": "SYNTHETIC_CONTROLLED_CALIBRATION",
+    "license": "PUBLIC_DOMAIN / MUTOPIA"
+  },
+  {
+    "artifact_id": "beethoven_op119_no01",
+    "composer": "Ludwig van Beethoven",
+    "work": "Bagatelle in G minor, Op. 119 No. 1",
+    "score_type": "piano_solo",
+    "measures_total": 40,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/beethoven_op119_no01.musicxml",
+    "ground_truth_sha256": "2ed889a252bfaf4b351b31f1e3939559a4e14270ed8a2cafa6fff78e0f9d25ba",
+    "image_path": "data/calibration/rc013_machine_validation/scans/beethoven_op119_no01_p1.png",
+    "image_sha256": "fcb0fe87da647e54aa8a9c975bec81f52a0e927cfcbe20501a901776e4a095f4",
+    "split": "REAL_SCAN_THRESHOLD_CALIBRATION",
+    "license": "PUBLIC_DOMAIN / MUTOPIA"
+  },
+  {
+    "artifact_id": "mozart_k545_andante",
+    "composer": "Wolfgang Amadeus Mozart",
+    "work": "Sonata in C major K. 545, II. Andante",
+    "score_type": "piano_solo",
+    "measures_total": 74,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/mozart_k545_andante.musicxml",
+    "ground_truth_sha256": "718943ec0d01df4615e852be7f3156b8971b39f1d765ff5fcd122cf0ddff8bd9",
+    "image_path": "data/calibration/rc013_machine_validation/scans/mozart_k545_andante_p1.png",
+    "image_sha256": "9e313e1efc1c17875ead4ca2c873916930054868ad94974eb4307ebe40701e3a",
+    "split": "REAL_SCAN_THRESHOLD_CALIBRATION",
+    "license": "PUBLIC_DOMAIN / MUTOPIA"
+  },
+  {
+    "artifact_id": "schumann_op15_no01",
+    "composer": "Robert Schumann",
+    "work": "Kinderszenen, Op. 15 No. 1 (Von fremden L\u00e4ndern und Menschen)",
+    "score_type": "piano_solo",
+    "measures_total": 22,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/schumann_op15_no01.musicxml",
+    "ground_truth_sha256": "c5822c008cdd7e8052d85f87ebaa350b98aae78355427830597123509e0e47bf",
+    "image_path": "data/calibration/rc013_machine_validation/scans/schumann_op15_no01_p1.png",
+    "image_sha256": "49eec1a6f37cc8c7a5a35c357432aac59236a78877418876f885db2aae05ce84",
+    "split": "CALIBRATION_V2_FINAL_HOLDOUT",
+    "license": "PUBLIC_DOMAIN / MUTOPIA"
+  },
+  {
+    "artifact_id": "clementi_op36_no01",
+    "composer": "Muzio Clementi",
+    "work": "Sonatina in C major, Op. 36 No. 1",
+    "score_type": "piano_solo",
+    "measures_total": 38,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/clementi_op36_no01.musicxml",
+    "ground_truth_sha256": "ac218d94cb096bed719a7faf4eab823ea9dc0c665d4d7bda64748d90887d3808",
+    "image_path": "data/calibration/rc013_machine_validation/scans/clementi_op36_no01_p1.png",
+    "image_sha256": "3c4d82b22e4cd1f1cd45752f6fbfc88da436da35b2fd85561cae1e058026dd74",
+    "split": "CALIBRATION_V2_FINAL_HOLDOUT",
+    "license": "PUBLIC_DOMAIN / MUTOPIA"
+  }
+]

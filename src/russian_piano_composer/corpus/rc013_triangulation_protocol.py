@@ -1,7 +1,7 @@
-"""Machine-Triangulated Source-Fidelity Validation Protocol Engine for RC-013.
+"""Machine-Triangulated Source-Fidelity Validation Protocol Engine for RC-013 (Protocol V2).
 
 Coordinates multi-channel OMR and visual alignment triangulation, evaluates disagreement taxonomy,
-runs calibration and mutation benchmarks, and computes protocol freeze hashes.
+runs blind calibration and end-to-end image mutation benchmarks, and computes protocol freeze hashes.
 """
 
 from __future__ import annotations
@@ -13,9 +13,12 @@ from typing import Any
 
 from russian_piano_composer.corpus.rc013_event_graph import (
     EventComparisonResult,
-    NormalizedEventGraph,
     compare_event_graphs,
     extract_event_graph_from_musicxml,
+)
+from russian_piano_composer.corpus.rc013_image_mutations import (
+    EndToEndImageMutationEngine,
+    ImageMutationBenchmarkResult,
 )
 from russian_piano_composer.corpus.rc013_mutations import (
     RC013MutationEngine,
@@ -25,8 +28,11 @@ from russian_piano_composer.corpus.rc013_omr_adapters import (
     ScoreScanStructuralAlignmentEngine,
     StructuredStaffGraphOMREngine,
 )
+from russian_piano_composer.corpus.rc013_renderer import (
+    DeterministicScoreRenderer,
+)
 
-PROTOCOL_VERSION: str = "rc013_machine_triangulation_protocol_v1"
+PROTOCOL_VERSION: str = "rc013_machine_triangulation_protocol_v2"
 
 # Frozen Structural Rules & Dimensions
 CRITICAL_DIMENSIONS: list[str] = [
@@ -86,7 +92,7 @@ class TriangulationEvaluationResult:
 
 
 class MachineTriangulationProtocol:
-    """Pre-registered calibration and evaluation protocol engine."""
+    """Pre-registered calibration and evaluation protocol engine (V2)."""
 
     def __init__(
         self,
@@ -102,36 +108,51 @@ class MachineTriangulationProtocol:
         self.engine_b = NeuralVisualFeatureOMREngine()
         self.engine_c = ScoreScanStructuralAlignmentEngine()
         self.mutation_engine = RC013MutationEngine()
+        self.renderer = DeterministicScoreRenderer(target_dpi=150)
+        self.image_mutation_engine = EndToEndImageMutationEngine()
 
     def evaluate_candidate(
         self,
         candidate_musicxml_path: str,
         source_image_paths: list[str],
         score_id: str,
-        reference_hint: dict[str, Any] | None = None,
+        rendered_score_image_paths: list[str] | None = None,
     ) -> TriangulationEvaluationResult:
-        """Runs multi-channel triangulation on a candidate score."""
+        """Runs multi-channel blind triangulation on a candidate score.
+
+        OMR Engines (Channels A and B) receive strictly source scan images.
+        Alignment Engine (Channel C) compares rendered symbolic score images against source scan images.
+        """
         import datetime
+        import tempfile
 
         candidate_graph = extract_event_graph_from_musicxml(candidate_musicxml_path, score_id=score_id)
 
-        # 1. Run Channel A (Structured OMR)
+        # 1. Run Channel A (Structured OMR) - strictly blind
         res_a = self.engine_a.process_source_pages(
             source_image_paths,
             score_id=score_id,
-            reference_structure_hint=reference_hint,
         )
 
-        # 2. Run Channel B (Neural Visual Feature OMR)
+        # 2. Run Channel B (Neural Visual Feature OMR) - strictly blind
         res_b = self.engine_b.process_source_pages(
             source_image_paths,
             score_id=score_id,
-            reference_structure_hint=reference_hint,
         )
 
-        # 3. Run Channel C (Structural Image Alignment)
+        # 3. Channel C: Render candidate score if not explicitly passed
+        rendered_images = rendered_score_image_paths
+        if not rendered_images:
+            temp_render_dir = tempfile.mkdtemp(prefix="rc013_rend_eval_")
+            rendered_images = self.renderer.render_musicxml_to_images(
+                candidate_musicxml_path,
+                temp_render_dir,
+                score_id=score_id,
+            )
+
+        # Run Channel C (Structural Image Alignment) - comparing rendered symbolic images vs distinct scan images
         res_c = self.engine_c.align_score_to_scan(
-            rendered_images=source_image_paths,  # In calibration, compares rendered to scan
+            rendered_images=rendered_images,
             historical_scan_images=source_image_paths,
             score_id=score_id,
         )
@@ -198,56 +219,17 @@ class MachineTriangulationProtocol:
             validation_timestamp=datetime.datetime.now(datetime.UTC).isoformat(),
         )
 
-    def run_mutation_benchmark(
+    def run_image_mutation_benchmark(
         self,
-        base_graphs: list[NormalizedEventGraph],
-    ) -> dict[str, Any]:
-        """Evaluates detection recall and false negatives across all 19 mutation families."""
-        results_by_family: dict[str, dict[str, int]] = {
-            fam: {"injected": 0, "detected": 0, "missed": 0}
-            for fam in self.mutation_engine.MUTATION_FAMILIES
-        }
-
-        all_missed: list[dict[str, Any]] = []
-
-        for base_g in base_graphs:
-            specimens = self.mutation_engine.generate_mutations(base_g)
-            for spec in specimens:
-                fam = spec.mutation_family
-                results_by_family[fam]["injected"] += 1
-
-                comp = compare_event_graphs(base_g, spec.mutated_event_graph)
-                detected = comp.critical_mismatches_count > 0 or comp.overall_omr_ned > 0.0
-
-                if detected:
-                    results_by_family[fam]["detected"] += 1
-                else:
-                    results_by_family[fam]["missed"] += 1
-                    all_missed.append({
-                        "specimen_id": spec.specimen_id,
-                        "family": fam,
-                        "description": spec.mutation_description,
-                    })
-
-        total_injected = sum(v["injected"] for v in results_by_family.values())
-        total_detected = sum(v["detected"] for v in results_by_family.values())
-        total_missed = sum(v["missed"] for v in results_by_family.values())
-
-        overall_recall = round(total_detected / total_injected, 4) if total_injected > 0 else 1.0
-
-        return {
-            "total_mutations_injected": total_injected,
-            "total_mutations_detected": total_detected,
-            "total_mutations_missed": total_missed,
-            "overall_mutation_recall": overall_recall,
-            "family_breakdown": results_by_family,
-            "missed_mutations": all_missed,
-        }
+        base_musicxml_paths: list[str],
+    ) -> ImageMutationBenchmarkResult:
+        """Evaluates end-to-end image-level mutation sensitivity across all 19 mutation families."""
+        return self.image_mutation_engine.run_benchmark(base_musicxml_paths)
 
     def generate_frozen_protocol_manifest(
         self,
         calibration_corpus_hash: str,
-        mutation_suite_hash: str,
+        end_to_end_mutation_suite_hash: str,
         calibration_result_hash: str,
     ) -> dict[str, Any]:
         """Generates the canonical frozen protocol manifest payload."""
@@ -258,7 +240,7 @@ class MachineTriangulationProtocol:
             "created_at": datetime.datetime.now(datetime.UTC).isoformat(),
             "status": "FROZEN_PRE_REGISTERED",
             "calibration_corpus_hash": calibration_corpus_hash,
-            "mutation_suite_hash": mutation_suite_hash,
+            "end_to_end_mutation_suite_hash": end_to_end_mutation_suite_hash,
             "calibration_result_hash": calibration_result_hash,
             "engines": {
                 "channel_a": {
