@@ -1,10 +1,16 @@
-"""Computes canonical scientific hashes for the RC-013 milestone."""
+"""Computes canonical scientific hashes for the RC-013 milestone.
+
+Canonical Hash Schema Versions:
+- SCHEMA V1: Historical baseline where SOURCE_IMAGE_BUNDLE_HASH hashed only the manifest JSON.
+- SCHEMA V2: Hardened canonical baseline where SOURCE_IMAGE_BUNDLE_HASH hashes actual unique authoritative source PDF bytes + manifest binding, and HUMAN_REVIEW_RECEIPT_BUNDLE_HASH hashes validated human review receipts.
+"""
 
 from __future__ import annotations
 
 import hashlib
 import json
 import os
+from typing import Any
 
 import yaml
 
@@ -15,6 +21,11 @@ from russian_piano_composer.corpus.rc013_fidelity import (
 from russian_piano_composer.corpus.rc013_integrity import (
     validate_canonical_score_integrity,
 )
+from russian_piano_composer.corpus.rc013_review_ingestion import (
+    validate_human_review_receipt,
+)
+
+RC013_CANONICAL_HASH_SCHEMA_VERSION: int = 2
 
 
 def compute_sha256_file(file_path: str) -> str:
@@ -34,7 +45,11 @@ def compute_normalized_text_sha256(file_path: str) -> str:
 
 
 def compute_directory_bundle_hash(dir_path: str, extension: str = ".musicxml") -> str:
+    if not os.path.exists(dir_path):
+        return hashlib.sha256(b"EMPTY_DIRECTORY\n").hexdigest()
     files = sorted([f for f in os.listdir(dir_path) if f.endswith(extension)])
+    if not files:
+        return hashlib.sha256(b"EMPTY_SET\n").hexdigest()
     bundle_hasher = hashlib.sha256()
     for f in files:
         full_path = os.path.join(dir_path, f)
@@ -57,15 +72,67 @@ def load_canonical_symbolic_paths(manifest_yaml_path: str) -> dict[str, str]:
     return mapping
 
 
+def compute_authoritative_source_image_bundle_hash(
+    scans_manifest_path: str = "data/scans/rc013/rc013_scans_manifest.json",
+    scans_dir: str = "data/scans/rc013",
+) -> str:
+    """Computes canonical V2 source image bundle hash from physical authoritative source PDF bytes.
+
+    Fails closed if any declared source PDF is missing or if actual PDF SHA differs from declared SHA.
+    """
+    if not os.path.exists(scans_manifest_path):
+        raise FileNotFoundError(f"SOURCE_MANIFEST_MISSING: {scans_manifest_path}")
+
+    with open(scans_manifest_path, encoding="utf-8") as f:
+        scans_manifest: list[dict[str, Any]] = json.load(f)
+
+    # Extract unique source files deterministically
+    unique_files: dict[str, str] = {}
+    for entry in scans_manifest:
+        fn = entry.get("source_file_name")
+        declared_sha = entry.get("source_file_sha256")
+        if fn and declared_sha and fn not in unique_files:
+            unique_files[str(fn)] = str(declared_sha)
+
+    lines: list[str] = []
+    for fn in sorted(unique_files.keys()):
+        declared_sha = unique_files[fn]
+        local_path = os.path.join(scans_dir, fn)
+        if not os.path.exists(local_path):
+            raise FileNotFoundError(f"SOURCE_BYTES_MISSING: {local_path}")
+        actual_sha = compute_sha256_file(local_path)
+        if actual_sha != declared_sha:
+            raise ValueError(
+                f"SOURCE_BYTE_SHA_MISMATCH for {fn}: actual={actual_sha} != declared={declared_sha}"
+            )
+        lines.append(f"SOURCE_FILE|{fn}|{actual_sha}")
+
+    # Bind the scans manifest file hash
+    manifest_file_sha = compute_sha256_file(scans_manifest_path)
+    lines.append(f"SCANS_MANIFEST|{manifest_file_sha}")
+
+    payload = "\n".join(lines) + "\n"
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
 def compute_source_fidelity_gate_result(
     source_comparison_bundle_hash: str,
     source_img_bundle_hash: str,
     corpus_bundle_hash: str,
     reviews_dir: str = "data/reviews/rc013",
+    receipts_dir: str = "data/reviews/rc013/accepted",
     source_manifest_csv: str = "data/manifests/rc013_source_candidates.csv",
     digitization_manifest_yaml: str = "data/manifests/rc013_digitization_manifest.yaml",
+    packets_dir: str = "data/reviews/rc013/packets",
 ) -> tuple[str, str]:
-    """Computes overall pilot source fidelity verdict and gate result hash via production gate."""
+    """Computes overall pilot source fidelity verdict and gate result hash via production gate.
+
+    Production fidelity gate requires:
+    1. Cross-artifact integrity valid.
+    2. Authoritative work identity valid.
+    3. Ledger structure and per-measure audit valid.
+    4. Valid independent human review receipt present and bound to exact live MusicXML & source PDF bytes.
+    """
     files = sorted([f for f in os.listdir(reviews_dir) if f.endswith(".source_comparison.json")])
     source_sha_map = load_canonical_source_manifest(source_manifest_csv) if os.path.exists(source_manifest_csv) else {}
     sym_path_map = load_canonical_symbolic_paths(digitization_manifest_yaml)
@@ -98,13 +165,22 @@ def compute_source_fidelity_gate_result(
 
         current_sym_sha = compute_sha256_file(sym_path) if os.path.exists(sym_path) else None
 
-        # Cross-artifact integrity and work identity are prerequisites to fidelity.
+        # 1. Cross-artifact integrity check
         integrity = validate_canonical_score_integrity(
             score_id,
             identity_map_path=identity_map_path,
             digitization_manifest_path=digitization_manifest_yaml,
             reviews_dir=reviews_dir,
             score_path=sym_path,
+        )
+
+        # 2. Receipt validation check (Human Review Acceptance Requirement)
+        receipt_path = os.path.join(receipts_dir, f"{score_id}.human_review_receipt.json")
+        receipt_res = validate_human_review_receipt(
+            receipt_path=receipt_path,
+            live_symbolic_sha=current_sym_sha or "",
+            actual_source_sha=canonical_source_sha or "",
+            packets_dir=packets_dir,
         )
 
         if not integrity.artifact_consistent:
@@ -122,6 +198,11 @@ def compute_source_fidelity_gate_result(
                 if integrity.errors
                 else "IDENTITY_REVALIDATION_REQUIRED"
             )
+            overall_all_verified = False
+        elif not receipt_res.valid:
+            # Unreviewed / pending independent human review
+            verdict = "PENDING_SOURCE_COMPARISON"
+            category = "PENDING_INDEPENDENT_HUMAN_REVIEW_RECEIPT"
             overall_all_verified = False
         else:
             res = validate_source_comparison_ledger(
@@ -164,9 +245,11 @@ def get_all_rc013_hashes() -> dict[str, str]:
     # 1. Source Inventory Hash
     source_inv_hash = compute_normalized_text_sha256("data/manifests/rc013_source_candidates.csv")
 
-    # 2. Source Image Bundle Hash
-    scans_manifest = "data/scans/rc013/rc013_scans_manifest.json"
-    source_img_bundle_hash = compute_sha256_file(scans_manifest)
+    # 2. Source Image Bundle Hash (V2: actual authoritative PDF bytes + scans manifest binding)
+    source_img_bundle_hash = compute_authoritative_source_image_bundle_hash(
+        scans_manifest_path="data/scans/rc013/rc013_scans_manifest.json",
+        scans_dir="data/scans/rc013",
+    )
 
     # 3. Digitization Policy Hash
     policy_hash = compute_normalized_text_sha256("docs/research/RC013_SCORE_ENTRY_POLICY.md")
@@ -194,17 +277,26 @@ def get_all_rc013_hashes() -> dict[str, str]:
     # 9. Source Comparison Bundle Hash (all *.source_comparison.json)
     source_comparison_bundle_hash = compute_directory_bundle_hash("data/reviews/rc013", extension=".source_comparison.json")
 
-    # 10. Source Fidelity Gate Result Hash (derived from production gate)
+    # 10. Human Review Receipt Bundle Hash (all *.human_review_receipt.json in data/reviews/rc013/accepted)
+    human_review_receipt_bundle_hash = compute_directory_bundle_hash(
+        "data/reviews/rc013/accepted",
+        extension=".human_review_receipt.json",
+    )
+
+    # 11. Source Fidelity Gate Result Hash (derived from production gate)
     _, source_fidelity_gate_result_hash = compute_source_fidelity_gate_result(
         source_comparison_bundle_hash=source_comparison_bundle_hash,
         source_img_bundle_hash=source_img_bundle_hash,
         corpus_bundle_hash=corpus_bundle_hash,
         reviews_dir="data/reviews/rc013",
+        receipts_dir="data/reviews/rc013/accepted",
         source_manifest_csv="data/manifests/rc013_source_candidates.csv",
         digitization_manifest_yaml="data/manifests/rc013_digitization_manifest.yaml",
+        packets_dir="data/reviews/rc013/packets",
     )
 
     return {
+        "RC013_CANONICAL_HASH_SCHEMA_VERSION": str(RC013_CANONICAL_HASH_SCHEMA_VERSION),
         "RC013_SOURCE_INVENTORY_HASH": source_inv_hash,
         "RC013_SOURCE_IMAGE_BUNDLE_HASH": source_img_bundle_hash,
         "RC013_DIGITIZATION_POLICY_HASH": policy_hash,
@@ -214,6 +306,7 @@ def get_all_rc013_hashes() -> dict[str, str]:
         "RC013_QC_RESULT_HASH": qc_result_hash,
         "RC013_AUTOMATED_REVIEW_BUNDLE_HASH": automated_review_bundle_hash,
         "RC013_SOURCE_COMPARISON_BUNDLE_HASH": source_comparison_bundle_hash,
+        "RC013_HUMAN_REVIEW_RECEIPT_BUNDLE_HASH": human_review_receipt_bundle_hash,
         "RC013_SOURCE_FIDELITY_GATE_RESULT_HASH": source_fidelity_gate_result_hash,
     }
 
@@ -221,7 +314,7 @@ def get_all_rc013_hashes() -> dict[str, str]:
 def main() -> None:
     hashes = get_all_rc013_hashes()
     print("==================================================")
-    print("   RC-013 Canonical Cryptographic Hashes")
+    print(f"   RC-013 Canonical Hashes (Schema V{RC013_CANONICAL_HASH_SCHEMA_VERSION})")
     print("==================================================")
     for k, v in hashes.items():
         print(f"{k}: {v}")
