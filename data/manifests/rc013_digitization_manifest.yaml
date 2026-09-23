@@ -1,9 +1,7 @@
 milestone: RC-013
 title: RC-013 Canonical Pilot Digitization Manifest
-description: 'Authentic source-transcribed symbolic piano score pilot for Russian
-  confirmatory
-
-  resumption.'
+description: Authentic source-transcribed symbolic piano score pilot for Russian confirmatory
+  resumption.
 status: PILOT_SOURCE_FIDELITY_RECOVERY
 total_score_entries: 9
 pilot_composer_counts:
@@ -15,9 +13,9 @@ score_entries:
   composer: Anatoly Lyadov
   opus_or_catalogue: Op. 40
   movement: 2
-  title: Prélude
+  title: Prelude in D minor
   relative_score_path: data/scores/rc013/canonical/anatoly_lyadov_op40_no02.musicxml
-  file_sha256: 176eba2ffbe47a944f9a59fe860b6c09b6d7a18906c4121fbec7edf3fc957443
+  file_sha256: 0fc25451fa355a46b04598ae80c48f79acc33af5b06e6f60f7b12f1d6e481adb
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/anatoly_lyadov_op40_no02.review.json
@@ -28,23 +26,23 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 129
-  num_rests: 0
+  num_measures: 32
+  num_notes: 309
+  num_rests: 30
   time_signatures:
-  - 3/4
-  - 3/4
+  - 6/8
+  - 6/8
   key_signatures:
-  - d minor
-  - d minor
+  - <music21.key.KeySignature of 1 flat>
+  - <music21.key.KeySignature of 1 flat>
   qc_passed: true
 - canonical_work_id: anatoly_lyadov_op40_m03
   composer: Anatoly Lyadov
   opus_or_catalogue: Op. 40
   movement: 3
-  title: Prélude
+  title: Prelude in B-flat major
   relative_score_path: data/scores/rc013/canonical/anatoly_lyadov_op40_no03.musicxml
-  file_sha256: c873ad1522fb8fb89bbb23e6c95dcac96e6c3502aa0a6e82be56e280949588d5
+  file_sha256: 5784b8f95bf897e828a6a9b0918f1f2118d37c5198db93184c81f1a43e5582cd
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/anatoly_lyadov_op40_no03.review.json
@@ -55,23 +53,23 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 163
-  num_rests: 0
+  num_measures: 23
+  num_notes: 123
+  num_rests: 14
   time_signatures:
-  - 4/4
-  - 4/4
+  - 3/4
+  - 3/4
   key_signatures:
-  - B- major
-  - B- major
+  - <music21.key.KeySignature of 2 flats>
+  - <music21.key.KeySignature of 2 flats>
   qc_passed: true
 - canonical_work_id: anatoly_lyadov_op46_m04
   composer: Anatoly Lyadov
   opus_or_catalogue: Op. 46
   movement: 4
-  title: Prélude
+  title: Prelude in E minor
   relative_score_path: data/scores/rc013/canonical/anatoly_lyadov_op46_no04.musicxml
-  file_sha256: d07c6528f2253f6d379644c0913e6a0617ae02d48cc65f3dac96f6485f83363c
+  file_sha256: 1d7fe5a91edcb402449d0067fcfecbf156f38da9f710c515c7c1783b55daa748
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/anatoly_lyadov_op46_no04.review.json
@@ -82,15 +80,15 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 163
-  num_rests: 0
+  num_measures: 45
+  num_notes: 276
+  num_rests: 4
   time_signatures:
-  - 4/4
-  - 4/4
+  - 3/4
+  - 3/4
   key_signatures:
-  - e minor
-  - e minor
+  - <music21.key.KeySignature of 1 sharp>
+  - <music21.key.KeySignature of 1 sharp>
   qc_passed: true
 - canonical_work_id: anton_arensky_op36_m01
   composer: Anton Arensky
@@ -101,7 +99,6 @@ score_entries:
   file_sha256: 50f37ea7d2e5327f07bfd518ab0950c25130bc485ee9ddedc032cb26b697376e
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
-  source_fidelity_status: PENDING_SOURCE_COMPARISON
   review_record: data/reviews/rc013/anton_arensky_op36_no01.review.json
   source_archive: Internet Archive / IMSLP
   source_file_name: Arensky_morceaux_op36-1.pdf
@@ -144,8 +141,8 @@ score_entries:
   - 3/4
   - 3/4
   key_signatures:
-  - c minor
-  - c minor
+  - <music21.key.KeySignature of 3 flats>
+  - <music21.key.KeySignature of 3 flats>
   qc_passed: true
 - canonical_work_id: anton_arensky_op36_m13
   composer: Anton Arensky
@@ -171,8 +168,8 @@ score_entries:
   - 3/4
   - 3/4
   key_signatures:
-  - F# major
-  - F# major
+  - <music21.key.KeySignature of 6 sharps>
+  - <music21.key.KeySignature of 6 sharps>
   qc_passed: true
 - canonical_work_id: sergei_lyapunov_op11_m01
   composer: Sergei Lyapunov
@@ -180,7 +177,7 @@ score_entries:
   movement: 1
   title: Berceuse in F-sharp major
   relative_score_path: data/scores/rc013/canonical/sergei_lyapunov_op11_no01.musicxml
-  file_sha256: 293888563f6f8a7fc72385ffacc779505716e678447022706c69b164d3332daa
+  file_sha256: 37e92865e95c04747d537c8d80ecc5d09340c818ee3a135d97536221255b1b9a
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/sergei_lyapunov_op11_no01.review.json
@@ -191,15 +188,15 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 32
-  num_notes: 247
-  num_rests: 0
+  num_measures: 64
+  num_notes: 757
+  num_rests: 1
   time_signatures:
-  - 6/8
-  - 6/8
+  - 2/4
+  - 2/4
   key_signatures:
-  - F# major
-  - F# major
+  - <music21.key.KeySignature of 6 sharps>
+  - <music21.key.KeySignature of 6 sharps>
   qc_passed: true
 - canonical_work_id: sergei_lyapunov_op11_m02
   composer: Sergei Lyapunov
@@ -207,7 +204,7 @@ score_entries:
   movement: 2
   title: Ronde des Fantômes in D-sharp minor
   relative_score_path: data/scores/rc013/canonical/sergei_lyapunov_op11_no02.musicxml
-  file_sha256: 0c98760b913e97e2f91731a7ec1a9d1211ec0da1bea782e8921eabc1bf9e24e7
+  file_sha256: 1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/sergei_lyapunov_op11_no02.review.json
@@ -218,15 +215,15 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 113
-  num_rests: 48
+  num_measures: 168
+  num_notes: 1672
+  num_rests: 334
   time_signatures:
   - 2/4
   - 2/4
   key_signatures:
-  - d# minor
-  - d# minor
+  - <music21.key.KeySignature of 6 sharps>
+  - <music21.key.KeySignature of 6 sharps>
   qc_passed: true
 - canonical_work_id: sergei_lyapunov_op11_m03
   composer: Sergei Lyapunov
@@ -234,7 +231,7 @@ score_entries:
   movement: 3
   title: Carillon in B major
   relative_score_path: data/scores/rc013/canonical/sergei_lyapunov_op11_no03.musicxml
-  file_sha256: da1c3d9932c93d3988316b892558160027d4f837c764399461009580b926efbb
+  file_sha256: fc10d4d7d1006d1a5888fb7eb83d9ce6f05b392ce3834d1bb0a02d30c18a683a
   pipeline_state: MANUALLY_TRANSCRIBED
   verification_status: AUTOMATED_QC_PASS
   review_record: data/reviews/rc013/sergei_lyapunov_op11_no03.review.json
@@ -245,13 +242,13 @@ score_entries:
   rights_status: PUBLIC_DOMAIN
   analysis_eligible: false
   generative_eligible: false
-  num_measures: 24
-  num_notes: 133
+  num_measures: 114
+  num_notes: 906
   num_rests: 0
   time_signatures:
-  - 3/4
-  - 3/4
+  - 6/8
+  - 6/8
   key_signatures:
-  - B major
-  - B major
+  - <music21.key.KeySignature of 5 sharps>
+  - <music21.key.KeySignature of 5 sharps>
   qc_passed: true

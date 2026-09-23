@@ -58,6 +58,30 @@ def test_composer_pool_arensky_qualification_requires_three_scores() -> None:
     assert res_full.rc012_resumption_status == "BLOCKED"
 
 
+def test_all_nine_pilot_review_packets_exist_and_are_blank() -> None:
+    """Verifies that all 9 pilot scores have blank review packets with status PENDING_INDEPENDENT_HUMAN_REVIEW."""
+    packet_files = [
+        ("anton_arensky_op36_no01.review_packet.json", 36),
+        ("anton_arensky_op36_no02.review_packet.json", 102),
+        ("anton_arensky_op36_no13.review_packet.json", 60),
+        ("anatoly_lyadov_op40_no02.review_packet.json", 32),
+        ("anatoly_lyadov_op40_no03.review_packet.json", 23),
+        ("anatoly_lyadov_op46_no04.review_packet.json", 45),
+        ("sergei_lyapunov_op11_no01.review_packet.json", 64),
+        ("sergei_lyapunov_op11_no02.review_packet.json", 168),
+        ("sergei_lyapunov_op11_no03.review_packet.json", 114),
+    ]
+    packets_dir = Path("data/reviews/rc013/packets")
+    for filename, expected_mm in packet_files:
+        p = packets_dir / filename
+        assert p.exists(), f"Missing review packet: {p}"
+        data = json.loads(p.read_text(encoding="utf-8"))
+        assert data["packet_status"] == "PENDING_INDEPENDENT_HUMAN_REVIEW"
+        assert data["header"]["total_measures"] == expected_mm
+        assert len(data["measures"]) == expected_mm
+        assert data["reviewer_declaration"]["reviewer_identifier"] is None
+
+
 def test_review_packet_ingestion_rejects_ai_or_agent_reviewer(tmp_path: Path) -> None:
     """Proves that AI or Agent cannot be an authorized human reviewer."""
     packet_path = Path("data/reviews/rc013/packets/anton_arensky_op36_no01.review_packet.json")
