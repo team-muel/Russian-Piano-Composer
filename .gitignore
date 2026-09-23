@@ -70,3 +70,6 @@ Desktop.ini
 # Environment variables
 .env
 .env.local
+
+# Scratch
+scratch/
