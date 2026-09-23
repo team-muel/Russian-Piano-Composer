@@ -2,14 +2,14 @@
   "anti_synthetic_guard_passed": true,
   "canonical_work_id": "sergei_lyapunov_op11_m02",
   "composer": "Sergei Lyapunov",
-  "measures_in_musicxml": 24,
+  "measures_in_musicxml": 168,
   "movement": 2,
   "notation_errors": [],
-  "notes_in_musicxml": 113,
+  "notes_in_musicxml": 1672,
   "opus": "Op. 11",
   "pipeline_state": "AUTOMATED_QC_PASS",
-  "rests_in_musicxml": 48,
-  "review_date": "2026-09-20",
+  "rests_in_musicxml": 334,
+  "review_date": "2026-09-24",
   "reviewer_identifier": "rc013_notation_validator_v3",
   "reviewer_type": "AUTOMATED_QC",
   "source_comparison_record": "data/reviews/rc013/sergei_lyapunov_op11_no02.source_comparison.json",
@@ -17,6 +17,6 @@
   "source_file_name": "Lyapunov_-_Etudes,_Op.11.pdf",
   "source_file_sha256": "1083b34ad2e8a972877d8f3da7458d265976ced42377ad33efe14ad11157beb0",
   "symbolic_file_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no02.musicxml",
-  "symbolic_file_sha256": "0c98760b913e97e2f91731a7ec1a9d1211ec0da1bea782e8921eabc1bf9e24e7",
-  "title": "Ronde des Fant\u00f4mes in D-sharp minor"
+  "symbolic_file_sha256": "1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b",
+  "title": "Ronde des Fantômes in D-sharp minor"
 }
