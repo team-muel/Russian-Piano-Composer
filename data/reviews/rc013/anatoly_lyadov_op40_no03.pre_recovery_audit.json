@@ -1,0 +1,39 @@
+{
+  "score_id": "anatoly_lyadov_op40_no03",
+  "canonical_work_id": "anatoly_lyadov_op40_m03",
+  "audit_timestamp": "2026-09-24T00:00:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no03.musicxml",
+  "symbolic_file_sha256": "c873ad1522fb8fb89bbb23e6c95dcac96e6c3502aa0a6e82be56e280949588d5",
+  "num_measures": 24,
+  "num_notes": 163,
+  "num_rests": 0,
+  "key_signatures_observed": [
+    "<music21.key.KeySignature of 2 flats>"
+  ],
+  "observed_fifths": -2,
+  "observed_key_str": "B-flat major",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Prelude in B-flat major",
+  "authoritative_identity": {
+    "composer": "Anatoly Lyadov",
+    "work": "Etude et 3 Preludes, Op.40",
+    "movement": 3,
+    "title": "Prelude in B-flat major",
+    "key": "B-flat major",
+    "key_fifths": -2,
+    "meter": "3/4",
+    "tempo": "Lento",
+    "measure_count": 23
+  },
+  "source_binding": {
+    "source_file_name": "31761108768078.pdf",
+    "source_file_sha256": "8484f2d6e88df70001935921964ed6c805f3df069d02cd4d0cd466d8f6cdc8f5",
+    "source_archive": "Internet Archive / University of Toronto",
+    "pdf_page_range": "7 (bundle pages)",
+    "printed_page_range": "5"
+  },
+  "known_identity_mismatch": "Candidate meter is 4/4 (24 measures), but authoritative historical score is 3/4 meter, Lento (23 measures). Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical score is 3/4 meter with 23 measures; candidate MusicXML has wrong meter, measure count, and non-faithful notes. Genuine direct transcription from historical scan is required."
+}

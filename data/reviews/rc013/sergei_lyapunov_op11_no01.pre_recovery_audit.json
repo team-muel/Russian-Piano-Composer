@@ -1,0 +1,39 @@
+{
+  "score_id": "sergei_lyapunov_op11_no01",
+  "canonical_work_id": "sergei_lyapunov_op11_m01",
+  "audit_timestamp": "2026-09-24T00:00:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no01.musicxml",
+  "symbolic_file_sha256": "293888563f6f8a7fc72385ffacc779505716e678447022706c69b164d3332daa",
+  "num_measures": 32,
+  "num_notes": 247,
+  "num_rests": 0,
+  "key_signatures_observed": [
+    "<music21.key.KeySignature of 6 sharps>"
+  ],
+  "observed_fifths": 6,
+  "observed_key_str": "F-sharp major",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Berceuse in F-sharp major",
+  "authoritative_identity": {
+    "composer": "Sergei Lyapunov",
+    "work": "12 Études d'exécution transcendante, Op.11",
+    "movement": 1,
+    "title": "Berceuse in F-sharp major",
+    "key": "F-sharp major",
+    "key_fifths": 6,
+    "meter": "2/4",
+    "tempo": "Andantino",
+    "measure_count": 64
+  },
+  "source_binding": {
+    "source_file_name": "Lyapunov_-_Etudes,_Op.11.pdf",
+    "source_file_sha256": "1083b34ad2e8a972877d8f3da7458d265976ced42377ad33efe14ad11157beb0",
+    "source_archive": "Internet Archive / IMSLP",
+    "pdf_page_range": "1-8 (bundle pages)",
+    "printed_page_range": "2-9"
+  },
+  "known_identity_mismatch": "Candidate meter is 6/8 (32 measures), but authoritative historical score is 2/4 meter, Andantino (64 measures). Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical score is 2/4 meter with 64 measures; candidate MusicXML has wrong meter, measure count, and non-faithful notes. Genuine direct transcription from historical scan is required."
+}

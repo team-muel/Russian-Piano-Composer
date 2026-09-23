@@ -1,0 +1,39 @@
+{
+  "score_id": "anatoly_lyadov_op46_no04",
+  "canonical_work_id": "anatoly_lyadov_op46_m04",
+  "audit_timestamp": "2026-09-24T00:00:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/anatoly_lyadov_op46_no04.musicxml",
+  "symbolic_file_sha256": "d07c6528f2253f6d379644c0913e6a0617ae02d48cc65f3dac96f6485f83363c",
+  "num_measures": 24,
+  "num_notes": 163,
+  "num_rests": 0,
+  "key_signatures_observed": [
+    "<music21.key.KeySignature of 1 sharp>"
+  ],
+  "observed_fifths": 1,
+  "observed_key_str": "E minor",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Prelude in E minor",
+  "authoritative_identity": {
+    "composer": "Anatoly Lyadov",
+    "work": "4 Preludes, Op.46",
+    "movement": 4,
+    "title": "Prelude in E minor",
+    "key": "E minor",
+    "key_fifths": 1,
+    "meter": "3/4",
+    "tempo": "Lamentoso",
+    "measure_count": 45
+  },
+  "source_binding": {
+    "source_file_name": "31761108768078.pdf",
+    "source_file_sha256": "8484f2d6e88df70001935921964ed6c805f3df069d02cd4d0cd466d8f6cdc8f5",
+    "source_archive": "Internet Archive / University of Toronto",
+    "pdf_page_range": "8-9 (bundle pages)",
+    "printed_page_range": "6-7"
+  },
+  "known_identity_mismatch": "Candidate meter is 4/4 (24 measures), but authoritative historical score is 3/4 meter, Lamentoso (45 measures). Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical score is 3/4 meter with 45 measures; candidate MusicXML has wrong meter, measure count, and non-faithful notes. Genuine direct transcription from historical scan is required."
+}

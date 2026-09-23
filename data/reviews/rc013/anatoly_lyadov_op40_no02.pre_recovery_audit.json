@@ -1,0 +1,39 @@
+{
+  "score_id": "anatoly_lyadov_op40_no02",
+  "canonical_work_id": "anatoly_lyadov_op40_m02",
+  "audit_timestamp": "2026-09-24T00:00:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no02.musicxml",
+  "symbolic_file_sha256": "176eba2ffbe47a944f9a59fe860b6c09b6d7a18906c4121fbec7edf3fc957443",
+  "num_measures": 24,
+  "num_notes": 129,
+  "num_rests": 0,
+  "key_signatures_observed": [
+    "<music21.key.KeySignature of 1 flat>"
+  ],
+  "observed_fifths": -1,
+  "observed_key_str": "D minor",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Prelude in D minor",
+  "authoritative_identity": {
+    "composer": "Anatoly Lyadov",
+    "work": "Etude et 3 Preludes, Op.40",
+    "movement": 2,
+    "title": "Prelude in D minor",
+    "key": "D minor",
+    "key_fifths": -1,
+    "meter": "6/8",
+    "tempo": "Allegretto",
+    "measure_count": 32
+  },
+  "source_binding": {
+    "source_file_name": "31761108768078.pdf",
+    "source_file_sha256": "8484f2d6e88df70001935921964ed6c805f3df069d02cd4d0cd466d8f6cdc8f5",
+    "source_archive": "Internet Archive / University of Toronto",
+    "pdf_page_range": "5-6 (bundle pages)",
+    "printed_page_range": "3-4"
+  },
+  "known_identity_mismatch": "Candidate meter is 3/4 (24 measures), but authoritative historical score is 6/8 meter, Allegretto (32 measures). Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical score is 6/8 meter with 32 measures; candidate MusicXML has wrong meter, measure count, and non-faithful notes. Genuine direct transcription from historical scan is required."
+}

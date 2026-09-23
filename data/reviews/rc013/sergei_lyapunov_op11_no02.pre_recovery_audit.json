@@ -1,0 +1,39 @@
+{
+  "score_id": "sergei_lyapunov_op11_no02",
+  "canonical_work_id": "sergei_lyapunov_op11_m02",
+  "audit_timestamp": "2026-09-24T00:00:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no02.musicxml",
+  "symbolic_file_sha256": "0c98760b913e97e2f91731a7ec1a9d1211ec0da1bea782e8921eabc1bf9e24e7",
+  "num_measures": 24,
+  "num_notes": 113,
+  "num_rests": 48,
+  "key_signatures_observed": [
+    "<music21.key.KeySignature of 6 sharps>"
+  ],
+  "observed_fifths": 6,
+  "observed_key_str": "D-sharp minor",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Ronde des Fantômes in D-sharp minor",
+  "authoritative_identity": {
+    "composer": "Sergei Lyapunov",
+    "work": "12 Études d'exécution transcendante, Op.11",
+    "movement": 2,
+    "title": "Ronde des Fantômes in D-sharp minor",
+    "key": "D-sharp minor",
+    "key_fifths": 6,
+    "meter": "2/4",
+    "tempo": "Presto tempestoso",
+    "measure_count": 168
+  },
+  "source_binding": {
+    "source_file_name": "Lyapunov_-_Etudes,_Op.11.pdf",
+    "source_file_sha256": "1083b34ad2e8a972877d8f3da7458d265976ced42377ad33efe14ad11157beb0",
+    "source_archive": "Internet Archive / IMSLP",
+    "pdf_page_range": "9-20 (bundle pages)",
+    "printed_page_range": "10-21"
+  },
+  "known_identity_mismatch": "Candidate has 24 measures with artificial texture, but authoritative historical score is 168 measures in 2/4 meter, Presto tempestoso. Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical score is 168 measures; candidate MusicXML has wrong measure count and non-faithful notes. Genuine direct transcription from historical scan is required."
+}

@@ -1,0 +1,39 @@
+{
+  "score_id": "sergei_lyapunov_op11_no03",
+  "canonical_work_id": "sergei_lyapunov_op11_m03",
+  "audit_timestamp": "2026-09-24T00:00:00Z",
+  "stage": "PRE_RECOVERY_FROZEN_EVIDENCE",
+  "musicxml_relative_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no03.musicxml",
+  "symbolic_file_sha256": "da1c3d9932c93d3988316b892558160027d4f837c764399461009580b926efbb",
+  "num_measures": 24,
+  "num_notes": 133,
+  "num_rests": 0,
+  "key_signatures_observed": [
+    "<music21.key.KeySignature of 5 sharps>"
+  ],
+  "observed_fifths": 5,
+  "observed_key_str": "B major",
+  "title_in_musicxml": null,
+  "title_in_manifest": "Carillon in B major",
+  "authoritative_identity": {
+    "composer": "Sergei Lyapunov",
+    "work": "12 Études d'exécution transcendante, Op.11",
+    "movement": 3,
+    "title": "Carillon in B major",
+    "key": "B major",
+    "key_fifths": 5,
+    "meter": "6/8",
+    "tempo": "Allegro moderato",
+    "measure_count": 114
+  },
+  "source_binding": {
+    "source_file_name": "Lyapunov_-_Etudes,_Op.11.pdf",
+    "source_file_sha256": "1083b34ad2e8a972877d8f3da7458d265976ced42377ad33efe14ad11157beb0",
+    "source_archive": "Internet Archive / IMSLP",
+    "pdf_page_range": "21-30 (bundle pages)",
+    "printed_page_range": "22-31"
+  },
+  "known_identity_mismatch": "Candidate meter is 3/4 (24 measures), but authoritative historical score is 6/8 meter, Allegro moderato (114 measures). Candidate was constructed from non-authoritative template generator.",
+  "scientific_status": "IDENTITY_REVALIDATION_REQUIRED",
+  "reason_for_replacement": "Historical score is 6/8 meter with 114 measures; candidate MusicXML has wrong meter, measure count, and non-faithful notes. Genuine direct transcription from historical scan is required."
+}
