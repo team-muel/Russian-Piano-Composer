@@ -1,7 +1,8 @@
-"""Machine-Triangulated Source-Fidelity Validation Protocol Engine for RC-013 (Protocol V2).
+"""Machine-Triangulated Source-Fidelity Validation Protocol Engine for RC-013 (Protocol V3).
 
-Coordinates multi-channel OMR and visual alignment triangulation, evaluates disagreement taxonomy,
-runs blind calibration and end-to-end image mutation benchmarks, and computes protocol freeze hashes.
+Coordinates external multi-channel OMR (Audiveris + homr) and MuseScore visual alignment triangulation,
+evaluates disagreement taxonomy, runs blind calibration on external real-scan and synthetic corpora,
+and computes immutable protocol freeze hashes.
 """
 
 from __future__ import annotations
@@ -24,15 +25,15 @@ from russian_piano_composer.corpus.rc013_mutations import (
     RC013MutationEngine,
 )
 from russian_piano_composer.corpus.rc013_omr_adapters import (
-    NeuralVisualFeatureOMREngine,
+    ExternalAudiverisOMREngine,
+    ExternalHomrNeuralOMREngine,
     ScoreScanStructuralAlignmentEngine,
-    StructuredStaffGraphOMREngine,
 )
 from russian_piano_composer.corpus.rc013_renderer import (
-    DeterministicScoreRenderer,
+    MuseScoreProductionScoreRenderer,
 )
 
-PROTOCOL_VERSION: str = "rc013_machine_triangulation_protocol_v2"
+PROTOCOL_VERSION: str = "rc013_machine_triangulation_protocol_v3"
 
 # Frozen Structural Rules & Dimensions
 CRITICAL_DIMENSIONS: list[str] = [
@@ -42,6 +43,8 @@ CRITICAL_DIMENSIONS: list[str] = [
     "onset",
     "duration",
     "rest",
+    "staff",
+    "voice",
     "key_signature",
     "time_signature",
     "tie",
@@ -70,6 +73,8 @@ class TriangulationEvaluationResult:
     channel_a_distance: float
     channel_b_distance: float
     channel_c_discrepancy: float
+    channel_a_coverage: float
+    channel_b_coverage: float
     critical_mismatches_total: int
     discrepant_measures: list[int]
     channel_results: list[dict[str, Any]]
@@ -84,6 +89,8 @@ class TriangulationEvaluationResult:
             "channel_a_distance": self.channel_a_distance,
             "channel_b_distance": self.channel_b_distance,
             "channel_c_discrepancy": self.channel_c_discrepancy,
+            "channel_a_coverage": self.channel_a_coverage,
+            "channel_b_coverage": self.channel_b_coverage,
             "critical_mismatches_total": self.critical_mismatches_total,
             "discrepant_measures": self.discrepant_measures,
             "channel_results": self.channel_results,
@@ -92,23 +99,25 @@ class TriangulationEvaluationResult:
 
 
 class MachineTriangulationProtocol:
-    """Pre-registered calibration and evaluation protocol engine (V2)."""
+    """Pre-registered calibration and evaluation protocol engine (Protocol V3)."""
 
     def __init__(
         self,
         max_omr_ned_threshold: float = 0.05,
         max_critical_mismatches: int = 0,
         max_image_discrepancy: float = 0.35,
+        min_coverage_threshold: float = 0.20,
     ) -> None:
         self.max_omr_ned_threshold = max_omr_ned_threshold
         self.max_critical_mismatches = max_critical_mismatches
         self.max_image_discrepancy = max_image_discrepancy
+        self.min_coverage_threshold = min_coverage_threshold
 
-        self.engine_a = StructuredStaffGraphOMREngine()
-        self.engine_b = NeuralVisualFeatureOMREngine()
+        self.engine_a = ExternalAudiverisOMREngine()
+        self.engine_b = ExternalHomrNeuralOMREngine()
         self.engine_c = ScoreScanStructuralAlignmentEngine()
         self.mutation_engine = RC013MutationEngine()
-        self.renderer = DeterministicScoreRenderer(target_dpi=150)
+        self.renderer = MuseScoreProductionScoreRenderer()
         self.image_mutation_engine = EndToEndImageMutationEngine()
 
     def evaluate_candidate(
@@ -118,29 +127,20 @@ class MachineTriangulationProtocol:
         score_id: str,
         rendered_score_image_paths: list[str] | None = None,
     ) -> TriangulationEvaluationResult:
-        """Runs multi-channel blind triangulation on a candidate score.
-
-        OMR Engines (Channels A and B) receive strictly source scan images.
-        Alignment Engine (Channel C) compares rendered symbolic score images against source scan images.
-        """
+        """Runs multi-channel blind triangulation on a candidate score."""
         import datetime
         import tempfile
 
         candidate_graph = extract_event_graph_from_musicxml(candidate_musicxml_path, score_id=score_id)
+        ref_events_count = max(len(candidate_graph.events), 1)
 
-        # 1. Run Channel A (Structured OMR) - strictly blind
-        res_a = self.engine_a.process_source_pages(
-            source_image_paths,
-            score_id=score_id,
-        )
+        # 1. Run Channel A (External Audiveris OMR)
+        res_a = self.engine_a.process_source_pages(source_image_paths, score_id=score_id)
 
-        # 2. Run Channel B (Neural Visual Feature OMR) - strictly blind
-        res_b = self.engine_b.process_source_pages(
-            source_image_paths,
-            score_id=score_id,
-        )
+        # 2. Run Channel B (External homr Neural OMR)
+        res_b = self.engine_b.process_source_pages(source_image_paths, score_id=score_id)
 
-        # 3. Channel C: Render candidate score if not explicitly passed
+        # 3. Channel C: Render candidate score with MuseScore if not provided
         rendered_images = rendered_score_image_paths
         if not rendered_images:
             temp_render_dir = tempfile.mkdtemp(prefix="rc013_rend_eval_")
@@ -150,31 +150,35 @@ class MachineTriangulationProtocol:
                 score_id=score_id,
             )
 
-        # Run Channel C (Structural Image Alignment) - comparing rendered symbolic images vs distinct scan images
+        # Run Channel C (Structural Image Alignment)
         res_c = self.engine_c.align_score_to_scan(
             rendered_images=rendered_images,
             historical_scan_images=source_image_paths,
             score_id=score_id,
         )
 
-        # Compute pairwise distances
+        # Compute pairwise distances and coverage
         dist_a = 0.0
+        cov_a = 0.0
         comp_a: EventComparisonResult | None = None
         if res_a.extracted_event_graph:
             comp_a = compare_event_graphs(candidate_graph, res_a.extracted_event_graph)
             dist_a = comp_a.overall_omr_ned
+            cov_a = round(len(res_a.extracted_event_graph.events) / ref_events_count, 4)
 
         dist_b = 0.0
+        cov_b = 0.0
         comp_b: EventComparisonResult | None = None
         if res_b.extracted_event_graph:
             comp_b = compare_event_graphs(candidate_graph, res_b.extracted_event_graph)
             dist_b = comp_b.overall_omr_ned
+            cov_b = round(len(res_b.extracted_event_graph.events) / ref_events_count, 4)
 
         c_disc = float(res_c.execution_metadata.get("mean_discrepancy", 0.0))
 
         # Check disagreements
-        disagreements_a = dist_a > self.max_omr_ned_threshold
-        disagreements_b = dist_b > self.max_omr_ned_threshold
+        disagreements_a = dist_a > self.max_omr_ned_threshold or cov_a < self.min_coverage_threshold
+        disagreements_b = dist_b > self.max_omr_ned_threshold or cov_b < self.min_coverage_threshold
         disagreements_c = c_disc > self.max_image_discrepancy
 
         critical_mismatches = 0
@@ -213,6 +217,8 @@ class MachineTriangulationProtocol:
             channel_a_distance=dist_a,
             channel_b_distance=dist_b,
             channel_c_discrepancy=c_disc,
+            channel_a_coverage=cov_a,
+            channel_b_coverage=cov_b,
             critical_mismatches_total=critical_mismatches,
             discrepant_measures=sorted(discrepant_measures),
             channel_results=[res_a.to_dict(), res_b.to_dict(), res_c.to_dict()],
@@ -231,8 +237,10 @@ class MachineTriangulationProtocol:
         calibration_corpus_hash: str,
         end_to_end_mutation_suite_hash: str,
         calibration_result_hash: str,
+        external_engine_bundle_hash: str,
+        real_scan_benchmark_hash: str,
     ) -> dict[str, Any]:
-        """Generates the canonical frozen protocol manifest payload."""
+        """Generates the canonical frozen protocol manifest payload (Protocol V3)."""
         import datetime
 
         manifest: dict[str, Any] = {
@@ -242,6 +250,8 @@ class MachineTriangulationProtocol:
             "calibration_corpus_hash": calibration_corpus_hash,
             "end_to_end_mutation_suite_hash": end_to_end_mutation_suite_hash,
             "calibration_result_hash": calibration_result_hash,
+            "external_engine_bundle_hash": external_engine_bundle_hash,
+            "real_scan_benchmark_hash": real_scan_benchmark_hash,
             "engines": {
                 "channel_a": {
                     "name": self.engine_a.ENGINE_NAME,
@@ -257,6 +267,8 @@ class MachineTriangulationProtocol:
                     "name": self.engine_c.ENGINE_NAME,
                     "version": self.engine_c.ENGINE_VERSION,
                     "architecture": self.engine_c.ARCHITECTURE,
+                    "renderer": self.renderer.RENDERER_NAME,
+                    "renderer_version": self.renderer.RENDERER_VERSION,
                 },
             },
             "dimensions": {
@@ -267,6 +279,7 @@ class MachineTriangulationProtocol:
                 "max_omr_ned": self.max_omr_ned_threshold,
                 "max_critical_mismatches": self.max_critical_mismatches,
                 "max_image_discrepancy": self.max_image_discrepancy,
+                "min_coverage_threshold": self.min_coverage_threshold,
                 "required_mutation_recall": 1.0,
             },
             "qualification_policy": {

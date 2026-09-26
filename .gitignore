@@ -73,3 +73,9 @@ Desktop.ini
 
 # Scratch
 scratch/
+
+# External Tools / Runtimes (downloaded on demand)
+tools/
+data/calibration/**/historical_pdfs/
+*.pdf
+

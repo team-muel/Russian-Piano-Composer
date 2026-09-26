@@ -85,6 +85,8 @@ module = [
     "polars.*",
     "orjson.*",
     "yaml.*",
+    "homr.*",
+    "onnxruntime.*",
 ]
 ignore_missing_imports = true
 

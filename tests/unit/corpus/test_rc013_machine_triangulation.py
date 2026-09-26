@@ -36,7 +36,6 @@ from russian_piano_composer.corpus.rc013_omr_adapters import (
     StructuredStaffGraphOMREngine,
 )
 from russian_piano_composer.corpus.rc013_triangulation_protocol import (
-    PROTOCOL_VERSION,
     MachineTriangulationProtocol,
 )
 
@@ -193,27 +192,31 @@ def test_adversarial_mutation_suite_covers_all_19_families() -> None:
         )
 
 
-def test_protocol_v2_manifest_hash_changes_on_threshold_mutation() -> None:
-    """Proves that changing any acceptance threshold mutates the V2 protocol hash."""
+def test_protocol_v3_manifest_hash_changes_on_threshold_mutation() -> None:
+    """Proves that changing any acceptance threshold mutates the V3 protocol hash."""
     protocol = MachineTriangulationProtocol(max_omr_ned_threshold=0.05)
     manifest1 = protocol.generate_frozen_protocol_manifest(
         calibration_corpus_hash="a" * 64,
-        end_to_end_mutation_suite_hash="b" * 64,
-        calibration_result_hash="c" * 64,
+        external_engine_bundle_hash="b" * 64,
+        real_scan_benchmark_hash="c" * 64,
+        end_to_end_mutation_suite_hash="d" * 64,
+        calibration_result_hash="e" * 64,
     )
 
     protocol_mutated = MachineTriangulationProtocol(max_omr_ned_threshold=0.01)
     manifest2 = protocol_mutated.generate_frozen_protocol_manifest(
         calibration_corpus_hash="a" * 64,
-        end_to_end_mutation_suite_hash="b" * 64,
-        calibration_result_hash="c" * 64,
+        external_engine_bundle_hash="b" * 64,
+        real_scan_benchmark_hash="c" * 64,
+        end_to_end_mutation_suite_hash="d" * 64,
+        calibration_result_hash="e" * 64,
     )
 
     assert manifest1["protocol_hash"] != manifest2["protocol_hash"]
 
 
 def test_machine_calibration_v2_pass_leaves_russian_composer_pool_at_two() -> None:
-    """Proves that machine calibration V2 PASS does not alter N_Russian = 2 or unblock RC-012."""
+    """Proves that machine calibration PASS does not alter N_Russian = 2 or unblock RC-012."""
     res = derive_russian_composer_pool_from_evidence()
     assert res.n_russian == 2
     assert res.n_control == 5
@@ -233,7 +236,7 @@ def test_frozen_protocol_v2_manifest_matches_disk() -> None:
     assert manifest_p.exists()
 
     data = json.loads(manifest_p.read_text(encoding="utf-8"))
-    assert data["protocol_version"] == PROTOCOL_VERSION
+    assert data["protocol_version"] == "rc013_machine_triangulation_protocol_v2"
     assert len(data["protocol_hash"]) == 64
     assert len(data["calibration_corpus_hash"]) == 64
     assert len(data["end_to_end_mutation_suite_hash"]) == 64
@@ -244,7 +247,7 @@ def test_frozen_protocol_v2_manifest_matches_disk() -> None:
 
 
 def test_machine_triangulation_v2_hashes_present_and_valid() -> None:
-    """Verifies that get_machine_triangulation_hashes returns valid SHA256 hashes for V1 and V2."""
+    """Verifies that get_machine_triangulation_hashes returns valid SHA256 hashes for V1, V2, and V3."""
     from scripts.compute_rc013_hashes import get_machine_triangulation_hashes
 
     hashes = get_machine_triangulation_hashes()
@@ -257,3 +260,111 @@ def test_machine_triangulation_v2_hashes_present_and_valid() -> None:
     for k in expected_v2_keys:
         assert k in hashes
         assert len(hashes[k]) == 64
+
+    expected_v3_keys = [
+        "RC013_MACHINE_PROTOCOL_V3_HASH",
+        "RC013_CALIBRATION_V3_CORPUS_HASH",
+        "RC013_EXTERNAL_ENGINE_BUNDLE_HASH",
+        "RC013_REAL_SCAN_BENCHMARK_HASH",
+        "RC013_END_TO_END_MUTATION_V3_HASH",
+        "RC013_CALIBRATION_V3_RESULT_HASH",
+    ]
+    for k in expected_v3_keys:
+        assert k in hashes
+        assert len(hashes[k]) == 64
+
+
+def test_calibration_v3_corpus_registry_excludes_rc013_pilot_scores() -> None:
+    """Verifies that the calibration V3 corpus contains strictly non-RC-013 piano scores with DCMLab provenance."""
+    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_v3_registry.json")
+    assert registry_path.exists()
+
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    assert len(registry) == 6
+
+    forbidden_composers = {"Anton Arensky", "Anatoly Lyadov", "Sergei Lyapunov"}
+    forbidden_work_prefixes = {
+        "anton_arensky_op36",
+        "anatoly_lyadov_op40",
+        "anatoly_lyadov_op46",
+        "sergei_lyapunov_op11",
+    }
+
+    splits = {entry["split"] for entry in registry}
+    assert splits == {
+        "SYNTHETIC_CONTROLLED_CALIBRATION",
+        "REAL_SCAN_THRESHOLD_CALIBRATION",
+        "CALIBRATION_V3_FINAL_HOLDOUT",
+    }
+
+    for entry in registry:
+        assert entry["composer"] not in forbidden_composers
+        assert not any(entry["artifact_id"].startswith(fp) for fp in forbidden_work_prefixes)
+        if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V3_FINAL_HOLDOUT"}:
+            assert entry["provenance_class"] == "REAL_HISTORICAL_SCAN"
+            assert "DCMLab" in entry["dataset_name"]
+            assert Path(entry["ground_truth_path"]).exists()
+            assert Path(entry["image_path"]).exists()
+            assert Path(entry["historical_pdf_path"]).exists()
+
+
+def test_frozen_protocol_v3_manifest_matches_disk() -> None:
+    """Verifies that the frozen protocol manifest V3 exists and contains valid SHA256 hashes."""
+    manifest_p = Path("data/manifests/rc013_machine_validation_protocol_v3.json")
+    assert manifest_p.exists()
+
+    data = json.loads(manifest_p.read_text(encoding="utf-8"))
+    assert data["protocol_version"] == "rc013_machine_triangulation_protocol_v3"
+    assert len(data["protocol_hash"]) == 64
+    assert len(data["calibration_corpus_hash"]) == 64
+    assert len(data["external_engine_bundle_hash"]) == 64
+    assert len(data["real_scan_benchmark_hash"]) == 64
+    assert len(data["end_to_end_mutation_suite_hash"]) == 64
+    assert len(data["calibration_result_hash"]) == 64
+    assert data["qualification_policy"]["machine_receipts_can_qualify_composer"] is False
+    assert data["qualification_policy"]["current_n_russian"] == 2
+    assert data["qualification_policy"]["rc012_resumption_status"] == "BLOCKED"
+
+
+def test_feature_dependency_coverage_for_rc012_descriptors() -> None:
+    """Tests the feature dependency evaluator against core and incomplete feature dimensions."""
+    from russian_piano_composer.corpus.rc013_feature_dependency import (
+        evaluate_feature_dependency_coverage,
+    )
+
+    full_core_dims = {
+        "pitch", "accidental", "octave", "onset", "duration",
+        "rest", "key_signature", "time_signature", "tie", "tuplet",
+        "repeat_structure", "measure_sequence", "staff", "voice",
+    }
+    cov_full = evaluate_feature_dependency_coverage(full_core_dims)
+    assert cov_full["fit_for_rc012_structural_analysis"] is True
+    assert len(cov_full["unsupported_core_descriptors"]) == 0
+    assert "pitch_class_entropy" in cov_full["supported_core_descriptors"]
+    assert "voice_leading_cross_entropy" in cov_full["supported_core_descriptors"]
+    assert "harmonic_root_motion" in cov_full["supported_core_descriptors"]
+    assert "metric_accent_syncopation" in cov_full["supported_core_descriptors"]
+    assert "phrase_boundary_density" in cov_full["supported_core_descriptors"]
+
+    # Incomplete dimensions (missing voice/staff)
+    incomplete_dims = {"pitch", "accidental", "octave", "onset", "duration"}
+    cov_inc = evaluate_feature_dependency_coverage(incomplete_dims)
+    assert cov_inc["fit_for_rc012_structural_analysis"] is False
+    assert "voice_leading_cross_entropy" in cov_inc["unsupported_core_descriptors"]
+
+
+def test_external_engine_adapter_classes() -> None:
+    """Verifies that external OMR engines declare correct architectures."""
+    from russian_piano_composer.corpus.rc013_omr_adapters import (
+        ExternalAudiverisOMREngine,
+        ExternalHomrNeuralOMREngine,
+    )
+
+    aud = ExternalAudiverisOMREngine()
+    assert "Audiveris" in aud.ENGINE_NAME
+    assert "tesseract" in aud.ARCHITECTURE
+
+    homr = ExternalHomrNeuralOMREngine()
+    assert "Homr" in homr.ENGINE_NAME
+    assert "tromr" in homr.ARCHITECTURE
+

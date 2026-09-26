@@ -312,11 +312,13 @@ def get_all_rc013_hashes() -> dict[str, str]:
 
 
 def get_machine_triangulation_hashes() -> dict[str, str]:
-    """Computes and returns cryptographic hashes for machine triangulation calibration artifacts (V1 and V2)."""
+    """Computes and returns cryptographic hashes for machine triangulation calibration artifacts (V1, V2, and V3)."""
     manifest_v1_p = "data/manifests/rc013_machine_validation_protocol_v1.json"
     calib_v1_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_registry.json"
     manifest_v2_p = "data/manifests/rc013_machine_validation_protocol_v2.json"
     calib_v2_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_v2_registry.json"
+    manifest_v3_p = "data/manifests/rc013_machine_validation_protocol_v3.json"
+    calib_v3_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_v3_registry.json"
 
     res: dict[str, str] = {}
 
@@ -337,6 +339,17 @@ def get_machine_triangulation_hashes() -> dict[str, str]:
         res["RC013_CALIBRATION_V2_CORPUS_HASH"] = calib_v2_corpus_hash
         res["RC013_END_TO_END_MUTATION_SUITE_HASH"] = v2_data.get("end_to_end_mutation_suite_hash", "")
         res["RC013_CALIBRATION_V2_RESULT_HASH"] = v2_data.get("calibration_result_hash", "")
+
+    if os.path.exists(manifest_v3_p):
+        with open(manifest_v3_p, encoding="utf-8") as f:
+            v3_data = json.load(f)
+        calib_v3_corpus_hash = compute_sha256_file(calib_v3_reg_p) if os.path.exists(calib_v3_reg_p) else "0" * 64
+        res["RC013_MACHINE_PROTOCOL_V3_HASH"] = v3_data.get("protocol_hash", "")
+        res["RC013_CALIBRATION_V3_CORPUS_HASH"] = calib_v3_corpus_hash
+        res["RC013_EXTERNAL_ENGINE_BUNDLE_HASH"] = v3_data.get("external_engine_bundle_hash", "")
+        res["RC013_REAL_SCAN_BENCHMARK_HASH"] = v3_data.get("real_scan_benchmark_hash", "")
+        res["RC013_END_TO_END_MUTATION_V3_HASH"] = v3_data.get("end_to_end_mutation_suite_hash", "")
+        res["RC013_CALIBRATION_V3_RESULT_HASH"] = v3_data.get("calibration_result_hash", "")
 
     return res
 
