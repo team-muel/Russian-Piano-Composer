@@ -1,0 +1,67 @@
+{
+  "corpus_repository": "hectorbellmann-art/Tonal-Piano-Corpus",
+  "corpus_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
+  "comparison_targets": {
+    "DCMLab": {
+      "source_type": "MuseScore 3/4 repository with linked PDF/scans and annotations",
+      "authority_level": "Scholarly institutional corpus (EPFL DCML)",
+      "editorial_transparency": "Full git history, open issue tracker, CC-BY-NC-SA / CC0"
+    },
+    "CCARH_craigsapp_scriabin": {
+      "source_type": "Humdrum **kern transcribed from historical first/early editions (Belyayev / Muzgiz)",
+      "authority_level": "Scholarly academic corpus (Stanford CCARH / Craig Sapp)",
+      "editorial_transparency": "Full provenance documentation, public domain / CC-BY"
+    },
+    "PERiScoPe": {
+      "source_type": "MusicXML / MEI encoded from historical Russian library editions",
+      "authority_level": "Research project corpus",
+      "editorial_transparency": "Explicit source edition metadata per file"
+    },
+    "Tonal_Piano_Corpus": {
+      "source_type": "MusicXML + Finale MUS/MUSX + High-Resolution Source Scan TIFFs",
+      "authority_level": "Curated independent musicological transcription repository",
+      "editorial_transparency": "EditorialPrinciples.md, EditorialNotes.md, paired source TIFFs for every score",
+      "symmetry_assessment": "MEETS_SOURCE_LINKED_STANDARD (TIFF source scans provided for 100% of Russian pieces, editorial notes document strict fidelity to printed text with 0 unnotated revisions)"
+    }
+  },
+  "prokofiev_source_editions": [
+    {
+      "work": "10 Episodes Op. 12 (Legend, Prelude)",
+      "source": "Gutheil / Forberg historical first/early editions (TIFF scans included)"
+    },
+    {
+      "work": "4 Pieces Op. 3 (March)",
+      "source": "Jurgenson / Muzgiz historical edition (TIFF scans included)"
+    },
+    {
+      "work": "Etudes Op. 2 (No. 4)",
+      "source": "Jurgenson historical edition (TIFF scans included)"
+    },
+    {
+      "work": "Music for Children Op. 65 (3 pieces)",
+      "source": "Muzgiz historical edition (TIFF scans included)"
+    },
+    {
+      "work": "Visions Fugitives Op. 22 (Nos. 1, 5, 10)",
+      "source": "Gutheil historical first edition (TIFF scans included)"
+    },
+    {
+      "work": "Romeo and Juliet Op. 75 (Montagues and Capulets)",
+      "source": "Muzgiz historical author piano transcription (TIFF scans included)"
+    },
+    {
+      "work": "Toccata Op. 11",
+      "source": "Jurgenson historical first edition (TIFF scans included)"
+    }
+  ],
+  "rubinstein_source_editions": [
+    {
+      "work": "Album de Peterhof Op. 75 (8 pieces visible in repo)",
+      "source": "Bartholf Senff (Leipzig) historical first edition / high-res TIFF scans included"
+    },
+    {
+      "work": "Six Preludes Op. 24 (3 pieces visible in repo)",
+      "source": "Bartholf Senff (Leipzig) historical first edition / high-res TIFF scans included"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "corpus_repository": "hectorbellmann-art/Tonal-Piano-Corpus",
+  "corpus_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
+  "feature_catalog_descriptor_count": 56,
+  "prokofiev_summary": {
+    "total_files": 12,
+    "files_passing_56_descriptors": 12,
+    "files_failing": 0,
+    "failures": []
+  },
+  "rubinstein_summary": {
+    "total_files": 11,
+    "files_passing_56_descriptors": 11,
+    "files_failing": 0,
+    "failures": []
+  },
+  "overall_compatibility_verdict": "100%_PASS_56_DESCRIPTORS (23/23 pieces across both composers successfully parse and extract exact 56 frozen RC-011 structural features without runtime error or schema violation)"
+}

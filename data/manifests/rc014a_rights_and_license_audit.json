@@ -1,0 +1,27 @@
+{
+  "corpus_repository": "hectorbellmann-art/Tonal-Piano-Corpus",
+  "corpus_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
+  "repository_license": "UNSPECIFIED (No root LICENSE file in repo)",
+  "legal_analysis": {
+    "Anton_Rubinstein": {
+      "composer_lifespan": "1829-1894",
+      "public_domain_status": "PUBLIC_DOMAIN_WORLDWIDE",
+      "jurisdiction_notes": "Life + 70 and Life + 80 expired decades ago. Composition and original editions are PD worldwide.",
+      "digital_score_transcription_status": "FACTUAL_DATA_NON_CREATIVE_REPRODUCTION (Sweat of brow / typographical rights expired or non-copyrightable in US; redistribution rights clear under academic fair use; formal upstream license waiver recommended for open redistribution)",
+      "qualification_verdict": "RIGHTS_CLEAR_FOR_SCIENTIFIC_EVALUATION"
+    },
+    "Sergei_Prokofiev": {
+      "composer_lifespan": "1891-1953",
+      "public_domain_status": {
+        "EU_UK_Worldwide_Life_Plus_70": "PUBLIC_DOMAIN as of January 1, 2024 (expired Dec 31, 2023)",
+        "US_Copyright": {
+          "Pre_1929_Works": "PUBLIC_DOMAIN (Op. 2, Op. 3, Op. 11, Op. 12, Op. 22)",
+          "Post_1928_Works": "RESTRICTED / COPYRIGHT_PROTECTED in US (Op. 65 [1935], Op. 75 [1937] subject to URAA 95-year term from publication)"
+        }
+      },
+      "pre_1929_eligible_count": 8,
+      "post_1928_count": 4,
+      "qualification_verdict": "PARTIALLY_PUBLIC_DOMAIN (8 pieces fully PD worldwide; 4 pieces PD in EU/UK but restricted in US; for strict worldwide open distribution without US territory restrictions, $M_c = 8$ < 10 unless US Fair Use / non-US research exception applied)"
+    }
+  }
+}

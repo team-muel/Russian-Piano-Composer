@@ -1,0 +1,3700 @@
+{
+  "corpus_repository": "hectorbellmann-art/Tonal-Piano-Corpus",
+  "corpus_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
+  "prokofiev": {
+    "composer": "Sergei Prokofiev",
+    "folder_name": "Prokofiev, Sergey (1891 - 1953)",
+    "raw_xml_count": 12,
+    "total_tiffs": 40,
+    "total_mus": 12,
+    "works": [
+      {
+        "xml_filename": "Legend.xml",
+        "xml_relative_path": "xml\\10 Episodes Op12\\Legend.xml",
+        "xml_sha256": "3494ff2cc3672e5476b81dff8d762afe5916300ac13f7c4d53918a35c26ec35c",
+        "xml_size_bytes": 187934,
+        "declared_title": "Legend, No.2 from 10 Episodes Op.12",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 39,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "fifths": -1,
+        "time_signature": "6/8",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 7,
+        "source_tiffs": [
+          {
+            "filename": "Legend_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_1.tif",
+            "sha256": "89cc4667c4f377c25c6ff71f0e56d0bd1c3110c4398d1ec3cca71ae24efe8dae",
+            "size_bytes": 118970
+          },
+          {
+            "filename": "Legend_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_2.tif",
+            "sha256": "a79646c1c06e6fdab4f4bdc257c068f5727d5f55ca7f6788fde11b2f92d8dc9c",
+            "size_bytes": 137266
+          },
+          {
+            "filename": "Prelude_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_1.tif",
+            "sha256": "f4ffffee9a80c784698718f425e9f39f30f50e878a0d19419768bc3dd20f8e0b",
+            "size_bytes": 153822
+          },
+          {
+            "filename": "Prelude_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_2.tif",
+            "sha256": "7f4a64118fe2e2a156412e7983dbfd261d26b8d765190c5470aae1b9196aadc2",
+            "size_bytes": 148078
+          },
+          {
+            "filename": "Prelude_3.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_3.tif",
+            "sha256": "9f1ae140ca12ab970b564e0963ff12915bb34a2df81106d93db03bf06d0787c9",
+            "size_bytes": 157216
+          },
+          {
+            "filename": "Prelude_4.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_4.tif",
+            "sha256": "fe1e43247570827e03f3279a6c5a2c2a5b2b2fb091beee470ba2ef80187c7207",
+            "size_bytes": 144000
+          },
+          {
+            "filename": "Prelude_5.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_5.tif",
+            "sha256": "473dcd8b0057c7d7e65882aac99c58906b577e6c1b4156657ce359ce5e1eaba0",
+            "size_bytes": 157070
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Legend.MUS",
+            "relative_path": "mus\\10 Episodes Op12\\Legend.MUS",
+            "sha256": "d538f9a1e9ff3afd0fcf7605ad46a53b5e2e6e3655bdfe1b2ca6469780e75f33",
+            "size_bytes": 73066
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Prelude.xml",
+        "xml_relative_path": "xml\\10 Episodes Op12\\Prelude.xml",
+        "xml_sha256": "fbe7f0658039ecb89cdec2d699894361b00cb172b974a1e9ffd578f3e95f19bc",
+        "xml_size_bytes": 530199,
+        "declared_title": "Prelude 'Harp', No.7 from 10 Episodes Op.12",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 81,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2"
+        ],
+        "fifths": 0,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 7,
+        "source_tiffs": [
+          {
+            "filename": "Legend_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_1.tif",
+            "sha256": "89cc4667c4f377c25c6ff71f0e56d0bd1c3110c4398d1ec3cca71ae24efe8dae",
+            "size_bytes": 118970
+          },
+          {
+            "filename": "Legend_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_2.tif",
+            "sha256": "a79646c1c06e6fdab4f4bdc257c068f5727d5f55ca7f6788fde11b2f92d8dc9c",
+            "size_bytes": 137266
+          },
+          {
+            "filename": "Prelude_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_1.tif",
+            "sha256": "f4ffffee9a80c784698718f425e9f39f30f50e878a0d19419768bc3dd20f8e0b",
+            "size_bytes": 153822
+          },
+          {
+            "filename": "Prelude_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_2.tif",
+            "sha256": "7f4a64118fe2e2a156412e7983dbfd261d26b8d765190c5470aae1b9196aadc2",
+            "size_bytes": 148078
+          },
+          {
+            "filename": "Prelude_3.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_3.tif",
+            "sha256": "9f1ae140ca12ab970b564e0963ff12915bb34a2df81106d93db03bf06d0787c9",
+            "size_bytes": 157216
+          },
+          {
+            "filename": "Prelude_4.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_4.tif",
+            "sha256": "fe1e43247570827e03f3279a6c5a2c2a5b2b2fb091beee470ba2ef80187c7207",
+            "size_bytes": 144000
+          },
+          {
+            "filename": "Prelude_5.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_5.tif",
+            "sha256": "473dcd8b0057c7d7e65882aac99c58906b577e6c1b4156657ce359ce5e1eaba0",
+            "size_bytes": 157070
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Prelude.MUS",
+            "relative_path": "mus\\10 Episodes Op12\\Prelude.MUS",
+            "sha256": "15f949d7cef02c78000cb313d8765a96971a29d65200cb6b2a092a9724f8e955",
+            "size_bytes": 88211
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "March.xml",
+        "xml_relative_path": "xml\\4 Pieces Op3\\March.xml",
+        "xml_sha256": "0b5e9a962707d815b54a2a8f7d9f681d729567a25bb01635c384380d290cc426",
+        "xml_size_bytes": 152386,
+        "declared_title": "March, No.3 from 4 Pieces Op.3",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 21,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2"
+        ],
+        "fifths": -1,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 2,
+        "source_tiffs": [
+          {
+            "filename": "March_1.tif",
+            "relative_path": "tiff\\4 Pieces Op3\\March_1.tif",
+            "sha256": "54582cffe4411d632934e06a9337e7f2946e05955196e1a34841d3948ef0562f",
+            "size_bytes": 122000
+          },
+          {
+            "filename": "March_2.tif",
+            "relative_path": "tiff\\4 Pieces Op3\\March_2.tif",
+            "sha256": "1fcdae37f251c103f7bc72b27132f8c27f0b3955068fbd3ae32aacdeee9cd261",
+            "size_bytes": 129732
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "March.MUS",
+            "relative_path": "mus\\4 Pieces Op3\\March.MUS",
+            "sha256": "e8ff0e09c3ad586d14e8f5f62654370da14acf6c1819fbd0a1abf77df14d2cf1",
+            "size_bytes": 68288
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Etude.xml",
+        "xml_relative_path": "xml\\Etudes Op2\\Etude.xml",
+        "xml_sha256": "9f5626e548fd54254770b381dcab8e7afd0244492bed6213bb7beed551d323e1",
+        "xml_size_bytes": 483058,
+        "declared_title": "No.4 from Etudes Op.2",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 99,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "fifths": -3,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 5,
+        "source_tiffs": [
+          {
+            "filename": "Etude_1.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_1.tif",
+            "sha256": "47090c38f69fdc5d65cff5f26e2ea00d4690fc1f74bb4d66a70b94af19eb4f6a",
+            "size_bytes": 139866
+          },
+          {
+            "filename": "Etude_2.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_2.tif",
+            "sha256": "3ca2058bdf8fdb66459967dafad98380d229ea89471226507e957c2e4cd09bf6",
+            "size_bytes": 151950
+          },
+          {
+            "filename": "Etude_3.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_3.tif",
+            "sha256": "9608c69293bf42f0a191f54789d2512c5486acea6e4d494d1395bac3cdaa00c5",
+            "size_bytes": 157444
+          },
+          {
+            "filename": "Etude_4.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_4.tif",
+            "sha256": "a90fbf92a657c6a456befe9b810574c65099586a268da48ce05e6c956aff1ef0",
+            "size_bytes": 163094
+          },
+          {
+            "filename": "Etude_5.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_5.tif",
+            "sha256": "52dec6d8e36c04d191981887f7bf89f6abc7621c0e023d581b9123edbb314034",
+            "size_bytes": 163872
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Etude.MUS",
+            "relative_path": "mus\\Etudes Op2\\Etude.MUS",
+            "sha256": "e10334ab9e243a84601129403aeafa7930c62e3a1075362008a78890fd7b3084",
+            "size_bytes": 86350
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Montagues.xml",
+        "xml_relative_path": "xml\\Montagues.xml",
+        "xml_sha256": "1cd89cba01d4ac0b589c877f061fea2368c4b289818ada9fdee532e367082fd3",
+        "xml_size_bytes": 514393,
+        "declared_title": "The Montagues and the Capulets",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 95,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": 1,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 40,
+        "source_tiffs": [
+          {
+            "filename": "Legend_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_1.tif",
+            "sha256": "89cc4667c4f377c25c6ff71f0e56d0bd1c3110c4398d1ec3cca71ae24efe8dae",
+            "size_bytes": 118970
+          },
+          {
+            "filename": "Legend_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_2.tif",
+            "sha256": "a79646c1c06e6fdab4f4bdc257c068f5727d5f55ca7f6788fde11b2f92d8dc9c",
+            "size_bytes": 137266
+          },
+          {
+            "filename": "Prelude_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_1.tif",
+            "sha256": "f4ffffee9a80c784698718f425e9f39f30f50e878a0d19419768bc3dd20f8e0b",
+            "size_bytes": 153822
+          },
+          {
+            "filename": "Prelude_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_2.tif",
+            "sha256": "7f4a64118fe2e2a156412e7983dbfd261d26b8d765190c5470aae1b9196aadc2",
+            "size_bytes": 148078
+          },
+          {
+            "filename": "Prelude_3.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_3.tif",
+            "sha256": "9f1ae140ca12ab970b564e0963ff12915bb34a2df81106d93db03bf06d0787c9",
+            "size_bytes": 157216
+          },
+          {
+            "filename": "Prelude_4.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_4.tif",
+            "sha256": "fe1e43247570827e03f3279a6c5a2c2a5b2b2fb091beee470ba2ef80187c7207",
+            "size_bytes": 144000
+          },
+          {
+            "filename": "Prelude_5.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_5.tif",
+            "sha256": "473dcd8b0057c7d7e65882aac99c58906b577e6c1b4156657ce359ce5e1eaba0",
+            "size_bytes": 157070
+          },
+          {
+            "filename": "March_1.tif",
+            "relative_path": "tiff\\4 Pieces Op3\\March_1.tif",
+            "sha256": "54582cffe4411d632934e06a9337e7f2946e05955196e1a34841d3948ef0562f",
+            "size_bytes": 122000
+          },
+          {
+            "filename": "March_2.tif",
+            "relative_path": "tiff\\4 Pieces Op3\\March_2.tif",
+            "sha256": "1fcdae37f251c103f7bc72b27132f8c27f0b3955068fbd3ae32aacdeee9cd261",
+            "size_bytes": 129732
+          },
+          {
+            "filename": "Montagues_1.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_1.tif",
+            "sha256": "df06c7a2170c3742ad852403a93680d2a01be21605ce9775be0c48cd5c940315",
+            "size_bytes": 142774
+          },
+          {
+            "filename": "Montagues_2.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_2.tif",
+            "sha256": "038d2cfcb64fc332eaa72b29d5dd7fcbb09347d908965758d9789ef42d7cc991",
+            "size_bytes": 170734
+          },
+          {
+            "filename": "Montagues_3.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_3.tif",
+            "sha256": "f57cbb596831af541bf75f5c47b27d8f5082c83acbe967af46a1be312742d182",
+            "size_bytes": 171436
+          },
+          {
+            "filename": "Montagues_4.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_4.tif",
+            "sha256": "c82bad9104cfcccf718d316b6cefa86aa05d5852d0552b350de60f43603b8e9f",
+            "size_bytes": 156372
+          },
+          {
+            "filename": "Montagues_5.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_5.tif",
+            "sha256": "2385cf91a6031587ce23ad69ebad605a2c435da6a98b13f757fe8273b85a14ae",
+            "size_bytes": 126534
+          },
+          {
+            "filename": "Grasshoppers_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_1.tif",
+            "sha256": "33e1fc7e648d1b50b8a7e32952b2f6b9df2466bd2236f0fe80352c6c676b5de3",
+            "size_bytes": 141948
+          },
+          {
+            "filename": "Grasshoppers_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_2.tif",
+            "sha256": "c3d25cff7e1b2f0dad1c9ab5fd7edbe11d2fd16f34f5bcc99b0a0bf4bd314d8a",
+            "size_bytes": 160830
+          },
+          {
+            "filename": "Moonlit_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_1.tif",
+            "sha256": "76f97bb821b72e7aaaa8e780b48aeab1e45f16924eb0aede6f3e205826d245d8",
+            "size_bytes": 140746
+          },
+          {
+            "filename": "Moonlit_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_2.tif",
+            "sha256": "3c7f14b26bd66f9fa7aa1b60558dcd4518a358c9af6fbcebf09707302d85fc0e",
+            "size_bytes": 172172
+          },
+          {
+            "filename": "Morning_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_1.tif",
+            "sha256": "1256e52e9fafb791e7c0e025a125e52cca0e6c593c16d6d6f60173a9b3bc5119",
+            "size_bytes": 106516
+          },
+          {
+            "filename": "Morning_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_2.tif",
+            "sha256": "78b70d13ac557a8de9560a7023285f43672c6b2e7052a0868048066533ee2564",
+            "size_bytes": 134478
+          },
+          {
+            "filename": "Toccata_1.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_1.tif",
+            "sha256": "7ac4c276f1469f9c9a54c516e4ece84c95d5a7089048de8e9fa9fb4f36457c17",
+            "size_bytes": 140068
+          },
+          {
+            "filename": "Toccata_10.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_10.tif",
+            "sha256": "5bcacfc8e42e2c71fa80cc09076fc26e0b142ac13ac56adc297f92bbc1a0dbf8",
+            "size_bytes": 196854
+          },
+          {
+            "filename": "Toccata_11.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_11.tif",
+            "sha256": "e31dc0d90a06acc2a8acffe0ce9a17ea56f56b9e63736c2ea5235e8bf0e564c9",
+            "size_bytes": 189618
+          },
+          {
+            "filename": "Toccata_2.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_2.tif",
+            "sha256": "b15da54111fd3e3e846e1e2909be9ffe4020dab682bb8b3fb0a29297ef00d43e",
+            "size_bytes": 169986
+          },
+          {
+            "filename": "Toccata_3.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_3.tif",
+            "sha256": "761b111a482925f86e60a1b3104d8f24b5d149879113783463d7a7039dab9483",
+            "size_bytes": 200408
+          },
+          {
+            "filename": "Toccata_4.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_4.tif",
+            "sha256": "59fa92a1daa5581650abd905c396b2d5a525af84cba166c27ca7e9b50dfd7b08",
+            "size_bytes": 209918
+          },
+          {
+            "filename": "Toccata_5.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_5.tif",
+            "sha256": "1a3e8013fa9952189a86619ee8cc121efd4126148f6f9a80ef0c50c0dad02f25",
+            "size_bytes": 188520
+          },
+          {
+            "filename": "Toccata_6.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_6.tif",
+            "sha256": "2de5531c7352b8a8b875213b8d94786720c80da5e76331ef8b152eab9f145125",
+            "size_bytes": 194292
+          },
+          {
+            "filename": "Toccata_7.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_7.tif",
+            "sha256": "fb85b215333531e54e2783339b402126adaff3d454baf030ead3e2f1f6f57221",
+            "size_bytes": 190114
+          },
+          {
+            "filename": "Toccata_8.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_8.tif",
+            "sha256": "3cedb3e5af15a76bf1e6603ae0ceb0c03ede6f31820caab071d0b104d9125d77",
+            "size_bytes": 201568
+          },
+          {
+            "filename": "Toccata_9.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_9.tif",
+            "sha256": "99c9aef00d073efd4d5ab4aeb86cc2a7ffe0c0586076e634fb15484bb4cde766",
+            "size_bytes": 216546
+          },
+          {
+            "filename": "Op22No1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No1.tif",
+            "sha256": "ac5e6977e062f373f16dcabc721fcc7691b1fb11b71eb510800a56125650aa7e",
+            "size_bytes": 151170
+          },
+          {
+            "filename": "Op22No10_1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_1.tif",
+            "sha256": "fc5c59b9e12ef8576e32ed387d7556960ec2a48b4c0fd4ae322b8e86107d5c0b",
+            "size_bytes": 130376
+          },
+          {
+            "filename": "Op22No10_2.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_2.tif",
+            "sha256": "0c5e92e3dcfe3aaf67fa32db39570106e0aaa6769d4eb85f7606e21009e9a454",
+            "size_bytes": 136118
+          },
+          {
+            "filename": "Op22No5.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No5.tif",
+            "sha256": "f67804346bd5062b77c5bd94a0c2db47ad2d886ac31655b57e47e185dc9586a9",
+            "size_bytes": 156074
+          },
+          {
+            "filename": "Etude_1.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_1.tif",
+            "sha256": "47090c38f69fdc5d65cff5f26e2ea00d4690fc1f74bb4d66a70b94af19eb4f6a",
+            "size_bytes": 139866
+          },
+          {
+            "filename": "Etude_2.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_2.tif",
+            "sha256": "3ca2058bdf8fdb66459967dafad98380d229ea89471226507e957c2e4cd09bf6",
+            "size_bytes": 151950
+          },
+          {
+            "filename": "Etude_3.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_3.tif",
+            "sha256": "9608c69293bf42f0a191f54789d2512c5486acea6e4d494d1395bac3cdaa00c5",
+            "size_bytes": 157444
+          },
+          {
+            "filename": "Etude_4.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_4.tif",
+            "sha256": "a90fbf92a657c6a456befe9b810574c65099586a268da48ce05e6c956aff1ef0",
+            "size_bytes": 163094
+          },
+          {
+            "filename": "Etude_5.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_5.tif",
+            "sha256": "52dec6d8e36c04d191981887f7bf89f6abc7621c0e023d581b9123edbb314034",
+            "size_bytes": 163872
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Montagues.MUS",
+            "relative_path": "mus\\Montagues.MUS",
+            "sha256": "0a57a010d2f52475b92fa0e4184eae916c741e2152c98b66fe81c5ff713905d3",
+            "size_bytes": 86363
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Grasshoppers.xml",
+        "xml_relative_path": "xml\\Music for children Op65\\Grasshoppers.xml",
+        "xml_sha256": "df20bd9198b893abb7eda4799f781832a16ef0155cfcc3d8f04d12b9d3c79d85",
+        "xml_size_bytes": 152235,
+        "declared_title": "March of the Grasshoppers, No.7 from Music for Children Op.65",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 65,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3"
+        ],
+        "fifths": -2,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 6,
+        "source_tiffs": [
+          {
+            "filename": "Grasshoppers_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_1.tif",
+            "sha256": "33e1fc7e648d1b50b8a7e32952b2f6b9df2466bd2236f0fe80352c6c676b5de3",
+            "size_bytes": 141948
+          },
+          {
+            "filename": "Grasshoppers_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_2.tif",
+            "sha256": "c3d25cff7e1b2f0dad1c9ab5fd7edbe11d2fd16f34f5bcc99b0a0bf4bd314d8a",
+            "size_bytes": 160830
+          },
+          {
+            "filename": "Moonlit_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_1.tif",
+            "sha256": "76f97bb821b72e7aaaa8e780b48aeab1e45f16924eb0aede6f3e205826d245d8",
+            "size_bytes": 140746
+          },
+          {
+            "filename": "Moonlit_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_2.tif",
+            "sha256": "3c7f14b26bd66f9fa7aa1b60558dcd4518a358c9af6fbcebf09707302d85fc0e",
+            "size_bytes": 172172
+          },
+          {
+            "filename": "Morning_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_1.tif",
+            "sha256": "1256e52e9fafb791e7c0e025a125e52cca0e6c593c16d6d6f60173a9b3bc5119",
+            "size_bytes": 106516
+          },
+          {
+            "filename": "Morning_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_2.tif",
+            "sha256": "78b70d13ac557a8de9560a7023285f43672c6b2e7052a0868048066533ee2564",
+            "size_bytes": 134478
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Grasshoppers.MUS",
+            "relative_path": "mus\\Music for children Op65\\Grasshoppers.MUS",
+            "sha256": "5817dba98cc208e5c8b48132a0002ade7c97dc208ca3cc19aefdac63db713f70",
+            "size_bytes": 73080
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Moonlit.xml",
+        "xml_relative_path": "xml\\Music for children Op65\\Moonlit.xml",
+        "xml_sha256": "66a8ea4e9b2a81861c62c5b661c3e8b97010486c915b9e606bf1b242e8696ac0",
+        "xml_size_bytes": 163694,
+        "declared_title": "Moonlit Meadows, No.12 from Music for Children Op.65",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 82,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3"
+        ],
+        "fifths": 2,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 6,
+        "source_tiffs": [
+          {
+            "filename": "Grasshoppers_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_1.tif",
+            "sha256": "33e1fc7e648d1b50b8a7e32952b2f6b9df2466bd2236f0fe80352c6c676b5de3",
+            "size_bytes": 141948
+          },
+          {
+            "filename": "Grasshoppers_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_2.tif",
+            "sha256": "c3d25cff7e1b2f0dad1c9ab5fd7edbe11d2fd16f34f5bcc99b0a0bf4bd314d8a",
+            "size_bytes": 160830
+          },
+          {
+            "filename": "Moonlit_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_1.tif",
+            "sha256": "76f97bb821b72e7aaaa8e780b48aeab1e45f16924eb0aede6f3e205826d245d8",
+            "size_bytes": 140746
+          },
+          {
+            "filename": "Moonlit_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_2.tif",
+            "sha256": "3c7f14b26bd66f9fa7aa1b60558dcd4518a358c9af6fbcebf09707302d85fc0e",
+            "size_bytes": 172172
+          },
+          {
+            "filename": "Morning_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_1.tif",
+            "sha256": "1256e52e9fafb791e7c0e025a125e52cca0e6c593c16d6d6f60173a9b3bc5119",
+            "size_bytes": 106516
+          },
+          {
+            "filename": "Morning_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_2.tif",
+            "sha256": "78b70d13ac557a8de9560a7023285f43672c6b2e7052a0868048066533ee2564",
+            "size_bytes": 134478
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Moonlit.MUS",
+            "relative_path": "mus\\Music for children Op65\\Moonlit.MUS",
+            "sha256": "61f81070e3882eb5518b58e4fdadf3819da64308c0bf3ceb205738075d6d9dc4",
+            "size_bytes": 74163
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Morning.xml",
+        "xml_relative_path": "xml\\Music for children Op65\\Morning.xml",
+        "xml_sha256": "8dc19306dc53c4dd9cf799be3e09a3de7f36dbf243c91bd0a3a91f507bf8b4a5",
+        "xml_size_bytes": 117059,
+        "declared_title": "Morning, No.1 from Music for Children Op.65",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 29,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3"
+        ],
+        "fifths": 0,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 6,
+        "source_tiffs": [
+          {
+            "filename": "Grasshoppers_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_1.tif",
+            "sha256": "33e1fc7e648d1b50b8a7e32952b2f6b9df2466bd2236f0fe80352c6c676b5de3",
+            "size_bytes": 141948
+          },
+          {
+            "filename": "Grasshoppers_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_2.tif",
+            "sha256": "c3d25cff7e1b2f0dad1c9ab5fd7edbe11d2fd16f34f5bcc99b0a0bf4bd314d8a",
+            "size_bytes": 160830
+          },
+          {
+            "filename": "Moonlit_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_1.tif",
+            "sha256": "76f97bb821b72e7aaaa8e780b48aeab1e45f16924eb0aede6f3e205826d245d8",
+            "size_bytes": 140746
+          },
+          {
+            "filename": "Moonlit_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_2.tif",
+            "sha256": "3c7f14b26bd66f9fa7aa1b60558dcd4518a358c9af6fbcebf09707302d85fc0e",
+            "size_bytes": 172172
+          },
+          {
+            "filename": "Morning_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_1.tif",
+            "sha256": "1256e52e9fafb791e7c0e025a125e52cca0e6c593c16d6d6f60173a9b3bc5119",
+            "size_bytes": 106516
+          },
+          {
+            "filename": "Morning_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_2.tif",
+            "sha256": "78b70d13ac557a8de9560a7023285f43672c6b2e7052a0868048066533ee2564",
+            "size_bytes": 134478
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Morning.MUS",
+            "relative_path": "mus\\Music for children Op65\\Morning.MUS",
+            "sha256": "b59c2d17c94bf9d54fc8f2b04d909cd578d17030fbcdffcef37a69ca94601904",
+            "size_bytes": 70978
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Toccata.xml",
+        "xml_relative_path": "xml\\Toccata.xml",
+        "xml_sha256": "46696a6d6cb7b46ffee5f55c8ae40b1fcf14aa35645ee8d31ce611862cce396b",
+        "xml_size_bytes": 1540602,
+        "declared_title": "Toccata Op.11",
+        "composer_text": "Serge Prokofiev",
+        "measures_total": 226,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": -1,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 40,
+        "source_tiffs": [
+          {
+            "filename": "Legend_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_1.tif",
+            "sha256": "89cc4667c4f377c25c6ff71f0e56d0bd1c3110c4398d1ec3cca71ae24efe8dae",
+            "size_bytes": 118970
+          },
+          {
+            "filename": "Legend_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Legend_2.tif",
+            "sha256": "a79646c1c06e6fdab4f4bdc257c068f5727d5f55ca7f6788fde11b2f92d8dc9c",
+            "size_bytes": 137266
+          },
+          {
+            "filename": "Prelude_1.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_1.tif",
+            "sha256": "f4ffffee9a80c784698718f425e9f39f30f50e878a0d19419768bc3dd20f8e0b",
+            "size_bytes": 153822
+          },
+          {
+            "filename": "Prelude_2.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_2.tif",
+            "sha256": "7f4a64118fe2e2a156412e7983dbfd261d26b8d765190c5470aae1b9196aadc2",
+            "size_bytes": 148078
+          },
+          {
+            "filename": "Prelude_3.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_3.tif",
+            "sha256": "9f1ae140ca12ab970b564e0963ff12915bb34a2df81106d93db03bf06d0787c9",
+            "size_bytes": 157216
+          },
+          {
+            "filename": "Prelude_4.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_4.tif",
+            "sha256": "fe1e43247570827e03f3279a6c5a2c2a5b2b2fb091beee470ba2ef80187c7207",
+            "size_bytes": 144000
+          },
+          {
+            "filename": "Prelude_5.tif",
+            "relative_path": "tiff\\10 Episodes Op12\\Prelude_5.tif",
+            "sha256": "473dcd8b0057c7d7e65882aac99c58906b577e6c1b4156657ce359ce5e1eaba0",
+            "size_bytes": 157070
+          },
+          {
+            "filename": "March_1.tif",
+            "relative_path": "tiff\\4 Pieces Op3\\March_1.tif",
+            "sha256": "54582cffe4411d632934e06a9337e7f2946e05955196e1a34841d3948ef0562f",
+            "size_bytes": 122000
+          },
+          {
+            "filename": "March_2.tif",
+            "relative_path": "tiff\\4 Pieces Op3\\March_2.tif",
+            "sha256": "1fcdae37f251c103f7bc72b27132f8c27f0b3955068fbd3ae32aacdeee9cd261",
+            "size_bytes": 129732
+          },
+          {
+            "filename": "Montagues_1.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_1.tif",
+            "sha256": "df06c7a2170c3742ad852403a93680d2a01be21605ce9775be0c48cd5c940315",
+            "size_bytes": 142774
+          },
+          {
+            "filename": "Montagues_2.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_2.tif",
+            "sha256": "038d2cfcb64fc332eaa72b29d5dd7fcbb09347d908965758d9789ef42d7cc991",
+            "size_bytes": 170734
+          },
+          {
+            "filename": "Montagues_3.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_3.tif",
+            "sha256": "f57cbb596831af541bf75f5c47b27d8f5082c83acbe967af46a1be312742d182",
+            "size_bytes": 171436
+          },
+          {
+            "filename": "Montagues_4.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_4.tif",
+            "sha256": "c82bad9104cfcccf718d316b6cefa86aa05d5852d0552b350de60f43603b8e9f",
+            "size_bytes": 156372
+          },
+          {
+            "filename": "Montagues_5.tif",
+            "relative_path": "tiff\\Montagues\\Montagues_5.tif",
+            "sha256": "2385cf91a6031587ce23ad69ebad605a2c435da6a98b13f757fe8273b85a14ae",
+            "size_bytes": 126534
+          },
+          {
+            "filename": "Grasshoppers_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_1.tif",
+            "sha256": "33e1fc7e648d1b50b8a7e32952b2f6b9df2466bd2236f0fe80352c6c676b5de3",
+            "size_bytes": 141948
+          },
+          {
+            "filename": "Grasshoppers_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Grasshoppers_2.tif",
+            "sha256": "c3d25cff7e1b2f0dad1c9ab5fd7edbe11d2fd16f34f5bcc99b0a0bf4bd314d8a",
+            "size_bytes": 160830
+          },
+          {
+            "filename": "Moonlit_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_1.tif",
+            "sha256": "76f97bb821b72e7aaaa8e780b48aeab1e45f16924eb0aede6f3e205826d245d8",
+            "size_bytes": 140746
+          },
+          {
+            "filename": "Moonlit_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Moonlit_2.tif",
+            "sha256": "3c7f14b26bd66f9fa7aa1b60558dcd4518a358c9af6fbcebf09707302d85fc0e",
+            "size_bytes": 172172
+          },
+          {
+            "filename": "Morning_1.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_1.tif",
+            "sha256": "1256e52e9fafb791e7c0e025a125e52cca0e6c593c16d6d6f60173a9b3bc5119",
+            "size_bytes": 106516
+          },
+          {
+            "filename": "Morning_2.tif",
+            "relative_path": "tiff\\Music for children Op65\\Morning_2.tif",
+            "sha256": "78b70d13ac557a8de9560a7023285f43672c6b2e7052a0868048066533ee2564",
+            "size_bytes": 134478
+          },
+          {
+            "filename": "Toccata_1.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_1.tif",
+            "sha256": "7ac4c276f1469f9c9a54c516e4ece84c95d5a7089048de8e9fa9fb4f36457c17",
+            "size_bytes": 140068
+          },
+          {
+            "filename": "Toccata_10.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_10.tif",
+            "sha256": "5bcacfc8e42e2c71fa80cc09076fc26e0b142ac13ac56adc297f92bbc1a0dbf8",
+            "size_bytes": 196854
+          },
+          {
+            "filename": "Toccata_11.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_11.tif",
+            "sha256": "e31dc0d90a06acc2a8acffe0ce9a17ea56f56b9e63736c2ea5235e8bf0e564c9",
+            "size_bytes": 189618
+          },
+          {
+            "filename": "Toccata_2.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_2.tif",
+            "sha256": "b15da54111fd3e3e846e1e2909be9ffe4020dab682bb8b3fb0a29297ef00d43e",
+            "size_bytes": 169986
+          },
+          {
+            "filename": "Toccata_3.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_3.tif",
+            "sha256": "761b111a482925f86e60a1b3104d8f24b5d149879113783463d7a7039dab9483",
+            "size_bytes": 200408
+          },
+          {
+            "filename": "Toccata_4.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_4.tif",
+            "sha256": "59fa92a1daa5581650abd905c396b2d5a525af84cba166c27ca7e9b50dfd7b08",
+            "size_bytes": 209918
+          },
+          {
+            "filename": "Toccata_5.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_5.tif",
+            "sha256": "1a3e8013fa9952189a86619ee8cc121efd4126148f6f9a80ef0c50c0dad02f25",
+            "size_bytes": 188520
+          },
+          {
+            "filename": "Toccata_6.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_6.tif",
+            "sha256": "2de5531c7352b8a8b875213b8d94786720c80da5e76331ef8b152eab9f145125",
+            "size_bytes": 194292
+          },
+          {
+            "filename": "Toccata_7.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_7.tif",
+            "sha256": "fb85b215333531e54e2783339b402126adaff3d454baf030ead3e2f1f6f57221",
+            "size_bytes": 190114
+          },
+          {
+            "filename": "Toccata_8.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_8.tif",
+            "sha256": "3cedb3e5af15a76bf1e6603ae0ceb0c03ede6f31820caab071d0b104d9125d77",
+            "size_bytes": 201568
+          },
+          {
+            "filename": "Toccata_9.tif",
+            "relative_path": "tiff\\Toccata\\Toccata_9.tif",
+            "sha256": "99c9aef00d073efd4d5ab4aeb86cc2a7ffe0c0586076e634fb15484bb4cde766",
+            "size_bytes": 216546
+          },
+          {
+            "filename": "Op22No1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No1.tif",
+            "sha256": "ac5e6977e062f373f16dcabc721fcc7691b1fb11b71eb510800a56125650aa7e",
+            "size_bytes": 151170
+          },
+          {
+            "filename": "Op22No10_1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_1.tif",
+            "sha256": "fc5c59b9e12ef8576e32ed387d7556960ec2a48b4c0fd4ae322b8e86107d5c0b",
+            "size_bytes": 130376
+          },
+          {
+            "filename": "Op22No10_2.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_2.tif",
+            "sha256": "0c5e92e3dcfe3aaf67fa32db39570106e0aaa6769d4eb85f7606e21009e9a454",
+            "size_bytes": 136118
+          },
+          {
+            "filename": "Op22No5.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No5.tif",
+            "sha256": "f67804346bd5062b77c5bd94a0c2db47ad2d886ac31655b57e47e185dc9586a9",
+            "size_bytes": 156074
+          },
+          {
+            "filename": "Etude_1.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_1.tif",
+            "sha256": "47090c38f69fdc5d65cff5f26e2ea00d4690fc1f74bb4d66a70b94af19eb4f6a",
+            "size_bytes": 139866
+          },
+          {
+            "filename": "Etude_2.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_2.tif",
+            "sha256": "3ca2058bdf8fdb66459967dafad98380d229ea89471226507e957c2e4cd09bf6",
+            "size_bytes": 151950
+          },
+          {
+            "filename": "Etude_3.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_3.tif",
+            "sha256": "9608c69293bf42f0a191f54789d2512c5486acea6e4d494d1395bac3cdaa00c5",
+            "size_bytes": 157444
+          },
+          {
+            "filename": "Etude_4.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_4.tif",
+            "sha256": "a90fbf92a657c6a456befe9b810574c65099586a268da48ce05e6c956aff1ef0",
+            "size_bytes": 163094
+          },
+          {
+            "filename": "Etude_5.tif",
+            "relative_path": "tiff\\\u00c9tudes Op2\\Etude_5.tif",
+            "sha256": "52dec6d8e36c04d191981887f7bf89f6abc7621c0e023d581b9123edbb314034",
+            "size_bytes": 163872
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Toccata.MUS",
+            "relative_path": "mus\\Toccata.MUS",
+            "sha256": "0d915915da57f96d71a6299e5de9feb30837d400e1ce12100ff204453106049e",
+            "size_bytes": 142945
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Op22No1.xml",
+        "xml_relative_path": "xml\\Visions Fugitives Op22\\Op22No1.xml",
+        "xml_sha256": "f72819efd5de3017e56281e98990ebf8db287807cf653b6c55dc629336802b56",
+        "xml_size_bytes": 78866,
+        "declared_title": "No.1 from Visions Fugitives Op.22",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 27,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": 0,
+        "time_signature": "3/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 4,
+        "source_tiffs": [
+          {
+            "filename": "Op22No1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No1.tif",
+            "sha256": "ac5e6977e062f373f16dcabc721fcc7691b1fb11b71eb510800a56125650aa7e",
+            "size_bytes": 151170
+          },
+          {
+            "filename": "Op22No10_1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_1.tif",
+            "sha256": "fc5c59b9e12ef8576e32ed387d7556960ec2a48b4c0fd4ae322b8e86107d5c0b",
+            "size_bytes": 130376
+          },
+          {
+            "filename": "Op22No10_2.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_2.tif",
+            "sha256": "0c5e92e3dcfe3aaf67fa32db39570106e0aaa6769d4eb85f7606e21009e9a454",
+            "size_bytes": 136118
+          },
+          {
+            "filename": "Op22No5.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No5.tif",
+            "sha256": "f67804346bd5062b77c5bd94a0c2db47ad2d886ac31655b57e47e185dc9586a9",
+            "size_bytes": 156074
+          }
+        ],
+        "source_mus_count": 2,
+        "source_mus": [
+          {
+            "filename": "Op22No1.MUS",
+            "relative_path": "mus\\Visions Fugitives Op22\\Op22No1.MUS",
+            "sha256": "89f32071f9478d6e24a7c9962f6d8b1afcd204902ce14e2f3d46d0c467a054fc",
+            "size_bytes": 64337
+          },
+          {
+            "filename": "Op22No10.MUS",
+            "relative_path": "mus\\Visions Fugitives Op22\\Op22No10.MUS",
+            "sha256": "2064135189dfb18cb2fa3338c84a085aa7f04f57f438515556513e684c8d175e",
+            "size_bytes": 70530
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Op22No10.xml",
+        "xml_relative_path": "xml\\Visions Fugitives Op22\\Op22No10.xml",
+        "xml_sha256": "ed35f93dce1e3ae62edf5a8bb6c6914ef214a50453bc9b0023c2ca3496b1080d",
+        "xml_size_bytes": 165928,
+        "declared_title": "No.10 from Visions Fugitives Op.22",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 39,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3"
+        ],
+        "fifths": -5,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 4,
+        "source_tiffs": [
+          {
+            "filename": "Op22No1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No1.tif",
+            "sha256": "ac5e6977e062f373f16dcabc721fcc7691b1fb11b71eb510800a56125650aa7e",
+            "size_bytes": 151170
+          },
+          {
+            "filename": "Op22No10_1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_1.tif",
+            "sha256": "fc5c59b9e12ef8576e32ed387d7556960ec2a48b4c0fd4ae322b8e86107d5c0b",
+            "size_bytes": 130376
+          },
+          {
+            "filename": "Op22No10_2.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_2.tif",
+            "sha256": "0c5e92e3dcfe3aaf67fa32db39570106e0aaa6769d4eb85f7606e21009e9a454",
+            "size_bytes": 136118
+          },
+          {
+            "filename": "Op22No5.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No5.tif",
+            "sha256": "f67804346bd5062b77c5bd94a0c2db47ad2d886ac31655b57e47e185dc9586a9",
+            "size_bytes": 156074
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Op22No10.MUS",
+            "relative_path": "mus\\Visions Fugitives Op22\\Op22No10.MUS",
+            "sha256": "2064135189dfb18cb2fa3338c84a085aa7f04f57f438515556513e684c8d175e",
+            "size_bytes": 70530
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Op22No5.xml",
+        "xml_relative_path": "xml\\Visions Fugitives Op22\\Op22No5.xml",
+        "xml_sha256": "e784d5f8c7533841279d992f678fc3bbde2b0ec6a5b8658385c8ba0ee0f301d8",
+        "xml_size_bytes": 97967,
+        "declared_title": "No.5 from Visions Fugitives Op.22 ",
+        "composer_text": "Sergei Prokofiev",
+        "measures_total": 20,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2"
+        ],
+        "fifths": 0,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 4,
+        "source_tiffs": [
+          {
+            "filename": "Op22No1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No1.tif",
+            "sha256": "ac5e6977e062f373f16dcabc721fcc7691b1fb11b71eb510800a56125650aa7e",
+            "size_bytes": 151170
+          },
+          {
+            "filename": "Op22No10_1.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_1.tif",
+            "sha256": "fc5c59b9e12ef8576e32ed387d7556960ec2a48b4c0fd4ae322b8e86107d5c0b",
+            "size_bytes": 130376
+          },
+          {
+            "filename": "Op22No10_2.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No10_2.tif",
+            "sha256": "0c5e92e3dcfe3aaf67fa32db39570106e0aaa6769d4eb85f7606e21009e9a454",
+            "size_bytes": 136118
+          },
+          {
+            "filename": "Op22No5.tif",
+            "relative_path": "tiff\\Visions Fugitives Op22\\Op22No5.tif",
+            "sha256": "f67804346bd5062b77c5bd94a0c2db47ad2d886ac31655b57e47e185dc9586a9",
+            "size_bytes": 156074
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "Op22No5.MUS",
+            "relative_path": "mus\\Visions Fugitives Op22\\Op22No5.MUS",
+            "sha256": "4b3b8f189910a85cc21805c7a7614760302a7eacd1f9d5add8c3c90462e32cd2",
+            "size_bytes": 66850
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      }
+    ]
+  },
+  "rubinstein": {
+    "composer": "Anton Rubinstein",
+    "folder_name": "Rubinstein, Anton (1829 - 1894)",
+    "raw_xml_count": 11,
+    "total_tiffs": 52,
+    "total_mus": 11,
+    "works": [
+      {
+        "xml_filename": "1 Souvenir.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\1 Souvenir.xml",
+        "xml_sha256": "37f492ee454671a0fa9dce6880c886f3daa52094fb019952937f7cfea38a8b54",
+        "xml_size_bytes": 645039,
+        "declared_title": "Souvenir, No.1 from Album de Peterhof Op.75 (1866)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 133,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": 0,
+        "time_signature": "2/2",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "1 Souvenir.MUS",
+            "relative_path": "mus\\Album de Peterhof\\1 Souvenir.MUS",
+            "sha256": "5d6ee2a83917fb74d04a4c2a98b498b29b34c9eea3eee318412795690928bbf7",
+            "size_bytes": 99993
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "10 Mazurka.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\10 Mazurka.xml",
+        "xml_sha256": "0e61609102726f23e70a3c8ffa002d6b1817b77c7d7f0a2bfbcf7ef353a93f84",
+        "xml_size_bytes": 267030,
+        "declared_title": "Mazurka, No.10 from Album de Peterhof Op.75 (1866)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 104,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": -1,
+        "time_signature": "3/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "10 Mazurka.MUS",
+            "relative_path": "mus\\Album de Peterhof\\10 Mazurka.MUS",
+            "sha256": "f06f0a8805a054f28d9e0401d92a075f3b6c1f7dc5fa1cfc78dbafbc3ab3ecef",
+            "size_bytes": 79676
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "11 Romance.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\11 Romance.xml",
+        "xml_sha256": "68cc83c8d1c29d8eed93aae4e29455aedd51f1267265b72450ebf381055464e5",
+        "xml_size_bytes": 520185,
+        "declared_title": "Romance, No.11 from Album de Peterhof Op.75 (1866)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 65,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": -2,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "11 Romance.MUS",
+            "relative_path": "mus\\Album de Peterhof\\11 Romance.MUS",
+            "sha256": "a022cd07eb4030ad5f588db6bce2a7b0d5365e064bdc7e617673c2fa3dc679f0",
+            "size_bytes": 87825
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "2 Aubade.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\2 Aubade.xml",
+        "xml_sha256": "2eccf5f6a419286796556b7c5d7a2b4eb96b746010414b66c4bda4783c3583db",
+        "xml_size_bytes": 485428,
+        "declared_title": "",
+        "composer_text": "",
+        "measures_total": 52,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "5"
+        ],
+        "fifths": -3,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "2 Aubade.MUS",
+            "relative_path": "mus\\Album de Peterhof\\2 Aubade.MUS",
+            "sha256": "c4c53bf937e8c31437346bdc910e21d2f65265827c40279d5295a3c48aea464c",
+            "size_bytes": 83231
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "3 Marche fun\u00e8bre.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\3 Marche fun\u00e8bre.xml",
+        "xml_sha256": "03a0c6c91a2c43ac5ecac9d25e1c1bfee5e8b52f1510423959475b27584873ad",
+        "xml_size_bytes": 755315,
+        "declared_title": "Marche fun\u00e8bre, No.3 from Album de Peterhof (1866)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 90,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "fifths": -2,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "3 Marche fun\u00e8bre.MUS",
+            "relative_path": "mus\\Album de Peterhof\\3 Marche fun\u00e8bre.MUS",
+            "sha256": "dfeb7c74f07e07e7297b59af8e15d8b72513cd08f1e2bdf0095851017d399690",
+            "size_bytes": 93471
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "4 Impromptu.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\4 Impromptu.xml",
+        "xml_sha256": "871f9e6de06a948a5402b628c45f8564306394620fbd13a9383a29c873a96237",
+        "xml_size_bytes": 402461,
+        "declared_title": "Impromptu, No.4 from Album de Peterhof Op.75 (1866)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 98,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": -3,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "4 Impromptu.MUS",
+            "relative_path": "mus\\Album de Peterhof\\4 Impromptu.MUS",
+            "sha256": "1fbe41b046eba61d29a867f568e3e06af7e172d1925caadc1d170b0ecee67b0a",
+            "size_bytes": 84522
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "5 R\u00eaverie.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\5 R\u00eaverie.xml",
+        "xml_sha256": "9e6cedab7bdda0d781ecfab2efcd82e70029afcbd29583f9bb1784c98657da6b",
+        "xml_size_bytes": 512304,
+        "declared_title": "R\u00eaverie, No.5 from Album de Peterhof (1866)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 101,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": -1,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "5 R\u00eaverie.MUS",
+            "relative_path": "mus\\Album de Peterhof\\5 R\u00eaverie.MUS",
+            "sha256": "c4045d15d1eeb6a11db7cf8a1dbe29397c106a4db7265ff256580c2da681bb86",
+            "size_bytes": 93271
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "6 Caprice russe.xml",
+        "xml_relative_path": "xml\\Album de Peterhof\\6 Caprice russe.xml",
+        "xml_sha256": "ca0411afa5e61cc8dd672ddd0d2bbb948b9c970f03ddc5a9ed493d2c7a18314f",
+        "xml_size_bytes": 631191,
+        "declared_title": "Caprice russe, No.6 from Album de Peterhof Op.75 (1866)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 139,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": -1,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 36,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page03.tiff",
+            "sha256": "44f9906e0affb482fd4c15e1b55b7dc68eb5fc399c1bc744a6cdd39a2f523f6b",
+            "size_bytes": 125130
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page04.tiff",
+            "sha256": "0bb4d4de4b010ef494e07b2f4f550f7e0fc7ee8e3ef98f3b1451e388455e234c",
+            "size_bytes": 138302
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page05.tiff",
+            "sha256": "9e185cae8fbffe2e2c3d65128fb7251f34eca98b5830c51033253a7333915ac2",
+            "size_bytes": 150989
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page06.tiff",
+            "sha256": "a4e842c945d583d8d0e5f7b3002d7cd7ee458199ed9403b7f58dc23433c5402c",
+            "size_bytes": 142679
+          },
+          {
+            "filename": "Documents.page07.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\1 Souvenir\\Documents.page07.tiff",
+            "sha256": "e9f9c1789c85e7942933afc29868680fd0eeb6d32162c2f5bad8e88e44d6434a",
+            "size_bytes": 131931
+          },
+          {
+            "filename": "Documents.page52.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page52.tiff",
+            "sha256": "71a6314b5d4b32f6965d4487f067b2e3ae9641acad1b19ae001e783517182c37",
+            "size_bytes": 98822
+          },
+          {
+            "filename": "Documents.page53.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page53.tiff",
+            "sha256": "216b8993b6fdd40e62fc7009af076975cfc50ae1c1fa9c30348ccaddc5d383b7",
+            "size_bytes": 88726
+          },
+          {
+            "filename": "Documents.page54.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page54.tiff",
+            "sha256": "732adcb2b42b0cef3bd27976bb58226711ec3bd3e820ba92835c99d455137209",
+            "size_bytes": 110018
+          },
+          {
+            "filename": "Documents.page55.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\10 Mazurka\\Documents.page55.tiff",
+            "sha256": "43d61a90a0a0d63998d9782ac4c1b1cbdc9fe90474aeb60fb3e98b1531013ffc",
+            "size_bytes": 92512
+          },
+          {
+            "filename": "Documents.page56.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page56.tiff",
+            "sha256": "4c263b5881684f0fa3d842fbbb4f159a85f65f8eff8792d6481a4409939f11dd",
+            "size_bytes": 115165
+          },
+          {
+            "filename": "Documents.page57.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page57.tiff",
+            "sha256": "2aa3644f6947ff36760093b305090e9dffe4b32d523a4a8b84f3a1947257c101",
+            "size_bytes": 140552
+          },
+          {
+            "filename": "Documents.page58.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page58.tiff",
+            "sha256": "09f7915c4d7362b29be70f8abdc9ff70d5ddb2ad393e3d0f1042dd4b789697e6",
+            "size_bytes": 133008
+          },
+          {
+            "filename": "Documents.page59.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\11 Romance\\Documents.page59.tiff",
+            "sha256": "f2ece29734af105baa6946dcf7d202c63f41235a1ac7c81196e71e134509f5e5",
+            "size_bytes": 117223
+          },
+          {
+            "filename": "Documents.page08.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page08.tiff",
+            "sha256": "7365ab74259671a6d7f8cb324847d968e982849b0a3d9b6617a8f05136b98191",
+            "size_bytes": 113656
+          },
+          {
+            "filename": "Documents.page09.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page09.tiff",
+            "sha256": "cee32b387ade7c550fdcf541cd82352105072b977bc8852179eeb4ecc65e37cf",
+            "size_bytes": 94622
+          },
+          {
+            "filename": "Documents.page10.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page10.tiff",
+            "sha256": "27aac49944b066edc38348d5258c191ae321efc6546584d06bbb655919c95e87",
+            "size_bytes": 134546
+          },
+          {
+            "filename": "Documents.page11.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\2 Aubade\\Documents.page11.tiff",
+            "sha256": "de520b94a14ac55a72fdc1b41fed48de3d4705c57d49639868d08584ff61e2c1",
+            "size_bytes": 119617
+          },
+          {
+            "filename": "Documents.page12.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page12.tiff",
+            "sha256": "1904da65ba8ce90fda15a1d75ad54d93759629cee45ed67f13efc858664733cd",
+            "size_bytes": 141664
+          },
+          {
+            "filename": "Documents.page13.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page13.tiff",
+            "sha256": "96c513b55f9fd98d268e1cb3fc3a88db767028069ca2c04ad4db7969e5a86340",
+            "size_bytes": 150546
+          },
+          {
+            "filename": "Documents.page14.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page14.tiff",
+            "sha256": "4d1721e4c66d4662d621952fa15cbbcb61dc357f2b6eb77ba1726622bb0137e9",
+            "size_bytes": 167775
+          },
+          {
+            "filename": "Documents.page15.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\3 Marche fun\u00e8bre\\Documents.page15.tiff",
+            "sha256": "baad2d9bfe66632c7fec73585a145b80d854d1da813a2f6387eb7a273add9ad8",
+            "size_bytes": 156140
+          },
+          {
+            "filename": "Documents.page16.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page16.tiff",
+            "sha256": "5f37efa9dc43cc11052a793f6202825c7000930df84de7b742dfb41f9e65fa4b",
+            "size_bytes": 112108
+          },
+          {
+            "filename": "Documents.page17.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page17.tiff",
+            "sha256": "86f3c102b16a4e16f7a269eb624a90219f333f206b675cffbb75d3ccebc8f2fb",
+            "size_bytes": 115193
+          },
+          {
+            "filename": "Documents.page18.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page18.tiff",
+            "sha256": "125d0ad33f010e3ac41cb96ee474a7fb00da778614605aff511be8c05e96fdeb",
+            "size_bytes": 114318
+          },
+          {
+            "filename": "Documents.page19.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\4 Impromptu\\Documents.page19.tiff",
+            "sha256": "1713fb36ee9cf3b2473c7af072185fc1793064a2458fc52ea114bc60dfd4f9e7",
+            "size_bytes": 111485
+          },
+          {
+            "filename": "Documents.page20.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page20.tiff",
+            "sha256": "0ab19d22909575f67187cdb532f161e8f6a6e64ed13884c82f8235542f845138",
+            "size_bytes": 126261
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page21.tiff",
+            "sha256": "6eec1e5569912d8e36f10efa25c97cf946edb928039e51c23b6b2cffc15947c2",
+            "size_bytes": 148781
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page22.tiff",
+            "sha256": "6bd440fbe204f3afa48b90bf8763810e10787049f3904c79f3935af3c1c41e8a",
+            "size_bytes": 155726
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\5 R\u00eaverie\\Documents.page23.tiff",
+            "sha256": "a8822ee97ca373c1cb5ab26b79580a8b08a5e3b89b6c32b358ed5255c9cbac7c",
+            "size_bytes": 130516
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page24.tiff",
+            "sha256": "67d69a33a43bb9f394a92359e7dc6e42525166fb278fcde93d73205b79d738d2",
+            "size_bytes": 120508
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page25.tiff",
+            "sha256": "ea89933cc0b13e5a513c21fd984e93a9dd244cbed03ddf16dc22e26986b360e0",
+            "size_bytes": 128600
+          },
+          {
+            "filename": "Documents.page26.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page26.tiff",
+            "sha256": "ed53fcf0118b293ae978addaffec3d7a6900b645e102fa05c29e287fbf96c46e",
+            "size_bytes": 143037
+          },
+          {
+            "filename": "Documents.page27.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page27.tiff",
+            "sha256": "eb24eb50fed59c60d3dbbfb82448ce0089404dc30b83d58cc54f0143770c9a18",
+            "size_bytes": 122055
+          },
+          {
+            "filename": "Documents.page28.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page28.tiff",
+            "sha256": "826a3256ef39538e73cbc40942a6f7c863b3a30de7c3920f13fa7bfdfaef79a4",
+            "size_bytes": 97415
+          },
+          {
+            "filename": "Documents.page29.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\6 Caprice russe\\Documents.page29.tiff",
+            "sha256": "97ab5ac22ba922be88486ed36d12e954cefea15760c9fcbaf6d68d422f3bdc2a",
+            "size_bytes": 126116
+          },
+          {
+            "filename": "Album de Peterhof.page01.tiff",
+            "relative_path": "tiff\\Album de Peterhof\\Album de Peterhof.page01.tiff",
+            "sha256": "8c8cb2a97425c4a2b99f781cf627cd243be0dc26e1a709b3af54e8482375ee56",
+            "size_bytes": 304046
+          }
+        ],
+        "source_mus_count": 1,
+        "source_mus": [
+          {
+            "filename": "6 Caprice russe.MUS",
+            "relative_path": "mus\\Album de Peterhof\\6 Caprice russe.MUS",
+            "sha256": "00bb6856b84f1fabdecfb3e8f9acbf3da8c221c4095097d68afcba635076d236",
+            "size_bytes": 95399
+          }
+        ],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Pr\u00e8lude1.xml",
+        "xml_relative_path": "xml\\Six Preludes\\Pr\u00e8lude1.xml",
+        "xml_sha256": "0e61bc3d8f209f499fb78c794532f03675faa9516e9896309bf9a00c8fe3110d",
+        "xml_size_bytes": 627969,
+        "declared_title": "No.1 from Six Pr\u00e8ludes Op.24 (1854)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 97,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5"
+        ],
+        "fifths": -4,
+        "time_signature": "12/8",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 16,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page02.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page02.tiff",
+            "sha256": "c75d6a1b8c98fa926c2b451594f74f8d48c64c72edc0f81f966b0bb625f2b41f",
+            "size_bytes": 120991
+          },
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page03.tiff",
+            "sha256": "c16eea576394f97dab2f0b463c80d39abf9803b53d5972213ff77507a91b8480",
+            "size_bytes": 134962
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page04.tiff",
+            "sha256": "aff48e5080cb4d8a2e534a02aa62ad663d43f650719323b91f41c81af6c8ab73",
+            "size_bytes": 128795
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page05.tiff",
+            "sha256": "b70b1a66db70ceaae061cc212f12e72e69e5059575ee336cc932c9eb0f9721c7",
+            "size_bytes": 141053
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page06.tiff",
+            "sha256": "0f548b957957e0374f67f185b6d6b57160bdca43efe596e2479b2bb8300f3d53",
+            "size_bytes": 113598
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page21.tiff",
+            "sha256": "b139d770c87efb62b008b9a22fc26e27aeb35818069ca43e8e9502460a7700df",
+            "size_bytes": 134790
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page22.tiff",
+            "sha256": "9654e4c25fb27e884b3d07e381198c73f8bf6ee0be4db9b13c8a7bbad528ec5d",
+            "size_bytes": 117018
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page23.tiff",
+            "sha256": "44a865373c896c27a93f0b2896bd7548f5073dce6eb51e1fa5eec5e3d0a7aa57",
+            "size_bytes": 119593
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page24.tiff",
+            "sha256": "006c784a3ac6da6f5151d3f586607972baf0486aabb3b40b580887651662c8d9",
+            "size_bytes": 108202
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page25.tiff",
+            "sha256": "4c3746055ba0608d6cc7ff01393ac091e1a8ce561938a9b25690b5a64ae999e9",
+            "size_bytes": 137153
+          },
+          {
+            "filename": "Documents.page36.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page36.tiff",
+            "sha256": "f132b3edbae2e14e3cbd416661f4e4d3de7f01463151db372445845a6da3565f",
+            "size_bytes": 119040
+          },
+          {
+            "filename": "Documents.page37.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page37.tiff",
+            "sha256": "9735e713f11827b66ad4154c7ddaae6e0afad0df8915d70d0e19991d43796d98",
+            "size_bytes": 117851
+          },
+          {
+            "filename": "Documents.page38.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page38.tiff",
+            "sha256": "ff742fb91f3c13b8c1b0eaaf80110b770fb8f211307a4016f4a0af977753dda8",
+            "size_bytes": 122538
+          },
+          {
+            "filename": "Documents.page39.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page39.tiff",
+            "sha256": "ca929ff3860d48ef5b0cc1db1c1a22f36db6cbeebe4ee54729903c5d13e4e5e1",
+            "size_bytes": 165065
+          },
+          {
+            "filename": "Documents.page40.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page40.tiff",
+            "sha256": "41689b2f91c1b5fdaaa93911a49969109dc32a1d4bec9ef6fab148b517e1ec1e",
+            "size_bytes": 126983
+          },
+          {
+            "filename": "Rubinstein.page01.tiff",
+            "relative_path": "tiff\\Six Preludes\\Rubinstein.page01.tiff",
+            "sha256": "0646da1a7a1703a89ac74b46e356a49cb55e5b461f2ed276b17de8b4e8bb165d",
+            "size_bytes": 94320
+          }
+        ],
+        "source_mus_count": 0,
+        "source_mus": [],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Pr\u00e8lude4.xml",
+        "xml_relative_path": "xml\\Six Preludes\\Pr\u00e8lude4.xml",
+        "xml_sha256": "e64f12cbabc5f64247f76ea45e0042017098b94913416fb9143715a0066e3cf1",
+        "xml_size_bytes": 521768,
+        "declared_title": "No.4 from Six Pr\u00e8ludes Op.24 (1854)",
+        "composer_text": "Anton Rubinstein",
+        "measures_total": 164,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "fifths": 2,
+        "time_signature": "2/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 16,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page02.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page02.tiff",
+            "sha256": "c75d6a1b8c98fa926c2b451594f74f8d48c64c72edc0f81f966b0bb625f2b41f",
+            "size_bytes": 120991
+          },
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page03.tiff",
+            "sha256": "c16eea576394f97dab2f0b463c80d39abf9803b53d5972213ff77507a91b8480",
+            "size_bytes": 134962
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page04.tiff",
+            "sha256": "aff48e5080cb4d8a2e534a02aa62ad663d43f650719323b91f41c81af6c8ab73",
+            "size_bytes": 128795
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page05.tiff",
+            "sha256": "b70b1a66db70ceaae061cc212f12e72e69e5059575ee336cc932c9eb0f9721c7",
+            "size_bytes": 141053
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page06.tiff",
+            "sha256": "0f548b957957e0374f67f185b6d6b57160bdca43efe596e2479b2bb8300f3d53",
+            "size_bytes": 113598
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page21.tiff",
+            "sha256": "b139d770c87efb62b008b9a22fc26e27aeb35818069ca43e8e9502460a7700df",
+            "size_bytes": 134790
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page22.tiff",
+            "sha256": "9654e4c25fb27e884b3d07e381198c73f8bf6ee0be4db9b13c8a7bbad528ec5d",
+            "size_bytes": 117018
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page23.tiff",
+            "sha256": "44a865373c896c27a93f0b2896bd7548f5073dce6eb51e1fa5eec5e3d0a7aa57",
+            "size_bytes": 119593
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page24.tiff",
+            "sha256": "006c784a3ac6da6f5151d3f586607972baf0486aabb3b40b580887651662c8d9",
+            "size_bytes": 108202
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page25.tiff",
+            "sha256": "4c3746055ba0608d6cc7ff01393ac091e1a8ce561938a9b25690b5a64ae999e9",
+            "size_bytes": 137153
+          },
+          {
+            "filename": "Documents.page36.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page36.tiff",
+            "sha256": "f132b3edbae2e14e3cbd416661f4e4d3de7f01463151db372445845a6da3565f",
+            "size_bytes": 119040
+          },
+          {
+            "filename": "Documents.page37.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page37.tiff",
+            "sha256": "9735e713f11827b66ad4154c7ddaae6e0afad0df8915d70d0e19991d43796d98",
+            "size_bytes": 117851
+          },
+          {
+            "filename": "Documents.page38.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page38.tiff",
+            "sha256": "ff742fb91f3c13b8c1b0eaaf80110b770fb8f211307a4016f4a0af977753dda8",
+            "size_bytes": 122538
+          },
+          {
+            "filename": "Documents.page39.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page39.tiff",
+            "sha256": "ca929ff3860d48ef5b0cc1db1c1a22f36db6cbeebe4ee54729903c5d13e4e5e1",
+            "size_bytes": 165065
+          },
+          {
+            "filename": "Documents.page40.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page40.tiff",
+            "sha256": "41689b2f91c1b5fdaaa93911a49969109dc32a1d4bec9ef6fab148b517e1ec1e",
+            "size_bytes": 126983
+          },
+          {
+            "filename": "Rubinstein.page01.tiff",
+            "relative_path": "tiff\\Six Preludes\\Rubinstein.page01.tiff",
+            "sha256": "0646da1a7a1703a89ac74b46e356a49cb55e5b461f2ed276b17de8b4e8bb165d",
+            "size_bytes": 94320
+          }
+        ],
+        "source_mus_count": 0,
+        "source_mus": [],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      },
+      {
+        "xml_filename": "Pr\u00e9lude6.xml",
+        "xml_relative_path": "xml\\Six Preludes\\Pr\u00e9lude6.xml",
+        "xml_sha256": "7c9228573cf27a585b7489f6e9988e00d29df57590135adff0a5304bf86d831f",
+        "xml_size_bytes": 772559,
+        "declared_title": "",
+        "composer_text": "",
+        "measures_total": 47,
+        "part_count": 1,
+        "staff_count": 2,
+        "voices": [
+          "1",
+          "2",
+          "5",
+          "6"
+        ],
+        "fifths": -3,
+        "time_signature": "4/4",
+        "parse_success": true,
+        "parse_error": "",
+        "source_tiff_count": 16,
+        "source_tiffs": [
+          {
+            "filename": "Documents.page02.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page02.tiff",
+            "sha256": "c75d6a1b8c98fa926c2b451594f74f8d48c64c72edc0f81f966b0bb625f2b41f",
+            "size_bytes": 120991
+          },
+          {
+            "filename": "Documents.page03.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page03.tiff",
+            "sha256": "c16eea576394f97dab2f0b463c80d39abf9803b53d5972213ff77507a91b8480",
+            "size_bytes": 134962
+          },
+          {
+            "filename": "Documents.page04.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page04.tiff",
+            "sha256": "aff48e5080cb4d8a2e534a02aa62ad663d43f650719323b91f41c81af6c8ab73",
+            "size_bytes": 128795
+          },
+          {
+            "filename": "Documents.page05.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page05.tiff",
+            "sha256": "b70b1a66db70ceaae061cc212f12e72e69e5059575ee336cc932c9eb0f9721c7",
+            "size_bytes": 141053
+          },
+          {
+            "filename": "Documents.page06.tiff",
+            "relative_path": "tiff\\Six Preludes\\No1\\Documents.page06.tiff",
+            "sha256": "0f548b957957e0374f67f185b6d6b57160bdca43efe596e2479b2bb8300f3d53",
+            "size_bytes": 113598
+          },
+          {
+            "filename": "Documents.page21.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page21.tiff",
+            "sha256": "b139d770c87efb62b008b9a22fc26e27aeb35818069ca43e8e9502460a7700df",
+            "size_bytes": 134790
+          },
+          {
+            "filename": "Documents.page22.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page22.tiff",
+            "sha256": "9654e4c25fb27e884b3d07e381198c73f8bf6ee0be4db9b13c8a7bbad528ec5d",
+            "size_bytes": 117018
+          },
+          {
+            "filename": "Documents.page23.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page23.tiff",
+            "sha256": "44a865373c896c27a93f0b2896bd7548f5073dce6eb51e1fa5eec5e3d0a7aa57",
+            "size_bytes": 119593
+          },
+          {
+            "filename": "Documents.page24.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page24.tiff",
+            "sha256": "006c784a3ac6da6f5151d3f586607972baf0486aabb3b40b580887651662c8d9",
+            "size_bytes": 108202
+          },
+          {
+            "filename": "Documents.page25.tiff",
+            "relative_path": "tiff\\Six Preludes\\No4\\Documents.page25.tiff",
+            "sha256": "4c3746055ba0608d6cc7ff01393ac091e1a8ce561938a9b25690b5a64ae999e9",
+            "size_bytes": 137153
+          },
+          {
+            "filename": "Documents.page36.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page36.tiff",
+            "sha256": "f132b3edbae2e14e3cbd416661f4e4d3de7f01463151db372445845a6da3565f",
+            "size_bytes": 119040
+          },
+          {
+            "filename": "Documents.page37.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page37.tiff",
+            "sha256": "9735e713f11827b66ad4154c7ddaae6e0afad0df8915d70d0e19991d43796d98",
+            "size_bytes": 117851
+          },
+          {
+            "filename": "Documents.page38.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page38.tiff",
+            "sha256": "ff742fb91f3c13b8c1b0eaaf80110b770fb8f211307a4016f4a0af977753dda8",
+            "size_bytes": 122538
+          },
+          {
+            "filename": "Documents.page39.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page39.tiff",
+            "sha256": "ca929ff3860d48ef5b0cc1db1c1a22f36db6cbeebe4ee54729903c5d13e4e5e1",
+            "size_bytes": 165065
+          },
+          {
+            "filename": "Documents.page40.tiff",
+            "relative_path": "tiff\\Six Preludes\\No6\\Documents.page40.tiff",
+            "sha256": "41689b2f91c1b5fdaaa93911a49969109dc32a1d4bec9ef6fab148b517e1ec1e",
+            "size_bytes": 126983
+          },
+          {
+            "filename": "Rubinstein.page01.tiff",
+            "relative_path": "tiff\\Six Preludes\\Rubinstein.page01.tiff",
+            "sha256": "0646da1a7a1703a89ac74b46e356a49cb55e5b461f2ed276b17de8b4e8bb165d",
+            "size_bytes": 94320
+          }
+        ],
+        "source_mus_count": 0,
+        "source_mus": [],
+        "source_linkage_status": "SOURCE_LINKED",
+        "rc011_56_descriptor_compatible": true,
+        "rc011_feature_count": 56,
+        "rc011_error": "",
+        "is_solo_piano": true,
+        "scope_rationale": "Solo piano piece"
+      }
+    ]
+  }
+}
