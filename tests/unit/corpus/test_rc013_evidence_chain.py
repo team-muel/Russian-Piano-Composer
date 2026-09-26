@@ -33,6 +33,10 @@ from russian_piano_composer.corpus.rc013_review_ingestion import (
 )
 
 
+@pytest.mark.skipif(
+    not any(Path("data/scans/rc013").glob("*.pdf")),
+    reason="Authoritative scan/calibration PDF bytes absent in checkout",
+)
 def test_source_image_bundle_v2_binds_to_physical_pdf_bytes(tmp_path: Path) -> None:
     """Proves that changing a single byte in any authoritative PDF triggers fail-closed error or changes hash."""
     scans_manifest_json = Path("data/scans/rc013/rc013_scans_manifest.json")

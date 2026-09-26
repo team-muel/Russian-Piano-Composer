@@ -1,0 +1,114 @@
+{
+  "milestone": "RC-014C.1",
+  "status": "FULL_CONFIRMATORY_CORPUS_FROZEN_AWAITING_HUMAN_APPROVAL",
+  "governance_model": "FAIL_CLOSED_IMMUTABLE_PREREGISTRATION",
+  "preregistration_contract": {
+    "min_russian_composers": 4,
+    "min_control_composers": 4,
+    "min_pieces_per_counted_composer": 10,
+    "repertoire_sampling_rule": "USE_ALL_ELIGIBLE_PIECES",
+    "composer_count_relaxation_permitted": false
+  },
+  "live_production_pool": {
+    "N_Russian": 2,
+    "qualified_composers": [
+      "Alexander Scriabin",
+      "Modest Mussorgsky"
+    ],
+    "rc012_resumption_status": "BLOCKED",
+    "block_reason": "N_Russian = 2 < 4 (Preregistered minimum 4 Russian composers required)"
+  },
+  "confirmatory_pool": {
+    "N_Russian_confirmatory": 4,
+    "N_Control_confirmatory": 5,
+    "total_composers_count": 9,
+    "total_pieces_count": 483,
+    "russian_pieces_count": 246,
+    "control_pieces_count": 237,
+    "russian_composers": [
+      {
+        "composer": "Alexander Scriabin",
+        "class": "Russian",
+        "status": "LIVE_QUALIFIED",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 207,
+        "source_authority": "Stanford CCARH Humdrum (craigsapp/scriabin commit 7daa1136)",
+        "license_authority": "ACCEPTED_BASELINE (CC-BY-NC-SA-4.0)"
+      },
+      {
+        "composer": "Modest Mussorgsky",
+        "class": "Russian",
+        "status": "LIVE_QUALIFIED",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 18,
+        "source_authority": "SyMuPe/PERiScoPe v1.1 (15 Pictures at an Exhibition + 3 standalone pieces)",
+        "license_authority": "ACCEPTED_BASELINE (CC-BY-NC-SA-4.0)"
+      },
+      {
+        "composer": "Anton Rubinstein",
+        "class": "Russian",
+        "status": "TECHNICALLY_READY_GOVERNANCE_PENDING",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 11,
+        "source_authority": "Tonal-Piano-Corpus (hectorbellmann-art/Tonal-Piano-Corpus commit 3f5a08e9)",
+        "license_authority": "GOVERNANCE_DECISION_PENDING"
+      },
+      {
+        "composer": "Sergei Prokofiev",
+        "class": "Russian",
+        "status": "TECHNICALLY_READY_GOVERNANCE_PENDING",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 10,
+        "source_authority": "8 pre-1929 pieces from Tonal-Piano-Corpus + 2 Craig/Humdrum supplements (Op. 22 Nos. 2 & 3)",
+        "license_authority": "GOVERNANCE_DECISION_PENDING"
+      }
+    ],
+    "control_composers": [
+      {
+        "composer": "Edvard Grieg",
+        "class": "Control",
+        "status": "QUALIFIED_BASELINE",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 66,
+        "source_authority": "DCMLab/grieg_lyric_pieces (commit 91a30456)",
+        "license_authority": "ACCEPTED_BASELINE (CC-BY-NC-SA-4.0)"
+      },
+      {
+        "composer": "Claude Debussy",
+        "class": "Control",
+        "status": "QUALIFIED_BASELINE",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 54,
+        "source_authority": "7 DCMLab collections (suite_bergamasque, preludes, etudes, childrens_corner, estampes, deux_arabesques, pour_le_piano)",
+        "license_authority": "ACCEPTED_BASELINE (CC-BY-NC-SA-4.0)"
+      },
+      {
+        "composer": "Ludwig van Beethoven",
+        "class": "Control",
+        "status": "QUALIFIED_BASELINE",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 91,
+        "source_authority": "DCMLab/beethoven_piano_sonatas (commit ea7181bf)",
+        "license_authority": "ACCEPTED_BASELINE (CC-BY-NC-SA-4.0)"
+      },
+      {
+        "composer": "B\u00e9la Bart\u00f3k",
+        "class": "Control",
+        "status": "QUALIFIED_BASELINE",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 14,
+        "source_authority": "DCMLab/bartok_bagatelles (commit c6221f6e)",
+        "license_authority": "ACCEPTED_BASELINE (CC-BY-NC-SA-4.0)"
+      },
+      {
+        "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+        "class": "Control",
+        "status": "QUALIFIED_BASELINE",
+        "minimum_threshold_Mc": 10,
+        "eligible_pieces_count": 12,
+        "source_authority": "DCMLab/dvorak_silhouettes (commit f228006f)",
+        "license_authority": "ACCEPTED_BASELINE (CC-BY-NC-SA-4.0)"
+      }
+    ]
+  }
+}

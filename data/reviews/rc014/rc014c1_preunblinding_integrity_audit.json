@@ -1,0 +1,22 @@
+{
+  "milestone": "RC-014C.1",
+  "status": "RC014C1_FULL_CORPUS_FROZEN_AWAITING_HUMAN_ACCESS_APPROVAL",
+  "rc014c1_confirmatory_corpus_freeze_hash": "06173918554380617153cadd4de66443733c33d52dbbe54813a10846b24e6330",
+  "superseded_freeze_hash": "782f0cbd26e252985ba28d7cdd8bc69486ed2c3f933c2333711c435d4c40d9a8",
+  "superseded_freeze_explanation": "SUPERSEDED_INCOMPLETE_NEW_RUSSIAN_ADDITIONS_FREEZE (contained only 21 pieces for Rubinstein + Prokofiev)",
+  "feature_cache_matrix_sha256": "093d262da6ee7decce2026966be4b251d843c2c5836a2c4359d7609fefd8b28b",
+  "schema_hash": "924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282",
+  "total_confirmatory_pieces": 483,
+  "total_composers_count": 9,
+  "russian_composers_count": 4,
+  "control_composers_count": 5,
+  "russian_pieces_count": 246,
+  "control_pieces_count": 237,
+  "live_n_russian": 2,
+  "rc012_resumption_gate": "BLOCKED",
+  "gate_reason": "Live N_Russian = 2 < 4 until human governance approval is logged; predictor execution strictly prohibited",
+  "invalidation_policy": {
+    "trigger": "ANY_CHANGE_TO_EXTERNAL_BYTES_OR_PARSERS_OR_FEATURES",
+    "effect": "INVALIDATES_CONFIRMATORY_CORPUS_FREEZE_AND_DOWNSTREAM_STATISTICS"
+  }
+}
