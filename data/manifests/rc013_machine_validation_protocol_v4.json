@@ -1,0 +1,67 @@
+{
+  "protocol_version": "rc013_machine_triangulation_protocol_v4",
+  "created_at": "2026-09-26T03:16:07.846866+00:00",
+  "status": "FROZEN_PRE_REGISTERED",
+  "calibration_corpus_hash": "f03f23723e08af74df91e3255c346a99151013a4a1ec4d7ec4c0852935882e1d",
+  "end_to_end_mutation_suite_hash": "1a537f324b69daf230f74520bc03a6d1fc10af9f2fabc3eb5fb8540b52a03eee",
+  "calibration_result_hash": "df75babd348df2715f9d79b9f749303d8f5dc25827a8c46d0e37252663181835",
+  "external_engine_bundle_hash": "e696e41ea25329bd2f5c8642421c085a2c8d71fbfa0aa40ddb8956f7e196b51f",
+  "real_scan_benchmark_hash": "5e732f103b9ba9c06b6f64d3d4701f502707d3de19f040ae92c0220334a51946",
+  "engines": {
+    "channel_a": {
+      "name": "ExternalAudiverisOMR",
+      "version": "5.11.0",
+      "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline"
+    },
+    "channel_b": {
+      "name": "ExternalHomrNeuralOMR",
+      "version": "0.7.0",
+      "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder"
+    },
+    "channel_c": {
+      "name": "ScoreScanStructuralAlignment",
+      "version": "4.0.0-rc013",
+      "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+      "renderer": "MuseScoreProductionScoreRenderer",
+      "renderer_version": "4.0.0-rc013"
+    }
+  },
+  "dimensions": {
+    "critical": [
+      "pitch",
+      "accidental",
+      "octave",
+      "onset",
+      "duration",
+      "rest",
+      "staff",
+      "voice",
+      "key_signature",
+      "time_signature",
+      "tie",
+      "tuplet",
+      "repeat_structure",
+      "measure_sequence"
+    ],
+    "secondary": [
+      "dynamic",
+      "articulation",
+      "slur",
+      "pedal",
+      "tempo"
+    ]
+  },
+  "acceptance_thresholds": {
+    "max_omr_ned": 0.05,
+    "max_critical_mismatches": 0,
+    "max_image_discrepancy": 0.35,
+    "min_measure_coverage_threshold": 0.5,
+    "required_mutation_recall": 1.0
+  },
+  "qualification_policy": {
+    "machine_receipts_can_qualify_composer": false,
+    "current_n_russian": 2,
+    "rc012_resumption_status": "BLOCKED"
+  },
+  "protocol_hash": "ef9edd06e3383de1df27cd6b4cb6eb5d96a73fcf435fbc9e76998844fbf521cc"
+}

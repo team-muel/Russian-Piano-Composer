@@ -1,0 +1,1799 @@
+{
+  "protocol_version": "rc013_machine_triangulation_protocol_v4",
+  "calibration_verdict": "PROTOCOL_V4_CALIBRATION_FAIL",
+  "calibration_gate_details": {
+    "conditions": {
+      "external_engines_available": true,
+      "real_scan_bytes_valid": true,
+      "reference_bytes_valid": true,
+      "complete_source_page_coverage": false,
+      "required_mutation_recall_satisfied": true,
+      "synthetic_controls_pass": false,
+      "empirical_feature_fit_satisfied": false
+    },
+    "all_conditions_satisfied": false
+  },
+  "calibration_corpus_bundle_hash": "f03f23723e08af74df91e3255c346a99151013a4a1ec4d7ec4c0852935882e1d",
+  "external_engine_bundle_v4_hash": "e696e41ea25329bd2f5c8642421c085a2c8d71fbfa0aa40ddb8956f7e196b51f",
+  "real_scan_benchmark_v4_hash": "5e732f103b9ba9c06b6f64d3d4701f502707d3de19f040ae92c0220334a51946",
+  "end_to_end_mutation_suite_hash": "1a537f324b69daf230f74520bc03a6d1fc10af9f2fabc3eb5fb8540b52a03eee",
+  "synthetic_evaluations": [
+    {
+      "score_id": "chopin_op28_no07",
+      "verdict": "MACHINE_TRIANGULATION_FAILED",
+      "disagreement_category": "BOTH_OMR_AGREE_AGAINST_CANDIDATE",
+      "overall_omr_ned": 1.7344,
+      "channel_a_distance": 1.7344,
+      "channel_b_distance": 1.6094,
+      "channel_c_discrepancy": 0.9336,
+      "channel_a_page_coverage": 1.0,
+      "channel_a_measure_coverage": 1.0,
+      "channel_a_event_recall": 0.0,
+      "channel_a_event_precision": 0.0,
+      "channel_b_page_coverage": 1.0,
+      "channel_b_measure_coverage": 1.0,
+      "channel_b_event_recall": 0.0,
+      "channel_b_event_precision": 0.0,
+      "channel_c_page_coverage": 1.0,
+      "critical_mismatches_total": 214,
+      "discrepant_measures": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "channel_results": [
+        {
+          "channel_id": "CHANNEL_A",
+          "channel_name": "ExternalAudiverisOMR",
+          "engine_name": "ExternalAudiverisOMR",
+          "engine_version": "5.11.0",
+          "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline",
+          "input_file_sha256": "2d440abb135b058f3941470e71eb6b9ce57ee780b4e3ff3f17c857318bad014c",
+          "output_sha256": "fb4890694ec51db850056b3a8e91ed8b641307339e4907d8f5b6508b4aa4932f",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "pages_processed": 1,
+            "total_measures_detected": 20,
+            "total_events_extracted": 65,
+            "process_receipts": [
+              {
+                "page_index": 1,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_7ap1yug5\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_7ap1yug5\\chopin_op28_no07_p1.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "3eaeea1dfca717c153aa154f3cece0006cbd9817bf07fa378852506bf2862b95",
+                "measure_offset_applied": 0,
+                "stdout_tail": " Exporting sheet(s): [#1]\nINFO  [chopin_op28_no07_p1]             ScoreExporter 164  | Score chopin_op28_no07_p1 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_7ap1yug5\\audiveris_out\\chopin_op28_no07_p1.mxl\nINFO  [chopin_op28_no07_p1]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_B",
+          "channel_name": "ExternalHomrNeuralOMR",
+          "engine_name": "ExternalHomrNeuralOMR",
+          "engine_version": "0.7.0",
+          "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder",
+          "input_file_sha256": "2d440abb135b058f3941470e71eb6b9ce57ee780b4e3ff3f17c857318bad014c",
+          "output_sha256": "18101f3cfd79d45cf871465a918eec515d3c2c5c14cfcd336b2b0678f635cc39",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "model_hashes": {
+              "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx": "6ed36640db4ef5d223098b6d5efe4eda97c66b24a2c72faab8a018c749003a8d",
+              "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "3e10fd5ae52d0b86792721922fcd954c283a7ed365de7446425bdabe38f3e57d",
+              "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "4c16df852b3789f2676b0d49f0545dab0740e4005f7b472c5252add642f5d5eb"
+            },
+            "pages_processed": 1,
+            "total_measures_detected": 20,
+            "total_events_extracted": 57,
+            "page_receipts": [
+              {
+                "page_index": 1,
+                "success": true,
+                "xml_sha256": "d61ab7a48b94c3cb92feabad1932500e30f01eacb46fa5e448fe034ea3f8b41b",
+                "events_count": 57,
+                "measures_count": 20
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_C",
+          "channel_name": "ScoreScanStructuralAlignment",
+          "engine_name": "ScoreScanStructuralAlignment",
+          "engine_version": "4.0.0-rc013",
+          "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+          "input_file_sha256": "26df14262af1b6238385114dac50a79182de18f603e97087c49d3a7212554996",
+          "output_sha256": "9a62addad6afa7b10bf2c95b3cb14f94b09515f09b1dfa62b28f752195392d75",
+          "has_event_graph": false,
+          "execution_metadata": {
+            "score_id": "chopin_op28_no07",
+            "mean_discrepancy": 0.9336,
+            "rendered_pages_total": 1,
+            "source_pages_total": 1,
+            "matched_pages": 1,
+            "unmatched_rendered_pages": 0,
+            "unmatched_source_pages": 0,
+            "page_alignment_coverage": 1.0,
+            "page_details": [
+              {
+                "page_index": 1,
+                "rendered_image_sha256": "5ed97f10be4c499516011912120e740fb8c8091c9ea0984f5e24923028382b42",
+                "source_scan_image_sha256": "2d440abb135b058f3941470e71eb6b9ce57ee780b4e3ff3f17c857318bad014c",
+                "structural_correlation": 0.0664,
+                "discrepancy_score": 0.9336
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        }
+      ],
+      "dimension_reliability": {
+        "pitch": {
+          "recall": 0.0,
+          "error_rate": 1.4531
+        },
+        "accidental": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "octave": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "duration": {
+          "recall": 0.0,
+          "error_rate": 1.4844
+        },
+        "rest": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "voice_staff": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "time_signature": {
+          "recall": 0.7188,
+          "error_rate": 0.2812
+        },
+        "key_signature": {
+          "recall": 0.7188,
+          "error_rate": 0.2812
+        }
+      },
+      "validation_timestamp": "2026-09-26T02:36:35.196209+00:00"
+    },
+    {
+      "score_id": "chopin_op28_no20",
+      "verdict": "MACHINE_TRIANGULATION_FAILED",
+      "disagreement_category": "BOTH_OMR_AGREE_AGAINST_CANDIDATE",
+      "overall_omr_ned": 1.7692,
+      "channel_a_distance": 1.7692,
+      "channel_b_distance": 1.6462,
+      "channel_c_discrepancy": 0.935,
+      "channel_a_page_coverage": 1.0,
+      "channel_a_measure_coverage": 1.0,
+      "channel_a_event_recall": 0.0,
+      "channel_a_event_precision": 0.0,
+      "channel_b_page_coverage": 1.0,
+      "channel_b_measure_coverage": 1.0,
+      "channel_b_event_recall": 0.0,
+      "channel_b_event_precision": 0.0,
+      "channel_c_page_coverage": 1.0,
+      "critical_mismatches_total": 222,
+      "discrepant_measures": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20
+      ],
+      "channel_results": [
+        {
+          "channel_id": "CHANNEL_A",
+          "channel_name": "ExternalAudiverisOMR",
+          "engine_name": "ExternalAudiverisOMR",
+          "engine_version": "5.11.0",
+          "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline",
+          "input_file_sha256": "1e17e187a537628418477b7c24956811d0dcab6c86756028fee4e6d882b32c7b",
+          "output_sha256": "e5afddd6c6b78b325d71758ccd6560148de0c2bceae018da1f7738d71fe6c8b0",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "pages_processed": 1,
+            "total_measures_detected": 20,
+            "total_events_extracted": 65,
+            "process_receipts": [
+              {
+                "page_index": 1,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_8s6q25o1\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_8s6q25o1\\chopin_op28_no20_p1.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "f1df66388fa785c5e20df4eeef81483c53dc9c3f15445b420206e0a895fc9fe2",
+                "measure_offset_applied": 0,
+                "stdout_tail": " Exporting sheet(s): [#1]\nINFO  [chopin_op28_no20_p1]             ScoreExporter 164  | Score chopin_op28_no20_p1 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_8s6q25o1\\audiveris_out\\chopin_op28_no20_p1.mxl\nINFO  [chopin_op28_no20_p1]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_B",
+          "channel_name": "ExternalHomrNeuralOMR",
+          "engine_name": "ExternalHomrNeuralOMR",
+          "engine_version": "0.7.0",
+          "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder",
+          "input_file_sha256": "1e17e187a537628418477b7c24956811d0dcab6c86756028fee4e6d882b32c7b",
+          "output_sha256": "ef41e75bf5f023a1d0ff094436107ce164bd2c5f5ae215a6549c6712de2a3f92",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "model_hashes": {
+              "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx": "6ed36640db4ef5d223098b6d5efe4eda97c66b24a2c72faab8a018c749003a8d",
+              "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "3e10fd5ae52d0b86792721922fcd954c283a7ed365de7446425bdabe38f3e57d",
+              "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "4c16df852b3789f2676b0d49f0545dab0740e4005f7b472c5252add642f5d5eb"
+            },
+            "pages_processed": 1,
+            "total_measures_detected": 20,
+            "total_events_extracted": 57,
+            "page_receipts": [
+              {
+                "page_index": 1,
+                "success": true,
+                "xml_sha256": "d61ab7a48b94c3cb92feabad1932500e30f01eacb46fa5e448fe034ea3f8b41b",
+                "events_count": 57,
+                "measures_count": 20
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_C",
+          "channel_name": "ScoreScanStructuralAlignment",
+          "engine_name": "ScoreScanStructuralAlignment",
+          "engine_version": "4.0.0-rc013",
+          "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+          "input_file_sha256": "f06cf9531158756d8e6a1de17b2114e8528f007b699be9a75496a68da1f15e35",
+          "output_sha256": "c8d0919293d89ab0568f2c8866b8b5726ec79706d5beceb91f3bbd609fc6bb21",
+          "has_event_graph": false,
+          "execution_metadata": {
+            "score_id": "chopin_op28_no20",
+            "mean_discrepancy": 0.935,
+            "rendered_pages_total": 1,
+            "source_pages_total": 1,
+            "matched_pages": 1,
+            "unmatched_rendered_pages": 0,
+            "unmatched_source_pages": 0,
+            "page_alignment_coverage": 1.0,
+            "page_details": [
+              {
+                "page_index": 1,
+                "rendered_image_sha256": "de77c6f5cf310a848591231fe3f96be9c523b4f8e57979182be136ad1cb3eba7",
+                "source_scan_image_sha256": "1e17e187a537628418477b7c24956811d0dcab6c86756028fee4e6d882b32c7b",
+                "structural_correlation": 0.065,
+                "discrepancy_score": 0.935
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        }
+      ],
+      "dimension_reliability": {
+        "pitch": {
+          "recall": 0.0,
+          "error_rate": 1.3538
+        },
+        "accidental": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "octave": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "duration": {
+          "recall": 0.0,
+          "error_rate": 1.3692
+        },
+        "rest": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "voice_staff": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "time_signature": {
+          "recall": 0.7692,
+          "error_rate": 0.2308
+        },
+        "key_signature": {
+          "recall": 0.7692,
+          "error_rate": 0.2308
+        }
+      },
+      "validation_timestamp": "2026-09-26T02:36:46.772361+00:00"
+    },
+    {
+      "score_id": "bach_bwv846_prelude",
+      "verdict": "MACHINE_TRIANGULATION_FAILED",
+      "disagreement_category": "BOTH_OMR_AGREE_AGAINST_CANDIDATE",
+      "overall_omr_ned": 1.2457,
+      "channel_a_distance": 1.2457,
+      "channel_b_distance": 1.2,
+      "channel_c_discrepancy": 0.943,
+      "channel_a_page_coverage": 1.0,
+      "channel_a_measure_coverage": 0.5714,
+      "channel_a_event_recall": 0.0,
+      "channel_a_event_precision": 0.0,
+      "channel_b_page_coverage": 1.0,
+      "channel_b_measure_coverage": 0.5714,
+      "channel_b_event_recall": 0.0,
+      "channel_b_event_precision": 0.0,
+      "channel_c_page_coverage": 0.5,
+      "critical_mismatches_total": 428,
+      "discrepant_measures": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35
+      ],
+      "channel_results": [
+        {
+          "channel_id": "CHANNEL_A",
+          "channel_name": "ExternalAudiverisOMR",
+          "engine_name": "ExternalAudiverisOMR",
+          "engine_version": "5.11.0",
+          "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline",
+          "input_file_sha256": "6bd230f141219e930cfe36d64ffc1ff86bb009d9c505474a4faac7e268831937",
+          "output_sha256": "7a9211f8cb14eeaa552430e0ce328c1a2d0dc4c756440cc9c1470f20f84486e0",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "pages_processed": 1,
+            "total_measures_detected": 20,
+            "total_events_extracted": 65,
+            "process_receipts": [
+              {
+                "page_index": 1,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_euiqcg18\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_euiqcg18\\bach_bwv846_prelude_p1.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "38e95d5b36d6f60fdc0abd0e0e6269dead586e51962be995c4db76df0516e8de",
+                "measure_offset_applied": 0,
+                "stdout_tail": "heet(s): [#1]\nINFO  [bach_bwv846_prelude_p1]             ScoreExporter 164  | Score bach_bwv846_prelude_p1 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_euiqcg18\\audiveris_out\\bach_bwv846_prelude_p1.mxl\nINFO  [bach_bwv846_prelude_p1]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_B",
+          "channel_name": "ExternalHomrNeuralOMR",
+          "engine_name": "ExternalHomrNeuralOMR",
+          "engine_version": "0.7.0",
+          "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder",
+          "input_file_sha256": "6bd230f141219e930cfe36d64ffc1ff86bb009d9c505474a4faac7e268831937",
+          "output_sha256": "b7cb529f250ee8eca74a9ddb24e6c9b029676bb2954421ce1ef74f82e8868c64",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "model_hashes": {
+              "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx": "6ed36640db4ef5d223098b6d5efe4eda97c66b24a2c72faab8a018c749003a8d",
+              "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "3e10fd5ae52d0b86792721922fcd954c283a7ed365de7446425bdabe38f3e57d",
+              "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "4c16df852b3789f2676b0d49f0545dab0740e4005f7b472c5252add642f5d5eb"
+            },
+            "pages_processed": 1,
+            "total_measures_detected": 20,
+            "total_events_extracted": 57,
+            "page_receipts": [
+              {
+                "page_index": 1,
+                "success": true,
+                "xml_sha256": "6133e7bb5214522253971fd16fd2cb6ce8c7f840b04a282d860ea91e7cd9405d",
+                "events_count": 57,
+                "measures_count": 20
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_C",
+          "channel_name": "ScoreScanStructuralAlignment",
+          "engine_name": "ScoreScanStructuralAlignment",
+          "engine_version": "4.0.0-rc013",
+          "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+          "input_file_sha256": "79c236b65128f91941f135c89c614c46c30f05c4541d33aa0400012c2f60648c",
+          "output_sha256": "eeea11e1ac71d6c86977ea940a1cdc8554c92ac73b608e85152eeee148e9de45",
+          "has_event_graph": false,
+          "execution_metadata": {
+            "score_id": "bach_bwv846_prelude",
+            "mean_discrepancy": 0.943,
+            "rendered_pages_total": 2,
+            "source_pages_total": 1,
+            "matched_pages": 1,
+            "unmatched_rendered_pages": 1,
+            "unmatched_source_pages": 0,
+            "page_alignment_coverage": 0.5,
+            "page_details": [
+              {
+                "page_index": 1,
+                "rendered_image_sha256": "9d2a67f969097e0a2f707965b2b644d043d919bbc5cde8835de608a6e3e5d472",
+                "source_scan_image_sha256": "6bd230f141219e930cfe36d64ffc1ff86bb009d9c505474a4faac7e268831937",
+                "structural_correlation": 0.057,
+                "discrepancy_score": 0.943
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        }
+      ],
+      "dimension_reliability": {
+        "pitch": {
+          "recall": 0.0,
+          "error_rate": 1.2114
+        },
+        "accidental": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "octave": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "duration": {
+          "recall": 0.0,
+          "error_rate": 1.2286
+        },
+        "rest": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "voice_staff": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "time_signature": {
+          "recall": 0.8743,
+          "error_rate": 0.1257
+        },
+        "key_signature": {
+          "recall": 0.8743,
+          "error_rate": 0.1257
+        }
+      },
+      "validation_timestamp": "2026-09-26T02:36:58.745863+00:00"
+    }
+  ],
+  "threshold_evaluations": [
+    {
+      "score_id": "chopin_mazurka_op06_no01",
+      "verdict": "MACHINE_TRIANGULATION_FAILED",
+      "disagreement_category": "BOTH_OMR_AGREE_AGAINST_CANDIDATE",
+      "overall_omr_ned": 1.8465,
+      "channel_a_distance": 1.8445,
+      "channel_b_distance": 1.8465,
+      "channel_c_discrepancy": 0.897,
+      "channel_a_page_coverage": 1.0,
+      "channel_a_measure_coverage": 0.9863,
+      "channel_a_event_recall": 0.0,
+      "channel_a_event_precision": 0.0,
+      "channel_b_page_coverage": 1.0,
+      "channel_b_measure_coverage": 0.9863,
+      "channel_b_event_recall": 0.0,
+      "channel_b_event_precision": 0.0,
+      "channel_c_page_coverage": 0.75,
+      "critical_mismatches_total": 3702,
+      "discrepant_measures": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75
+      ],
+      "channel_results": [
+        {
+          "channel_id": "CHANNEL_A",
+          "channel_name": "ExternalAudiverisOMR",
+          "engine_name": "ExternalAudiverisOMR",
+          "engine_version": "5.11.0",
+          "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline",
+          "input_file_sha256": "80a3a37a13942aee8fd72db4cf03c0a987d6c6db57fa2da00eb661c4ff5039d8",
+          "output_sha256": "239c9865004ad32c1bc1180bb2b70d81dd5c4b6b77d4c58fe3aec1097ec7ad4b",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "pages_processed": 3,
+            "total_measures_detected": 75,
+            "total_events_extracted": 982,
+            "process_receipts": [
+              {
+                "page_index": 1,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\chopin_mazurka_op06_no01_p1.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "2b6b1c6eade7e8adb116a953d8730801995515ddf58414974ade70cf235dd11e",
+                "measure_offset_applied": 0,
+                "stdout_tail": "[chopin_mazurka_op06_no01_p1]             ScoreExporter 164  | Score chopin_mazurka_op06_no01_p1 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\audiveris_out\\chopin_mazurka_op06_no01_p1.mxl\nINFO  [chopin_mazurka_op06_no01_p1]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              },
+              {
+                "page_index": 2,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\chopin_mazurka_op06_no01_p2.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "4fb518bbc2505d5f49075d6067e2991b5a265ea4ad52fda6ce757156d7031f59",
+                "measure_offset_applied": 16,
+                "stdout_tail": "[chopin_mazurka_op06_no01_p2]             ScoreExporter 164  | Score chopin_mazurka_op06_no01_p2 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\audiveris_out\\chopin_mazurka_op06_no01_p2.mxl\nINFO  [chopin_mazurka_op06_no01_p2]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              },
+              {
+                "page_index": 3,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\chopin_mazurka_op06_no01_p3.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "d4c6cfc5c03000904f36397a8590a91e4f3fca87b7360f3c005722a673dc61dc",
+                "measure_offset_applied": 47,
+                "stdout_tail": "[chopin_mazurka_op06_no01_p3]             ScoreExporter 164  | Score chopin_mazurka_op06_no01_p3 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_l5zsb7r3\\audiveris_out\\chopin_mazurka_op06_no01_p3.mxl\nINFO  [chopin_mazurka_op06_no01_p3]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_B",
+          "channel_name": "ExternalHomrNeuralOMR",
+          "engine_name": "ExternalHomrNeuralOMR",
+          "engine_version": "0.7.0",
+          "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder",
+          "input_file_sha256": "80a3a37a13942aee8fd72db4cf03c0a987d6c6db57fa2da00eb661c4ff5039d8",
+          "output_sha256": "6590d0a5d8f2607b01feed04dcfbcdfc16f11a5eede2b6e95eb8c313a703cb0f",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "model_hashes": {
+              "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx": "6ed36640db4ef5d223098b6d5efe4eda97c66b24a2c72faab8a018c749003a8d",
+              "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "3e10fd5ae52d0b86792721922fcd954c283a7ed365de7446425bdabe38f3e57d",
+              "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "4c16df852b3789f2676b0d49f0545dab0740e4005f7b472c5252add642f5d5eb"
+            },
+            "pages_processed": 3,
+            "total_measures_detected": 75,
+            "total_events_extracted": 994,
+            "page_receipts": [
+              {
+                "page_index": 1,
+                "success": true,
+                "xml_sha256": "bbaba103e4d0a7d889615353591d966401e4f3fe94b219f05aca6d9294e187b1",
+                "events_count": 208,
+                "measures_count": 17
+              },
+              {
+                "page_index": 2,
+                "success": true,
+                "xml_sha256": "1e3aa6c7c0fd686655e54fa247de30c58821dab14988bf0bc7358a3f0ff12a03",
+                "events_count": 374,
+                "measures_count": 30
+              },
+              {
+                "page_index": 3,
+                "success": true,
+                "xml_sha256": "5b5ce198be60f132f64fade734a2fc2a724bb551c46b90b0cf5198163dd8adf6",
+                "events_count": 412,
+                "measures_count": 28
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_C",
+          "channel_name": "ScoreScanStructuralAlignment",
+          "engine_name": "ScoreScanStructuralAlignment",
+          "engine_version": "4.0.0-rc013",
+          "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+          "input_file_sha256": "b0bfe9a0ba3b55b278bee6be2e7cf352ea589ab55597597936a9a168d7686de4",
+          "output_sha256": "a2e201e84b5fbac1dd8100c9c2fe0a687685e553a79cce0f43f07142a9a5c50c",
+          "has_event_graph": false,
+          "execution_metadata": {
+            "score_id": "chopin_mazurka_op06_no01",
+            "mean_discrepancy": 0.897,
+            "rendered_pages_total": 4,
+            "source_pages_total": 3,
+            "matched_pages": 3,
+            "unmatched_rendered_pages": 1,
+            "unmatched_source_pages": 0,
+            "page_alignment_coverage": 0.75,
+            "page_details": [
+              {
+                "page_index": 1,
+                "rendered_image_sha256": "c15ff8e20d62ae59ae1348c4cdadb53720778f07622470eca0669b98bd3ef7b0",
+                "source_scan_image_sha256": "2494d9fe76b8996efb4f4b63d5b9fac2bd59ae3e867065420951709ba1e2d13b",
+                "structural_correlation": 0.0924,
+                "discrepancy_score": 0.9076
+              },
+              {
+                "page_index": 2,
+                "rendered_image_sha256": "be02bfff59050f55d9def0cce24916a5cbd2ccc44f51501040e68ef113bd0c79",
+                "source_scan_image_sha256": "be84386eb5f21f34163d40d94c9ad631e8cfd695f1850f9a0fb06371ad47ce36",
+                "structural_correlation": 0.1115,
+                "discrepancy_score": 0.8885
+              },
+              {
+                "page_index": 3,
+                "rendered_image_sha256": "e5a94c03619be4dcd69d549551a15b0b008e1123c11820354ae259c38e70c822",
+                "source_scan_image_sha256": "b1d355b995bc052b4894e3a731f34bad1cc5ca8f8f156335a1d32a50aa5518c3",
+                "structural_correlation": 0.1052,
+                "discrepancy_score": 0.8948
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        }
+      ],
+      "dimension_reliability": {
+        "pitch": {
+          "recall": 0.0,
+          "error_rate": 1.7667
+        },
+        "accidental": {
+          "recall": 0.9412,
+          "error_rate": 0.0588
+        },
+        "octave": {
+          "recall": 0.9093,
+          "error_rate": 0.0907
+        },
+        "duration": {
+          "recall": 0.0,
+          "error_rate": 1.8016
+        },
+        "rest": {
+          "recall": 0.996,
+          "error_rate": 0.004
+        },
+        "voice_staff": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "time_signature": {
+          "recall": 0.8893,
+          "error_rate": 0.1107
+        },
+        "key_signature": {
+          "recall": 0.9322,
+          "error_rate": 0.0678
+        }
+      },
+      "validation_timestamp": "2026-09-26T02:38:28.293714+00:00"
+    },
+    {
+      "score_id": "chopin_mazurka_op07_no01",
+      "verdict": "MACHINE_TRIANGULATION_FAILED",
+      "disagreement_category": "BOTH_OMR_AGREE_AGAINST_CANDIDATE",
+      "overall_omr_ned": 1.6718,
+      "channel_a_distance": 1.5692,
+      "channel_b_distance": 1.6718,
+      "channel_c_discrepancy": 0.9359,
+      "channel_a_page_coverage": 1.0,
+      "channel_a_measure_coverage": 0.8125,
+      "channel_a_event_recall": 0.0,
+      "channel_a_event_precision": 0.0,
+      "channel_b_page_coverage": 1.0,
+      "channel_b_measure_coverage": 1.0,
+      "channel_b_event_recall": 0.0,
+      "channel_b_event_precision": 0.0,
+      "channel_c_page_coverage": 0.5,
+      "critical_mismatches_total": 2528,
+      "discrepant_measures": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67
+      ],
+      "channel_results": [
+        {
+          "channel_id": "CHANNEL_A",
+          "channel_name": "ExternalAudiverisOMR",
+          "engine_name": "ExternalAudiverisOMR",
+          "engine_version": "5.11.0",
+          "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline",
+          "input_file_sha256": "e7bc0eeb5522292a225ccbe1ef27b9bbb5183fa5fb7e4f2b26645f31237e987b",
+          "output_sha256": "39f8f7b1cbcdcbd6f05e59d204b80a4fefc67fed1516083df5d111ce089555d0",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "pages_processed": 2,
+            "total_measures_detected": 59,
+            "total_events_extracted": 571,
+            "process_receipts": [
+              {
+                "page_index": 1,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr__5nk_rxm\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr__5nk_rxm\\chopin_mazurka_op07_no01_p1.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "47eb07813e3df1c7f8107b4bb2ce77c8c30857539bb5a10bd415260cf2c8476d",
+                "measure_offset_applied": 0,
+                "stdout_tail": "[chopin_mazurka_op07_no01_p1]             ScoreExporter 164  | Score chopin_mazurka_op07_no01_p1 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr__5nk_rxm\\audiveris_out\\chopin_mazurka_op07_no01_p1.mxl\nINFO  [chopin_mazurka_op07_no01_p1]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              },
+              {
+                "page_index": 2,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr__5nk_rxm\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr__5nk_rxm\\chopin_mazurka_op07_no01_p2.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "ec281f3ed1338e7347bd5bf68303ce60ad567e360f88f3224f10f54785fa44dc",
+                "measure_offset_applied": 27,
+                "stdout_tail": "[chopin_mazurka_op07_no01_p2]             ScoreExporter 164  | Score chopin_mazurka_op07_no01_p2 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr__5nk_rxm\\audiveris_out\\chopin_mazurka_op07_no01_p2.mxl\nINFO  [chopin_mazurka_op07_no01_p2]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_B",
+          "channel_name": "ExternalHomrNeuralOMR",
+          "engine_name": "ExternalHomrNeuralOMR",
+          "engine_version": "0.7.0",
+          "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder",
+          "input_file_sha256": "e7bc0eeb5522292a225ccbe1ef27b9bbb5183fa5fb7e4f2b26645f31237e987b",
+          "output_sha256": "e59667250ce39cd7eefbdbce4d47aab1b14bf14165bec56dec97edd5e66ae0a3",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "model_hashes": {
+              "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx": "6ed36640db4ef5d223098b6d5efe4eda97c66b24a2c72faab8a018c749003a8d",
+              "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "3e10fd5ae52d0b86792721922fcd954c283a7ed365de7446425bdabe38f3e57d",
+              "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "4c16df852b3789f2676b0d49f0545dab0740e4005f7b472c5252add642f5d5eb"
+            },
+            "pages_processed": 2,
+            "total_measures_detected": 67,
+            "total_events_extracted": 775,
+            "page_receipts": [
+              {
+                "page_index": 1,
+                "success": true,
+                "xml_sha256": "20435f924816a27bcacaa8f69a7c72c26df12fd6e7a82fefe4f9b09504618ad1",
+                "events_count": 403,
+                "measures_count": 35
+              },
+              {
+                "page_index": 2,
+                "success": true,
+                "xml_sha256": "1376192dc5152461413524b2c029c2b7a7800251f53b524e7aa567ebc85bf618",
+                "events_count": 372,
+                "measures_count": 32
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_C",
+          "channel_name": "ScoreScanStructuralAlignment",
+          "engine_name": "ScoreScanStructuralAlignment",
+          "engine_version": "4.0.0-rc013",
+          "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+          "input_file_sha256": "44d1a07b0a83697af961bdb8936f5fdcdff3526dc73bbc2f624a98dc35d0b5da",
+          "output_sha256": "daaaabee9b7bf10b499767dddb9b2220aeab171db9d8de3a786592604e37a85d",
+          "has_event_graph": false,
+          "execution_metadata": {
+            "score_id": "chopin_mazurka_op07_no01",
+            "mean_discrepancy": 0.9359,
+            "rendered_pages_total": 4,
+            "source_pages_total": 2,
+            "matched_pages": 2,
+            "unmatched_rendered_pages": 2,
+            "unmatched_source_pages": 0,
+            "page_alignment_coverage": 0.5,
+            "page_details": [
+              {
+                "page_index": 1,
+                "rendered_image_sha256": "8f6ee335ffbd365abc807509c9cab7afebb3af1148e4908febff859b9e5936e3",
+                "source_scan_image_sha256": "afcbeab786688d302bedb297739fd5bcd96babb34d25d98e8d0d3982d2fc9831",
+                "structural_correlation": 0.1118,
+                "discrepancy_score": 0.8882
+              },
+              {
+                "page_index": 2,
+                "rendered_image_sha256": "e28935b09ff22937377d745b4718f52104b313eb9672504f7719ef8b6b1e3bfd",
+                "source_scan_image_sha256": "a08796d514e67a2653c7e73feb15e07278138b9b5a40c091a3553f5276205349",
+                "structural_correlation": 0.0165,
+                "discrepancy_score": 0.9835
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        }
+      ],
+      "dimension_reliability": {
+        "pitch": {
+          "recall": 0.0,
+          "error_rate": 1.541
+        },
+        "accidental": {
+          "recall": 0.9064,
+          "error_rate": 0.0936
+        },
+        "octave": {
+          "recall": 0.8718,
+          "error_rate": 0.1282
+        },
+        "duration": {
+          "recall": 0.0,
+          "error_rate": 1.5474
+        },
+        "rest": {
+          "recall": 0.9667,
+          "error_rate": 0.0333
+        },
+        "voice_staff": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "time_signature": {
+          "recall": 0.9128,
+          "error_rate": 0.0872
+        },
+        "key_signature": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        }
+      },
+      "validation_timestamp": "2026-09-26T02:39:31.649167+00:00"
+    },
+    {
+      "score_id": "chopin_mazurka_op17_no01",
+      "verdict": "MACHINE_TRIANGULATION_FAILED",
+      "disagreement_category": "BOTH_OMR_AGREE_AGAINST_CANDIDATE",
+      "overall_omr_ned": 1.8716,
+      "channel_a_distance": 1.6044,
+      "channel_b_distance": 1.8716,
+      "channel_c_discrepancy": 0.8755,
+      "channel_a_page_coverage": 1.0,
+      "channel_a_measure_coverage": 0.9836,
+      "channel_a_event_recall": 0.0287,
+      "channel_a_event_precision": 0.0318,
+      "channel_b_page_coverage": 1.0,
+      "channel_b_measure_coverage": 0.9836,
+      "channel_b_event_recall": 0.0,
+      "channel_b_event_precision": 0.0,
+      "channel_c_page_coverage": 0.6667,
+      "critical_mismatches_total": 3031,
+      "discrepant_measures": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "channel_results": [
+        {
+          "channel_id": "CHANNEL_A",
+          "channel_name": "ExternalAudiverisOMR",
+          "engine_name": "ExternalAudiverisOMR",
+          "engine_version": "5.11.0",
+          "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline",
+          "input_file_sha256": "883333f06889df2a92521aeb094d6b3d5b5bd01f6ce37fbe73630e354882a990",
+          "output_sha256": "9c9fd32bff2e945a9882f85c4685b4d876035d37b98945359e1d62b312d0cc64",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "pages_processed": 2,
+            "total_measures_detected": 60,
+            "total_events_extracted": 787,
+            "process_receipts": [
+              {
+                "page_index": 1,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_oroundvk\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_oroundvk\\chopin_mazurka_op17_no01_p1.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "f522fc9bf83baf34fbefad8c0c7cc33abb24a939de72005fa912f41f14c55377",
+                "measure_offset_applied": 0,
+                "stdout_tail": "[chopin_mazurka_op17_no01_p1]             ScoreExporter 164  | Score chopin_mazurka_op17_no01_p1 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_oroundvk\\audiveris_out\\chopin_mazurka_op17_no01_p1.mxl\nINFO  [chopin_mazurka_op17_no01_p1]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              },
+              {
+                "page_index": 2,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_oroundvk\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_oroundvk\\chopin_mazurka_op17_no01_p2.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "e47a7824581502f7c414660e19b9f710ed7d1151016b1442a3fe64e0b7dae376",
+                "measure_offset_applied": 30,
+                "stdout_tail": "[chopin_mazurka_op17_no01_p2]             ScoreExporter 164  | Score chopin_mazurka_op17_no01_p2 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_oroundvk\\audiveris_out\\chopin_mazurka_op17_no01_p2.mxl\nINFO  [chopin_mazurka_op17_no01_p2]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_B",
+          "channel_name": "ExternalHomrNeuralOMR",
+          "engine_name": "ExternalHomrNeuralOMR",
+          "engine_version": "0.7.0",
+          "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder",
+          "input_file_sha256": "883333f06889df2a92521aeb094d6b3d5b5bd01f6ce37fbe73630e354882a990",
+          "output_sha256": "2063aa4a687c0fc3b26065a7d39a5c5ed84dc6f4ebafd30b8550834ddea06339",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "model_hashes": {
+              "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx": "6ed36640db4ef5d223098b6d5efe4eda97c66b24a2c72faab8a018c749003a8d",
+              "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "3e10fd5ae52d0b86792721922fcd954c283a7ed365de7446425bdabe38f3e57d",
+              "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "4c16df852b3789f2676b0d49f0545dab0740e4005f7b472c5252add642f5d5eb"
+            },
+            "pages_processed": 2,
+            "total_measures_detected": 62,
+            "total_events_extracted": 874,
+            "page_receipts": [
+              {
+                "page_index": 1,
+                "success": true,
+                "xml_sha256": "35db2ee179083b10a74027a46236bb0a0d0a71d060f0177d29411f335be133c8",
+                "events_count": 507,
+                "measures_count": 31
+              },
+              {
+                "page_index": 2,
+                "success": true,
+                "xml_sha256": "973fcf8d2b033902094a54d55691ec5ea3d7605357cb236374d4ce247b8a2af3",
+                "events_count": 367,
+                "measures_count": 31
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_C",
+          "channel_name": "ScoreScanStructuralAlignment",
+          "engine_name": "ScoreScanStructuralAlignment",
+          "engine_version": "4.0.0-rc013",
+          "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+          "input_file_sha256": "65d31db6304aadb08413bd5c01d00fbbb88503ff6a50aba4c12a99a7a54bebd0",
+          "output_sha256": "45da2ade58a10e02ddf40731540bde9337225b1b6cdc1ff940553275aa66af84",
+          "has_event_graph": false,
+          "execution_metadata": {
+            "score_id": "chopin_mazurka_op17_no01",
+            "mean_discrepancy": 0.8755,
+            "rendered_pages_total": 3,
+            "source_pages_total": 2,
+            "matched_pages": 2,
+            "unmatched_rendered_pages": 1,
+            "unmatched_source_pages": 0,
+            "page_alignment_coverage": 0.6667,
+            "page_details": [
+              {
+                "page_index": 1,
+                "rendered_image_sha256": "cbd16e99827bb2c18216b1542fe160dfe7a479bdc7e4ba6e6550eade512c75e1",
+                "source_scan_image_sha256": "86ff0cdad0b45cb936e28a4c2c734c3934514cc58b67ea57934c21858e9ef4b4",
+                "structural_correlation": 0.1471,
+                "discrepancy_score": 0.8529
+              },
+              {
+                "page_index": 2,
+                "rendered_image_sha256": "a69bb8d914f2629c2a6ac1c6dd561ac16401fe9d9de076be30b457bac64c9449",
+                "source_scan_image_sha256": "668f1d773f5f57e0223ec92669108a264d2c7937d9e8aeb9d8e358d71cfdca3d",
+                "structural_correlation": 0.102,
+                "discrepancy_score": 0.898
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        }
+      ],
+      "dimension_reliability": {
+        "pitch": {
+          "recall": 0.0,
+          "error_rate": 1.5183
+        },
+        "accidental": {
+          "recall": 0.8876,
+          "error_rate": 0.1124
+        },
+        "octave": {
+          "recall": 0.8544,
+          "error_rate": 0.1456
+        },
+        "duration": {
+          "recall": 0.0,
+          "error_rate": 1.4622
+        },
+        "rest": {
+          "recall": 0.9713,
+          "error_rate": 0.0287
+        },
+        "voice_staff": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "time_signature": {
+          "recall": 0.8807,
+          "error_rate": 0.1193
+        },
+        "key_signature": {
+          "recall": 0.9828,
+          "error_rate": 0.0172
+        }
+      },
+      "validation_timestamp": "2026-09-26T02:40:39.911489+00:00"
+    }
+  ],
+  "holdout_evaluations": [
+    {
+      "score_id": "grieg_lyric_pieces_op12_no01",
+      "verdict": "MACHINE_TRIANGULATION_FAILED",
+      "disagreement_category": "BOTH_OMR_AGREE_AGAINST_CANDIDATE",
+      "overall_omr_ned": 1.6726,
+      "channel_a_distance": 0.7936,
+      "channel_b_distance": 1.6726,
+      "channel_c_discrepancy": 0.9078,
+      "channel_a_page_coverage": 1.0,
+      "channel_a_measure_coverage": 1.0,
+      "channel_a_event_recall": 0.516,
+      "channel_a_event_precision": 0.5179,
+      "channel_b_page_coverage": 1.0,
+      "channel_b_measure_coverage": 1.0,
+      "channel_b_event_recall": 0.0,
+      "channel_b_event_precision": 0.0,
+      "channel_c_page_coverage": 1.0,
+      "critical_mismatches_total": 693,
+      "discrepant_measures": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ],
+      "channel_results": [
+        {
+          "channel_id": "CHANNEL_A",
+          "channel_name": "ExternalAudiverisOMR",
+          "engine_name": "ExternalAudiverisOMR",
+          "engine_version": "5.11.0",
+          "architecture": "external_rule_based_and_tesseract_ocr_staff_pipeline",
+          "input_file_sha256": "3c0e25f1fa1b5e0fb1d299c29ad81e064764422ebffdedc6d9e79ec691506b98",
+          "output_sha256": "05253b425aba0ee0df444c1a5c58a0050d6575034963ab461676e16368aff3c4",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "pages_processed": 1,
+            "total_measures_detected": 23,
+            "total_events_extracted": 280,
+            "process_receipts": [
+              {
+                "page_index": 1,
+                "command": [
+                  "C:\\Users\\User\\.gemini\\antigravity\\scratch\\russian-piano-composer\\tools\\audiveris\\Audiveris\\Audiveris.exe",
+                  "-batch",
+                  "-export",
+                  "-output",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_mcj32ou2\\audiveris_out",
+                  "C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_mcj32ou2\\grieg_lyric_pieces_op12_no01_p1.png"
+                ],
+                "exit_code": 0,
+                "process_started": true,
+                "output_created_by_process": true,
+                "external_binary_sha256": "06dbf3b4a5acd4dbbefcf9dfbcef43529ad6afde4ba9330cb856d849cd7fe172",
+                "mxl_sha256": "185ae266bc1b7e7593d95a239594017a0a1a976e21090cc67a81064f108bf6ea",
+                "measure_offset_applied": 0,
+                "stdout_tail": "ces_op12_no01_p1]             ScoreExporter 164  | Score grieg_lyric_pieces_op12_no01_p1 exported to C:\\Users\\User\\AppData\\Local\\Temp\\rc013_blind_omr_mcj32ou2\\audiveris_out\\grieg_lyric_pieces_op12_no01_p1.mxl\nINFO  [grieg_lyric_pieces_op12_no01_p1]                     Score 181  | Closing {Score 1}\n",
+                "stderr_tail": ""
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_B",
+          "channel_name": "ExternalHomrNeuralOMR",
+          "engine_name": "ExternalHomrNeuralOMR",
+          "engine_version": "0.7.0",
+          "architecture": "segnet_segmentation_and_tromr_transformer_sequence_decoder",
+          "input_file_sha256": "3c0e25f1fa1b5e0fb1d299c29ad81e064764422ebffdedc6d9e79ec691506b98",
+          "output_sha256": "c9591064a36535fd3d776aae1f693a92339a40631e63f3e17288c015f2dccb7a",
+          "has_event_graph": true,
+          "execution_metadata": {
+            "model_hashes": {
+              "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx": "6ed36640db4ef5d223098b6d5efe4eda97c66b24a2c72faab8a018c749003a8d",
+              "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "3e10fd5ae52d0b86792721922fcd954c283a7ed365de7446425bdabe38f3e57d",
+              "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx": "4c16df852b3789f2676b0d49f0545dab0740e4005f7b472c5252add642f5d5eb"
+            },
+            "pages_processed": 1,
+            "total_measures_detected": 23,
+            "total_events_extracted": 273,
+            "page_receipts": [
+              {
+                "page_index": 1,
+                "success": true,
+                "xml_sha256": "ba0610d824df2701550d1a47c256cdb44aee62eded639c33342f6c2ca47a81c4",
+                "events_count": 273,
+                "measures_count": 23
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        },
+        {
+          "channel_id": "CHANNEL_C",
+          "channel_name": "ScoreScanStructuralAlignment",
+          "engine_name": "ScoreScanStructuralAlignment",
+          "engine_version": "4.0.0-rc013",
+          "architecture": "multi_scale_geometric_registration_and_page_alignment_correlation",
+          "input_file_sha256": "7794d719e26a04348bc5057ce4f31587696f8ac79f70e8ffdd6413b274d079a1",
+          "output_sha256": "bc3fdba500876b07b3aa3ab7a6f671e0611f74b11d17fce8ca1095f2dd463769",
+          "has_event_graph": false,
+          "execution_metadata": {
+            "score_id": "grieg_lyric_pieces_op12_no01",
+            "mean_discrepancy": 0.9078,
+            "rendered_pages_total": 1,
+            "source_pages_total": 1,
+            "matched_pages": 1,
+            "unmatched_rendered_pages": 0,
+            "unmatched_source_pages": 0,
+            "page_alignment_coverage": 1.0,
+            "page_details": [
+              {
+                "page_index": 1,
+                "rendered_image_sha256": "6eb0c43ebfb2d6c749cb5ce345fd660fdb04d7dc4f6228e4d5685ac35f94eaaa",
+                "source_scan_image_sha256": "3c0e25f1fa1b5e0fb1d299c29ad81e064764422ebffdedc6d9e79ec691506b98",
+                "structural_correlation": 0.0922,
+                "discrepancy_score": 0.9078
+              }
+            ]
+          },
+          "status": "SUCCESS",
+          "error_message": null
+        }
+      ],
+      "dimension_reliability": {
+        "pitch": {
+          "recall": 0.2598,
+          "error_rate": 0.7402
+        },
+        "accidental": {
+          "recall": 0.9146,
+          "error_rate": 0.0854
+        },
+        "octave": {
+          "recall": 0.911,
+          "error_rate": 0.089
+        },
+        "duration": {
+          "recall": 0.3523,
+          "error_rate": 0.6477
+        },
+        "rest": {
+          "recall": 0.9964,
+          "error_rate": 0.0036
+        },
+        "voice_staff": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "time_signature": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        },
+        "key_signature": {
+          "recall": 1.0,
+          "error_rate": 0.0
+        }
+      },
+      "validation_timestamp": "2026-09-26T03:16:07.761030+00:00"
+    }
+  ],
+  "mutation_report": {
+    "total_mutations_injected": 57,
+    "total_mutations_detected": 57,
+    "total_mutations_missed": 0,
+    "end_to_end_image_mutation_recall": 1.0,
+    "family_breakdown": {
+      "pitch_semitone_shift": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "wrong_accidental": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "octave_displacement": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "duration_halving_doubling": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "rest_insertion": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "rest_deletion": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "note_deletion": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "chord_tone_deletion": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "extra_note_insertion": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "tie_removal": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "tie_insertion": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "voice_swap": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "staff_swap": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "tuplet_corruption": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "key_signature_mutation": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "time_signature_mutation": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "measure_deletion": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "measure_duplication": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      },
+      "repeat_corruption": {
+        "injected": 3,
+        "detected": 3,
+        "missed": 0
+      }
+    }
+  },
+  "feature_dependency": {
+    "fit_status": "PARTIALLY_FIT_FOR_RC012_STRUCTURAL_ANALYSIS",
+    "fit_for_rc012_structural_analysis": false,
+    "supported_core_descriptors": [],
+    "partially_supported_core_descriptors": [
+      "pitch_class_entropy",
+      "harmonic_root_motion",
+      "metric_accent_syncopation",
+      "phrase_boundary_density"
+    ],
+    "unsupported_core_descriptors": [
+      "voice_leading_cross_entropy"
+    ],
+    "supported_performance_descriptors": [],
+    "unsupported_performance_descriptors": [
+      "dynamic_contrast_profile",
+      "articulation_density",
+      "pedal_resonance_ratio"
+    ],
+    "descriptor_details": {
+      "pitch_class_entropy": {
+        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
+        "status": "PARTIALLY_SUPPORTED",
+        "required_dimensions": [
+          "accidental",
+          "pitch",
+          "octave"
+        ],
+        "dimension_reliability": {
+          "accidental": 0.9117,
+          "pitch": 0.0,
+          "octave": 0.8785
+        },
+        "rationale": "Measures distribution of spelled pitch classes; sensitive to pitch/accidental misclassification."
+      },
+      "voice_leading_cross_entropy": {
+        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
+        "status": "UNSUPPORTED",
+        "required_dimensions": [
+          "accidental",
+          "voice_staff",
+          "pitch",
+          "octave"
+        ],
+        "dimension_reliability": {
+          "accidental": 0.9117,
+          "voice_staff": 1.0,
+          "pitch": 0.0,
+          "octave": 0.8785
+        },
+        "rationale": "Tracks horizontal voice transitions; requires accurate voice and staff assignment."
+      },
+      "harmonic_root_motion": {
+        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
+        "status": "PARTIALLY_SUPPORTED",
+        "required_dimensions": [
+          "duration",
+          "accidental",
+          "pitch"
+        ],
+        "dimension_reliability": {
+          "duration": 0.0,
+          "accidental": 0.9117,
+          "pitch": 0.0
+        },
+        "rationale": "Computes Roman numeral and root progression; depends on vertical pitch simultaneities."
+      },
+      "metric_accent_syncopation": {
+        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
+        "status": "PARTIALLY_SUPPORTED",
+        "required_dimensions": [
+          "duration",
+          "time_signature"
+        ],
+        "dimension_reliability": {
+          "duration": 0.0,
+          "time_signature": 0.8943
+        },
+        "rationale": "Calculates metric grid alignment and offbeat syncopations."
+      },
+      "phrase_boundary_density": {
+        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
+        "status": "PARTIALLY_SUPPORTED",
+        "required_dimensions": [
+          "duration",
+          "rest"
+        ],
+        "dimension_reliability": {
+          "duration": 0.0,
+          "rest": 0.978
+        },
+        "rationale": "Detects cadential pauses and measure barlines."
+      },
+      "dynamic_contrast_profile": {
+        "fidelity_class": "PERFORMANCE_NOTATION_FIDELITY",
+        "status": "UNSUPPORTED",
+        "required_dimensions": [
+          "dynamic"
+        ],
+        "dimension_reliability": {
+          "dynamic": 0.0
+        },
+        "rationale": "Performance expression markup; tracked separately from core pitch-time structural features."
+      },
+      "articulation_density": {
+        "fidelity_class": "PERFORMANCE_NOTATION_FIDELITY",
+        "status": "UNSUPPORTED",
+        "required_dimensions": [
+          "articulation"
+        ],
+        "dimension_reliability": {
+          "articulation": 0.0
+        },
+        "rationale": "Surface performance nuance; not required for core pitch/rhythm grammar validation."
+      },
+      "pedal_resonance_ratio": {
+        "fidelity_class": "PERFORMANCE_NOTATION_FIDELITY",
+        "status": "UNSUPPORTED",
+        "required_dimensions": [
+          "pedal"
+        ],
+        "dimension_reliability": {
+          "pedal": 0.0
+        },
+        "rationale": "Pianistic sustain pedal markings."
+      }
+    }
+  }
+}

@@ -335,7 +335,7 @@ def test_feature_dependency_coverage_for_rc012_descriptors() -> None:
     full_core_dims = {
         "pitch", "accidental", "octave", "onset", "duration",
         "rest", "key_signature", "time_signature", "tie", "tuplet",
-        "repeat_structure", "measure_sequence", "staff", "voice",
+        "repeat_structure", "measure_sequence", "staff", "voice", "voice_staff",
     }
     cov_full = evaluate_feature_dependency_coverage(full_core_dims)
     assert cov_full["fit_for_rc012_structural_analysis"] is True
@@ -367,4 +367,163 @@ def test_external_engine_adapter_classes() -> None:
     homr = ExternalHomrNeuralOMREngine()
     assert "Homr" in homr.ENGINE_NAME
     assert "tromr" in homr.ARCHITECTURE
+
+
+def test_calibration_v4_corpus_registry_excludes_rc013_pilot_scores() -> None:
+    """Verifies that the calibration V4 corpus contains strictly non-RC-013 piano scores with separate licensing."""
+    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_v4_registry.json")
+    assert registry_path.exists()
+
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    assert len(registry) == 7
+
+    forbidden_composers = {"Anton Arensky", "Anatoly Lyadov", "Sergei Lyapunov"}
+    forbidden_work_prefixes = {
+        "anton_arensky_op36",
+        "anatoly_lyadov_op40",
+        "anatoly_lyadov_op46",
+        "sergei_lyapunov_op11",
+    }
+
+    splits = {entry["split"] for entry in registry}
+    assert splits == {
+        "SYNTHETIC_CONTROLLED_CALIBRATION",
+        "REAL_SCAN_THRESHOLD_CALIBRATION",
+        "CALIBRATION_V4_FINAL_HOLDOUT",
+    }
+
+    for entry in registry:
+        assert entry["composer"] not in forbidden_composers
+        assert not any(entry["artifact_id"].startswith(fp) for fp in forbidden_work_prefixes)
+        assert "digital_dataset_license" in entry
+        assert "historical_scan_status" in entry
+        if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V4_FINAL_HOLDOUT"}:
+            assert entry["provenance_class"] == "REAL_HISTORICAL_SCAN"
+            assert "DCMLab" in entry["dataset_name"]
+            assert Path(entry["ground_truth_path"]).exists()
+            assert Path(entry["historical_pdf_path"]).exists()
+            assert len(entry["historical_page_image_paths"]) > 0
+            for p in entry["historical_page_image_paths"]:
+                assert Path(p).exists()
+
+
+def test_frozen_protocol_v4_manifest_matches_disk() -> None:
+    """Verifies that the frozen protocol manifest V4 exists and contains valid SHA256 hashes."""
+    manifest_p = Path("data/manifests/rc013_machine_validation_protocol_v4.json")
+    assert manifest_p.exists()
+
+    data = json.loads(manifest_p.read_text(encoding="utf-8"))
+    assert data["protocol_version"] == "rc013_machine_triangulation_protocol_v4"
+    assert len(data["protocol_hash"]) == 64
+    assert len(data["calibration_corpus_hash"]) == 64
+    assert len(data["external_engine_bundle_hash"]) == 64
+    assert len(data["real_scan_benchmark_hash"]) == 64
+    assert len(data["end_to_end_mutation_suite_hash"]) == 64
+    assert len(data["calibration_result_hash"]) == 64
+    assert data["qualification_policy"]["machine_receipts_can_qualify_composer"] is False
+    assert data["qualification_policy"]["current_n_russian"] == 2
+    assert data["qualification_policy"]["rc012_resumption_status"] == "BLOCKED"
+
+
+def test_derive_calibration_verdict_logic() -> None:
+    """Tests the inspectable deterministic calibration verdict derivation function."""
+    from russian_piano_composer.corpus.rc013_image_mutations import ImageMutationBenchmarkResult
+    from russian_piano_composer.corpus.rc013_triangulation_protocol import (
+        derive_calibration_verdict,
+    )
+
+    dummy_mut_res = ImageMutationBenchmarkResult(
+        total_mutations_injected=57,
+        total_mutations_detected=57,
+        total_mutations_missed=0,
+        end_to_end_image_mutation_recall=1.0,
+        family_breakdown={},
+        missed_mutations=[],
+        benchmark_sha256="0" * 64,
+    )
+    dummy_feat_res = {"fit_for_rc012_structural_analysis": True, "fit_status": "FIT_FOR_RC012_STRUCTURAL_ANALYSIS"}
+
+    # All conditions pass -> PASS
+    all_pass, _ = derive_calibration_verdict(
+        evaluations=[],
+        holdout_evaluations=[],
+        mutation_result=dummy_mut_res,
+        feature_dep_result=dummy_feat_res,
+        conditions_gate={
+            "external_engines_available": True,
+            "real_scan_bytes_valid": True,
+            "reference_bytes_valid": True,
+            "complete_source_page_coverage": True,
+            "required_mutation_recall_satisfied": True,
+            "synthetic_controls_pass": True,
+            "empirical_feature_fit_satisfied": True,
+        },
+    )
+    assert all_pass == "PROTOCOL_V4_CALIBRATION_PASS"
+
+    # Core engine and mutation pass, synthetic controls pass, but empirical feature fit or real-scan noise bounds threshold -> PARTIAL
+    partial, _ = derive_calibration_verdict(
+        evaluations=[],
+        holdout_evaluations=[],
+        mutation_result=dummy_mut_res,
+        feature_dep_result={"fit_for_rc012_structural_analysis": False, "fit_status": "PARTIALLY_FIT"},
+        conditions_gate={
+            "external_engines_available": True,
+            "real_scan_bytes_valid": True,
+            "reference_bytes_valid": True,
+            "complete_source_page_coverage": True,
+            "required_mutation_recall_satisfied": True,
+            "synthetic_controls_pass": True,
+            "empirical_feature_fit_satisfied": False,
+        },
+    )
+    assert partial == "PROTOCOL_V4_CALIBRATION_PARTIAL"
+
+    # Missing engines -> BLOCKED
+    blocked, _ = derive_calibration_verdict(
+        evaluations=[],
+        holdout_evaluations=[],
+        mutation_result=dummy_mut_res,
+        feature_dep_result=dummy_feat_res,
+        conditions_gate={
+            "external_engines_available": False,
+            "real_scan_bytes_valid": True,
+            "reference_bytes_valid": True,
+            "complete_source_page_coverage": True,
+            "required_mutation_recall_satisfied": True,
+            "synthetic_controls_pass": True,
+            "empirical_feature_fit_satisfied": True,
+        },
+    )
+    assert blocked == "PROTOCOL_V4_CALIBRATION_BLOCKED"
+
+
+def test_bounded_coverage_and_measure_offset_alignment() -> None:
+    """Verifies that measure sequence alignment correctly handles bounded coverage and offset tracking."""
+    from russian_piano_composer.corpus.rc013_event_graph import (
+        NormalizedEventGraph,
+        ScoreEvent,
+        compare_event_graphs,
+    )
+
+    evts_ref = [
+        ScoreEvent(score_id="s1", measure_number=1, staff=1, voice=1, onset_fraction="0/1", duration_fraction="1/4", event_type="NOTE", pitch_step="C", alter=0, octave=4, page_index=1, local_measure_number=1),
+        ScoreEvent(score_id="s1", measure_number=2, staff=1, voice=1, onset_fraction="0/1", duration_fraction="1/4", event_type="NOTE", pitch_step="D", alter=0, octave=4, page_index=1, local_measure_number=2),
+        ScoreEvent(score_id="s1", measure_number=3, staff=1, voice=1, onset_fraction="0/1", duration_fraction="1/4", event_type="NOTE", pitch_step="E", alter=0, octave=4, page_index=2, local_measure_number=1),
+    ]
+    evts_hyp = [
+        ScoreEvent(score_id="s1", measure_number=1, staff=1, voice=1, onset_fraction="0/1", duration_fraction="1/4", event_type="NOTE", pitch_step="C", alter=0, octave=4, page_index=1, local_measure_number=1),
+        ScoreEvent(score_id="s1", measure_number=2, staff=1, voice=1, onset_fraction="0/1", duration_fraction="1/4", event_type="NOTE", pitch_step="D", alter=0, octave=4, page_index=1, local_measure_number=2),
+    ]
+
+    g_ref = NormalizedEventGraph(score_id="s1", events=evts_ref)
+    g_hyp = NormalizedEventGraph(score_id="s1", events=evts_hyp)
+
+    res = compare_event_graphs(g_ref, g_hyp)
+    assert 0.0 <= res.page_coverage <= 1.0
+    assert 0.0 <= res.measure_coverage <= 1.0
+    assert 0.0 <= res.event_recall <= 1.0
+    assert 0.0 <= res.event_precision <= 1.0
+    assert res.measure_coverage == pytest.approx(2 / 3, abs=1e-3)
+
 

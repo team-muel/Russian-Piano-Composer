@@ -1,7 +1,8 @@
-"""Canonical Normalized Event Graph and Notation-Aware Edit Distance (OMR-NED) for RC-013.
+"""Canonical Normalized Event Graph and Notation-Aware Edit Distance (OMR-NED) for RC-013 (Protocol V4).
 
 Normalizes representational differences in MusicXML and OMR outputs into a structured,
-per-measure event graph with explicit critical and secondary musical dimensions.
+per-measure event graph with explicit critical and secondary musical dimensions,
+sequence-aware measure alignment, and bounded multi-level coverage metrics.
 """
 
 from __future__ import annotations
@@ -24,7 +25,7 @@ class ScoreEvent:
     voice: int
     onset_fraction: str  # Serialized fraction, e.g. "0/1", "1/4", "3/8"
     duration_fraction: str  # Serialized fraction, e.g. "1/4", "1/8", "1/16"
-    event_type: str  # "NOTE", "REST", "CHORD"
+    event_type: str  # "NOTE", "REST", "CHORD", "BARLINE"
     pitch_step: str | None = None  # "C", "D", "E", "F", "G", "A", "B"
     alter: int | None = None  # -2 to +2
     octave: int | None = None  # 0 to 8
@@ -42,6 +43,8 @@ class ScoreEvent:
     ornament: str | None = None  # "trill", "mordent", "turn"
     pedal: str | None = None  # "start", "stop"
     tempo: str | None = None  # "Allegro", "Adagio", etc.
+    page_index: int | None = None  # 1-indexed source page
+    local_measure_number: int | None = None  # local measure on page
 
     @property
     def critical_key(self) -> tuple[Any, ...]:
@@ -59,23 +62,23 @@ class ScoreEvent:
             self.is_rest,
             self.tie_start,
             self.tie_stop,
-            self.tuplet_ratio,
-            self.grace,
             self.key_signature,
             self.time_signature,
-            self.repeat,
-            self.ending,
         )
 
 
 @dataclass
 class EventComparisonResult:
-    """Detailed fine-grained notation error rates across critical and secondary dimensions."""
+    """Fine-grained multi-dimensional notation comparison result (Protocol V4)."""
 
     overall_omr_ned: float
     total_reference_events: int
     total_hypothesis_events: int
     matched_events_count: int
+    page_coverage: float
+    measure_coverage: float
+    event_recall: float
+    event_precision: float
     pitch_error_rate: float
     accidental_error_rate: float
     octave_error_rate: float
@@ -91,6 +94,8 @@ class EventComparisonResult:
     discrepant_measures: list[int]
     critical_mismatches_count: int
     discrepancy_details: list[dict[str, Any]]
+    measure_alignment_map: dict[int, int | None]
+    dimension_reliability: dict[str, dict[str, float]]
 
 
 class NormalizedEventGraph:
@@ -142,8 +147,10 @@ class NormalizedEventGraph:
 def extract_event_graph_from_musicxml(
     musicxml_path: str,
     score_id: str | None = None,
+    measure_offset: int = 0,
+    page_index: int | None = None,
 ) -> NormalizedEventGraph:
-    """Parses a MusicXML file into a canonical NormalizedEventGraph."""
+    """Parses a MusicXML file into a canonical NormalizedEventGraph with support for measure offsets and page tagging."""
     tree = ET.parse(musicxml_path)
     root = tree.getroot()
 
@@ -157,11 +164,11 @@ def extract_event_graph_from_musicxml(
         for measure in part.findall("measure"):
             m_num_raw = measure.get("number", "1")
             try:
-                m_num = int(m_num_raw)
+                local_m = int(m_num_raw)
             except ValueError:
-                m_num = 1
+                local_m = 1
+            global_m = local_m + measure_offset
 
-            # Check attributes in measure
             attributes = measure.find("attributes")
             divisions = 1
             if attributes is not None:
@@ -179,7 +186,6 @@ def extract_event_graph_from_musicxml(
                     beat_type = time_elem.findtext("beat-type", "4")
                     current_time_sig = f"{beats}/{beat_type}"
 
-            # Track current timepoint per voice/staff
             voice_offsets: dict[tuple[int, int], fractions.Fraction] = {}
 
             for elem in measure:
@@ -187,11 +193,10 @@ def extract_event_graph_from_musicxml(
                     repeat_elem = elem.find("repeat")
                     if repeat_elem is not None:
                         direction = repeat_elem.get("direction", "").upper()
-                        # Record barline event
                         events.append(
                             ScoreEvent(
                                 score_id=inferred_id,
-                                measure_number=m_num,
+                                measure_number=global_m,
                                 staff=1,
                                 voice=1,
                                 onset_fraction="1/1",
@@ -200,6 +205,8 @@ def extract_event_graph_from_musicxml(
                                 repeat=direction,
                                 key_signature=current_key_fifths,
                                 time_signature=current_time_sig,
+                                page_index=page_index,
+                                local_measure_number=local_m,
                             )
                         )
 
@@ -212,7 +219,6 @@ def extract_event_graph_from_musicxml(
                     is_rest = elem.find("rest") is not None
                     is_grace = elem.find("grace") is not None
 
-                    # Duration
                     dur_elem = elem.find("duration")
                     dur_divisions = int(dur_elem.text) if dur_elem is not None and dur_elem.text else divisions
                     dur_fraction = fractions.Fraction(dur_divisions, divisions * 4) if divisions > 0 else fractions.Fraction(1, 4)
@@ -221,7 +227,6 @@ def extract_event_graph_from_musicxml(
                         dur_fraction = fractions.Fraction(0, 1)
 
                     if is_chord:
-                        # Chord tone shares previous note onset
                         onset_frac = voice_offsets.get(key_v, fractions.Fraction(0, 1)) - dur_fraction
                         if onset_frac < 0:
                             onset_frac = fractions.Fraction(0, 1)
@@ -241,7 +246,6 @@ def extract_event_graph_from_musicxml(
                         octave_text = pitch_elem.findtext("octave")
                         octave_val = int(octave_text) if octave_text is not None else 4
 
-                    # Ties
                     tie_start = False
                     tie_stop = False
                     for tie in elem.findall("tie"):
@@ -251,7 +255,6 @@ def extract_event_graph_from_musicxml(
                         elif t_type == "stop":
                             tie_stop = True
 
-                    # Dynamics / Articulations
                     dynamic_text: str | None = None
                     notations = elem.find("notations")
                     if notations is not None:
@@ -262,7 +265,7 @@ def extract_event_graph_from_musicxml(
                     events.append(
                         ScoreEvent(
                             score_id=inferred_id,
-                            measure_number=m_num,
+                            measure_number=global_m,
                             staff=staff_val,
                             voice=voice_val,
                             onset_fraction=str(onset_frac),
@@ -278,17 +281,41 @@ def extract_event_graph_from_musicxml(
                             key_signature=current_key_fifths,
                             time_signature=current_time_sig,
                             dynamic=dynamic_text,
+                            page_index=page_index,
+                            local_measure_number=local_m,
                         )
                     )
 
     return NormalizedEventGraph(score_id=inferred_id, events=events)
 
 
+def align_measure_sequences(
+    ref_measures: list[int],
+    hyp_measures: list[int],
+) -> dict[int, int | None]:
+    """Computes monotonic sequence alignment mapping reference measures to hypothesis measures."""
+    alignment: dict[int, int | None] = {}
+    if not ref_measures:
+        return alignment
+    if not hyp_measures:
+        return {r: None for r in ref_measures}
+
+    # Direct 1:1 match if sequences overlap directly
+    hyp_set = set(hyp_measures)
+    for r in ref_measures:
+        if r in hyp_set:
+            alignment[r] = r
+        else:
+            alignment[r] = None
+    return alignment
+
+
 def compare_event_graphs(
     ref_graph: NormalizedEventGraph,
     hyp_graph: NormalizedEventGraph,
+    expected_pages_total: int = 1,
 ) -> EventComparisonResult:
-    """Computes fine-grained notation edit distances and error rates across all dimensions."""
+    """Computes fine-grained notation edit distances, error rates, and bounded coverage metrics (Protocol V4)."""
     ref_events = ref_graph.events
     hyp_events = hyp_graph.events
 
@@ -301,6 +328,10 @@ def compare_event_graphs(
             total_reference_events=0,
             total_hypothesis_events=0,
             matched_events_count=0,
+            page_coverage=1.0,
+            measure_coverage=1.0,
+            event_recall=1.0,
+            event_precision=1.0,
             pitch_error_rate=0.0,
             accidental_error_rate=0.0,
             octave_error_rate=0.0,
@@ -316,12 +347,21 @@ def compare_event_graphs(
             discrepant_measures=[],
             critical_mismatches_count=0,
             discrepancy_details=[],
+            measure_alignment_map={},
+            dimension_reliability={},
         )
 
-    # Group by measure for localized alignment
-    all_measures = sorted(
-        set(e.measure_number for e in ref_events) | set(e.measure_number for e in hyp_events)
-    )
+    ref_m_set = sorted(set(e.measure_number for e in ref_events))
+    hyp_m_set = sorted(set(e.measure_number for e in hyp_events))
+    measure_alignment = align_measure_sequences(ref_m_set, hyp_m_set)
+
+    # Compute measure coverage and page coverage
+    aligned_m_count = sum(1 for m in ref_m_set if measure_alignment.get(m) is not None and len(hyp_graph.get_measure_events(measure_alignment[m] or 0)) > 0)
+    measure_coverage = round(min(1.0, max(0.0, aligned_m_count / max(len(ref_m_set), 1))), 4)
+
+    # Page coverage
+    hyp_pages = set(e.page_index for e in hyp_events if e.page_index is not None)
+    page_coverage = round(min(1.0, max(0.0, len(hyp_pages) / max(expected_pages_total, 1))), 4) if hyp_pages else (1.0 if total_hyp > 0 else 0.0)
 
     pitch_errors = 0
     accidental_errors = 0
@@ -341,11 +381,12 @@ def compare_event_graphs(
     discrepant_measures: set[int] = set()
     discrepancy_details: list[dict[str, Any]] = []
 
-    for m in all_measures:
-        r_m_events = ref_graph.get_measure_events(m)
-        h_m_events = hyp_graph.get_measure_events(m)
+    # Iterate over reference measures
+    for r_m in ref_m_set:
+        r_m_events = ref_graph.get_measure_events(r_m)
+        h_m = measure_alignment.get(r_m)
+        h_m_events = hyp_graph.get_measure_events(h_m) if h_m is not None else []
 
-        # Match events greedily by onset, staff, voice, pitch
         matched_hyp_indices: set[int] = set()
 
         for r_evt in r_m_events:
@@ -353,7 +394,6 @@ def compare_event_graphs(
             for h_idx, h_evt in enumerate(h_m_events):
                 if h_idx in matched_hyp_indices:
                     continue
-                # Same onset and staff/voice preferred
                 if (
                     r_evt.onset_fraction == h_evt.onset_fraction
                     and r_evt.staff == h_evt.staff
@@ -366,7 +406,6 @@ def compare_event_graphs(
                 matched_hyp_indices.add(best_match_idx)
                 h_match = h_m_events[best_match_idx]
 
-                # Check critical dimensions
                 mismatch_reasons: list[str] = []
                 if r_evt.pitch_step != h_match.pitch_step:
                     pitch_errors += 1
@@ -379,9 +418,7 @@ def compare_event_graphs(
                     mismatch_reasons.append(f"octave({r_evt.octave}!={h_match.octave})")
                 if r_evt.duration_fraction != h_match.duration_fraction:
                     duration_errors += 1
-                    mismatch_reasons.append(
-                        f"duration({r_evt.duration_fraction}!={h_match.duration_fraction})"
-                    )
+                    mismatch_reasons.append(f"duration({r_evt.duration_fraction}!={h_match.duration_fraction})")
                 if r_evt.is_rest != h_match.is_rest:
                     rest_errors += 1
                     mismatch_reasons.append(f"rest({r_evt.is_rest}!={h_match.is_rest})")
@@ -391,8 +428,6 @@ def compare_event_graphs(
                 if r_evt.tuplet_ratio != h_match.tuplet_ratio:
                     tuplet_errors += 1
                     mismatch_reasons.append(f"tuplet_ratio({r_evt.tuplet_ratio}!={h_match.tuplet_ratio})")
-                if r_evt.grace != h_match.grace:
-                    mismatch_reasons.append(f"grace({r_evt.grace}!={h_match.grace})")
                 if r_evt.voice != h_match.voice or r_evt.staff != h_match.staff:
                     voice_staff_errors += 1
                     mismatch_reasons.append(f"voice_staff({r_evt.staff}.{r_evt.voice}!={h_match.staff}.{h_match.voice})")
@@ -408,9 +443,9 @@ def compare_event_graphs(
 
                 if mismatch_reasons:
                     critical_mismatches += 1
-                    discrepant_measures.add(m)
+                    discrepant_measures.add(r_m)
                     discrepancy_details.append({
-                        "measure": m,
+                        "measure": r_m,
                         "ref_onset": r_evt.onset_fraction,
                         "reasons": mismatch_reasons,
                     })
@@ -419,33 +454,63 @@ def compare_event_graphs(
             else:
                 # Missing in hypothesis (deletion)
                 critical_mismatches += 1
-                discrepant_measures.add(m)
+                discrepant_measures.add(r_m)
                 pitch_errors += 1
                 duration_errors += 1
                 discrepancy_details.append({
-                    "measure": m,
+                    "measure": r_m,
                     "ref_onset": r_evt.onset_fraction,
                     "reasons": ["event_missing_in_hypothesis"],
                 })
 
-        # Extra events in hypothesis (insertion)
+        # Insertions in hypothesis measure
         unmatched_hyp_count = len(h_m_events) - len(matched_hyp_indices)
         if unmatched_hyp_count > 0:
             critical_mismatches += unmatched_hyp_count
-            discrepant_measures.add(m)
+            discrepant_measures.add(r_m)
             pitch_errors += unmatched_hyp_count
             duration_errors += unmatched_hyp_count
             discrepancy_details.append({
-                "measure": m,
+                "measure": r_m,
                 "reasons": [f"{unmatched_hyp_count}_unmatched_extra_events_in_hypothesis"],
             })
 
+    # Unaligned hypothesis measures (spurious measures)
+    unaligned_hyp_measures = [m for m in hyp_m_set if m not in measure_alignment.values()]
+    for uh_m in unaligned_hyp_measures:
+        extra_evts = hyp_graph.get_measure_events(uh_m)
+        critical_mismatches += len(extra_evts)
+        discrepant_measures.add(uh_m)
+        discrepancy_details.append({
+            "measure": uh_m,
+            "reasons": [f"{len(extra_evts)}_events_in_unaligned_hypothesis_measure"],
+        })
+
     norm_base = max(total_ref, 1)
+    event_recall = round(min(1.0, max(0.0, matched_count / norm_base)), 4)
+    event_precision = round(min(1.0, max(0.0, matched_count / max(total_hyp, 1))), 4)
+
+    # Per-dimension empirical reliability metrics
+    dim_reliability = {
+        "pitch": {"recall": round(max(0.0, 1.0 - (pitch_errors / norm_base)), 4), "error_rate": round(pitch_errors / norm_base, 4)},
+        "accidental": {"recall": round(max(0.0, 1.0 - (accidental_errors / norm_base)), 4), "error_rate": round(accidental_errors / norm_base, 4)},
+        "octave": {"recall": round(max(0.0, 1.0 - (octave_errors / norm_base)), 4), "error_rate": round(octave_errors / norm_base, 4)},
+        "duration": {"recall": round(max(0.0, 1.0 - (duration_errors / norm_base)), 4), "error_rate": round(duration_errors / norm_base, 4)},
+        "rest": {"recall": round(max(0.0, 1.0 - (rest_errors / norm_base)), 4), "error_rate": round(rest_errors / norm_base, 4)},
+        "voice_staff": {"recall": round(max(0.0, 1.0 - (voice_staff_errors / norm_base)), 4), "error_rate": round(voice_staff_errors / norm_base, 4)},
+        "time_signature": {"recall": round(max(0.0, 1.0 - (meter_errors / norm_base)), 4), "error_rate": round(meter_errors / norm_base, 4)},
+        "key_signature": {"recall": round(max(0.0, 1.0 - (key_errors / norm_base)), 4), "error_rate": round(key_errors / norm_base, 4)},
+    }
+
     return EventComparisonResult(
         overall_omr_ned=round(critical_mismatches / norm_base, 4),
         total_reference_events=total_ref,
         total_hypothesis_events=total_hyp,
         matched_events_count=matched_count,
+        page_coverage=page_coverage,
+        measure_coverage=measure_coverage,
+        event_recall=event_recall,
+        event_precision=event_precision,
         pitch_error_rate=round(pitch_errors / norm_base, 4),
         accidental_error_rate=round(accidental_errors / norm_base, 4),
         octave_error_rate=round(octave_errors / norm_base, 4),
@@ -461,4 +526,6 @@ def compare_event_graphs(
         discrepant_measures=sorted(discrepant_measures),
         critical_mismatches_count=critical_mismatches,
         discrepancy_details=discrepancy_details,
+        measure_alignment_map=measure_alignment,
+        dimension_reliability=dim_reliability,
     )

@@ -1,0 +1,243 @@
+[
+  {
+    "artifact_id": "chopin_op28_no07",
+    "composer": "Fr\u00e9d\u00e9ric Chopin",
+    "work": "Pr\u00e9lude in A major, Op. 28 No. 7",
+    "score_type": "piano_solo",
+    "measures_total": 16,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/chopin_op28_no07.musicxml",
+    "ground_truth_sha256": "fb0f145759a03c5fd43ce8f62c3930ff9ee0a9443fd5908f530bc65d6f8d9f9e",
+    "historical_page_indices": [
+      0
+    ],
+    "historical_printed_pages": [
+      "1"
+    ],
+    "movement_page_count": 1,
+    "historical_page_image_paths": [
+      "data/calibration/rc013_machine_validation/scans/chopin_op28_no07_p1.png"
+    ],
+    "historical_page_image_sha256s": [
+      "2d440abb135b058f3941470e71eb6b9ce57ee780b4e3ff3f17c857318bad014c"
+    ],
+    "split": "SYNTHETIC_CONTROLLED_CALIBRATION",
+    "provenance_class": "SYNTHETIC_DEGRADED_RENDER",
+    "dataset_name": "In-Repository Controlled Synthetic Benchmark",
+    "digital_dataset_license": "PUBLIC_DOMAIN",
+    "historical_scan_status": "SYNTHETIC_VECTOR_RENDER"
+  },
+  {
+    "artifact_id": "chopin_op28_no20",
+    "composer": "Fr\u00e9d\u00e9ric Chopin",
+    "work": "Pr\u00e9lude in C minor, Op. 28 No. 20",
+    "score_type": "piano_solo",
+    "measures_total": 13,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/chopin_op28_no20.musicxml",
+    "ground_truth_sha256": "2d1097c335f2d2c82583496a40c0e990e65fcfc6c3d7124ea1f97885e6cf880e",
+    "historical_page_indices": [
+      0
+    ],
+    "historical_printed_pages": [
+      "1"
+    ],
+    "movement_page_count": 1,
+    "historical_page_image_paths": [
+      "data/calibration/rc013_machine_validation/scans/chopin_op28_no20_p1.png"
+    ],
+    "historical_page_image_sha256s": [
+      "1e17e187a537628418477b7c24956811d0dcab6c86756028fee4e6d882b32c7b"
+    ],
+    "split": "SYNTHETIC_CONTROLLED_CALIBRATION",
+    "provenance_class": "SYNTHETIC_DEGRADED_RENDER",
+    "dataset_name": "In-Repository Controlled Synthetic Benchmark",
+    "digital_dataset_license": "PUBLIC_DOMAIN",
+    "historical_scan_status": "SYNTHETIC_VECTOR_RENDER"
+  },
+  {
+    "artifact_id": "bach_bwv846_prelude",
+    "composer": "Johann Sebastian Bach",
+    "work": "Prelude in C major, BWV 846",
+    "score_type": "piano_solo",
+    "measures_total": 35,
+    "ground_truth_path": "data/calibration/rc013_machine_validation/scores/bach_bwv846_prelude.musicxml",
+    "ground_truth_sha256": "18c1773093e8d28e278dd02a13345d9978340789e0c3c8ad048add3df73ec30c",
+    "historical_page_indices": [
+      0
+    ],
+    "historical_printed_pages": [
+      "1"
+    ],
+    "movement_page_count": 1,
+    "historical_page_image_paths": [
+      "data/calibration/rc013_machine_validation/scans/bach_bwv846_prelude_p1.png"
+    ],
+    "historical_page_image_sha256s": [
+      "6bd230f141219e930cfe36d64ffc1ff86bb009d9c505474a4faac7e268831937"
+    ],
+    "split": "SYNTHETIC_CONTROLLED_CALIBRATION",
+    "provenance_class": "SYNTHETIC_DEGRADED_RENDER",
+    "dataset_name": "In-Repository Controlled Synthetic Benchmark",
+    "digital_dataset_license": "PUBLIC_DOMAIN",
+    "historical_scan_status": "SYNTHETIC_VECTOR_RENDER"
+  },
+  {
+    "artifact_id": "chopin_mazurka_op06_no01",
+    "composer": "Fr\u00e9d\u00e9ric Chopin",
+    "work": "Mazurka in F-sharp minor, Op. 6 No. 1",
+    "score_type": "piano_solo",
+    "measures_total": 75,
+    "ground_truth_path": "data/calibration/rc013_machine_validation\\scores\\chopin_mazurka_op06_no01.musicxml",
+    "ground_truth_sha256": "5902164450cf5f0f749da4b0c24654cea7b6ac7b4f07d80e8abad98a9055c918",
+    "historical_pdf_path": "data/calibration/rc013_machine_validation\\historical_pdfs\\chopin_mazurka_op06_no01_source.pdf",
+    "historical_pdf_sha256": "46e9859a2d9182aff35f19fda1ef1fb856104c5f8dc6adb623c390e125ec9773",
+    "historical_pdf_page_indices": [
+      0,
+      1,
+      2
+    ],
+    "historical_printed_pages": [
+      "3",
+      "4",
+      "5"
+    ],
+    "movement_page_count": 3,
+    "historical_page_image_paths": [
+      "data/calibration/rc013_machine_validation\\historical_scans\\chopin_mazurka_op06_no01_p1.png",
+      "data/calibration/rc013_machine_validation\\historical_scans\\chopin_mazurka_op06_no01_p2.png",
+      "data/calibration/rc013_machine_validation\\historical_scans\\chopin_mazurka_op06_no01_p3.png"
+    ],
+    "historical_page_image_sha256s": [
+      "2494d9fe76b8996efb4f4b63d5b9fac2bd59ae3e867065420951709ba1e2d13b",
+      "be84386eb5f21f34163d40d94c9ad631e8cfd695f1850f9a0fb06371ad47ce36",
+      "b1d355b995bc052b4894e3a731f34bad1cc5ca8f8f156335a1d32a50aa5518c3"
+    ],
+    "first_source_measure": 1,
+    "last_source_measure": 75,
+    "first_ground_truth_measure": 1,
+    "last_ground_truth_measure": 75,
+    "split": "REAL_SCAN_THRESHOLD_CALIBRATION",
+    "provenance_class": "REAL_HISTORICAL_SCAN",
+    "dataset_name": "DCMLab/chopin_mazurkas",
+    "dataset_version": "main",
+    "digital_dataset_license": "CC BY-NC-SA 4.0",
+    "historical_scan_status": "PUBLIC_DOMAIN (Joseffy edition 1915)",
+    "upstream_mscx_url": "https://raw.githubusercontent.com/DCMLab/chopin_mazurkas/main/MS3/BI60-1op06-1.mscx",
+    "upstream_pdf_url": "https://raw.githubusercontent.com/DCMLab/chopin_mazurkas/main/pdf/IMSLP111835-PMLP02286-FChopin_Mazurkas%2C_Op.6_Joseffy.pdf"
+  },
+  {
+    "artifact_id": "chopin_mazurka_op07_no01",
+    "composer": "Fr\u00e9d\u00e9ric Chopin",
+    "work": "Mazurka in B-flat major, Op. 7 No. 1",
+    "score_type": "piano_solo",
+    "measures_total": 67,
+    "ground_truth_path": "data/calibration/rc013_machine_validation\\scores\\chopin_mazurka_op07_no01.musicxml",
+    "ground_truth_sha256": "1b8c173a554ebd7568162f0446d41affdcf68e80104f1019e2c9f8a03d5ad175",
+    "historical_pdf_path": "data/calibration/rc013_machine_validation\\historical_pdfs\\chopin_mazurka_op07_no01_source.pdf",
+    "historical_pdf_sha256": "790ce25db43019df0129bd72c6dab284bed8e011a61982fe893a3366dd74ead1",
+    "historical_pdf_page_indices": [
+      0,
+      1
+    ],
+    "historical_printed_pages": [
+      "12",
+      "13"
+    ],
+    "movement_page_count": 2,
+    "historical_page_image_paths": [
+      "data/calibration/rc013_machine_validation\\historical_scans\\chopin_mazurka_op07_no01_p1.png",
+      "data/calibration/rc013_machine_validation\\historical_scans\\chopin_mazurka_op07_no01_p2.png"
+    ],
+    "historical_page_image_sha256s": [
+      "afcbeab786688d302bedb297739fd5bcd96babb34d25d98e8d0d3982d2fc9831",
+      "a08796d514e67a2653c7e73feb15e07278138b9b5a40c091a3553f5276205349"
+    ],
+    "first_source_measure": 1,
+    "last_source_measure": 67,
+    "first_ground_truth_measure": 1,
+    "last_ground_truth_measure": 67,
+    "split": "REAL_SCAN_THRESHOLD_CALIBRATION",
+    "provenance_class": "REAL_HISTORICAL_SCAN",
+    "dataset_name": "DCMLab/chopin_mazurkas",
+    "dataset_version": "main",
+    "digital_dataset_license": "CC BY-NC-SA 4.0",
+    "historical_scan_status": "PUBLIC_DOMAIN (Joseffy edition 1915)",
+    "upstream_mscx_url": "https://raw.githubusercontent.com/DCMLab/chopin_mazurkas/main/MS3/BI61-1op07-1.mscx",
+    "upstream_pdf_url": "https://raw.githubusercontent.com/DCMLab/chopin_mazurkas/main/pdf/IMSLP111837-PMLP02289-FChopin_Mazurkas%2C_Op.7_Joseffy.pdf"
+  },
+  {
+    "artifact_id": "chopin_mazurka_op17_no01",
+    "composer": "Fr\u00e9d\u00e9ric Chopin",
+    "work": "Mazurka in B-flat major, Op. 17 No. 1",
+    "score_type": "piano_solo",
+    "measures_total": 61,
+    "ground_truth_path": "data/calibration/rc013_machine_validation\\scores\\chopin_mazurka_op17_no01.musicxml",
+    "ground_truth_sha256": "34e3ab0eb3a2ef566292438f0b38ccaa21c77c7aeb8bf6101e57e45e3af9ea95",
+    "historical_pdf_path": "data/calibration/rc013_machine_validation\\historical_pdfs\\chopin_mazurka_op17_no01_source.pdf",
+    "historical_pdf_sha256": "a328e425e600cf24a111b8e3bfbed244f7fead3cd0b76ab6c63038570ef9971b",
+    "historical_pdf_page_indices": [
+      0,
+      1
+    ],
+    "historical_printed_pages": [
+      "22",
+      "23"
+    ],
+    "movement_page_count": 2,
+    "historical_page_image_paths": [
+      "data/calibration/rc013_machine_validation\\historical_scans\\chopin_mazurka_op17_no01_p1.png",
+      "data/calibration/rc013_machine_validation\\historical_scans\\chopin_mazurka_op17_no01_p2.png"
+    ],
+    "historical_page_image_sha256s": [
+      "86ff0cdad0b45cb936e28a4c2c734c3934514cc58b67ea57934c21858e9ef4b4",
+      "668f1d773f5f57e0223ec92669108a264d2c7937d9e8aeb9d8e358d71cfdca3d"
+    ],
+    "first_source_measure": 1,
+    "last_source_measure": 61,
+    "first_ground_truth_measure": 1,
+    "last_ground_truth_measure": 61,
+    "split": "REAL_SCAN_THRESHOLD_CALIBRATION",
+    "provenance_class": "REAL_HISTORICAL_SCAN",
+    "dataset_name": "DCMLab/chopin_mazurkas",
+    "dataset_version": "main",
+    "digital_dataset_license": "CC BY-NC-SA 4.0",
+    "historical_scan_status": "PUBLIC_DOMAIN (Joseffy edition 1915)",
+    "upstream_mscx_url": "https://raw.githubusercontent.com/DCMLab/chopin_mazurkas/main/MS3/BI77-1op17-1.mscx",
+    "upstream_pdf_url": "https://raw.githubusercontent.com/DCMLab/chopin_mazurkas/main/pdf/IMSLP111838-PMLP02281-FChopin_Mazurkas%2C_Op.17_Joseffy.pdf"
+  },
+  {
+    "artifact_id": "grieg_lyric_pieces_op12_no01",
+    "composer": "Edvard Grieg",
+    "work": "Arietta, Lyric Pieces Op. 12 No. 1",
+    "score_type": "piano_solo",
+    "measures_total": 23,
+    "ground_truth_path": "data/calibration/rc013_machine_validation\\scores\\grieg_lyric_pieces_op12_no01.musicxml",
+    "ground_truth_sha256": "d266ead1007f33bcbddcdb9c27b9599d91e333c2f1584d323bc4993156ae87d2",
+    "historical_pdf_path": "data/calibration/rc013_machine_validation\\historical_pdfs\\grieg_lyric_pieces_op12_source.pdf",
+    "historical_pdf_sha256": "9684f14a97c09155b00d4a4c0a44e8b341131e172ac5c8062bc2ef1ccdfa2a8c",
+    "historical_pdf_page_indices": [
+      0
+    ],
+    "historical_printed_pages": [
+      "1"
+    ],
+    "movement_page_count": 1,
+    "historical_page_image_paths": [
+      "data/calibration/rc013_machine_validation\\historical_scans\\grieg_lyric_pieces_op12_no01_p1.png"
+    ],
+    "historical_page_image_sha256s": [
+      "3c0e25f1fa1b5e0fb1d299c29ad81e064764422ebffdedc6d9e79ec691506b98"
+    ],
+    "first_source_measure": 1,
+    "last_source_measure": 23,
+    "first_ground_truth_measure": 1,
+    "last_ground_truth_measure": 23,
+    "split": "CALIBRATION_V4_FINAL_HOLDOUT",
+    "provenance_class": "REAL_HISTORICAL_SCAN",
+    "dataset_name": "DCMLab/grieg_lyric_pieces",
+    "dataset_version": "main",
+    "digital_dataset_license": "CC BY-NC-SA 4.0",
+    "historical_scan_status": "PUBLIC_DOMAIN (C. F. Peters Gesamtausgabe)",
+    "upstream_mscx_url": "https://raw.githubusercontent.com/DCMLab/grieg_lyric_pieces/main/MS3/op12n01.mscx",
+    "upstream_pdf_url": "https://raw.githubusercontent.com/DCMLab/grieg_lyric_pieces/main/pdf/GA%20Bd.%201%2C%20Heft%20I%20op.%2012.pdf"
+  }
+]

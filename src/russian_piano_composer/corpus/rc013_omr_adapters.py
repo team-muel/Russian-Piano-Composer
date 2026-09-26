@@ -1,14 +1,14 @@
-"""External Production OMR and Image Alignment Verification Adapters for RC-013 Protocol V3.
+"""External Production OMR and Image Alignment Verification Adapters for RC-013 (Protocol V4).
 
 Enforces:
 1. Channel A (External Audiveris OMR): Executes actual external Audiveris CLI binary (v5.11.0)
-   producing an official .mxl score export, extracted into NormalizedEventGraph with process receipts.
+   with page-aware execution, measure offset tracking, and detailed process receipts.
 2. Channel B (External homr Neural OMR): Executes real homr package with trained SegNet and TrOMR
-   transformer ONNX models and weights SHA verification, exporting MusicXML into NormalizedEventGraph.
+   transformer ONNX models with verified model SHA-256 hashes and page-aware measure mapping.
 3. Channel C (Structural Alignment Engine): Aligns MuseScore-rendered production score images
-   against distinct historical scans, enforcing SELF_COMPARISON_DISALLOWED.
+   against distinct historical scans, enforcing SELF_COMPARISON_DISALLOWED, page completeness,
+   and sequence alignment.
 4. BlindOMRFirewall: Complete sandbox isolation where only raw images are visible to OMR processes.
-5. Heuristic / diagnostic engines retained strictly as NON_AUTHORITATIVE_DIAGNOSTIC.
 """
 
 from __future__ import annotations
@@ -139,7 +139,7 @@ class ExternalAudiverisOMREngine:
         page_order: list[int] | None = None,
         config: dict[str, Any] | None = None,
     ) -> OMRChannelResult:
-        """Runs external Audiveris CLI within a strict isolated sandbox."""
+        """Runs external Audiveris CLI within a strict isolated sandbox, maintaining global measure offsets."""
         if not image_paths:
             return OMRChannelResult(
                 channel_id="CHANNEL_A",
@@ -186,6 +186,7 @@ class ExternalAudiverisOMREngine:
 
             combined_events: list[ScoreEvent] = []
             process_receipts: list[dict[str, Any]] = []
+            current_measure_offset = 0
 
             for p_idx, s_img in enumerate(sandboxed_images):
                 cmd = [self.executable_path, "-batch", "-export", "-output", output_dir, s_img]
@@ -195,7 +196,6 @@ class ExternalAudiverisOMREngine:
                 files_after = os.listdir(output_dir)
                 new_files = [f for f in files_after if f not in files_before]
 
-                # Find generated .mxl
                 mxl_files = [os.path.join(output_dir, f) for f in new_files if f.endswith(".mxl")]
                 mxl_sha = compute_file_sha256(mxl_files[0]) if mxl_files else ""
 
@@ -207,6 +207,7 @@ class ExternalAudiverisOMREngine:
                     "output_created_by_process": bool(mxl_files),
                     "external_binary_sha256": binary_sha,
                     "mxl_sha256": mxl_sha,
+                    "measure_offset_applied": current_measure_offset,
                     "stdout_tail": res.stdout[-300:] if res.stdout else "",
                     "stderr_tail": res.stderr[-300:] if res.stderr else "",
                 }
@@ -224,8 +225,16 @@ class ExternalAudiverisOMREngine:
                         if f.endswith(".xml") and f != "container.xml"
                     ]
                     if xml_candidates:
-                        p_graph = extract_event_graph_from_musicxml(xml_candidates[0], score_id=score_id)
+                        p_graph = extract_event_graph_from_musicxml(
+                            xml_candidates[0],
+                            score_id=score_id,
+                            measure_offset=current_measure_offset,
+                            page_index=p_idx + 1,
+                        )
                         combined_events.extend(p_graph.events)
+                        # Advance measure offset by total measures detected on this page
+                        p_measures = set(e.local_measure_number for e in p_graph.events if e.local_measure_number is not None)
+                        current_measure_offset += max(len(p_measures), 1)
 
             if not combined_events:
                 return OMRChannelResult(
@@ -272,26 +281,35 @@ class ExternalAudiverisOMREngine:
 
 
 class ExternalHomrNeuralOMREngine:
-    """Channel B: Genuine External homr Neural Optical Music Recognition Engine."""
+    """Channel B: Genuine External homr Neural OMR Engine (v0.7.0)."""
 
     ENGINE_NAME = "ExternalHomrNeuralOMR"
     ENGINE_VERSION = "0.7.0"
     ARCHITECTURE = "segnet_segmentation_and_tromr_transformer_sequence_decoder"
 
-    def __init__(self) -> None:
-        import homr
-        self.homr_dir = os.path.dirname(homr.__file__)
+    def __init__(self, package_root: str | None = None) -> None:
+        self.package_root = package_root or self._detect_package_root()
+
+    def _detect_package_root(self) -> str | None:
+        try:
+            import homr
+            if homr.__file__:
+                return str(os.path.dirname(homr.__file__))
+            return None
+        except (ImportError, AttributeError):
+            return None
 
     def is_available(self) -> bool:
-        """Verifies that the homr package and trained ONNX models exist."""
-        segnet_onnx = os.path.join(self.homr_dir, "segmentation", "segnet_308-3296ccd40960f90ca6ab9c035cca945675d30a0f.onnx")
-        encoder_onnx = os.path.join(self.homr_dir, "transformer", "encoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx")
-        decoder_onnx = os.path.join(self.homr_dir, "transformer", "decoder_pytorch_model_396-f6feedb42ff90087d898b0941a55d040fa6b2903.onnx")
-        return os.path.exists(segnet_onnx) and os.path.exists(encoder_onnx) and os.path.exists(decoder_onnx)
+        if not self.package_root:
+            return False
+        onnx_files = glob.glob(os.path.join(self.package_root, "**", "*.onnx"), recursive=True)
+        return len(onnx_files) >= 3
 
     def get_model_hashes(self) -> dict[str, str]:
+        if not self.package_root:
+            return {}
         hashes: dict[str, str] = {}
-        for onnx_p in glob.glob(os.path.join(self.homr_dir, "**", "*.onnx"), recursive=True):
+        for onnx_p in sorted(glob.glob(os.path.join(self.package_root, "**", "*.onnx"), recursive=True)):
             hashes[os.path.basename(onnx_p)] = compute_file_sha256(onnx_p)
         return hashes
 
@@ -302,7 +320,7 @@ class ExternalHomrNeuralOMREngine:
         page_order: list[int] | None = None,
         config: dict[str, Any] | None = None,
     ) -> OMRChannelResult:
-        """Runs external homr neural inference in an isolated blind sandbox."""
+        """Runs external homr neural inference in an isolated blind sandbox with measure offsets."""
         if not image_paths:
             return OMRChannelResult(
                 channel_id="CHANNEL_B",
@@ -361,6 +379,7 @@ class ExternalHomrNeuralOMREngine:
 
             combined_events: list[ScoreEvent] = []
             page_receipts: list[dict[str, Any]] = []
+            current_measure_offset = 0
 
             for p_idx, s_img in enumerate(sandboxed_images):
                 out_xml = s_img.replace(os.path.splitext(s_img)[1], ".musicxml")
@@ -369,25 +388,29 @@ class ExternalHomrNeuralOMREngine:
                 except Exception as e:
                     page_receipts.append({
                         "page_index": p_idx + 1,
-                        "input_image": os.path.basename(s_img),
-                        "model_inference_executed": True,
+                        "success": False,
                         "error": str(e),
-                        "output_musicxml_sha256": "",
                     })
                     continue
 
-                xml_sha = compute_file_sha256(out_xml) if os.path.exists(out_xml) else ""
-                receipt = {
-                    "page_index": p_idx + 1,
-                    "input_image": os.path.basename(s_img),
-                    "model_inference_executed": True,
-                    "output_musicxml_sha256": xml_sha,
-                }
-                page_receipts.append(receipt)
-
                 if os.path.exists(out_xml):
-                    p_graph = extract_event_graph_from_musicxml(out_xml, score_id=score_id)
+                    p_graph = extract_event_graph_from_musicxml(
+                        out_xml,
+                        score_id=score_id,
+                        measure_offset=current_measure_offset,
+                        page_index=p_idx + 1,
+                    )
                     combined_events.extend(p_graph.events)
+                    p_measures = set(e.local_measure_number for e in p_graph.events if e.local_measure_number is not None)
+                    current_measure_offset += max(len(p_measures), 1)
+
+                    page_receipts.append({
+                        "page_index": p_idx + 1,
+                        "success": True,
+                        "xml_sha256": compute_file_sha256(out_xml),
+                        "events_count": len(p_graph.events),
+                        "measures_count": len(p_measures),
+                    })
 
             if not combined_events:
                 return OMRChannelResult(
@@ -399,7 +422,10 @@ class ExternalHomrNeuralOMREngine:
                     input_file_sha256=input_sha,
                     output_sha256="0" * 64,
                     extracted_event_graph=None,
-                    execution_metadata={"page_receipts": page_receipts, "model_hashes": model_hashes},
+                    execution_metadata={
+                        "model_hashes": model_hashes,
+                        "page_receipts": page_receipts,
+                    },
                     status="FAILED",
                     error_message="HOMR_RECOGNITION_NO_EVENTS",
                 )
@@ -417,10 +443,10 @@ class ExternalHomrNeuralOMREngine:
                 output_sha256=out_sha,
                 extracted_event_graph=graph,
                 execution_metadata={
+                    "model_hashes": model_hashes,
                     "pages_processed": len(sandboxed_images),
                     "total_measures_detected": graph.total_measures,
                     "total_events_extracted": len(graph.events),
-                    "model_hashes": model_hashes,
                     "page_receipts": page_receipts,
                 },
                 status="SUCCESS",
@@ -430,16 +456,16 @@ class ExternalHomrNeuralOMREngine:
 
 
 # ---------------------------------------------------------------------------
-# Channel C: Structural Vector-Raster Alignment Engine (Distinct Inputs Required)
+# Channel C: Structural Image Alignment Engine
 # ---------------------------------------------------------------------------
 
 
 class ScoreScanStructuralAlignmentEngine:
-    """Channel C: Structural Vector-Raster Image Alignment and Spatial Correspondence."""
+    """Channel C: Structural Score-to-Scan Image Cross-Correlation Engine (Protocol V4)."""
 
     ENGINE_NAME = "ScoreScanStructuralAlignment"
-    ENGINE_VERSION = "3.0.0-rc013"
-    ARCHITECTURE = "multi_scale_geometric_registration_and_patch_correlation"
+    ENGINE_VERSION = "4.0.0-rc013"
+    ARCHITECTURE = "multi_scale_geometric_registration_and_page_alignment_correlation"
 
     def align_score_to_scan(
         self,
@@ -447,7 +473,7 @@ class ScoreScanStructuralAlignmentEngine:
         historical_scan_images: list[str],
         score_id: str,
     ) -> OMRChannelResult:
-        """Aligns rendered symbolic score images with distinct historical scans and measures visual discrepancy."""
+        """Aligns rendered symbolic score images with historical scans and measures visual discrepancy and completeness."""
         if not rendered_images or not historical_scan_images:
             return OMRChannelResult(
                 channel_id="CHANNEL_C",
@@ -478,10 +504,17 @@ class ScoreScanStructuralAlignmentEngine:
                     all_bytes += f.read()
         input_sha = hashlib.sha256(all_bytes).hexdigest() if all_bytes else "0" * 64
 
+        rendered_pages_total = len(rendered_images)
+        source_pages_total = len(historical_scan_images)
+        num_pages = min(rendered_pages_total, source_pages_total)
+
+        unmatched_rendered_pages = max(0, rendered_pages_total - source_pages_total)
+        unmatched_source_pages = max(0, source_pages_total - rendered_pages_total)
+        page_alignment_coverage = round(num_pages / max(source_pages_total, rendered_pages_total, 1), 4)
+
         page_alignments: list[dict[str, Any]] = []
         overall_discrepancies: list[float] = []
 
-        num_pages = min(len(rendered_images), len(historical_scan_images))
         for p_idx in range(num_pages):
             rend_p = rendered_images[p_idx]
             scan_p = historical_scan_images[p_idx]
@@ -529,7 +562,12 @@ class ScoreScanStructuralAlignmentEngine:
         output_data = {
             "score_id": score_id,
             "mean_discrepancy": round(mean_discrepancy, 4),
-            "pages_aligned": len(page_alignments),
+            "rendered_pages_total": rendered_pages_total,
+            "source_pages_total": source_pages_total,
+            "matched_pages": len(page_alignments),
+            "unmatched_rendered_pages": unmatched_rendered_pages,
+            "unmatched_source_pages": unmatched_source_pages,
+            "page_alignment_coverage": page_alignment_coverage,
             "page_details": page_alignments,
         }
         output_payload = json.dumps(output_data, sort_keys=True)
