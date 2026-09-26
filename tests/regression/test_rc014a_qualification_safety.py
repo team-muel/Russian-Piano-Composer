@@ -106,7 +106,9 @@ def test_rc014b_external_access_policy_manifest_safety() -> None:
 
     assert data["access_mode"] == "NON_VENDORED_REFERENCE_ACCESS"
     assert data["license_status"] == "UNDECLARED"
-    assert data["policy_verdict"] == "RC014B_NONVENDORED_REFERENCE_PATH_VALID"
+    assert data["legal_governance_axes"]["technical_reproducibility"] == "TECHNICALLY_VALID"
+    assert data["legal_governance_axes"]["legal_redistribution_authority"] == "LEGAL_AUTHORITY_PENDING"
+    assert data["legal_governance_axes"]["composite_policy_verdict"] == "RC014B_NONVENDORED_REFERENCE_PATH_TECHNICALLY_VALID_LEGAL_AUTHORITY_PENDING"
     assert data["raw_file_redistribution_permitted"] is False
     assert data["derived_feature_extraction_permitted"] is True
     assert data["corpus_root_tree"] == "2e86805f11040570d1f2f45bc0f03be408ca4997"
@@ -135,8 +137,7 @@ def test_rc014b_license_undeclared_disallows_ready_for_vendoring() -> None:
     # When license is UNDECLARED, raw redistribution cannot be permitted
     if data["license_status"] == "UNDECLARED":
         assert data["raw_file_redistribution_permitted"] is False
-        assert data["policy_verdict"] != "READY_FOR_VENDORING"
-        assert data["policy_verdict"] == "RC014B_NONVENDORED_REFERENCE_PATH_VALID"
+        assert "READY_FOR_VENDORING" not in data["legal_governance_axes"]["composite_policy_verdict"]
 
 
 def test_rc014b_technical_compatibility_distinct_from_redistribution() -> None:
@@ -169,6 +170,31 @@ def test_rc014b_prokofiev_symbolic_coverage_audit() -> None:
     assert len(vf_audit["availability_matrix"]) == 20
     assert vf_audit["global_public_domain"] is True
     assert data["confirmatory_supplementation_path"]["target_pieces_count"] == 10
+
+    # Guard against false availability claims
+    asap_claims = [row for row in vf_audit["availability_matrix"] if "PRESENT" in row["asap_status"]]
+    assert len(asap_claims) == 0, "ASAP must not be claimed to contain Op.22 scores without proof"
+
+    # Craig Humdrum verified supplements
+    verified_supps = data["verified_supplement_records"]
+    assert len(verified_supps) == 2
+    assert verified_supps[0]["piece_identifier"] == "prokofiev_op22_no02"
+    assert verified_supps[1]["piece_identifier"] == "prokofiev_op22_no03"
+    assert all("PASS" in s["rc011_compatibility"] for s in verified_supps)
+
+
+def test_rc014b_unicode_paths_roundtrip_integrity() -> None:
+    """Verify all 23 manifest entries preserve valid Unicode paths without question marks."""
+    policy_path = Path("data/manifests/rc014b_external_access_policy.json")
+    with open(policy_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    for entry in data["reference_manifest"]:
+        rel = entry["relative_path"]
+        assert "?" not in rel, f"Path {rel} contains corrupted Unicode replacement character '?'"
+        assert len(entry["sha256"]) == 64
+        assert len(entry["git_blob_sha"]) == 40
+
 
 
 

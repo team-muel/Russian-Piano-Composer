@@ -31,31 +31,219 @@
     "total_pieces": 20,
     "global_public_domain": true,
     "availability_matrix": [
-      {"no": 1, "in_tpc": true, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "INDEPENDENT"},
-      {"no": 2, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 3, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 4, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 5, "in_tpc": true, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "INDEPENDENT"},
-      {"no": 6, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 7, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 8, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 9, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 10, "in_tpc": true, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "INDEPENDENT"},
-      {"no": 11, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 12, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 13, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 14, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 15, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 16, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 17, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 18, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 19, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"},
-      {"no": 20, "in_tpc": false, "in_asap": true, "in_periscope": true, "in_ccarh": true, "independence": "ELIGIBLE_SUPPLEMENT"}
+      {
+        "no": 1,
+        "tempo": "Lentamente",
+        "tpc_status": "PRESENT (MusicXML+TIFF)",
+        "craig_humdrum_status": "PRESENT (visions22-1.krn in automata/ana-music commit 335cbdc6)",
+        "asap_status": "ABSENT (No Op. 22 in ASAP dataset)",
+        "periscope_status": "UNVERIFIED",
+        "independence": "INDEPENDENT"
+      },
+      {
+        "no": 2,
+        "tempo": "Andante",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "PRESENT (visions22-2.krn in automata/ana-music commit 335cbdc6)",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "ELIGIBLE_SUPPLEMENT_CRAIG_HUMDRUM"
+      },
+      {
+        "no": 3,
+        "tempo": "Allegretto",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "PRESENT (visions22-3.krn in automata/ana-music commit 335cbdc6)",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "ELIGIBLE_SUPPLEMENT_CRAIG_HUMDRUM"
+      },
+      {
+        "no": 4,
+        "tempo": "Animato",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 5,
+        "tempo": "Molto giocoso",
+        "tpc_status": "PRESENT (MusicXML+TIFF)",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "INDEPENDENT"
+      },
+      {
+        "no": 6,
+        "tempo": "Con eleganza",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 7,
+        "tempo": "Pithesco",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 8,
+        "tempo": "Commodo",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 9,
+        "tempo": "Allegro tranquillo",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 10,
+        "tempo": "Ridicolosamente",
+        "tpc_status": "PRESENT (MusicXML+TIFF)",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "INDEPENDENT"
+      },
+      {
+        "no": 11,
+        "tempo": "Con vivacita",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 12,
+        "tempo": "Assai moderato",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 13,
+        "tempo": "Allegretto",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 14,
+        "tempo": "Feroce",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 15,
+        "tempo": "Inquieto",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 16,
+        "tempo": "Dolente",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 17,
+        "tempo": "Poetico",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 18,
+        "tempo": "Con una dolce lentezza",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 19,
+        "tempo": "Presto agitatissimo",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      },
+      {
+        "no": 20,
+        "tempo": "Lento irrealmente",
+        "tpc_status": "ABSENT",
+        "craig_humdrum_status": "ABSENT",
+        "asap_status": "ABSENT",
+        "periscope_status": "UNVERIFIED",
+        "independence": "UNVERIFIED"
+      }
     ]
   },
+  "verified_supplement_records": [
+    {
+      "piece_identifier": "prokofiev_op22_no02",
+      "work_title": "Visions Fugitives Op. 22 No. 2 (Andante)",
+      "source_repository": "https://github.com/automata/ana-music",
+      "pinned_commit": "335cbdc617c919d29e9384c4e490cabca5736f73",
+      "file_path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-2.krn",
+      "file_sha256": "c60ed809b26e1ac0d6862aaf62ba8c89c9c857a6a14cdf9c269a324f735d74e6",
+      "format": "HUMDRUM_KERN",
+      "encoder": "Craig Stuart Sapp (2004/12/09)",
+      "rc011_compatibility": "PASS (56 descriptors extracted)",
+      "measures_count": 24,
+      "license_status": "SUPPLEMENT_LICENSE_PENDING"
+    },
+    {
+      "piece_identifier": "prokofiev_op22_no03",
+      "work_title": "Visions Fugitives Op. 22 No. 3 (Allegretto)",
+      "source_repository": "https://github.com/automata/ana-music",
+      "pinned_commit": "335cbdc617c919d29e9384c4e490cabca5736f73",
+      "file_path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-3.krn",
+      "file_sha256": "5895df19b433c3ddf4b424f6d0ecfa9b3bcb4cd0f902106c0b5ddea766c49de4",
+      "format": "HUMDRUM_KERN",
+      "encoder": "Craig Stuart Sapp (2004/12/09)",
+      "rc011_compatibility": "PASS (56 descriptors extracted)",
+      "measures_count": 28,
+      "license_status": "SUPPLEMENT_LICENSE_PENDING"
+    }
+  ],
   "confirmatory_supplementation_path": {
     "target_pieces_count": 10,
-    "strategy": "8 pre-1931 pieces from TPC + 2 pre-1931 Op. 22 pieces from CCARH/ASAP (Nos. 2 & 3)",
-    "feasibility": "FULLY_FEASIBLE_PREFLIGHT_PASS"
+    "strategy": "8 pre-1931 pieces from TPC + 2 verified pre-1931 Op. 22 pieces from Craig/Humdrum (Nos. 2 & 3)",
+    "feasibility": "TECHNICALLY_FEASIBLE_LICENSE_PENDING"
   }
 }

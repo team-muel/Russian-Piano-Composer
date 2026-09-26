@@ -4,7 +4,20 @@
   "corpus_root_tree": "2e86805f11040570d1f2f45bc0f03be408ca4997",
   "access_mode": "NON_VENDORED_REFERENCE_ACCESS",
   "license_status": "UNDECLARED",
-  "policy_verdict": "RC014B_NONVENDORED_REFERENCE_PATH_VALID",
+  "legal_governance_axes": {
+    "technical_reproducibility": "TECHNICALLY_VALID",
+    "legal_redistribution_authority": "LEGAL_AUTHORITY_PENDING",
+    "composite_policy_verdict": "RC014B_NONVENDORED_REFERENCE_PATH_TECHNICALLY_VALID_LEGAL_AUTHORITY_PENDING"
+  },
+  "legal_permissions": {
+    "underlying_composition_status": "JURISDICTION_DEPENDENT",
+    "historical_print_status": "JURISDICTION_DEPENDENT",
+    "digital_transcription_license": "UNDECLARED",
+    "repository_reuse_permission": "PERMISSION_PENDING",
+    "local_scientific_analysis_permission": "JURISDICTION_DEPENDENT",
+    "redistribution_permission": "NOT_ESTABLISHED",
+    "derivative_distribution_permission": "JURISDICTION_DEPENDENT"
+  },
   "upstream_permission_request_status": "PENDING_DISPATCH",
   "raw_file_redistribution_permitted": false,
   "derived_feature_extraction_permitted": true,
@@ -208,9 +221,9 @@
       "publication_year": 1866,
       "us_copyright_status": "PUBLIC_DOMAIN",
       "eu_uk_copyright_status": "PUBLIC_DOMAIN",
-      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Album de Peterhof/3 Marche fun?bre.xml",
+      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Album de Peterhof/3 Marche funèbre.xml",
       "git_blob_sha": "ed4ff53319947c638d62857a565c2201fed50049",
-      "sha256": "03a0c6c91a2c43ac99187fa54d3ee1882672fa69ff55848bb2e8fa48c4fa04e2",
+      "sha256": "03a0c6c91a2c43ac5ecac9d25e1c1bfee5e8b52f1510423959475b27584873ad",
       "rc011_56_features_pass": true
     },
     {
@@ -222,7 +235,7 @@
       "eu_uk_copyright_status": "PUBLIC_DOMAIN",
       "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Album de Peterhof/4 Impromptu.xml",
       "git_blob_sha": "ce7ee8bb91ec22beb8d58f74a7075a0ed1d13761",
-      "sha256": "871f9e6de06a948a3e74be8fe4d493a778e874983a54d5885f8e5f2998a442e9",
+      "sha256": "871f9e6de06a948a5402b628c45f8564306394620fbd13a9383a29c873a96237",
       "rc011_56_features_pass": true
     },
     {
@@ -232,9 +245,9 @@
       "publication_year": 1866,
       "us_copyright_status": "PUBLIC_DOMAIN",
       "eu_uk_copyright_status": "PUBLIC_DOMAIN",
-      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Album de Peterhof/5 R?verie.xml",
+      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Album de Peterhof/5 Rêverie.xml",
       "git_blob_sha": "169a16cc939a30775cee73e2acca76d5bffb3fcf",
-      "sha256": "9e6cedab7bdda0d7f2da5d429a17ce33f4a38faea9b60b29cffcf8ec21eb9133",
+      "sha256": "9e6cedab7bdda0d781ecfab2efcd82e70029afcbd29583f9bb1784c98657da6b",
       "rc011_56_features_pass": true
     },
     {
@@ -246,7 +259,7 @@
       "eu_uk_copyright_status": "PUBLIC_DOMAIN",
       "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Album de Peterhof/6 Caprice russe.xml",
       "git_blob_sha": "5e886633a401e9c7a094043715708321f2a1ddb1",
-      "sha256": "ca0411afa5e61cc8ec6c738ef672f09ba9d3db9bf9186fa6a5c2d3cf88289ea7",
+      "sha256": "ca0411afa5e61cc8dd672ddd0d2bbb948b9c970f03ddc5a9ed493d2c7a18314f",
       "rc011_56_features_pass": true
     },
     {
@@ -256,9 +269,9 @@
       "publication_year": 1854,
       "us_copyright_status": "PUBLIC_DOMAIN",
       "eu_uk_copyright_status": "PUBLIC_DOMAIN",
-      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Six Preludes/Pr?lude1.xml",
+      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Six Preludes/Prèlude1.xml",
       "git_blob_sha": "1cc7978dc51494447375c696d6c8d18566fedc0f",
-      "sha256": "0e61bc3d8f209f4937faee8624be80721d6044c330dfca6006f15ddcf9659b87",
+      "sha256": "0e61bc3d8f209f499fb78c794532f03675faa9516e9896309bf9a00c8fe3110d",
       "rc011_56_features_pass": true
     },
     {
@@ -268,9 +281,9 @@
       "publication_year": 1854,
       "us_copyright_status": "PUBLIC_DOMAIN",
       "eu_uk_copyright_status": "PUBLIC_DOMAIN",
-      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Six Preludes/Pr?lude4.xml",
+      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Six Preludes/Prèlude4.xml",
       "git_blob_sha": "b1245f2de95b803f84ab016ed5372a0f5e48688b",
-      "sha256": "e64f12cbabc5f642646cba6e8c75ffae06830da57f6d2f70366a6a43f8e5fead",
+      "sha256": "e64f12cbabc5f64247f76ea45e0042017098b94913416fb9143715a0066e3cf1",
       "rc011_56_features_pass": true
     },
     {
@@ -280,9 +293,9 @@
       "publication_year": 1854,
       "us_copyright_status": "PUBLIC_DOMAIN",
       "eu_uk_copyright_status": "PUBLIC_DOMAIN",
-      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Six Preludes/Pr?lude6.xml",
+      "relative_path": "Rubinstein, Anton (1829 - 1894)/xml/Six Preludes/Prélude6.xml",
       "git_blob_sha": "1e8ff732c6c9e4fbf71448b91393726b86ff03e4",
-      "sha256": "7c9228573cf27a58793085bfd96d9e03d4ba8a6d71b402ef2db1c2b53b80b7b1",
+      "sha256": "7c9228573cf27a585b7489f6e9988e00d29df57590135adff0a5304bf86d831f",
       "rc011_56_features_pass": true
     }
   ]
