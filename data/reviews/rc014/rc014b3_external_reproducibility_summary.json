@@ -1,0 +1,58 @@
+{
+  "milestone": "RC-014B.3",
+  "status": "RC014B3_TECHNICAL_CORPUS_FROZEN_LEGAL_AUTHORITY_PENDING",
+  "tpc_corpus": {
+    "repository": "hectorbellmann-art/Tonal-Piano-Corpus",
+    "frozen_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
+    "root_tree": "2e86805f11040570d1f2f45bc0f03be408ca4997",
+    "verified_score_count": 23,
+    "parser": "ElementTree/xml",
+    "rubinstein_technical_count": 11,
+    "prokofiev_pre1931_count": 8,
+    "schema_hash": "924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282"
+  },
+  "humdrum_supplements": {
+    "repository": "automata/ana-music",
+    "frozen_commit": "335cbdc617c919d29e9384c4e490cabca5736f73",
+    "root_tree": "a7f14da4844b47ac3484b01d5d3da2a0029e4b6a",
+    "parser": "music21-10.5.0",
+    "traversal_mode": "recursive_voice_aware",
+    "scores": [
+      {
+        "piece_identifier": "prokofiev_op22_no02",
+        "relative_path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-2.krn",
+        "git_blob_sha": "8ecec739bc4c7f561e2c7c141aff1cf40d9d3c0d",
+        "canonical_blob_sha256": "c60ed809b26e1ac0d6862aaf62ba8c89c9c857a6a14cdf9c269a324f735d74e6",
+        "canonical_score_hash": "695cfa6a8fb89f852f0e34d38a8a5147fdd46aed6674bea89b008e2ab888f539",
+        "derived_feature_bundle_hash": "4f74c3da584d9c5d256943084072cc9b74d44fa31ad306700485acc9d949b3d2",
+        "canonical_measure_count": 24,
+        "canonical_event_count": 303,
+        "rc011_56_descriptor_status": "PASS"
+      },
+      {
+        "piece_identifier": "prokofiev_op22_no03",
+        "relative_path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-3.krn",
+        "git_blob_sha": "d7554373b3d67e4606f9f2f5f79b34608a000b12",
+        "canonical_blob_sha256": "5895df19b433c3ddf4b424f6d0ecfa9b3bcb4cd0f902106c0b5ddea766c49de4",
+        "canonical_score_hash": "31a7af107796ecc73e52247f7c5ad4adee05ba0b3a299b69791999f932494b91",
+        "derived_feature_bundle_hash": "575882c6e1fd251fe61bd4fb50ea148c6a50344b0014da227a4120c6d60ce56f",
+        "canonical_measure_count": 28,
+        "canonical_event_count": 611,
+        "rc011_56_descriptor_status": "PASS"
+      }
+    ]
+  },
+  "technical_corpus_totals": {
+    "Anton_Rubinstein_M_technical": 11,
+    "Sergei_Prokofiev_M_technical": 10,
+    "technical_pool_status": "FROZEN_SUFFICIENT"
+  },
+  "live_production_pool": {
+    "N_Russian": 2,
+    "qualified_composers": [
+      "Alexander Scriabin",
+      "Modest Mussorgsky"
+    ],
+    "rc012_resumption_status": "BLOCKED"
+  }
+}

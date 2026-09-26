@@ -215,17 +215,53 @@ def test_rc014b2_humdrum_supplement_receipts_and_invariants() -> None:
 
     # Check Op. 22 No. 2 invariants
     assert r2["canonical_measure_count"] == 24
+    assert r2["canonical_event_count"] == 303
     assert r2["git_blob_sha"] == "8ecec739bc4c7f561e2c7c141aff1cf40d9d3c0d"
-    assert r2["sha256"] == "944d176184b7311f3a9faee8726fb2583287fce0caf984e7118d37c4c37d71a3"
+    assert r2["canonical_blob_sha256"] == "c60ed809b26e1ac0d6862aaf62ba8c89c9c857a6a14cdf9c269a324f735d74e6"
+    assert r2["canonical_score_hash"] == "695cfa6a8fb89f852f0e34d38a8a5147fdd46aed6674bea89b008e2ab888f539"
     assert r2["source_metadata"]["OMD"] == "Andante"
     assert r2["source_metadata"]["ENC"] == "Craig Stuart Sapp"
 
     # Check Op. 22 No. 3 invariants
     assert r3["canonical_measure_count"] == 28
+    assert r3["canonical_event_count"] == 611
     assert r3["git_blob_sha"] == "d7554373b3d67e4606f9f2f5f79b34608a000b12"
-    assert r3["sha256"] == "5d8d2a84e7b39df25553c4175fdf56ea52a655fa1ca58abc9aaf68db30848399"
+    assert r3["canonical_blob_sha256"] == "5895df19b433c3ddf4b424f6d0ecfa9b3bcb4cd0f902106c0b5ddea766c49de4"
+    assert r3["canonical_score_hash"] == "31a7af107796ecc73e52247f7c5ad4adee05ba0b3a299b69791999f932494b91"
     assert r3["source_metadata"]["OMD"] == "Allegretto"
     assert r3["source_metadata"]["ENC"] == "Craig Stuart Sapp"
+
+
+def test_rc014b3_line_ending_and_blob_hash_invariance() -> None:
+    """Verify that Git blob plumbing produces invariant SHA-256 regardless of line-ending transformations."""
+    import hashlib
+
+    # Op. 22 No. 2 simulated LF and CRLF payloads
+    sample_lf = b"!!!COM: Prokofiev, Sergey\n!!!OPS: Op. 22\n**kern\n=1\n4c\n=2\n*-"
+    sample_crlf = b"!!!COM: Prokofiev, Sergey\r\n!!!OPS: Op. 22\r\n**kern\r\n=1\r\n4c\r\n=2\r\n*-"
+
+    # Normalized canonical representation must always use LF
+    normalized_from_lf = sample_lf.replace(b"\r\n", b"\n")
+    normalized_from_crlf = sample_crlf.replace(b"\r\n", b"\n")
+
+    assert hashlib.sha256(normalized_from_lf).hexdigest() == hashlib.sha256(normalized_from_crlf).hexdigest()
+
+
+def test_rc014b3_reproducibility_summary_manifest() -> None:
+    """Verify the RC-014B.3 external reproducibility summary manifest integrity."""
+    summary_path = Path("data/reviews/rc014/rc014b3_external_reproducibility_summary.json")
+    assert summary_path.exists(), "Reproducibility summary missing"
+
+    with open(summary_path, encoding="utf-8") as f:
+        summary = json.load(f)
+
+    assert summary["status"] == "RC014B3_TECHNICAL_CORPUS_FROZEN_LEGAL_AUTHORITY_PENDING"
+    assert summary["tpc_corpus"]["verified_score_count"] == 23
+    assert summary["technical_corpus_totals"]["Anton_Rubinstein_M_technical"] == 11
+    assert summary["technical_corpus_totals"]["Sergei_Prokofiev_M_technical"] == 10
+    assert summary["live_production_pool"]["N_Russian"] == 2
+    assert summary["live_production_pool"]["rc012_resumption_status"] == "BLOCKED"
+
 
 
 

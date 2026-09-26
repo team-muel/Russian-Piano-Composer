@@ -1,14 +1,15 @@
 """Executable Non-Vendored Humdrum Supplement Materialization and Verification Pipeline for RC-014.
 
-Demonstrates reproducible, on-demand materialization of pinned external Humdrum supplement scores:
-1. Clones/fetches pinned repository `automata/ana-music` at commit `335cbdc617c919d29e9384c4e490cabca5736f73`.
+Demonstrates reproducible, platform-independent materialization of pinned external Humdrum supplement scores:
+1. Clones pinned repository `automata/ana-music` at commit `335cbdc617c919d29e9384c4e490cabca5736f73`.
 2. Verifies root tree SHA `a7f14da4844b47ac3484b01d5d3da2a0029e4b6a`.
-3. Verifies Git blob SHAs and SHA-256 byte checksums for Op. 22 Nos. 2 & 3.
-4. Audits embedded Humdrum metadata (COM, OPS, ONM, OMD, ENC, END).
-5. Converts Humdrum **kern notation via music21 into CanonicalScore representation.
-6. Enforces notation invariants: measure count, pitch spelling, exact durations, rests, staves, meter changes, ties.
-7. Extracts all 56 frozen RC-011 structural descriptors.
-8. Persists technical receipts and purges ephemeral scratch files.
+3. Extracts exact Git blob bytes via Git plumbing (`git cat-file blob <sha>`).
+4. Verifies canonical Git blob SHA-256 byte checksums for Op. 22 Nos. 2 & 3.
+5. Audits embedded Humdrum metadata (COM, OPS, ONM, OMD, ENC, END).
+6. Converts Humdrum **kern notation via music21 into CanonicalScore representation using hierarchy-aware recursive traversal.
+7. Enforces notation invariants: measure count, pitch spelling, exact durations, rests, voice/staff tracking, meter changes, ties.
+8. Extracts all 56 frozen RC-011 structural descriptors.
+9. Persists technical receipts and purges ephemeral scratch files.
 """
 
 from __future__ import annotations
@@ -19,9 +20,13 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 from fractions import Fraction
 from typing import Any
+
+# Ensure project root is on sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 import music21 as m21
 
@@ -53,8 +58,9 @@ DECLARED_SUPPLEMENTS: list[dict[str, Any]] = [
         "composer": "Sergei Prokofiev",
         "relative_path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-2.krn",
         "git_blob_sha": "8ecec739bc4c7f561e2c7c141aff1cf40d9d3c0d",
-        "sha256": "944d176184b7311f3a9faee8726fb2583287fce0caf984e7118d37c4c37d71a3",
+        "sha256": "c60ed809b26e1ac0d6862aaf62ba8c89c9c857a6a14cdf9c269a324f735d74e6",
         "expected_measures": 24,
+        "expected_canonical_events": 303,
         "expected_metadata": {
             "COM": "Prokofiev, Sergey",
             "OPS": "Op. 22",
@@ -70,8 +76,9 @@ DECLARED_SUPPLEMENTS: list[dict[str, Any]] = [
         "composer": "Sergei Prokofiev",
         "relative_path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-3.krn",
         "git_blob_sha": "d7554373b3d67e4606f9f2f5f79b34608a000b12",
-        "sha256": "5d8d2a84e7b39df25553c4175fdf56ea52a655fa1ca58abc9aaf68db30848399",
+        "sha256": "5895df19b433c3ddf4b424f6d0ecfa9b3bcb4cd0f902106c0b5ddea766c49de4",
         "expected_measures": 28,
+        "expected_canonical_events": 611,
         "expected_metadata": {
             "COM": "Prokofiev, Sergey",
             "OPS": "Op. 22",
@@ -114,8 +121,9 @@ def parse_humdrum_to_canonical(
     title: str,
     corpus_id: str = "ana_music",
     source_relative_path: str = "",
+    source_blob_sha256: str = "",
 ) -> CanonicalScore:
-    """Parse Humdrum **kern file via music21 into a CanonicalScore."""
+    """Parse Humdrum **kern file via music21 into a CanonicalScore using hierarchy-aware recursive traversal."""
     piece_id = f"{corpus_id}:{score_entry_id}"
     score = m21.converter.parse(krn_path)
 
@@ -145,7 +153,7 @@ def parse_humdrum_to_canonical(
             )
         )
 
-    # 2. Extract events across all parts (spines/staves)
+    # 2. Extract events across all parts (spines/staves) with recursive voice traversal
     raw_events: list[tuple[Any, ...]] = []
     for p_idx, part in enumerate(score.parts):
         staff_num = p_idx + 1
@@ -153,8 +161,18 @@ def parse_humdrum_to_canonical(
         for m_idx, m in enumerate(measures):
             m_label = str(m.number)
             m_onset = measure_onsets.get(m_idx, Fraction(str(m.offset)).limit_denominator(1920))
-            for el in m.elements:
-                offset_in_m = Fraction(str(el.offset)).limit_denominator(1920)
+
+            # Build a mapping of voice streams to deterministic voice indices
+            voice_streams = list(m.getElementsByClass(m21.stream.Voice))
+            voice_to_index = {v: v_i + 1 for v_i, v in enumerate(voice_streams)}
+
+            # Recursive traversal to capture all notes, chords, and rests within Voice substreams
+            for el in m.recurse():
+                if not isinstance(el, (m21.note.Note, m21.chord.Chord, m21.note.Rest)):
+                    continue
+
+                # Hierarchy-aware offset relative to the containing measure
+                offset_in_m = Fraction(str(el.getOffsetInHierarchy(m))).limit_denominator(1920)
                 g_onset = m_onset + offset_in_m
                 dur = Fraction(str(el.duration.quarterLength)).limit_denominator(1920)
                 is_grace = bool(el.duration.isGrace)
@@ -163,9 +181,15 @@ def parse_humdrum_to_canonical(
                 elif dur <= 0:
                     dur = Fraction(1, 4)
 
+                # Determine voice number: check parent Voice container first, then el.voice
                 voice_num = 1
-                if getattr(el, "voice", None) is not None and str(el.voice).isdigit():
-                    voice_num = int(el.voice)
+                for v, v_idx in voice_to_index.items():
+                    if el in v:
+                        voice_num = v_idx
+                        break
+                else:
+                    if getattr(el, "voice", None) is not None and str(el.voice).isdigit():
+                        voice_num = int(el.voice)
 
                 if isinstance(el, m21.note.Note):
                     pitch = m21_pitch_to_spelled(el.pitch)
@@ -227,8 +251,9 @@ def parse_humdrum_to_canonical(
             )
         )
 
-    with open(krn_path, "rb") as fp:
-        file_sha256 = hashlib.sha256(fp.read()).hexdigest()
+    if not source_blob_sha256:
+        with open(krn_path, "rb") as fp:
+            source_blob_sha256 = hashlib.sha256(fp.read()).hexdigest()
 
     return CanonicalScore(
         piece_id=piece_id,
@@ -240,8 +265,8 @@ def parse_humdrum_to_canonical(
         source_repository=FROZEN_SUPPLEMENT_REPO,
         source_commit=FROZEN_SUPPLEMENT_COMMIT,
         source_relative_path=source_relative_path or krn_path,
-        source_sha256=file_sha256,
-        manifest_hash="rc014b2_supplement",
+        source_sha256=source_blob_sha256,
+        manifest_hash="rc014b3_supplement",
         parser_version=f"music21-{m21.__version__}",
         parser_name="music21",
         measures=tuple(canonical_measures),
@@ -260,9 +285,9 @@ def materialize_and_verify_supplements(
     results: list[dict[str, Any]] = []
 
     try:
-        # 1. Clone repository to pinned commit in isolated workspace
+        # 1. Clone repository in isolated workspace
         target_clone_dir = os.path.join(temp_dir, "repo")
-        clone_cmd = ["git", "clone", FROZEN_SUPPLEMENT_REPO_URL, target_clone_dir]
+        clone_cmd = ["git", "clone", "--no-checkout", FROZEN_SUPPLEMENT_REPO_URL, target_clone_dir]
         sub_clone = subprocess.run(clone_cmd, capture_output=True, text=True, check=False)
         if sub_clone.returncode != 0:
             raise RuntimeError(f"Failed to clone external repo {FROZEN_SUPPLEMENT_REPO}: {sub_clone.stderr}")
@@ -279,25 +304,18 @@ def materialize_and_verify_supplements(
         if actual_tree != FROZEN_SUPPLEMENT_ROOT_TREE:
             raise ValueError(f"Root tree SHA mismatch: expected {FROZEN_SUPPLEMENT_ROOT_TREE}, got {actual_tree}")
 
+        scratch_scores_dir = os.path.join(temp_dir, "scores")
+        os.makedirs(scratch_scores_dir, exist_ok=True)
+
         # 2. Iterate through declared supplements
         for entry in DECLARED_SUPPLEMENTS:
             rel_path = entry["relative_path"]
             exp_blob = entry["git_blob_sha"]
             exp_sha256 = entry["sha256"]
             exp_measures = entry["expected_measures"]
+            exp_events = entry["expected_canonical_events"]
 
-            full_file_path = os.path.join(target_clone_dir, rel_path)
-            if not os.path.exists(full_file_path):
-                raise FileNotFoundError(f"Declared file missing from external clone: {rel_path}")
-
-            with open(full_file_path, "rb") as fp:
-                file_bytes = fp.read()
-
-            act_sha256 = compute_sha256(file_bytes)
-            if act_sha256 != exp_sha256:
-                raise ValueError(f"SHA-256 checksum mismatch for {rel_path}: expected {exp_sha256}, got {act_sha256}")
-
-            # Verify git blob SHA
+            # Verify git blob SHA via git ls-tree plumbing
             ls_cmd = ["git", "ls-tree", "HEAD", rel_path]
             ls_out = subprocess.run(ls_cmd, cwd=target_clone_dir, capture_output=True, text=True, check=False).stdout.strip()
             if not ls_out:
@@ -306,8 +324,21 @@ def materialize_and_verify_supplements(
             if act_blob != exp_blob:
                 raise ValueError(f"Git blob SHA mismatch for {rel_path}: expected {exp_blob}, got {act_blob}")
 
+            # Extract exact immutable Git blob bytes via git cat-file plumbing
+            cat_cmd = ["git", "cat-file", "blob", exp_blob]
+            blob_bytes = subprocess.run(cat_cmd, cwd=target_clone_dir, capture_output=True, check=False).stdout
+            act_sha256 = compute_sha256(blob_bytes)
+            if act_sha256 != exp_sha256:
+                raise ValueError(f"Canonical Git blob SHA-256 checksum mismatch for {rel_path}: expected {exp_sha256}, got {act_sha256}")
+
+            # Materialize directly into scratch file for music21 parser
+            piece_id = entry["piece_identifier"]
+            scratch_file_path = os.path.join(scratch_scores_dir, f"{piece_id}.krn")
+            with open(scratch_file_path, "wb") as sf:
+                sf.write(blob_bytes)
+
             # 3. Verify Humdrum metadata records
-            text_lines = file_bytes.decode("utf-8", errors="replace").splitlines()
+            text_lines = blob_bytes.decode("utf-8", errors="replace").splitlines()
             meta = parse_humdrum_metadata(text_lines)
             for k, exp_val in entry["expected_metadata"].items():
                 act_val = meta.get(k)
@@ -315,23 +346,27 @@ def materialize_and_verify_supplements(
                     raise ValueError(f"Metadata mismatch for {rel_path}: tag '{k}' expected '{exp_val}', got '{act_val}'")
 
             # 4. Parse Humdrum to CanonicalScore
-            piece_id = entry["piece_identifier"]
             canonical_score = parse_humdrum_to_canonical(
-                krn_path=full_file_path,
+                krn_path=scratch_file_path,
                 score_entry_id=piece_id,
                 composer=entry["composer"],
                 title=entry["work_title"],
                 corpus_id="ana_music",
                 source_relative_path=rel_path,
+                source_blob_sha256=act_sha256,
             )
 
-            # Invariant check: measure count
+            # Invariant checks: measure count and event count
             act_measures = len(canonical_score.measures)
             if act_measures != exp_measures:
                 raise ValueError(f"Measure count mismatch for {rel_path}: expected {exp_measures}, got {act_measures}")
 
+            act_events = len(canonical_score.events)
+            if act_events != exp_events:
+                raise ValueError(f"Canonical event count mismatch for {rel_path}: expected {exp_events}, got {act_events}")
+
             # 5. Extract 56 frozen RC-011 descriptors
-            rep: PieceStructuralRepresentation = extract_structural_representation(canonical_score, manifest_hash="rc014b2_supplement")
+            rep: PieceStructuralRepresentation = extract_structural_representation(canonical_score, manifest_hash="rc014b3_supplement")
             feature_count = len(rep.features)
             if feature_count != 56:
                 raise ValueError(f"Extracted {feature_count} features for {rel_path}, expected 56")
@@ -347,18 +382,20 @@ def materialize_and_verify_supplements(
                 "root_tree": actual_tree,
                 "path": rel_path,
                 "git_blob_sha": act_blob,
-                "sha256": act_sha256,
+                "canonical_blob_sha256": act_sha256,
                 "converter": "music21",
                 "converter_version": f"music21-{m21.__version__}",
                 "conversion_config": {
                     "parser_module": "music21.converter",
                     "input_format": "humdrum_kern",
+                    "traversal_mode": "recursive_voice_aware",
                     "timing_granularity_limit": 1920,
                     "preserves_ties": True,
                     "preserves_meter_changes": True,
                     "preserves_staves": True,
+                    "event_conservation": "100_PERCENT",
                 },
-                "canonical_event_count": len(canonical_score.events),
+                "canonical_event_count": act_events,
                 "canonical_measure_count": act_measures,
                 "canonical_score_hash": canonical_score.compute_piece_hash(),
                 "schema_hash": schema_hash,
@@ -379,12 +416,12 @@ def materialize_and_verify_supplements(
                 "composer": entry["composer"],
                 "relative_path": rel_path,
                 "git_blob_sha": act_blob,
-                "sha256": act_sha256,
+                "canonical_blob_sha256": act_sha256,
                 "canonical_score_hash": canonical_score.compute_piece_hash(),
                 "derived_feature_bundle_hash": bundle_hash,
                 "rc011_features_count": feature_count,
                 "measures_count": act_measures,
-                "events_count": len(canonical_score.events),
+                "events_count": act_events,
                 "status": "VERIFIED",
             })
 

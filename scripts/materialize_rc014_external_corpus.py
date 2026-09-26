@@ -3,11 +3,12 @@
 Demonstrates reproducible, on-demand materialization of pinned external score files:
 1. Reads canonical external access policy manifest.
 2. Creates an isolated temporary scratch workspace.
-3. Retrieves declared external files directly from immutable Git repository commit/tree.
-4. Verifies Git blob SHAs and SHA-256 byte checksums.
-5. Fails closed on any hash mismatch, path alteration, or upstream drift.
-6. Evaluates RC-011 56-descriptor structural representation in-memory/in-scratch.
-7. Automatically purges raw external files upon completion.
+3. Retrieves declared external files directly from immutable Git repository commit/tree using Git plumbing (git cat-file blob).
+4. Verifies Git blob SHAs and canonical Git blob SHA-256 byte checksums.
+5. Materializes parser inputs directly from immutable blob bytes into scratch.
+6. Fails closed on any hash mismatch, path alteration, or upstream drift.
+7. Evaluates RC-011 56-descriptor structural representation in-memory/in-scratch.
+8. Automatically purges raw external files upon completion.
 """
 
 from __future__ import annotations
@@ -18,8 +19,12 @@ import json
 import os
 import shutil
 import subprocess
+import sys
 import tempfile
 from typing import Any
+
+# Ensure project root is on sys.path
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from scripts.audit_tonal_piano_corpus_rc014a import parse_xml_to_canonical
 
@@ -51,9 +56,9 @@ def materialize_and_verify_corpus(
     results: list[dict[str, Any]] = []
 
     try:
-        # 1. Clone repository to pinned commit in isolated workspace
+        # 1. Clone repository (bare or shallow) in isolated workspace
         target_clone_dir = os.path.join(temp_dir, "repo")
-        clone_cmd = ["git", "clone", f"https://github.com/{repo_url}.git", target_clone_dir]
+        clone_cmd = ["git", "clone", "--no-checkout", f"https://github.com/{repo_url}.git", target_clone_dir]
         sub_clone = subprocess.run(clone_cmd, capture_output=True, text=True, check=False)
         if sub_clone.returncode != 0:
             raise RuntimeError(f"Failed to clone external repo {repo_url}: {sub_clone.stderr}")
@@ -70,24 +75,16 @@ def materialize_and_verify_corpus(
         if actual_tree != expected_tree:
             raise ValueError(f"Root tree SHA mismatch: expected {expected_tree}, got {actual_tree}")
 
-        # 2. Iterate through declared files, verify exact blob SHAs and SHA-256
+        scratch_scores_dir = os.path.join(temp_dir, "scores")
+        os.makedirs(scratch_scores_dir, exist_ok=True)
+
+        # 2. Iterate through declared files, extract via git cat-file blob plumbing
         for entry in declared_entries:
             rel_path = entry["relative_path"]
             exp_blob = entry["git_blob_sha"]
             exp_sha256 = entry["sha256"]
 
-            full_file_path = os.path.join(target_clone_dir, rel_path)
-            if not os.path.exists(full_file_path):
-                raise FileNotFoundError(f"Declared file missing from external clone: {rel_path}")
-
-            with open(full_file_path, "rb") as fp:
-                file_bytes = fp.read()
-
-            act_sha256 = compute_sha256(file_bytes)
-            if act_sha256 != exp_sha256:
-                raise ValueError(f"SHA-256 checksum mismatch for {rel_path}: expected {exp_sha256}, got {act_sha256}")
-
-            # Verify git blob SHA
+            # Verify git blob SHA in tree
             ls_cmd = ["git", "ls-tree", "HEAD", rel_path]
             ls_out = subprocess.run(ls_cmd, cwd=target_clone_dir, capture_output=True, text=True, check=False).stdout.strip()
             if not ls_out:
@@ -96,11 +93,24 @@ def materialize_and_verify_corpus(
             if act_blob != exp_blob:
                 raise ValueError(f"Git blob SHA mismatch for {rel_path}: expected {exp_blob}, got {act_blob}")
 
+            # Extract exact immutable Git blob bytes
+            cat_cmd = ["git", "cat-file", "blob", exp_blob]
+            blob_bytes = subprocess.run(cat_cmd, cwd=target_clone_dir, capture_output=True, check=False).stdout
+            act_sha256 = compute_sha256(blob_bytes)
+            if act_sha256 != exp_sha256:
+                raise ValueError(f"Canonical blob SHA-256 checksum mismatch for {rel_path}: expected {exp_sha256}, got {act_sha256}")
+
+            # Materialize directly into scratch file for parser
+            score_filename = os.path.basename(rel_path)
+            scratch_file_path = os.path.join(scratch_scores_dir, score_filename)
+            with open(scratch_file_path, "wb") as sf:
+                sf.write(blob_bytes)
+
             # 3. Test in-memory / in-scratch RC-011 56-descriptor feature extraction
-            score_id = os.path.splitext(os.path.basename(rel_path))[0].replace(" ", "_").lower()
+            score_id = os.path.splitext(score_filename)[0].replace(" ", "_").lower()
             piece_id = f"tonal_piano_corpus:{score_id}"
             canonical_score = parse_xml_to_canonical(
-                xml_path=full_file_path,
+                xml_path=scratch_file_path,
                 piece_id=piece_id,
                 composer=entry["composer"],
                 title=entry["work_title"],

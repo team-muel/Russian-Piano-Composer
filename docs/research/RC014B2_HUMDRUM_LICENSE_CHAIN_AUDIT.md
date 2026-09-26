@@ -27,11 +27,11 @@ This audit establishes the frozen repository identity, encoder lineage, canonica
 | **Piece Identifier** | `prokofiev_op22_no02` | `prokofiev_op22_no03` |
 | **Relative Path** | `corpus/classical/users/craig/classical/prokofiev/op22/visions22-2.krn` | `corpus/classical/users/craig/classical/prokofiev/op22/visions22-3.krn` |
 | **Git Blob SHA** | `8ecec739bc4c7f561e2c7c141aff1cf40d9d3c0d` | `d7554373b3d67e4606f9f2f5f79b34608a000b12` |
-| **File SHA-256** | `944d176184b7311f3a9faee8726fb2583287fce0caf984e7118d37c4c37d71a3` | `5d8d2a84e7b39df25553c4175fdf56ea52a655fa1ca58abc9aaf68db30848399` |
-| **Canonical Score Hash** | `d55701ebe75dbe6b44266a8642218e4709f00610d2e1cfbe644c3506d9980eb7` | `8f0e835d0c317be57839ef5bc536af52c379400bc25f007796a71d125dfa2f47` |
-| **Derived Feature Bundle Hash** | `caabe00c9a7e607e320b67c7b5e9a0721d517c3c8535f1aee39bd88af51e0f15` | `4dc22a99e8408e949ce144d05ae7482ab570f15dbc03daf59cfcd76329ce6051` |
+| **Canonical Blob SHA-256** | `c60ed809b26e1ac0d6862aaf62ba8c89c9c857a6a14cdf9c269a324f735d74e6` | `5895df19b433c3ddf4b424f6d0ecfa9b3bcb4cd0f902106c0b5ddea766c49de4` |
+| **Canonical Score Hash** | `695cfa6a8fb89f852f0e34d38a8a5147fdd46aed6674bea89b008e2ab888f539` | `31a7af107796ecc73e52247f7c5ad4adee05ba0b3a299b69791999f932494b91` |
+| **Derived Feature Bundle Hash** | `4f74c3da584d9c5d256943084072cc9b74d44fa31ad306700485acc9d949b3d2` | `575882c6e1fd251fe61bd4fb50ea148c6a50344b0014da227a4120c6d60ce56f` |
 | **Measures Count** | 24 | 28 |
-| **Canonical Events Count** | 281 | 310 |
+| **Canonical Events Count** | 303 (269 notes + 34 rests) | 611 (588 notes + 23 rests) |
 
 ---
 
