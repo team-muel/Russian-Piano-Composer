@@ -1,0 +1,19 @@
+{
+  "milestone": "RC-014C",
+  "status": "RC014C_CORPUS_FROZEN_AWAITING_HUMAN_ACCESS_APPROVAL",
+  "rc014c_confirmatory_corpus_freeze_hash": "782f0cbd26e252985ba28d7cdd8bc69486ed2c3f933c2333711c435d4c40d9a8",
+  "feature_cache_matrix_sha256": "f970fdb656700c842a3ac4fd361b3766d056bae663d62b1170242041cc1f2876",
+  "schema_hash": "924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282",
+  "deduplication_audit_verdict": "PASS",
+  "source_to_music21_structural_sanity": "PASS",
+  "music21_parsed_event_conservation": "PASS",
+  "rubinstein_m_technical": 11,
+  "prokofiev_m_technical": 10,
+  "proposed_n_russian": 4,
+  "live_n_russian": 2,
+  "rc012_resumption_gate": "BLOCKED",
+  "invalidation_policy": {
+    "trigger": "ANY_CHANGE_TO_EXTERNAL_BYTES_OR_PARSERS_OR_FEATURES",
+    "effect": "INVALIDATES_CONFIRMATORY_CORPUS_FREEZE_AND_DOWNSTREAM_STATISTICS"
+  }
+}

@@ -437,7 +437,8 @@ class GenuineDifferentialVerifierV6:
             for c in candidates:
                 if os.path.exists(c):
                     img = cv2.imread(c, cv2.IMREAD_GRAYSCALE)
-                    return img
+                    if img is not None:
+                        return np.asarray(img, dtype=np.uint8)
         return None
 
     def evaluate_mutation_specimen(

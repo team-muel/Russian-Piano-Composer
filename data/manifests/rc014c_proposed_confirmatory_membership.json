@@ -1,0 +1,49 @@
+{
+  "milestone": "RC-014C",
+  "status": "PROPOSED_CONFIRMATORY_CORPUS_FROZEN_AWAITING_HUMAN_APPROVAL",
+  "live_production_pool": {
+    "N_Russian": 2,
+    "qualified_composers": [
+      "Alexander Scriabin",
+      "Modest Mussorgsky"
+    ],
+    "rc012_resumption_status": "BLOCKED"
+  },
+  "proposed_confirmatory_pool": {
+    "N_Russian_proposed": 4,
+    "composers": [
+      {
+        "composer": "Alexander Scriabin",
+        "status": "LIVE_QUALIFIED",
+        "target_pieces_count": 10,
+        "available_pieces_count": 207,
+        "source_authority": "Stanford CCARH Humdrum (craigsapp/scriabin)",
+        "license_authority": "ACCEPTED_BASELINE"
+      },
+      {
+        "composer": "Modest Mussorgsky",
+        "status": "LIVE_QUALIFIED",
+        "target_pieces_count": 10,
+        "available_pieces_count": 10,
+        "source_authority": "DCML Pictures at an Exhibition",
+        "license_authority": "ACCEPTED_BASELINE"
+      },
+      {
+        "composer": "Anton Rubinstein",
+        "status": "TECHNICALLY_READY_GOVERNANCE_PENDING",
+        "target_pieces_count": 11,
+        "available_pieces_count": 11,
+        "source_authority": "Tonal-Piano-Corpus (hectorbellmann-art/Tonal-Piano-Corpus commit 3f5a08e9)",
+        "license_authority": "GOVERNANCE_DECISION_PENDING"
+      },
+      {
+        "composer": "Sergei Prokofiev",
+        "status": "TECHNICALLY_READY_GOVERNANCE_PENDING",
+        "target_pieces_count": 10,
+        "available_pieces_count": 10,
+        "source_authority": "8 pre-1931 pieces from Tonal-Piano-Corpus + 2 Craig/Humdrum supplements (Op. 22 Nos. 2 & 3)",
+        "license_authority": "GOVERNANCE_DECISION_PENDING"
+      }
+    ]
+  }
+}
