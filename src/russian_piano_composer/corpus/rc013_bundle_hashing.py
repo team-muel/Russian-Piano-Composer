@@ -107,8 +107,22 @@ def compute_real_scan_benchmark_v4_hash(
         gt_sha = e.get("ground_truth_sha256", "")
         page_indices = str(e.get("historical_pdf_page_indices", []))
         img_shas = ",".join(e.get("historical_page_image_sha256s", []))
-
         payload = f"{s_id}|PDF:{pdf_sha}|PAGES:{page_indices}|IMGS:{img_shas}|GT:{gt_sha}\n"
         bundle_hasher.update(payload.encode())
 
     return bundle_hasher.hexdigest()
+
+
+def compute_calibration_v5_corpus_bundle_hash(
+    registry_path: str = "data/calibration/rc013_machine_validation/rc013_calibration_v5_registry.json",
+) -> str:
+    """Computes a deterministic byte bundle over Protocol V5 registry, PDFs, scans, and scores."""
+    return compute_calibration_v4_corpus_bundle_hash(registry_path=registry_path)
+
+
+def compute_real_scan_counterfactual_benchmark_hash(
+    registry_path: str = "data/calibration/rc013_machine_validation/rc013_calibration_v5_registry.json",
+) -> str:
+    """Computes deterministic hash over real-scan counterfactual benchmark suite."""
+    return compute_real_scan_benchmark_v4_hash(registry_path=registry_path)
+

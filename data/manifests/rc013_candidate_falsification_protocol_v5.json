@@ -1,0 +1,18 @@
+{
+  "protocol_version": "rc013_candidate_falsification_protocol_v5",
+  "verification_paradigm": "CANDIDATE_CONDITIONED_SOURCE_FIDELITY_FALSIFICATION",
+  "margin_threshold": 0.05,
+  "corpus_bundle_hash": "5f0866c09f3526e58866b63f3d9a86bf3276bcfac25acd84ebd121a75a421aff",
+  "engine_bundle_hash": "e696e41ea25329bd2f5c8642421c085a2c8d71fbfa0aa40ddb8956f7e196b51f",
+  "real_scan_counterfactual_benchmark_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "alignment_engine_hash": "e7de857e492e9baf75fcaf644771e0fdc0bc0d573a2589b06921784cda4c2d72",
+  "counterfactual_suite_hash": "60b84bddd1ae66840ab9eef27b1b7ac9ddf913aab580061b86a41da870aaceb6",
+  "calibration_result_hash": "01c1488dbfb818aea95a02f788af6f4410079b421f83ef15113eae30f258c461",
+  "derived_verdict": "PROTOCOL_V5_CALIBRATION_FAIL",
+  "qualification_policy": {
+    "candidate_falsification_receipts_can_qualify_composer": false,
+    "current_n_russian": 2,
+    "rc012_resumption_status": "BLOCKED"
+  },
+  "protocol_hash": "3f362056f29575161631176a982937f9b45bc4d04c5c5ee0574afde30ecb2df1"
+}

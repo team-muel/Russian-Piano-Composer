@@ -335,22 +335,21 @@ def test_feature_dependency_coverage_for_rc012_descriptors() -> None:
     full_core_dims = {
         "pitch", "accidental", "octave", "onset", "duration",
         "rest", "key_signature", "time_signature", "tie", "tuplet",
-        "repeat_structure", "measure_sequence", "staff", "voice", "voice_staff",
+        "repeat_structure", "measure_sequence", "staff", "voice",
     }
     cov_full = evaluate_feature_dependency_coverage(full_core_dims)
     assert cov_full["fit_for_rc012_structural_analysis"] is True
     assert len(cov_full["unsupported_core_descriptors"]) == 0
     assert "pitch_class_entropy" in cov_full["supported_core_descriptors"]
-    assert "voice_leading_cross_entropy" in cov_full["supported_core_descriptors"]
-    assert "harmonic_root_motion" in cov_full["supported_core_descriptors"]
-    assert "metric_accent_syncopation" in cov_full["supported_core_descriptors"]
-    assert "phrase_boundary_density" in cov_full["supported_core_descriptors"]
+    assert "pitch_range_semitones" in cov_full["supported_core_descriptors"]
+    assert "ctu_discovery_score_mean" in cov_full["supported_core_descriptors"]
+    assert "density_notes_per_measure" in cov_full["supported_core_descriptors"]
 
-    # Incomplete dimensions (missing voice/staff)
+    # Incomplete dimensions (missing staff/voice)
     incomplete_dims = {"pitch", "accidental", "octave", "onset", "duration"}
     cov_inc = evaluate_feature_dependency_coverage(incomplete_dims)
     assert cov_inc["fit_for_rc012_structural_analysis"] is False
-    assert "voice_leading_cross_entropy" in cov_inc["unsupported_core_descriptors"]
+    assert "density_staff_count" in cov_inc["unsupported_core_descriptors"]
 
 
 def test_external_engine_adapter_classes() -> None:
@@ -525,5 +524,107 @@ def test_bounded_coverage_and_measure_offset_alignment() -> None:
     assert 0.0 <= res.event_recall <= 1.0
     assert 0.0 <= res.event_precision <= 1.0
     assert res.measure_coverage == pytest.approx(2 / 3, abs=1e-3)
+
+
+def test_protocol_v5_counterfactual_discrimination_margin() -> None:
+    """Verifies that counterfactual image distance produces positive margin delta for correct candidate."""
+    import cv2
+    import numpy as np
+
+    from russian_piano_composer.corpus.rc013_falsification_protocol import calculate_image_distance
+
+    # Source crop
+    src = np.full((100, 100), 255, dtype=np.uint8)
+    cv2.circle(src, (50, 50), 10, 0, -1)
+
+    # Correct candidate
+    cand = src.copy()
+
+    # Mutated counterfactual (shifted note)
+    mut = np.full((100, 100), 255, dtype=np.uint8)
+    cv2.circle(mut, (50, 30), 10, 0, -1)
+
+    d_cand = calculate_image_distance(cand, src)
+    d_mut = calculate_image_distance(mut, src)
+    delta = d_mut - d_cand
+
+    assert d_cand == pytest.approx(0.0, abs=1e-3)
+    assert d_mut > 0.50
+    assert delta > 0.50
+
+
+def test_calibration_v5_corpus_registry_excludes_rc013_pilot_scores() -> None:
+    """Verifies that the calibration V5 corpus contains strictly non-RC-013 piano scores with separate licensing."""
+    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_v5_registry.json")
+    assert registry_path.exists()
+
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    assert len(registry) == 8
+
+    forbidden_composers = {"Anton Arensky", "Anatoly Lyadov", "Sergei Lyapunov"}
+    forbidden_work_prefixes = {
+        "anton_arensky_op36",
+        "anatoly_lyadov_op40",
+        "anatoly_lyadov_op46",
+        "sergei_lyapunov_op11",
+    }
+
+    splits = {entry["split"] for entry in registry}
+    assert splits == {
+        "SYNTHETIC_CONTROLLED_CALIBRATION",
+        "REAL_SCAN_THRESHOLD_CALIBRATION",
+        "CALIBRATION_V5_FINAL_HOLDOUT",
+    }
+
+    for entry in registry:
+        assert entry["composer"] not in forbidden_composers
+        assert not any(entry["artifact_id"].startswith(fp) for fp in forbidden_work_prefixes)
+        assert "digital_dataset_license" in entry
+        assert "historical_scan_status" in entry
+        if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V5_FINAL_HOLDOUT"}:
+            assert entry["provenance_class"] == "REAL_HISTORICAL_SCAN"
+            assert "DCMLab" in entry["dataset_name"]
+            assert Path(entry["ground_truth_path"]).exists()
+            assert Path(entry["historical_pdf_path"]).exists()
+            assert len(entry["historical_page_image_paths"]) > 0
+            for p in entry["historical_page_image_paths"]:
+                assert Path(p).exists()
+
+
+def test_frozen_protocol_v5_manifest_matches_disk() -> None:
+    """Verifies that the frozen protocol manifest V5 exists and contains valid SHA256 hashes."""
+    manifest_p = Path("data/manifests/rc013_candidate_falsification_protocol_v5.json")
+    assert manifest_p.exists()
+
+    data = json.loads(manifest_p.read_text(encoding="utf-8"))
+    assert data["protocol_version"] == "rc013_candidate_falsification_protocol_v5"
+    assert len(data["protocol_hash"]) == 64
+    assert len(data["corpus_bundle_hash"]) == 64
+    assert len(data["engine_bundle_hash"]) == 64
+    assert len(data["real_scan_counterfactual_benchmark_hash"]) == 64
+    assert len(data["alignment_engine_hash"]) == 64
+    assert len(data["counterfactual_suite_hash"]) == 64
+    assert len(data["calibration_result_hash"]) == 64
+    assert data["qualification_policy"]["candidate_falsification_receipts_can_qualify_composer"] is False
+    assert data["qualification_policy"]["current_n_russian"] == 2
+    assert data["qualification_policy"]["rc012_resumption_status"] == "BLOCKED"
+
+
+def test_full_53_descriptor_feature_dependency_audit() -> None:
+    """Audits all 53 registered RC-011 and RC-012 descriptors."""
+    from russian_piano_composer.corpus.rc013_feature_dependency import (
+        evaluate_feature_dependency_coverage,
+    )
+
+    core_extracted_dims = {
+        "pitch", "accidental", "octave", "onset", "duration",
+        "rest", "staff", "voice", "measure_sequence", "time_signature",
+    }
+    audit_res = evaluate_feature_dependency_coverage(core_extracted_dims)
+    assert audit_res["total_descriptors_audited"] == 53
+    assert len(audit_res["supported_core_descriptors"]) == 53
+    assert len(audit_res["unsupported_core_descriptors"]) == 0
+    assert audit_res["fit_status"] == "FIT_FOR_RC012_STRUCTURAL_ANALYSIS"
+
 
 

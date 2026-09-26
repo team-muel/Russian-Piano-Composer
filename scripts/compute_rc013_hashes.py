@@ -375,6 +375,31 @@ def get_machine_triangulation_hashes() -> dict[str, str]:
         res["RC013_MUTATION_V4_HASH"] = v4_data.get("end_to_end_mutation_suite_hash", "")
         res["RC013_CALIBRATION_V4_RESULT_HASH"] = calib_v4_res_hash
 
+    manifest_v5_p = "data/manifests/rc013_candidate_falsification_protocol_v5.json"
+    calib_v5_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_v5_registry.json"
+    calib_v5_res_p = "data/reviews/rc013/candidate_falsification_calibration_v5_result.json"
+
+    if os.path.exists(manifest_v5_p):
+        from russian_piano_composer.corpus.rc013_bundle_hashing import (
+            compute_calibration_v5_corpus_bundle_hash,
+            compute_real_scan_counterfactual_benchmark_hash,
+        )
+
+        with open(manifest_v5_p, encoding="utf-8") as f:
+            v5_data = json.load(f)
+        calib_v5_bundle_hash = compute_calibration_v5_corpus_bundle_hash(calib_v5_reg_p)
+        real_scan_v5_hash = compute_real_scan_counterfactual_benchmark_hash(calib_v5_reg_p)
+        align_v5_hash = compute_sha256_file("src/russian_piano_composer/corpus/rc013_alignment.py")
+        mut_v5_hash = compute_sha256_file("src/russian_piano_composer/corpus/rc013_mutations.py")
+        calib_v5_res_hash = compute_sha256_file(calib_v5_res_p) if os.path.exists(calib_v5_res_p) else "0" * 64
+
+        res["RC013_CANDIDATE_FALSIFICATION_PROTOCOL_V5_HASH"] = v5_data.get("protocol_hash", "")
+        res["RC013_CANDIDATE_FALSIFICATION_CALIBRATION_CORPUS_HASH"] = calib_v5_bundle_hash
+        res["RC013_REAL_SCAN_COUNTERFACTUAL_BENCHMARK_HASH"] = real_scan_v5_hash
+        res["RC013_V5_ALIGNMENT_ENGINE_HASH"] = align_v5_hash
+        res["RC013_V5_COUNTERFACTUAL_SUITE_HASH"] = mut_v5_hash
+        res["RC013_V5_CALIBRATION_RESULT_HASH"] = calib_v5_res_hash
+
     return res
 
 
