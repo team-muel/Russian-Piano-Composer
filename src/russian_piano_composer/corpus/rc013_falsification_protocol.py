@@ -586,8 +586,12 @@ class GenuineDifferentialVerifierV6:
         tree = ET.parse(candidate_musicxml_path)
         root = tree.getroot()
 
-        measures = root.findall(".//measure")
-        measures_total = len(measures)
+        first_part = root.find("part")
+        if first_part is not None:
+            measures_total = len(first_part.findall("measure"))
+        else:
+            unique_nums = {m.get("number") for m in root.findall(".//measure") if m.get("number") is not None}
+            measures_total = len(unique_nums) if unique_nums else len(root.findall(".//measure"))
 
         # Load first source scan
         source_img = cv2.imread(source_image_paths[0], cv2.IMREAD_GRAYSCALE)
