@@ -1,0 +1,22 @@
+{
+  "specimen_id": "grieg_lyric_pieces_op12_no01_m2_octave_5_to_5",
+  "base_score_id": "grieg_lyric_pieces_op12_no01",
+  "base_score_sha256": "d266ead1007f33bcbddcdb9c27b9599d91e333c2f1584d323bc4993156ae87d2",
+  "mutation_dimension": "octave",
+  "target_measure": 2,
+  "original_value": "5",
+  "mutated_value": "5",
+  "mutated_xml_sha256": "7c6233e9ddbab0bdf5e49b818697de1285ca4f4e6d14c174dee91c0223e5ae8f",
+  "h0_render_sha256": "7c1ad5973e2f3e5f32bc0fbfe24c67282e5564f061d3376f5f06a23bc77efe9e",
+  "hi_render_sha256": "7c1ad5973e2f3e5f32bc0fbfe24c67282e5564f061d3376f5f06a23bc77efe9e",
+  "source_crop_sha256": "8effe79eb97e83c64cbcaa710cdfd286e5dea48b423014970055e816aeb3ddba",
+  "difference_mask_sha256": "17afaec7d4220baa7cd9e507940dbe75dbbb4f3072726028dbcc665b9661e2e1",
+  "d0": 0.5,
+  "di": 0.5,
+  "delta": 0.0,
+  "delta_norm": 0.0,
+  "predicted_status": "CANDIDATE_FALSIFICATION_INDETERMINATE",
+  "ground_truth_mutation_status": "CORRUPTED",
+  "localized_measure": 2,
+  "is_correctly_localized": true
+}

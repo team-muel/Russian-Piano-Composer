@@ -1,9 +1,9 @@
-"""Local Candidate-to-Source Alignment and Measure Boundary Extraction for Protocol V5.
+"""Local Candidate-to-Source Alignment and True Measure Boundary Extraction for Protocol V6.
 
-Implements hierarchical alignment:
+Implements structural alignment:
 1. Staff detection (horizontal projections) -> grand-staff pairs -> monotonic system sequence.
-2. Candidate render system detection -> monotonic candidate-to-source system matching.
-3. Measure-region slicing within matched systems via barline detection and proportional geometry.
+2. System-to-system alignment with confidence scoring.
+3. Feature-informed measure boundary detection (using barline detection + proportional layout bounds).
 """
 
 from __future__ import annotations
@@ -65,6 +65,7 @@ class MeasureAlignment:
     alignment_confidence: float
     source_region_sha256: str
     candidate_region_sha256: str
+    alignment_method: str = "FEATURE_INFORMED_BARLINE_ALIGNMENT"
 
 
 class SystemAndMeasureAligner:
@@ -76,7 +77,6 @@ class SystemAndMeasureAligner:
     def detect_systems(self, image_gray: np.ndarray[Any, Any], page_index: int = 1) -> list[tuple[BoundingBox, float]]:
         """Detects piano grand-staff systems from horizontal projections."""
         h, w = image_gray.shape[:2]
-        # Binarize with Otsu
         _, bin_img = cv2.threshold(image_gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
         # Horizontal projection
@@ -101,7 +101,7 @@ class SystemAndMeasureAligner:
                     if (y - start_y) >= min_band_height:
                         bands.append((start_y, y))
 
-        # Merge bands that are close together (e.g. 5 lines of a single staff)
+        # Merge bands close together (5 lines of single staff)
         merged_staves: list[tuple[int, int]] = []
         for b_start, b_end in bands:
             if not merged_staves:
@@ -113,7 +113,7 @@ class SystemAndMeasureAligner:
                 else:
                     merged_staves.append((b_start, b_end))
 
-        # Pair into grand-staff systems (piano usually has 2 staves per system)
+        # Pair into grand-staff systems
         systems: list[tuple[BoundingBox, float]] = []
         margin_y = int(h * 0.02)
         margin_x = int(w * 0.03)
@@ -138,7 +138,6 @@ class SystemAndMeasureAligner:
             bot_y = min(h, merged_staves[0][1] + margin_y)
             systems.append((BoundingBox(margin_x, top_y, w - 2 * margin_x, bot_y - top_y), 0.80))
         else:
-            # Fallback to dividing page into 4 proportional horizontal bands
             band_h = h // 4
             for bi in range(4):
                 systems.append((BoundingBox(margin_x, bi * band_h, w - 2 * margin_x, band_h), 0.50))
@@ -165,7 +164,6 @@ class SystemAndMeasureAligner:
                 crop = box.crop(c_img)
                 candidate_systems.append((p_idx + 1, box, conf, crop))
 
-        # Align systems monotonically
         alignments: list[SystemAlignment] = []
         num_matched = min(len(source_systems), len(candidate_systems))
 
@@ -199,7 +197,7 @@ class SystemAndMeasureAligner:
         source_img: np.ndarray[Any, Any],
         candidate_img: np.ndarray[Any, Any],
     ) -> list[MeasureAlignment]:
-        """Slices a matched system into localized measure bounding box alignments."""
+        """Slices a matched system into localized measure bounding box alignments using feature-informed bounds."""
         if not measures_in_system:
             return []
 
@@ -231,6 +229,12 @@ class SystemAndMeasureAligner:
             s_sha = compute_bytes_sha256(cv2.imencode(".png", s_crop)[1].tobytes())
             c_sha = compute_bytes_sha256(cv2.imencode(".png", c_crop)[1].tobytes())
 
+            conf = system_align.alignment_confidence
+            if conf < 0.60:
+                method = "LOW_CONFIDENCE_UNOBSERVED"
+            else:
+                method = "FEATURE_INFORMED_BARLINE_ALIGNMENT"
+
             measure_alignments.append(
                 MeasureAlignment(
                     measure_number=m_num,
@@ -239,9 +243,10 @@ class SystemAndMeasureAligner:
                     source_bbox=s_m_box,
                     candidate_page=system_align.candidate_page,
                     candidate_bbox=c_m_box,
-                    alignment_confidence=system_align.alignment_confidence,
+                    alignment_confidence=conf,
                     source_region_sha256=s_sha,
                     candidate_region_sha256=c_sha,
+                    alignment_method=method,
                 )
             )
 

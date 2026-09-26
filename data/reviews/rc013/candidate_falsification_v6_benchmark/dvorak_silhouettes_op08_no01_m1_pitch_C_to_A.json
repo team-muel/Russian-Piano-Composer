@@ -1,0 +1,22 @@
+{
+  "specimen_id": "dvorak_silhouettes_op08_no01_m1_pitch_C_to_A",
+  "base_score_id": "dvorak_silhouettes_op08_no01",
+  "base_score_sha256": "173ff13c5ce85d4bb3a55edce911a0d1f935cf0ab0837f2ffe69327aaa37cdd6",
+  "mutation_dimension": "pitch",
+  "target_measure": 1,
+  "original_value": "C",
+  "mutated_value": "A",
+  "mutated_xml_sha256": "3a163b09c149bfc2504e34e7fa809081fe1c55929cd144b2f9da3888b6cdacfd",
+  "h0_render_sha256": "a7f0c3310063b327d4685529832a69da9166f351aff9bb51ffa71456187b73e6",
+  "hi_render_sha256": "aaf3806a950024a6f620a4a778875ccb7a6fdf8203f8e26091f49ea3c43ddb2b",
+  "source_crop_sha256": "5381d716015a554b980dd260bb5c6a247793be10e281299169373ea8dbd7e283",
+  "difference_mask_sha256": "896376c383e123d83d8ea57f22085234d578be08cd2544e31970b2443da2aac3",
+  "d0": 0.1948,
+  "di": 0.1912,
+  "delta": -0.0036,
+  "delta_norm": -0.0094,
+  "predicted_status": "CANDIDATE_FALSIFICATION_DISPUTED",
+  "ground_truth_mutation_status": "CORRUPTED",
+  "localized_measure": 1,
+  "is_correctly_localized": true
+}

@@ -1,417 +1,716 @@
-"""Feature-Dependency and Downstream Structural Analysis Fidelity Contract for RC-013 (Protocol V5).
+"""Canonical 56-Descriptor Feature Dependency Audit for RC-011 and RC-013 (Protocol V6).
 
-Comprehensive audit of all 53 registered RC-011 and RC-012 structural descriptors (Category A piece
-features and Category B CTU style features) mapped to their exact symbolic notation requirements.
-Evaluates empirical dimension reliability, coverage, and derives fit status:
-FIT_FOR_RC012_STRUCTURAL_ANALYSIS, PARTIALLY_FIT_FOR_RC012_STRUCTURAL_ANALYSIS, or NOT_FIT_FOR_RC012_STRUCTURAL_ANALYSIS.
+Audits the exact frozen 56-descriptor specification defined in:
+docs/spec/STRUCTURAL_REPRESENTATION_SCHEMA_V1.md and
+src/russian_piano_composer/structure_analysis/schema.py
+
+Maps each descriptor to:
+- feature_family (TONAL, SONORITY, CADENCE, FORM, VOICE_LEADING, TEXTURE, TRAJECTORY)
+- implementation_module & function
+- required symbolic dimensions
+- machine identifiability classification:
+  - DIRECTLY_VISUALLY_IDENTIFIABLE (pitch, accidental, octave, onset, duration, rest, measure_sequence, time_signature)
+  - CONDITIONALLY_IDENTIFIABLE (staff - clean vs cross-staff; tie - clean slur/tie vs dense articulation)
+  - NOT_IDENTIFIABLE_FROM_PRINT (voice integer ID - pure MusicXML metadata without engraved representation)
 """
 
 from __future__ import annotations
 
 from typing import Any
 
-# Comprehensive Audit of all 53 RC-011 / RC-012 Descriptors and their notation dependencies
-FULL_DESCRIPTOR_FEATURE_DEPENDENCY_MAP: dict[str, dict[str, Any]] = {
-    # 1. Pitch Category A Features (8 descriptors)
-    "pitch_range_semitones": {
-        "required_dimensions": ["pitch", "accidental", "octave"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "max(midi) - min(midi) across note attacks.",
+# Identifiability classification of symbolic dimensions
+DIMENSION_IDENTIFIABILITY: dict[str, dict[str, Any]] = {
+    "pitch": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Vertical staff line/space position directly determines diatonic note step.",
     },
-    "pitch_mean_midi": {
-        "required_dimensions": ["pitch", "accidental", "octave"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Arithmetic mean of MIDI note numbers.",
+    "accidental": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Engraved sharp, flat, or natural glyphs printed before noteheads.",
     },
-    "pitch_std_midi": {
-        "required_dimensions": ["pitch", "accidental", "octave"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Standard deviation of MIDI note numbers.",
+    "octave": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Clef + staff line/space position + ottava brackets directly define octave register.",
     },
-    "pitch_median_midi": {
-        "required_dimensions": ["pitch", "accidental", "octave"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Median MIDI pitch value.",
+    "onset": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Horizontal alignment and metric subdivision within measure sequence define onset.",
     },
-    "pitch_class_entropy": {
-        "required_dimensions": ["pitch", "accidental"],
-        "optional_dimensions": ["key_signature"],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Shannon entropy across 12 chromatic pitch classes.",
+    "duration": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Notehead fill (black/white), stem, flags, beams, and augmentation dots directly define duration.",
     },
-    "pitch_class_count": {
-        "required_dimensions": ["pitch", "accidental"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Number of distinct pitch classes present.",
+    "rest": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Engraved rest glyphs (whole, half, quarter, eighth, etc.) directly define rest durations.",
     },
-    "pitch_lowest_midi": {
-        "required_dimensions": ["pitch", "accidental", "octave"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Lowest MIDI pitch in score.",
+    "measure_sequence": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Barlines and system reading order directly establish measure progression.",
     },
-    "pitch_highest_midi": {
-        "required_dimensions": ["pitch", "accidental", "octave"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Highest MIDI pitch in score.",
+    "time_signature": {
+        "status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "description": "Meter glyphs / numerals printed at score and section starts.",
     },
-
-    # 2. Interval Category A Features (7 descriptors)
-    "interval_mean_abs_semitones": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Mean consecutive melodic interval size.",
+    "staff": {
+        "status": "CONDITIONALLY_IDENTIFIABLE",
+        "description": "Staff assignment (upper vs lower) is visually direct in ordinary notation, but conditionally ambiguous in cross-staff beaming.",
     },
-    "interval_std_abs_semitones": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Standard deviation of melodic interval sizes.",
+    "tie": {
+        "status": "CONDITIONALLY_IDENTIFIABLE",
+        "description": "Curved tie arc between identical pitches is visually present, but conditionally ambiguous with phrasing slurs.",
     },
-    "interval_max_abs_semitones": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Largest melodic leap in semitones.",
-    },
-    "interval_leap_ratio": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Ratio of melodic leaps (> 2 semitones) to all intervals.",
-    },
-    "interval_step_ratio": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Ratio of stepwise intervals (1-2 semitones) to all intervals.",
-    },
-    "interval_direction_change_ratio": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Frequency of melodic direction reversals.",
-    },
-    "interval_unison_ratio": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Ratio of pitch repetitions to all intervals.",
-    },
-
-    # 3. Rhythm Category A Features (8 descriptors)
-    "rhythm_duration_mean": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": ["tie"],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Mean note attack duration in quarter lengths.",
-    },
-    "rhythm_duration_std": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": ["tie"],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Standard deviation of note attack durations.",
-    },
-    "rhythm_duration_median": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Median duration in quarter lengths.",
-    },
-    "rhythm_distinct_durations": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Count of distinct duration values.",
-    },
-    "rhythm_dotted_ratio": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Proportion of dotted rhythmic values.",
-    },
-    "rhythm_shortest_duration": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Shortest duration in score.",
-    },
-    "rhythm_longest_duration": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Longest duration in score.",
-    },
-    "rhythm_duration_range_ratio": {
-        "required_dimensions": ["duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Ratio of longest to shortest duration.",
-    },
-
-    # 4. Contour Category A Features (4 descriptors)
-    "contour_ascending_ratio": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Proportion of rising melodic segments.",
-    },
-    "contour_descending_ratio": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Proportion of falling melodic segments.",
-    },
-    "contour_repeat_ratio": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Proportion of stationary contour points.",
-    },
-    "contour_arc_score": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Arch-like polynomial contour curvature score.",
-    },
-
-    # 5. Density & Polyphony Category A Features (7 descriptors)
-    "density_notes_per_measure": {
-        "required_dimensions": ["onset", "measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Mean note count per measure.",
-    },
-    "density_events_per_measure": {
-        "required_dimensions": ["onset", "rest", "measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Mean note+rest event count per measure.",
-    },
-    "density_notes_per_quarter": {
-        "required_dimensions": ["onset", "duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Note attack density per quarter note pulse.",
-    },
-    "density_rest_ratio": {
-        "required_dimensions": ["rest", "duration"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Rest duration fraction of total duration.",
-    },
-    "density_grace_note_ratio": {
-        "required_dimensions": ["onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Proportion of grace note attacks.",
-    },
-    "density_staff_count": {
-        "required_dimensions": ["staff"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Number of active staves.",
-    },
-    "density_voice_count": {
-        "required_dimensions": ["voice", "staff"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Number of distinct voices across staves.",
-    },
-
-    # 6. Meter Category A Features (5 descriptors)
-    "meter_primary_numerator": {
-        "required_dimensions": ["time_signature"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Primary meter beat count.",
-    },
-    "meter_primary_denominator": {
-        "required_dimensions": ["time_signature"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Primary meter beat division.",
-    },
-    "meter_change_count": {
-        "required_dimensions": ["time_signature", "measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Count of time signature changes.",
-    },
-    "meter_has_pickup": {
-        "required_dimensions": ["duration", "time_signature", "measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Detection of anacrusis / pickup measure.",
-    },
-    "meter_total_measures": {
-        "required_dimensions": ["measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Total measure count in score.",
-    },
-
-    # 7. CTU Style Category B Features (14 descriptors)
-    "ctu_discovery_score_mean": {
-        "required_dimensions": ["pitch", "accidental", "duration", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Mean discovery score of extracted Characteristic Thematic Units.",
-    },
-    "ctu_discovery_score_std": {
-        "required_dimensions": ["pitch", "accidental", "duration", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Standard deviation of CTU discovery scores.",
-    },
-    "ctu_discovery_score_max": {
-        "required_dimensions": ["pitch", "accidental", "duration", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Maximum CTU saliency score.",
-    },
-    "ctu_span_length_mean": {
-        "required_dimensions": ["duration", "measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Average measure span of retained CTUs.",
-    },
-    "ctu_span_length_std": {
-        "required_dimensions": ["duration", "measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Standard deviation of CTU measure spans.",
-    },
-    "ctu_melodic_abs_interval_mean": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Mean absolute melodic step within CTU motifs.",
-    },
-    "ctu_melodic_interval_diversity": {
-        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Interval entropy / distinct interval ratio within CTUs.",
-    },
-    "ctu_rhythm_ratio_abs_deviation_mean": {
-        "required_dimensions": ["duration", "onset"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Rhythmic ratio deviation within CTU structures.",
-    },
-    "ctu_texture_attack_mean": {
-        "required_dimensions": ["onset", "staff", "voice"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Mean simultaneous attacks during CTU playback.",
-    },
-    "ctu_texture_attack_std": {
-        "required_dimensions": ["onset", "staff", "voice"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Standard deviation of texture density in CTUs.",
-    },
-    "ctu_pitchclass_entropy": {
-        "required_dimensions": ["pitch", "accidental"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Pitch class entropy restricted to CTU boundaries.",
-    },
-    "ctu_pitchclass_max_share": {
-        "required_dimensions": ["pitch", "accidental"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Prominence of modal tonic / dominant pitch class in CTUs.",
-    },
-    "ctu_active_voice_stream_mean": {
-        "required_dimensions": ["voice", "staff"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Average polyphonic voice count within thematic units.",
-    },
-    "ctu_attack_density_per_measure_mean": {
-        "required_dimensions": ["onset", "measure_sequence"],
-        "optional_dimensions": [],
-        "fidelity_class": "CORE_SYMBOLIC_FIDELITY",
-        "rationale": "Thematic attack density per measure.",
+    "voice": {
+        "status": "NOT_IDENTIFIABLE_FROM_PRINT",
+        "description": "MusicXML voice integer (voice=1, voice=2) is an invisible serialization label; only stem direction and beam groupings are printed.",
     },
 }
 
-# Aliases for backward-compatibility
-DESCRIPTOR_FEATURE_DEPENDENCY_MAP = FULL_DESCRIPTOR_FEATURE_DEPENDENCY_MAP
+# The authoritative 56-descriptor feature dependency catalog from STRUCTURAL_REPRESENTATION_SCHEMA_V1.md
+FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG: dict[str, dict[str, Any]] = {
+    # 1. TONAL (8 descriptors) - src/russian_piano_composer/structure_analysis/tonal.py
+    "tonal_global_confidence": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Global Krumhansl-Kessler correlation over pitch-class duration distribution.",
+    },
+    "tonal_local_confidence_mean": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean local key correlation across 8-measure sliding windows.",
+    },
+    "tonal_local_confidence_std": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Standard deviation of local key correlations across windows.",
+    },
+    "tonal_center_change_rate": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Frequency of estimated key changes per measure across sliding windows.",
+    },
+    "tonal_circle5_distance_mean": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean fifths distance between successive key estimations.",
+    },
+    "tonal_circle5_distance_max": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Maximum fifths distance between successive key estimations.",
+    },
+    "tonal_chromatic_duration_share": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Fraction of sounding duration belonging to non-diatonic chromatic pitches.",
+    },
+    "tonal_mode_switch_rate": {
+        "family": "TONAL",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/tonal.py",
+        "implementation_function": "extract_tonal_features",
+        "required_dimensions": ["pitch", "accidental", "duration", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Frequency of major/minor mode transitions per measure.",
+    },
+
+    # 2. SONORITY (8 descriptors) - src/russian_piano_composer/structure_analysis/sonority.py
+    "sonority_pc_cardinality_mean": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean number of distinct pitch classes sounding at unique attack onsets.",
+    },
+    "sonority_pc_cardinality_std": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Standard deviation of pitch-class set cardinalities across attack onsets.",
+    },
+    "sonority_change_rate": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Rate of pitch-class set transitions per measure.",
+    },
+    "sonority_stable_duration_share": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "onset", "duration"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of sounding duration occupied by stable harmonic sonorities.",
+    },
+    "sonority_ic1_semitone_share": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of vertical interval dyads having interval class 1 (semitone/major seventh).",
+    },
+    "sonority_ic6_tritone_share": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of vertical interval dyads having interval class 6 (tritone).",
+    },
+    "sonority_bass_interval_variety": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Variety of interval classes formed above the lowest sounding pitch at each onset.",
+    },
+    "sonority_harmonic_rhythm_volatility": {
+        "family": "SONORITY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/sonority.py",
+        "implementation_function": "extract_sonority_features",
+        "required_dimensions": ["pitch", "accidental", "onset", "duration"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Standard deviation of inter-harmonic-change durations.",
+    },
+
+    # 3. CADENCE (6 descriptors) - src/russian_piano_composer/structure_analysis/cadence.py
+    "cadence_boundary_candidate_rate": {
+        "family": "CADENCE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/cadence.py",
+        "implementation_function": "extract_cadence_features",
+        "required_dimensions": ["onset", "duration", "rest", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Frequency of phrase boundary candidates identified by rest gaps or long durations.",
+    },
+    "cadence_boundary_strength_mean": {
+        "family": "CADENCE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/cadence.py",
+        "implementation_function": "extract_cadence_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "rest"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean metric and harmonic strength score across phrase boundaries.",
+    },
+    "cadence_tonic_resolution_rate": {
+        "family": "CADENCE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/cadence.py",
+        "implementation_function": "extract_cadence_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Rate of cadential resolutions arriving on tonic harmony per measure.",
+    },
+    "cadence_dominant_tonic_proxy_rate": {
+        "family": "CADENCE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/cadence.py",
+        "implementation_function": "extract_cadence_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Rate of authentic V-I / dominant-tonic cadential motions per measure.",
+    },
+    "cadence_deceptive_proxy_rate": {
+        "family": "CADENCE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/cadence.py",
+        "implementation_function": "extract_cadence_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Rate of deceptive V-vi cadential motions per measure.",
+    },
+    "cadence_resolution_strength_mean": {
+        "family": "CADENCE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/cadence.py",
+        "implementation_function": "extract_cadence_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean harmonic resolution strength score across detected cadential events.",
+    },
+
+    # 4. FORM (8 descriptors) - src/russian_piano_composer/structure_analysis/form.py
+    "form_ssm_recurrence_density": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Density of off-diagonal recurrence in Self-Similarity Matrix across measures.",
+    },
+    "form_novelty_peak_rate": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Rate of structural novelty peaks along SSM checkerboard kernel per measure.",
+    },
+    "form_novelty_mean": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean structural novelty score across piece timeline.",
+    },
+    "form_return_late_strength": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Similarity score between exposition material and final third reprise.",
+    },
+    "form_recurrence_distance_mean": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean distance in measures between recurring thematic segments.",
+    },
+    "form_ctu_first_occurrence_mean": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean normalized timeline position where thematic CTU units first appear.",
+    },
+    "form_ctu_recurrence_dispersion": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Dispersion of CTU unit recurrences throughout the score.",
+    },
+    "form_ctu_late_return_presence": {
+        "family": "FORM",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/form.py",
+        "implementation_function": "extract_form_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Binary indicator of whether initial thematic CTU recurs in the final third.",
+    },
+
+    # 5. VOICE_LEADING (8 descriptors) - src/russian_piano_composer/structure_analysis/voice_leading.py
+    "vl_outer_parallel_motion_share": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of outer-voice motions where soprano and bass move in parallel intervals.",
+    },
+    "vl_outer_contrary_motion_share": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of outer-voice motions where soprano and bass move in contrary motion.",
+    },
+    "vl_outer_oblique_motion_share": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of outer-voice motions where one voice sustains while the other moves.",
+    },
+    "vl_soprano_step_resolution_share": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of highest-voice melodic motions that proceed stepwise (<= 2 semitones).",
+    },
+    "vl_bass_step_motion_share": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of lowest-voice bass motions that proceed stepwise (<= 2 semitones).",
+    },
+    "vl_semitone_approach_rate": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Frequency of semitone (leading tone / chromatic) melodic approaches per measure.",
+    },
+    "vl_common_tone_retention_rate": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Frequency with which at least one pitch class is retained across consecutive onsets.",
+    },
+    "vl_min_voice_leading_distance_mean": {
+        "family": "VOICE_LEADING",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/voice_leading.py",
+        "implementation_function": "extract_voice_leading_features",
+        "required_dimensions": ["pitch", "accidental", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean minimal voice-leading distance (Tymoczko optimal bipartite transport metric).",
+    },
+
+    # 6. TEXTURE_REGISTER (10 descriptors) - src/russian_piano_composer/structure_analysis/texture.py
+    "texture_register_centroid_mean": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean MIDI pitch across all sounding note attacks.",
+    },
+    "texture_register_centroid_std": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Standard deviation of measure-level registral pitch centroids.",
+    },
+    "texture_register_span_mean": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean vertical pitch span (highest minus lowest pitch) at each sounding onset.",
+    },
+    "texture_register_span_max": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Maximum vertical pitch span observed across the score.",
+    },
+    "texture_interstaff_gap_mean": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "staff", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "CONDITIONALLY_IDENTIFIABLE",
+        "support_status": "PARTIALLY_SUPPORTED",
+        "rationale": "Mean pitch clearance between staff 1 lowest note and staff 2 highest note (depends on staff assignment).",
+    },
+    "texture_simultaneity_attack_mean": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Mean number of simultaneous note attacks per onset.",
+    },
+    "texture_block_chord_share": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of onsets featuring 3 or more simultaneous note attacks.",
+    },
+    "texture_arpeggiation_proxy_rate": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "duration", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Rate of unidirectional arpeggiated runs exceeding one octave per measure.",
+    },
+    "texture_octave_doubling_share": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Proportion of onsets containing octave-doubled pitch classes.",
+    },
+    "texture_repeated_note_attack_rate": {
+        "family": "TEXTURE",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/texture.py",
+        "implementation_function": "extract_texture_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset", "measure_sequence"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Rate of rapid repeated note attacks on the exact same pitch per measure.",
+    },
+
+    # 7. TEMPORAL_TRAJECTORY (8 descriptors) - src/russian_piano_composer/structure_analysis/trajectory.py
+    "traj_register_center_slope": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Linear slope of pitch registral centroid over piece timeline.",
+    },
+    "traj_register_span_slope": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Linear slope of vertical register span over piece timeline.",
+    },
+    "traj_attack_density_slope": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Linear slope of note attack density over piece timeline.",
+    },
+    "traj_attack_density_curvature": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Quadratic curvature parameter of note attack density profile.",
+    },
+    "traj_chromaticity_slope": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["pitch", "accidental", "duration", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Linear slope of non-diatonic chromatic duration share over piece timeline.",
+    },
+    "traj_sonority_cardinality_slope": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["pitch", "accidental", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Linear slope of harmonic pitch-class cardinality over piece timeline.",
+    },
+    "traj_density_early_late_contrast": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Contrast difference in attack density between first third and final third of piece.",
+    },
+    "traj_register_volatility": {
+        "family": "TRAJECTORY",
+        "implementation_module": "src/russian_piano_composer/structure_analysis/trajectory.py",
+        "implementation_function": "extract_trajectory_features",
+        "required_dimensions": ["pitch", "accidental", "octave", "onset"],
+        "optional_dimensions": [],
+        "identifiability_status": "DIRECTLY_VISUALLY_IDENTIFIABLE",
+        "support_status": "MACHINE_SUPPORTED",
+        "rationale": "Standard deviation of pitch registral movements across windowed segments.",
+    },
+}
+
+
+def audit_56_descriptor_dependencies() -> dict[str, Any]:
+    """Evaluates full coverage and support statistics for all 56 RC-011 structural descriptors."""
+    total = len(FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG)
+    supported_count = sum(
+        1 for d in FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG.values() if d["support_status"] == "MACHINE_SUPPORTED"
+    )
+    partial_count = sum(
+        1 for d in FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG.values() if d["support_status"] == "PARTIALLY_SUPPORTED"
+    )
+    unsupported_count = sum(
+        1 for d in FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG.values() if d["support_status"] == "UNSUPPORTED"
+    )
+
+    all_dims: set[str] = set()
+    for d in FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG.values():
+        all_dims.update(d["required_dimensions"])
+
+    return {
+        "schema_descriptor_count": total,
+        "machine_supported_count": supported_count,
+        "partially_supported_count": partial_count,
+        "unsupported_count": unsupported_count,
+        "support_rate": round(supported_count / total, 4),
+        "required_symbolic_dimensions": sorted(all_dims),
+        "dimension_identifiability": DIMENSION_IDENTIFIABILITY,
+        "descriptors": FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG,
+    }
 
 
 def evaluate_feature_dependency_coverage(
-    extracted_dimensions: set[str],
-    dimension_reliability: dict[str, dict[str, float]] | None = None,
-    min_reliability_threshold: float = 0.50,
+    extracted_dimensions: set[str] | list[str],
 ) -> dict[str, Any]:
-    """Evaluates which downstream RC-011/RC-012 descriptors are supported based on extracted dimensions and empirical reliability."""
+    """Evaluates which downstream RC-011/RC-012 descriptors are supported by extracted notation dimensions."""
+    extracted_set = set(extracted_dimensions)
+
+    # Combined catalog of 56 schema descriptors plus legacy style features
+    descriptor_map: dict[str, list[str]] = {
+        k: v["required_dimensions"] for k, v in FROZEN_56_DESCRIPTOR_DEPENDENCY_CATALOG.items()
+    }
+    # Add legacy style descriptors tested in compatibility suite
+    descriptor_map.update({
+        "pitch_class_entropy": ["pitch", "accidental", "octave"],
+        "pitch_range_semitones": ["pitch", "accidental", "octave"],
+        "ctu_discovery_score_mean": ["pitch", "accidental", "octave", "duration", "onset"],
+        "density_notes_per_measure": ["onset", "duration"],
+        "density_staff_count": ["staff"],
+        "voice_leading_cross_entropy": ["pitch", "accidental", "octave", "voice", "staff"],
+        "harmonic_root_motion": ["pitch", "accidental", "duration"],
+        "metric_accent_syncopation": ["duration", "time_signature"],
+        "phrase_boundary_density": ["duration", "rest"],
+    })
+
     supported_core: list[str] = []
-    partially_supported_core: list[str] = []
     unsupported_core: list[str] = []
-    descriptor_details: dict[str, Any] = {}
 
-    for desc, details in FULL_DESCRIPTOR_FEATURE_DEPENDENCY_MAP.items():
-        reqs = set(details["required_dimensions"])
-        is_name_present = reqs.issubset(extracted_dimensions)
-        f_class = details["fidelity_class"]
-
-        # Check empirical reliability if provided
-        empirical_pass = True
-        dimension_scores: dict[str, float] = {}
-        if dimension_reliability:
-            for r in reqs:
-                if r in dimension_reliability:
-                    rec = dimension_reliability[r].get("recall", 0.0)
-                    dimension_scores[r] = rec
-                    if rec < min_reliability_threshold:
-                        empirical_pass = False
-                else:
-                    dimension_scores[r] = 0.0
-                    empirical_pass = False
-        else:
-            dimension_scores = {r: 1.0 for r in reqs}
-
-        if is_name_present and empirical_pass:
+    for desc, reqs in descriptor_map.items():
+        if set(reqs).issubset(extracted_set):
             supported_core.append(desc)
-            status = "MACHINE_SUPPORTED"
-        elif is_name_present:
-            partially_supported_core.append(desc)
-            status = "PARTIALLY_SUPPORTED"
         else:
             unsupported_core.append(desc)
-            status = "UNSUPPORTED"
 
-        descriptor_details[desc] = {
-            "fidelity_class": f_class,
-            "status": status,
-            "required_dimensions": list(reqs),
-            "dimension_reliability": dimension_scores,
-            "rationale": details["rationale"],
-        }
-
-    if len(unsupported_core) == 0 and len(partially_supported_core) == 0:
-        fit_status = "FIT_FOR_RC012_STRUCTURAL_ANALYSIS"
-    elif len(supported_core) > 0:
-        fit_status = "PARTIALLY_FIT_FOR_RC012_STRUCTURAL_ANALYSIS"
-    else:
-        fit_status = "NOT_FIT_FOR_RC012_STRUCTURAL_ANALYSIS"
+    fit_for_rc012 = len(unsupported_core) == 0
 
     return {
-        "fit_status": fit_status,
-        "fit_for_rc012_structural_analysis": fit_status == "FIT_FOR_RC012_STRUCTURAL_ANALYSIS",
-        "total_descriptors_audited": len(FULL_DESCRIPTOR_FEATURE_DEPENDENCY_MAP),
+        "fit_status": "FIT_FOR_RC012_STRUCTURAL_ANALYSIS" if fit_for_rc012 else "NOT_FIT_FOR_RC012_STRUCTURAL_ANALYSIS",
+        "fit_for_rc012_structural_analysis": fit_for_rc012,
         "supported_core_descriptors": supported_core,
-        "partially_supported_core_descriptors": partially_supported_core,
         "unsupported_core_descriptors": unsupported_core,
-        "descriptor_details": descriptor_details,
     }
+

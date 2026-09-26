@@ -1,0 +1,22 @@
+{
+  "specimen_id": "chopin_mazurka_op06_no01_m2_pitch_C_to_A",
+  "base_score_id": "chopin_mazurka_op06_no01",
+  "base_score_sha256": "5902164450cf5f0f749da4b0c24654cea7b6ac7b4f07d80e8abad98a9055c918",
+  "mutation_dimension": "pitch",
+  "target_measure": 2,
+  "original_value": "C",
+  "mutated_value": "A",
+  "mutated_xml_sha256": "1e3c9e467c8afaa40f8d3004ab2469f3f6fe2bff1e4c59f3ce2ab5eaeafa868b",
+  "h0_render_sha256": "62309633a13c24f2e00be65346f5b6f2dfd78029bc41ce1e7288f3d970d5c2d2",
+  "hi_render_sha256": "27e3a86c5a8425931dab605a20803665f29c1510ba88a329f9f961eac45c21d6",
+  "source_crop_sha256": "b5df2dd4eab0f94ad59987575513c4237c1d38c126ed98a428b1b589098a639a",
+  "difference_mask_sha256": "84fea3fb8f9516c6720138cb0bed462a8592044195b6d340e41e409db663fef2",
+  "d0": 0.2826,
+  "di": 0.2825,
+  "delta": -0.0,
+  "delta_norm": -0.0001,
+  "predicted_status": "CANDIDATE_FALSIFICATION_INDETERMINATE",
+  "ground_truth_mutation_status": "CORRUPTED",
+  "localized_measure": 2,
+  "is_correctly_localized": true
+}

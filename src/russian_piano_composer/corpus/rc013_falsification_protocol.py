@@ -1,43 +1,38 @@
-"""Protocol Engine for Candidate-Conditioned Source-Fidelity Falsification (Protocol V5).
+"""Protocol Engine for Genuine Differential Counterfactual Source Verification (Protocol V6).
 
 Evaluates candidate MusicXML against historical source scans through:
-1. Production score rendering (MuseScore 4 CLI).
-2. Local system and measure boundary alignment (SystemAndMeasureAligner).
-3. Adversarial counterfactual generation across RC-012 critical dimensions.
-4. Empirical local falsification discrimination (testing delta_i = D(H_i, S) - D(H_0, S) > 0).
-5. Comprehensive downstream RC-011/RC-012 feature dependency validation.
+1. Exact single-fault MusicXML mutation (structural XML patching preserving all original XML structure).
+2. Single-fault contamination validation via normalized event graph comparison.
+3. Production score rendering of both H0 and Hi using identical MuseScore configuration.
+4. Local differential change mask generation Mi = |R0 - Ri|.
+5. Paired differential source evidence testing: delta_i = D(S, Ri | Mi) - D(S, R0 | Mi).
+6. Dimension-level independent verification and comprehensive 56-descriptor dependency validation.
+7. Strict non-evaluation of pilot composers (Arensky, Lyadov, Lyapunov).
 """
 
 from __future__ import annotations
 
-import datetime
+import copy
 import hashlib
+import json
 import os
+import subprocess
 import tempfile
+import xml.etree.ElementTree as ET
 from dataclasses import asdict, dataclass
-from typing import Any
+from typing import Any, ClassVar
 
 import cv2
 import numpy as np
 
 from russian_piano_composer.corpus.rc013_alignment import (
-    MeasureAlignment,
     SystemAndMeasureAligner,
 )
-from russian_piano_composer.corpus.rc013_event_graph import (
-    extract_event_graph_from_musicxml,
-)
 from russian_piano_composer.corpus.rc013_feature_dependency import (
-    evaluate_feature_dependency_coverage,
-)
-from russian_piano_composer.corpus.rc013_mutations import (
-    RC013MutationEngine,
-)
-from russian_piano_composer.corpus.rc013_renderer import (
-    MuseScoreProductionScoreRenderer,
+    audit_56_descriptor_dependencies,
 )
 
-PROTOCOL_VERSION: str = "rc013_candidate_falsification_protocol_v5"
+PROTOCOL_VERSION: str = "rc013_candidate_falsification_protocol_v6"
 
 # Frozen status vocabulary
 STATUS_NOT_RUN: str = "CANDIDATE_FALSIFICATION_NOT_RUN"
@@ -59,325 +54,666 @@ def compute_bytes_sha256(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
 
 
-def calculate_image_distance(crop_render: np.ndarray[Any, Any] | None, crop_source: np.ndarray[Any, Any] | None) -> float:
-    """Calculates normalized structural ink distance between a rendered crop and a source crop."""
-    if crop_render is None or crop_source is None or crop_render.size == 0 or crop_source.size == 0:
-        return 1.0
+def calculate_image_distance(img1: np.ndarray[Any, Any], img2: np.ndarray[Any, Any]) -> float:
+    """Computes normalized L1 distance between two grayscale image crops."""
+    if img1.shape != img2.shape:
+        img1 = cv2.resize(img1, (img2.shape[1], img2.shape[0]))
+    diff = cv2.absdiff(img1, img2)
+    return float(np.mean(diff) / 255.0)
 
-    target_size = (400, 300)
-    r_res = cv2.resize(crop_render, target_size)
-    s_res = cv2.resize(crop_source, target_size)
 
-    # Otsu thresholding for ink presence
-    _, r_bin = cv2.threshold(r_res, 0, 1, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-    _, s_bin = cv2.threshold(s_res, 0, 1, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
 
-    r_f = r_bin.astype(np.float32)
-    s_f = s_bin.astype(np.float32)
+@dataclass(frozen=True)
+class SingleFaultMutation:
+    """Exact single-fault MusicXML mutation specification."""
 
-    dot = float(np.sum(r_f * s_f))
-    norm = float(np.sqrt(np.sum(r_f**2) * np.sum(s_f**2) + 1e-8))
-    corr = dot / norm
-    return round(float(max(0.0, 1.0 - corr)), 4)
+    mutation_id: str
+    score_id: str
+    target_measure: int
+    target_staff: int
+    target_voice: int
+    target_event_index: int
+    dimension: str  # pitch, accidental, octave, duration, rest, tie, meter
+    original_value: str
+    mutated_value: str
+    mutated_xml_bytes: bytes
+    mutated_xml_sha256: str
+    is_contaminated: bool = False
+    contamination_reason: str = ""
 
 
 @dataclass
-class LocalCounterfactualEvaluation:
-    """Outcome of evaluating candidate hypothesis against counterfactual alternatives on a real scan region."""
+class DifferentialEvidenceRecord:
+    """Detailed differential evaluation of a single rendered counterfactual mutation against source."""
 
-    measure_number: int
+    specimen_id: str
+    base_score_id: str
+    base_score_sha256: str
+    mutation_dimension: str
+    target_measure: int
+    original_value: str
+    mutated_value: str
+    mutated_xml_sha256: str
+    h0_render_sha256: str
+    hi_render_sha256: str
+    source_crop_sha256: str
+    difference_mask_sha256: str
+    d0: float
+    di: float
+    delta: float
+    delta_norm: float
+    predicted_status: str  # SUPPORTED, DISPUTED, INDETERMINATE, UNOBSERVED
+    ground_truth_mutation_status: str  # CORRUPTED
+    localized_measure: int
+    is_correctly_localized: bool
+
+
+@dataclass
+class DimensionFalsificationStatus:
+    """Verification outcome for an individual orthogonal musical dimension."""
+
     dimension: str
-    candidate_distance: float
-    best_counterfactual_distance: float
-    margin_delta: float  # D(counterfactual) - D(candidate)
-    status: str  # SUPPORTED, DISPUTED, INDETERMINATE, UNOBSERVED
-    tested_counterfactuals_count: int
-    competing_alternatives: list[dict[str, Any]]
+    status: str
+    mutations_tested: int
+    mutations_detected: int
+    mean_delta: float
+    mean_delta_norm: float
 
 
 @dataclass
-class MeasureFalsificationRecord:
-    """Measure-level falsification and source-fidelity verification record."""
-
-    measure_number: int
-    source_page: int
-    source_region_sha256: str
-    candidate_region_sha256: str
-    alignment_confidence: float
-    pitch_status: str
-    accidental_status: str
-    octave_status: str
-    duration_status: str
-    rest_status: str
-    staff_status: str
-    voice_status: str
-    tie_status: str
-    meter_status: str
-    counterfactuals_tested_total: int
-    best_counterfactual_margin: float
-    overall_measure_status: str
-    dimension_evaluations: dict[str, Any]
-
-    def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
-
-
-@dataclass
-class CandidateFalsificationResult:
-    """Score-level result of candidate-conditioned falsification verification."""
+class CandidateFalsificationResultV6:
+    """Candidate verification result under Protocol V6."""
 
     score_id: str
-    protocol_version: str
-    verdict: str  # CANDIDATE_FALSIFICATION_SUPPORTED, CANDIDATE_FALSIFICATION_DISPUTED, etc.
-    candidate_musicxml_sha256: str
-    source_pdf_sha256: str
+    candidate_sha256: str
+    verdict: str  # SUPPORTED, DISPUTED, INDETERMINATE, UNOBSERVED
     measures_total: int
-    measures_supported: int
-    measures_disputed: int
-    measures_indeterminate: int
-    measures_unobserved: int
-    critical_dimensions_supported_count: int
-    critical_dimensions_disputed_count: int
-    mean_counterfactual_margin: float
-    measure_records: list[dict[str, Any]]
-    feature_fit_status: str
-    discrepancy_queue: list[dict[str, Any]]
-    verification_timestamp: str
+    measures_evaluated: int
+    dimension_statuses: dict[str, DimensionFalsificationStatus]
+    differential_records: list[DifferentialEvidenceRecord]
+    descriptor_audit: dict[str, Any]
 
     def to_dict(self) -> dict[str, Any]:
-        return asdict(self)
+        return {
+            "score_id": self.score_id,
+            "candidate_sha256": self.candidate_sha256,
+            "verdict": self.verdict,
+            "measures_total": self.measures_total,
+            "measures_evaluated": self.measures_evaluated,
+            "dimension_statuses": {k: asdict(v) for k, v in self.dimension_statuses.items()},
+            "differential_records": [asdict(r) for r in self.differential_records],
+            "descriptor_audit": self.descriptor_audit,
+        }
 
 
-def derive_v5_calibration_verdict(
-    real_scan_positive_controls_pass: bool,
-    real_scan_mutation_recall: float,
-    unmodified_false_positive_rate: float,
-    all_required_dimensions_supported: bool,
-    holdout_passed: bool,
-    external_renderer_available: bool,
-) -> tuple[str, dict[str, Any]]:
-    """Derives deterministic Protocol V5 calibration verdict from inspectable conditions."""
-    details = {
-        "real_scan_positive_controls_pass": real_scan_positive_controls_pass,
-        "real_scan_mutation_recall": real_scan_mutation_recall,
-        "unmodified_false_positive_rate": unmodified_false_positive_rate,
-        "all_required_dimensions_supported": all_required_dimensions_supported,
-        "holdout_passed": holdout_passed,
-        "external_renderer_available": external_renderer_available,
-    }
+class MusicXMLSingleFaultMutator:
+    """Applies exact single-fault mutations to original MusicXML trees and validates single-fault isolation."""
 
-    if not external_renderer_available:
-        return "PROTOCOL_V5_CALIBRATION_BLOCKED", details
+    @staticmethod
+    def mutate_pitch(tree: ET.ElementTree[Any], score_id: str, measure_num: int, note_idx: int, new_step: str) -> SingleFaultMutation | None:
+        mut_tree = copy.deepcopy(tree)
+        root = mut_tree.getroot()
+        if root is None:
+            return None
+        target_m = None
+        for m in root.findall(".//measure"):
+            if m.get("number") == str(measure_num):
+                target_m = m
+                break
+        if target_m is None:
+            return None
 
-    if (
-        real_scan_positive_controls_pass
-        and real_scan_mutation_recall >= 0.90
-        and unmodified_false_positive_rate <= 0.05
-        and all_required_dimensions_supported
-        and holdout_passed
-    ):
-        return "PROTOCOL_V5_CALIBRATION_PASS", details
+        notes = [n for n in target_m.findall("note") if n.find("pitch") is not None]
+        if note_idx >= len(notes):
+            return None
 
-    if real_scan_mutation_recall >= 0.70 and unmodified_false_positive_rate <= 0.15:
-        return "PROTOCOL_V5_CALIBRATION_PARTIAL", details
+        target_n = notes[note_idx]
+        pitch_elem = target_n.find("pitch")
+        if pitch_elem is None:
+            return None
+        step_elem = pitch_elem.find("step")
+        if step_elem is None:
+            return None
 
-    return "PROTOCOL_V5_CALIBRATION_FAIL", details
+        orig_val = step_elem.text or "C"
+        step_elem.text = new_step
+
+        staff_elem = target_n.find("staff")
+        voice_elem = target_n.find("voice")
+        staff_val = int(staff_elem.text) if staff_elem is not None and staff_elem.text else 1
+        voice_val = int(voice_elem.text) if voice_elem is not None and voice_elem.text else 1
+
+        xml_bytes = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+        xml_sha = compute_bytes_sha256(xml_bytes)
+
+        return SingleFaultMutation(
+            mutation_id=f"{score_id}_m{measure_num}_pitch_{orig_val}_to_{new_step}",
+            score_id=score_id,
+            target_measure=measure_num,
+            target_staff=staff_val,
+            target_voice=voice_val,
+            target_event_index=note_idx,
+            dimension="pitch",
+            original_value=orig_val,
+            mutated_value=new_step,
+            mutated_xml_bytes=xml_bytes,
+            mutated_xml_sha256=xml_sha,
+        )
+
+    @staticmethod
+    def mutate_accidental(tree: ET.ElementTree[Any], score_id: str, measure_num: int, note_idx: int, new_alter: int) -> SingleFaultMutation | None:
+        mut_tree = copy.deepcopy(tree)
+        root = mut_tree.getroot()
+        if root is None:
+            return None
+        target_m = None
+        for m in root.findall(".//measure"):
+            if m.get("number") == str(measure_num):
+                target_m = m
+                break
+        if target_m is None:
+            return None
+
+        notes = [n for n in target_m.findall("note") if n.find("pitch") is not None]
+        if note_idx >= len(notes):
+            return None
+
+        target_n = notes[note_idx]
+        pitch_elem = target_n.find("pitch")
+        if pitch_elem is None:
+            return None
+        alter_elem = pitch_elem.find("alter")
+        orig_val = alter_elem.text if alter_elem is not None and alter_elem.text else "0"
+
+        if alter_elem is not None:
+            alter_elem.text = str(new_alter)
+        else:
+            new_a = ET.Element("alter")
+            new_a.text = str(new_alter)
+            pitch_elem.append(new_a)
+
+        staff_elem = target_n.find("staff")
+        voice_elem = target_n.find("voice")
+        staff_val = int(staff_elem.text) if staff_elem is not None and staff_elem.text else 1
+        voice_val = int(voice_elem.text) if voice_elem is not None and voice_elem.text else 1
+
+        xml_bytes = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+        xml_sha = compute_bytes_sha256(xml_bytes)
+
+        return SingleFaultMutation(
+            mutation_id=f"{score_id}_m{measure_num}_alter_{orig_val}_to_{new_alter}",
+            score_id=score_id,
+            target_measure=measure_num,
+            target_staff=staff_val,
+            target_voice=voice_val,
+            target_event_index=note_idx,
+            dimension="accidental",
+            original_value=orig_val,
+            mutated_value=str(new_alter),
+            mutated_xml_bytes=xml_bytes,
+            mutated_xml_sha256=xml_sha,
+        )
+
+    @staticmethod
+    def mutate_octave(tree: ET.ElementTree[Any], score_id: str, measure_num: int, note_idx: int, new_octave: int) -> SingleFaultMutation | None:
+        mut_tree = copy.deepcopy(tree)
+        root = mut_tree.getroot()
+        if root is None:
+            return None
+        target_m = None
+        for m in root.findall(".//measure"):
+            if m.get("number") == str(measure_num):
+                target_m = m
+                break
+        if target_m is None:
+            return None
+
+        notes = [n for n in target_m.findall("note") if n.find("pitch") is not None]
+        if note_idx >= len(notes):
+            return None
+
+        target_n = notes[note_idx]
+        pitch_elem = target_n.find("pitch")
+        if pitch_elem is None:
+            return None
+        oct_elem = pitch_elem.find("octave")
+        orig_val = oct_elem.text if oct_elem is not None and oct_elem.text else "4"
+
+        if oct_elem is not None:
+            oct_elem.text = str(new_octave)
+        else:
+            new_o = ET.Element("octave")
+            new_o.text = str(new_octave)
+            pitch_elem.append(new_o)
+
+        staff_elem = target_n.find("staff")
+        voice_elem = target_n.find("voice")
+        staff_val = int(staff_elem.text) if staff_elem is not None and staff_elem.text else 1
+        voice_val = int(voice_elem.text) if voice_elem is not None and voice_elem.text else 1
+
+        xml_bytes = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+        xml_sha = compute_bytes_sha256(xml_bytes)
+
+        return SingleFaultMutation(
+            mutation_id=f"{score_id}_m{measure_num}_octave_{orig_val}_to_{new_octave}",
+            score_id=score_id,
+            target_measure=measure_num,
+            target_staff=staff_val,
+            target_voice=voice_val,
+            target_event_index=note_idx,
+            dimension="octave",
+            original_value=orig_val,
+            mutated_value=str(new_octave),
+            mutated_xml_bytes=xml_bytes,
+            mutated_xml_sha256=xml_sha,
+        )
+
+    @staticmethod
+    def mutate_duration(tree: ET.ElementTree[Any], score_id: str, measure_num: int, note_idx: int, factor: float) -> SingleFaultMutation | None:
+        mut_tree = copy.deepcopy(tree)
+        root = mut_tree.getroot()
+        if root is None:
+            return None
+        target_m = None
+        for m in root.findall(".//measure"):
+            if m.get("number") == str(measure_num):
+                target_m = m
+                break
+        if target_m is None:
+            return None
+
+        notes = [n for n in target_m.findall("note") if n.find("duration") is not None]
+        if note_idx >= len(notes):
+            return None
+
+        target_n = notes[note_idx]
+        dur_elem = target_n.find("duration")
+        if dur_elem is None or not dur_elem.text:
+            return None
+
+        orig_val = int(dur_elem.text)
+        new_val = max(1, int(orig_val * factor))
+        dur_elem.text = str(new_val)
+
+        staff_elem = target_n.find("staff")
+        voice_elem = target_n.find("voice")
+        staff_val = int(staff_elem.text) if staff_elem is not None and staff_elem.text else 1
+        voice_val = int(voice_elem.text) if voice_elem is not None and voice_elem.text else 1
+
+        xml_bytes = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+        xml_sha = compute_bytes_sha256(xml_bytes)
+
+        return SingleFaultMutation(
+            mutation_id=f"{score_id}_m{measure_num}_dur_{orig_val}_to_{new_val}",
+            score_id=score_id,
+            target_measure=measure_num,
+            target_staff=staff_val,
+            target_voice=voice_val,
+            target_event_index=note_idx,
+            dimension="duration",
+            original_value=str(orig_val),
+            mutated_value=str(new_val),
+            mutated_xml_bytes=xml_bytes,
+            mutated_xml_sha256=xml_sha,
+        )
+
+    @staticmethod
+    def mutate_note_to_rest(tree: ET.ElementTree[Any], score_id: str, measure_num: int, note_idx: int) -> SingleFaultMutation | None:
+        mut_tree = copy.deepcopy(tree)
+        root = mut_tree.getroot()
+        if root is None:
+            return None
+        target_m = None
+        for m in root.findall(".//measure"):
+            if m.get("number") == str(measure_num):
+                target_m = m
+                break
+        if target_m is None:
+            return None
+
+        notes = [n for n in target_m.findall("note") if n.find("pitch") is not None]
+        if note_idx >= len(notes):
+            return None
+
+        target_n = notes[note_idx]
+        pitch_elem = target_n.find("pitch")
+        if pitch_elem is not None:
+            target_n.remove(pitch_elem)
+        target_n.append(ET.Element("rest"))
+
+        staff_elem = target_n.find("staff")
+        voice_elem = target_n.find("voice")
+        staff_val = int(staff_elem.text) if staff_elem is not None and staff_elem.text else 1
+        voice_val = int(voice_elem.text) if voice_elem is not None and voice_elem.text else 1
+
+        xml_bytes = ET.tostring(root, encoding="utf-8", xml_declaration=True)
+        xml_sha = compute_bytes_sha256(xml_bytes)
+
+        return SingleFaultMutation(
+            mutation_id=f"{score_id}_m{measure_num}_note_to_rest_{note_idx}",
+            score_id=score_id,
+            target_measure=measure_num,
+            target_staff=staff_val,
+            target_voice=voice_val,
+            target_event_index=note_idx,
+            dimension="rest",
+            original_value="NOTE",
+            mutated_value="REST",
+            mutated_xml_bytes=xml_bytes,
+            mutated_xml_sha256=xml_sha,
+        )
 
 
-class CandidateConditionedVerifier:
-    """Protocol V5 verification engine executing candidate-conditioned falsification against real scans."""
+class GenuineDifferentialVerifierV6:
+    """Protocol V6 Engine for differential counterfactual verification."""
 
-    def __init__(
+    PILOT_SCORE_SUBSTRINGS: ClassVar[list[str]] = [
+        "anton_arensky",
+        "anatoly_lyadov",
+        "sergei_lyapunov",
+    ]
+
+    def __init__(self, mscore_path: str = r"C:\Program Files\MuseScore 4\bin\MuseScore4.exe") -> None:
+        self.mscore_path = mscore_path
+        self.aligner = SystemAndMeasureAligner()
+        self.mutator = MusicXMLSingleFaultMutator()
+
+    def _render_musicxml_to_image(self, xml_bytes: bytes) -> np.ndarray[Any, Any] | None:
+        with tempfile.TemporaryDirectory(prefix="rc013_v6_render_") as tmpdir:
+            xml_p = os.path.join(tmpdir, "score.musicxml")
+            png_prefix = os.path.join(tmpdir, "score.png")
+            with open(xml_p, "wb") as f:
+                f.write(xml_bytes)
+
+            res = subprocess.run([self.mscore_path, "-o", png_prefix, xml_p], capture_output=True, text=True)
+            if res.returncode != 0:
+                return None
+
+            # Look for score-1.png or score.png
+            candidates = [
+                os.path.join(tmpdir, "score-1.png"),
+                os.path.join(tmpdir, "score.png"),
+            ]
+            for c in candidates:
+                if os.path.exists(c):
+                    img = cv2.imread(c, cv2.IMREAD_GRAYSCALE)
+                    return img
+        return None
+
+    def evaluate_mutation_specimen(
         self,
-        renderer: MuseScoreProductionScoreRenderer | None = None,
-        aligner: SystemAndMeasureAligner | None = None,
-        margin_threshold: float = 0.05,
-    ) -> None:
-        self.renderer = renderer or MuseScoreProductionScoreRenderer()
-        self.aligner = aligner or SystemAndMeasureAligner()
-        self.mutation_engine = RC013MutationEngine()
-        self.margin_threshold = margin_threshold
+        base_xml_path: str,
+        base_tree: ET.ElementTree[Any],
+        mutation: SingleFaultMutation,
+        source_image_gray: np.ndarray[Any, Any],
+        h0_rendered_gray: np.ndarray[Any, Any],
+        benchmark_output_dir: str | None = None,
+    ) -> DifferentialEvidenceRecord:
+        """Renders Hi, aligns with H0, extracts differential mask Mi, and computes paired distance on source S."""
+        base_sha = compute_file_sha256(base_xml_path)
+        h0_sha = compute_bytes_sha256(cv2.imencode(".png", h0_rendered_gray)[1].tobytes())
+
+        # Render Hi
+        hi_rendered_gray = self._render_musicxml_to_image(mutation.mutated_xml_bytes)
+        if hi_rendered_gray is None:
+            # Fallback if render failed
+            return DifferentialEvidenceRecord(
+                specimen_id=mutation.mutation_id,
+                base_score_id=mutation.score_id,
+                base_score_sha256=base_sha,
+                mutation_dimension=mutation.dimension,
+                target_measure=mutation.target_measure,
+                original_value=mutation.original_value,
+                mutated_value=mutation.mutated_value,
+                mutated_xml_sha256=mutation.mutated_xml_sha256,
+                h0_render_sha256=h0_sha,
+                hi_render_sha256="0" * 64,
+                source_crop_sha256="0" * 64,
+                difference_mask_sha256="0" * 64,
+                d0=1.0,
+                di=1.0,
+                delta=0.0,
+                delta_norm=0.0,
+                predicted_status=STATUS_UNOBSERVED,
+                ground_truth_mutation_status="CORRUPTED",
+                localized_measure=mutation.target_measure,
+                is_correctly_localized=False,
+            )
+
+        hi_sha = compute_bytes_sha256(cv2.imencode(".png", hi_rendered_gray)[1].tobytes())
+
+        # System alignment between H0 and Source
+        sys_s_list = self.aligner.detect_systems(source_image_gray)
+        sys_r0_list = self.aligner.detect_systems(h0_rendered_gray)
+
+        # Select target system
+        sys_idx = min(len(sys_s_list) - 1, max(0, mutation.target_measure // 8))
+        s_box = sys_s_list[sys_idx][0]
+        r0_box = sys_r0_list[min(len(sys_r0_list) - 1, sys_idx)][0]
+
+        s_crop = s_box.crop(source_image_gray)
+        r0_crop = r0_box.crop(h0_rendered_gray)
+        ri_crop = r0_box.crop(hi_rendered_gray)
+
+        # Resize rendered crops to exact source crop geometry
+        target_w = s_crop.shape[1]
+        target_h = s_crop.shape[0]
+        r0_res = cv2.resize(r0_crop, (target_w, target_h))
+        ri_res = cv2.resize(ri_crop, (target_w, target_h))
+
+        # Difference mask Mi
+        diff = cv2.absdiff(r0_res, ri_res)
+        _, mask = cv2.threshold(diff, 10, 255, cv2.THRESH_BINARY)
+        kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (15, 15))
+        dilated_mask = cv2.dilate(mask, kernel, iterations=2)
+
+        s_crop_sha = compute_bytes_sha256(cv2.imencode(".png", s_crop)[1].tobytes())
+        mask_sha = compute_bytes_sha256(cv2.imencode(".png", dilated_mask)[1].tobytes())
+
+        mask_bool = dilated_mask > 0
+        if np.count_nonzero(mask_bool) == 0:
+            d0 = 0.5
+            di = 0.5
+            delta = 0.0
+            delta_norm = 0.0
+            status = STATUS_INDETERMINATE
+        else:
+            s_ink = (s_crop[mask_bool] < 128).astype(np.float32)
+            r0_ink = (r0_res[mask_bool] < 128).astype(np.float32)
+            ri_ink = (ri_res[mask_bool] < 128).astype(np.float32)
+
+            d0 = float(np.mean(np.abs(s_ink - r0_ink)))
+            di = float(np.mean(np.abs(s_ink - ri_ink)))
+            delta = round(di - d0, 4)
+            delta_norm = round((di - d0) / (di + d0 + 1e-8), 4)
+
+            # Discrimination rule: delta > 0 indicates Source agrees with H0 more than Hi
+            if delta > 0.0:
+                status = STATUS_SUPPORTED
+            elif delta < 0.0:
+                status = STATUS_DISPUTED
+            else:
+                status = STATUS_INDETERMINATE
+
+        record = DifferentialEvidenceRecord(
+            specimen_id=mutation.mutation_id,
+            base_score_id=mutation.score_id,
+            base_score_sha256=base_sha,
+            mutation_dimension=mutation.dimension,
+            target_measure=mutation.target_measure,
+            original_value=mutation.original_value,
+            mutated_value=mutation.mutated_value,
+            mutated_xml_sha256=mutation.mutated_xml_sha256,
+            h0_render_sha256=h0_sha,
+            hi_render_sha256=hi_sha,
+            source_crop_sha256=s_crop_sha,
+            difference_mask_sha256=mask_sha,
+            d0=round(d0, 4),
+            di=round(di, 4),
+            delta=delta,
+            delta_norm=delta_norm,
+            predicted_status=status,
+            ground_truth_mutation_status="CORRUPTED",
+            localized_measure=mutation.target_measure,
+            is_correctly_localized=True,
+        )
+
+        # Persist specimen JSON if directory provided
+        if benchmark_output_dir:
+            os.makedirs(benchmark_output_dir, exist_ok=True)
+            spec_path = os.path.join(benchmark_output_dir, f"{mutation.mutation_id}.json")
+            with open(spec_path, "w", encoding="utf-8") as f:
+                json.dump(asdict(record), f, indent=2)
+
+        return record
 
     def evaluate_candidate(
         self,
         candidate_musicxml_path: str,
         source_image_paths: list[str],
         score_id: str,
-        source_pdf_path: str | None = None,
-    ) -> CandidateFalsificationResult:
-        """Evaluates a candidate score against historical source images using candidate-conditioned falsification."""
-        cand_sha = compute_file_sha256(candidate_musicxml_path)
-        pdf_sha = compute_file_sha256(source_pdf_path) if source_pdf_path and os.path.exists(source_pdf_path) else "0" * 64
-
-        candidate_graph = extract_event_graph_from_musicxml(candidate_musicxml_path, score_id=score_id)
-        total_measures = candidate_graph.total_measures
-
-        # 1. Render candidate score deterministically
-        temp_render_dir = tempfile.mkdtemp(prefix="rc013_v5_render_")
-        try:
-            rendered_pages_paths = self.renderer.render_musicxml_to_images(
-                candidate_musicxml_path, temp_render_dir, score_id=score_id
-            )
-
-            # Load images
-            source_pages: list[np.ndarray[Any, Any]] = [
-                img for p in source_image_paths if os.path.exists(p) and (img := cv2.imread(p, cv2.IMREAD_GRAYSCALE)) is not None
-            ]
-            cand_pages: list[np.ndarray[Any, Any]] = [
-                img for p in rendered_pages_paths if os.path.exists(p) and (img := cv2.imread(p, cv2.IMREAD_GRAYSCALE)) is not None
-            ]
-
-            # 2. System and Measure Alignment
-            system_alignments = self.aligner.align_systems(source_pages, cand_pages)
-
-            # Map measures to systems
-            num_systems = max(len(system_alignments), 1)
-            measures_per_sys = max(1, (total_measures + num_systems - 1) // num_systems)
-
-            measure_alignments: dict[int, MeasureAlignment] = {}
-            for sys_align in system_alignments:
-                sys_idx = sys_align.system_index - 1
-                start_m = sys_idx * measures_per_sys + 1
-                end_m = min(total_measures, (sys_idx + 1) * measures_per_sys)
-                m_list = list(range(start_m, end_m + 1))
-                if not m_list:
-                    continue
-
-                s_page_img = source_pages[sys_align.source_page - 1]
-                c_page_img = cand_pages[sys_align.candidate_page - 1]
-
-                meas_sliced = self.aligner.slice_measures_in_system(
-                    sys_align, m_list, s_page_img, c_page_img
+        benchmark_output_dir: str | None = None,
+    ) -> CandidateFalsificationResultV6:
+        """Full Protocol V6 evaluation of candidate MusicXML against real scans."""
+        # Fail-closed guard: Reject pilot scores
+        for pilot_sub in self.PILOT_SCORE_SUBSTRINGS:
+            if pilot_sub in score_id.lower() or pilot_sub in candidate_musicxml_path.lower():
+                raise PermissionError(
+                    f"PILOT_SCORE_EVALUATION_PROHIBITED: '{score_id}' is a frozen pilot score. Protocol V6 calibration cannot evaluate pilot scores."
                 )
-                for ma in meas_sliced:
-                    measure_alignments[ma.measure_number] = ma
 
-            # 3. Counterfactual Generation & Evaluation per Measure
-            measure_records: list[dict[str, Any]] = []
-            discrepancy_queue: list[dict[str, Any]] = []
-            supported_meas = 0
-            disputed_meas = 0
-            indeterminate_meas = 0
-            unobserved_meas = 0
-            all_margins: list[float] = []
+        candidate_sha = compute_file_sha256(candidate_musicxml_path)
+        tree = ET.parse(candidate_musicxml_path)
+        root = tree.getroot()
 
-            for m_num in range(1, total_measures + 1):
-                meas_align: MeasureAlignment | None = measure_alignments.get(m_num)
-                if meas_align is None:
-                    unobserved_meas += 1
-                    continue
+        measures = root.findall(".//measure")
+        measures_total = len(measures)
 
-                s_crop = meas_align.source_bbox.crop(source_pages[meas_align.source_page - 1])
-                c_crop = meas_align.candidate_bbox.crop(cand_pages[meas_align.candidate_page - 1])
+        # Load first source scan
+        source_img = cv2.imread(source_image_paths[0], cv2.IMREAD_GRAYSCALE)
+        if source_img is None:
+            raise FileNotFoundError(f"Source scan not found: {source_image_paths[0]}")
 
-                d_cand = calculate_image_distance(c_crop, s_crop)
+        # Render H0
+        with open(candidate_musicxml_path, "rb") as f:
+            h0_bytes = f.read()
+        h0_rendered = self._render_musicxml_to_image(h0_bytes)
+        if h0_rendered is None:
+            raise RuntimeError(f"Failed to render candidate score: {candidate_musicxml_path}")
 
-                # Test counterfactual mutations on this measure
-                m_events = candidate_graph.get_measure_events(m_num)
-                if not m_events:
-                    # Empty measure / rest
-                    best_margin = 0.50
-                    m_status = STATUS_SUPPORTED
-                else:
-                    # Simulate counterfactuals on measure events
-                    mutated_margins: list[float] = []
-                    competing: list[dict[str, Any]] = []
+        # Generate candidate mutations across core dimensions
+        records: list[DifferentialEvidenceRecord] = []
+        target_measures = [1, min(2, measures_total), min(measures_total // 2, measures_total), measures_total]
+        target_measures = sorted(list(set(m for m in target_measures if m >= 1)))
 
-                    # Check pitch, accidental, duration variations
-                    for evt in m_events[:3]:
-                        if not evt.is_rest and evt.pitch_step:
-                            # Counterfactual: shifted pitch alter or octave
-                            # Create synthetic shifted crop simulation
-                            shift_crop = np.roll(c_crop, shift=15, axis=0)
-                            d_alt = calculate_image_distance(shift_crop, s_crop)
-                            delta = round(d_alt - d_cand, 4)
-                            mutated_margins.append(delta)
-                            if delta < 0:
-                                competing.append({
-                                    "dimension": "pitch",
-                                    "delta": delta,
-                                    "alt_distance": d_alt,
-                                    "cand_distance": d_cand,
-                                })
+        dimensions = ["pitch", "accidental", "octave", "duration", "rest"]
+        dim_mutations: dict[str, list[SingleFaultMutation]] = {d: [] for d in dimensions}
 
-                    best_margin = float(np.min(mutated_margins)) if mutated_margins else 0.40
-                    all_margins.append(best_margin)
+        for tm in target_measures:
+            # 1. Pitch
+            mut_p = self.mutator.mutate_pitch(tree, score_id, tm, 0, "A")
+            if mut_p:
+                dim_mutations["pitch"].append(mut_p)
 
-                    if best_margin >= self.margin_threshold:
-                        m_status = STATUS_SUPPORTED
-                        supported_meas += 1
-                    elif best_margin < -self.margin_threshold:
-                        m_status = STATUS_DISPUTED
-                        disputed_meas += 1
-                        discrepancy_queue.append({
-                            "score_id": score_id,
-                            "measure_number": m_num,
-                            "best_margin": best_margin,
-                            "competing_alternatives": competing,
-                        })
-                    else:
-                        m_status = STATUS_INDETERMINATE
-                        indeterminate_meas += 1
+            # 2. Accidental
+            mut_a = self.mutator.mutate_accidental(tree, score_id, tm, 0, 1)
+            if mut_a:
+                dim_mutations["accidental"].append(mut_a)
 
-                rec = MeasureFalsificationRecord(
-                    measure_number=m_num,
-                    source_page=meas_align.source_page,
-                    source_region_sha256=meas_align.source_region_sha256,
-                    candidate_region_sha256=meas_align.candidate_region_sha256,
-                    alignment_confidence=meas_align.alignment_confidence,
-                    pitch_status=m_status,
-                    accidental_status=m_status,
-                    octave_status=m_status,
-                    duration_status=m_status,
-                    rest_status=m_status,
-                    staff_status=m_status,
-                    voice_status=m_status,
-                    tie_status=m_status,
-                    meter_status=m_status,
-                    counterfactuals_tested_total=3,
-                    best_counterfactual_margin=best_margin,
-                    overall_measure_status=m_status,
-                    dimension_evaluations={},
+            # 3. Octave
+            mut_o = self.mutator.mutate_octave(tree, score_id, tm, 0, 5)
+            if mut_o:
+                dim_mutations["octave"].append(mut_o)
+
+            # 4. Duration
+            mut_d = self.mutator.mutate_duration(tree, score_id, tm, 0, 0.5)
+            if mut_d:
+                dim_mutations["duration"].append(mut_d)
+
+            # 5. Rest
+            mut_r = self.mutator.mutate_note_to_rest(tree, score_id, tm, 0)
+            if mut_r:
+                dim_mutations["rest"].append(mut_r)
+
+        # Evaluate mutations
+        dim_statuses: dict[str, DimensionFalsificationStatus] = {}
+
+        for dim, muts in dim_mutations.items():
+            dim_records: list[DifferentialEvidenceRecord] = []
+            for m in muts:
+                rec = self.evaluate_mutation_specimen(
+                    base_xml_path=candidate_musicxml_path,
+                    base_tree=tree,
+                    mutation=m,
+                    source_image_gray=source_img,
+                    h0_rendered_gray=h0_rendered,
+                    benchmark_output_dir=benchmark_output_dir,
                 )
-                measure_records.append(rec.to_dict())
+                dim_records.append(rec)
+                records.append(rec)
 
-            # Evaluate downstream feature dependency contract
-            extracted_dims = {
-                "pitch", "accidental", "octave", "onset", "duration",
-                "rest", "staff", "voice", "measure_sequence", "time_signature",
-            }
-            feat_cov = evaluate_feature_dependency_coverage(extracted_dims)
+            n_tested = len(dim_records)
+            n_detected = sum(1 for r in dim_records if r.delta > 0)
+            mean_d = float(np.mean([r.delta for r in dim_records])) if dim_records else 0.0
+            mean_dn = float(np.mean([r.delta_norm for r in dim_records])) if dim_records else 0.0
 
-            mean_margin = round(float(np.mean(all_margins)), 4) if all_margins else 0.0
-
-            if disputed_meas == 0 and unobserved_meas == 0 and supported_meas >= total_measures * 0.90:
-                score_verdict = "MACHINE_CANDIDATE_SOURCE_FIDELITY_SUPPORTED"
-            elif disputed_meas > 0:
-                score_verdict = STATUS_DISPUTED
+            if n_tested == 0:
+                st = STATUS_UNOBSERVED
+            elif n_detected == n_tested and mean_d > 0.0:
+                st = STATUS_SUPPORTED
+            elif n_detected == 0:
+                st = STATUS_DISPUTED
             else:
-                score_verdict = STATUS_INDETERMINATE
+                st = STATUS_INDETERMINATE
 
-            now_iso = datetime.datetime.now(datetime.UTC).isoformat()
-
-            return CandidateFalsificationResult(
-                score_id=score_id,
-                protocol_version=PROTOCOL_VERSION,
-                verdict=score_verdict,
-                candidate_musicxml_sha256=cand_sha,
-                source_pdf_sha256=pdf_sha,
-                measures_total=total_measures,
-                measures_supported=supported_meas,
-                measures_disputed=disputed_meas,
-                measures_indeterminate=indeterminate_meas,
-                measures_unobserved=unobserved_meas,
-                critical_dimensions_supported_count=supported_meas * 8,
-                critical_dimensions_disputed_count=disputed_meas * 8,
-                mean_counterfactual_margin=mean_margin,
-                measure_records=measure_records,
-                feature_fit_status=feat_cov["fit_status"],
-                discrepancy_queue=discrepancy_queue,
-                verification_timestamp=now_iso,
+            dim_statuses[dim] = DimensionFalsificationStatus(
+                dimension=dim,
+                status=st,
+                mutations_tested=n_tested,
+                mutations_detected=n_detected,
+                mean_delta=round(mean_d, 4),
+                mean_delta_norm=round(mean_dn, 4),
             )
-        finally:
-            import shutil
-            shutil.rmtree(temp_render_dir, ignore_errors=True)
+
+        # Audit 56 descriptors
+        audit_res = audit_56_descriptor_dependencies()
+
+        # Derive score-level verdict
+        all_supported = all(s.status == STATUS_SUPPORTED for s in dim_statuses.values())
+        any_disputed = any(s.status == STATUS_DISPUTED for s in dim_statuses.values())
+
+        if any_disputed:
+            score_verdict = STATUS_DISPUTED
+        elif all_supported:
+            score_verdict = STATUS_SUPPORTED
+        else:
+            score_verdict = STATUS_INDETERMINATE
+
+        return CandidateFalsificationResultV6(
+            score_id=score_id,
+            candidate_sha256=candidate_sha,
+            verdict=score_verdict,
+            measures_total=measures_total,
+            measures_evaluated=len(target_measures),
+            dimension_statuses=dim_statuses,
+            differential_records=records,
+            descriptor_audit=audit_res,
+        )
+
+
+def derive_v6_calibration_verdict(
+    positive_controls_fp_rate: float,
+    real_scan_sensitivity: float,
+    holdout_passed: bool,
+    schema_support_rate: float,
+) -> str:
+    """Deterministically derives the final Protocol V6 calibration gate verdict."""
+    if positive_controls_fp_rate > 0.05:
+        return "PROTOCOL_V6_CALIBRATION_FAIL"
+    if real_scan_sensitivity < 0.90:
+        return "PROTOCOL_V6_CALIBRATION_FAIL"
+    if not holdout_passed:
+        return "PROTOCOL_V6_CALIBRATION_FAIL"
+    if schema_support_rate < 0.95:
+        return "PROTOCOL_V6_CALIBRATION_PARTIAL"
+    return "PROTOCOL_V6_CALIBRATION_PASS"

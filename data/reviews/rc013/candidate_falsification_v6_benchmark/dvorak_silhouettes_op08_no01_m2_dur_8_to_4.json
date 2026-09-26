@@ -1,0 +1,22 @@
+{
+  "specimen_id": "dvorak_silhouettes_op08_no01_m2_dur_8_to_4",
+  "base_score_id": "dvorak_silhouettes_op08_no01",
+  "base_score_sha256": "173ff13c5ce85d4bb3a55edce911a0d1f935cf0ab0837f2ffe69327aaa37cdd6",
+  "mutation_dimension": "duration",
+  "target_measure": 2,
+  "original_value": "8",
+  "mutated_value": "4",
+  "mutated_xml_sha256": "f157693da30654ae1e469124f0bfae9fb7359ef0b375d38a6691a8705ea69e5f",
+  "h0_render_sha256": "a7f0c3310063b327d4685529832a69da9166f351aff9bb51ffa71456187b73e6",
+  "hi_render_sha256": "a7f0c3310063b327d4685529832a69da9166f351aff9bb51ffa71456187b73e6",
+  "source_crop_sha256": "5381d716015a554b980dd260bb5c6a247793be10e281299169373ea8dbd7e283",
+  "difference_mask_sha256": "b4032355b2c1701c20c15ff449316cbf4d8366c786912eb41dac3955df2825c0",
+  "d0": 0.5,
+  "di": 0.5,
+  "delta": 0.0,
+  "delta_norm": 0.0,
+  "predicted_status": "CANDIDATE_FALSIFICATION_INDETERMINATE",
+  "ground_truth_mutation_status": "CORRUPTED",
+  "localized_measure": 2,
+  "is_correctly_localized": true
+}

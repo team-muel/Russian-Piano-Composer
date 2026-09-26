@@ -1,0 +1,22 @@
+{
+  "specimen_id": "schumann_kinderszenen_op15_no01_m22_octave_4_to_5",
+  "base_score_id": "schumann_kinderszenen_op15_no01",
+  "base_score_sha256": "d4c2ef5a2a45c3db4786ae8662176dedc01b117b21b8e1059bfea130874775e0",
+  "mutation_dimension": "octave",
+  "target_measure": 22,
+  "original_value": "4",
+  "mutated_value": "5",
+  "mutated_xml_sha256": "87ceddef5a5d542ecc58c1bd061800e27f6d8b5d294579c1c1bb991116bde369",
+  "h0_render_sha256": "827ee7f060e3bf5fb45cea992315ea832623a1abbaa666edea22dd672e86cac8",
+  "hi_render_sha256": "3e97de4661da9a8df93437b24869de76023ec1c2735432a3bc6db0c6e5ed8b6c",
+  "source_crop_sha256": "8434d0425603f2b2176acf9f15c46449aef4cd28b164a2533373e46972e76f6e",
+  "difference_mask_sha256": "96817745fed27726e4dbcb0be3fbdde4c73721601e104b9eb776c66eceebc881",
+  "d0": 0.5,
+  "di": 0.5,
+  "delta": 0.0,
+  "delta_norm": 0.0,
+  "predicted_status": "CANDIDATE_FALSIFICATION_INDETERMINATE",
+  "ground_truth_mutation_status": "CORRUPTED",
+  "localized_measure": 22,
+  "is_correctly_localized": true
+}

@@ -400,6 +400,34 @@ def get_machine_triangulation_hashes() -> dict[str, str]:
         res["RC013_V5_COUNTERFACTUAL_SUITE_HASH"] = mut_v5_hash
         res["RC013_V5_CALIBRATION_RESULT_HASH"] = calib_v5_res_hash
 
+    manifest_v6_p = "data/manifests/rc013_candidate_falsification_protocol_v6.json"
+    calib_v6_reg_p = "data/calibration/rc013_machine_validation/rc013_calibration_v6_registry.json"
+    calib_v6_res_p = "data/reviews/rc013/candidate_falsification_calibration_v6_result.json"
+    bench_v6_dir = "data/reviews/rc013/candidate_falsification_v6_benchmark"
+
+    if os.path.exists(manifest_v6_p):
+        from russian_piano_composer.corpus.rc013_bundle_hashing import (
+            compute_calibration_v6_corpus_bundle_hash,
+            compute_v6_counterfactual_benchmark_bundle_hash,
+        )
+
+        with open(manifest_v6_p, encoding="utf-8") as f:
+            v6_data = json.load(f)
+        calib_v6_bundle_hash = compute_calibration_v6_corpus_bundle_hash(calib_v6_reg_p)
+        bench_v6_bundle_hash = compute_v6_counterfactual_benchmark_bundle_hash(bench_v6_dir)
+        align_v6_hash = compute_sha256_file("src/russian_piano_composer/corpus/rc013_alignment.py")
+        metric_v6_hash = compute_sha256_file("src/russian_piano_composer/corpus/rc013_falsification_protocol.py")
+        audit_56_hash = compute_sha256_file("src/russian_piano_composer/corpus/rc013_feature_dependency.py")
+        calib_v6_res_hash = compute_sha256_file(calib_v6_res_p) if os.path.exists(calib_v6_res_p) else "0" * 64
+
+        res["RC013_CANDIDATE_FALSIFICATION_PROTOCOL_V6_HASH"] = v6_data.get("protocol_hash", "")
+        res["RC013_V6_CALIBRATION_CORPUS_HASH"] = calib_v6_bundle_hash
+        res["RC013_V6_COUNTERFACTUAL_BENCHMARK_BUNDLE_HASH"] = bench_v6_bundle_hash
+        res["RC013_V6_ALIGNMENT_ENGINE_HASH"] = align_v6_hash
+        res["RC013_V6_DIFFERENTIAL_METRIC_HASH"] = metric_v6_hash
+        res["RC013_V6_DESCRIPTOR_DEPENDENCY_AUDIT_HASH"] = audit_56_hash
+        res["RC013_V6_CALIBRATION_RESULT_HASH"] = calib_v6_res_hash
+
     return res
 
 

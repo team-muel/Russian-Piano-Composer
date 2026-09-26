@@ -1,0 +1,22 @@
+{
+  "specimen_id": "dvorak_silhouettes_op08_no01_m27_dur_24_to_12",
+  "base_score_id": "dvorak_silhouettes_op08_no01",
+  "base_score_sha256": "173ff13c5ce85d4bb3a55edce911a0d1f935cf0ab0837f2ffe69327aaa37cdd6",
+  "mutation_dimension": "duration",
+  "target_measure": 27,
+  "original_value": "24",
+  "mutated_value": "12",
+  "mutated_xml_sha256": "bf4b08944dd7b449c39caad1bf9572a73cc578217adfc8e8309ae51a721106f5",
+  "h0_render_sha256": "a7f0c3310063b327d4685529832a69da9166f351aff9bb51ffa71456187b73e6",
+  "hi_render_sha256": "a7f0c3310063b327d4685529832a69da9166f351aff9bb51ffa71456187b73e6",
+  "source_crop_sha256": "5381d716015a554b980dd260bb5c6a247793be10e281299169373ea8dbd7e283",
+  "difference_mask_sha256": "b4032355b2c1701c20c15ff449316cbf4d8366c786912eb41dac3955df2825c0",
+  "d0": 0.5,
+  "di": 0.5,
+  "delta": 0.0,
+  "delta_norm": 0.0,
+  "predicted_status": "CANDIDATE_FALSIFICATION_INDETERMINATE",
+  "ground_truth_mutation_status": "CORRUPTED",
+  "localized_measure": 27,
+  "is_correctly_localized": true
+}
