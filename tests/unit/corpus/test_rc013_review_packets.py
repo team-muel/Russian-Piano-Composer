@@ -44,18 +44,24 @@ def test_composer_pool_cannot_claim_lyadov_or_lyapunov_as_baseline() -> None:
 
 
 def test_composer_pool_arensky_qualification_requires_three_scores() -> None:
-    """Proves that Arensky requires >= 3 verified scores to qualify."""
-    # 2 verified scores -> still unqualified
+    """Proves that Arensky requires >= 3 verified scores to establish pilot source fidelity, while N_Russian remains 2 without M_c >= 10."""
+    # 2 verified scores -> pilot unvalidated, confirmatory ineligible
     res_partial = derive_russian_composer_pool(arensky_verified_count=2)
     assert res_partial.n_russian == 2
     assert "Anton Arensky" not in res_partial.qualified_russian_composers
+    assert res_partial.composer_records["Anton Arensky"].pilot_status == "PILOT_UNVALIDATED"
+    assert res_partial.composer_records["Anton Arensky"].confirmatory_status == "CONFIRMATORY_INELIGIBLE"
     assert res_partial.rc012_resumption_status == "BLOCKED"
 
-    # 3 verified scores -> qualifies, n_russian becomes 3 (still blocked < 4)
+    # 3 verified scores -> PILOT_SOURCE_FIDELITY_ESTABLISHED, but N_Russian remains 2 because M_c = 3 < 10
     res_full = derive_russian_composer_pool(arensky_verified_count=3)
-    assert res_full.n_russian == 3
-    assert "Anton Arensky" in res_full.qualified_russian_composers
+    assert res_full.n_russian == 2
+    assert "Anton Arensky" not in res_full.qualified_russian_composers
+    assert res_full.composer_records["Anton Arensky"].pilot_status == "PILOT_SOURCE_FIDELITY_ESTABLISHED"
+    assert res_full.composer_records["Anton Arensky"].confirmatory_status == "CONFIRMATORY_INELIGIBLE"
+    assert res_full.composer_records["Anton Arensky"].qualification_status == "UNQUALIFIED"
     assert res_full.rc012_resumption_status == "BLOCKED"
+
 
 
 def test_all_nine_pilot_review_packets_exist_and_are_blank() -> None:

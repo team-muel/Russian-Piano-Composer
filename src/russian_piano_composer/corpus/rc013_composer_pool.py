@@ -24,14 +24,23 @@ from russian_piano_composer.corpus.rc013_review_ingestion import (
     validate_human_review_receipt,
 )
 
+# Explicit status constants
+STATUS_PILOT_UNVALIDATED = "PILOT_UNVALIDATED"
+STATUS_PILOT_SOURCE_FIDELITY_ESTABLISHED = "PILOT_SOURCE_FIDELITY_ESTABLISHED"
+STATUS_PILOT_FAILED = "PILOT_FAILED"
+STATUS_CONFIRMATORY_INELIGIBLE = "CONFIRMATORY_INELIGIBLE"
+STATUS_CONFIRMATORY_ELIGIBLE = "CONFIRMATORY_ELIGIBLE"
+
 
 @dataclass(frozen=True)
 class ComposerQualificationRecord:
     composer: str
     composer_class: str  # "Russian" | "Control"
     qualified_score_count: int
+    pilot_status: str  # "PILOT_UNVALIDATED", "PILOT_SOURCE_FIDELITY_ESTABLISHED", "PILOT_FAILED", "NOT_APPLICABLE"
+    confirmatory_status: str  # "CONFIRMATORY_INELIGIBLE", "CONFIRMATORY_ELIGIBLE"
     source_fidelity_authority: str
-    qualification_status: str  # "QUALIFIED" | "UNQUALIFIED"
+    qualification_status: str  # "QUALIFIED" | "UNQUALIFIED" (Confirmatory qualification)
     qualification_reason: str
     evidence_artifact: str
     evidence_sha: str
@@ -62,6 +71,8 @@ class RussianPoolDerivationResult:
                     "composer": v.composer,
                     "composer_class": v.composer_class,
                     "qualified_score_count": v.qualified_score_count,
+                    "pilot_status": v.pilot_status,
+                    "confirmatory_status": v.confirmatory_status,
                     "source_fidelity_authority": v.source_fidelity_authority,
                     "qualification_status": v.qualification_status,
                     "qualification_reason": v.qualification_reason,
@@ -160,12 +171,13 @@ def derive_russian_composer_pool(
 ) -> RussianPoolDerivationResult:
     """Derives Russian Composer Pool qualification and N_Russian strictly from verified score evidence.
 
-    Threshold requirement for RC-012/RC-013 qualification:
-    - Scriabin: 207 verified scores (>= 10) -> QUALIFIED
-    - Mussorgsky: 18 verified scores (>= 10) -> QUALIFIED
-    - Arensky: requires exactly 3 verified pilot movements (3/3) -> QUALIFIED if verified, else UNQUALIFIED
-    - Lyapunov: requires exactly 3 verified pilot movements (3/3) -> QUALIFIED if verified, else UNQUALIFIED
-    - Lyadov: requires exactly 3 verified pilot movements (3/3) -> QUALIFIED if verified, else UNQUALIFIED
+    Preregistered RC-012/RC-013 Confirmatory Contract:
+    - Minimum composer piece count: M_c >= 10 eligible pieces per composer.
+    - Scriabin: 207 verified scores (>= 10) -> CONFIRMATORY_ELIGIBLE, QUALIFIED
+    - Mussorgsky: 18 verified scores (>= 10) -> CONFIRMATORY_ELIGIBLE, QUALIFIED
+    - Arensky: 3 pilot scores -> PILOT_SOURCE_FIDELITY_ESTABLISHED if 3/3, but CONFIRMATORY_INELIGIBLE (M_c < 10) -> UNQUALIFIED
+    - Lyapunov: 3 pilot scores -> PILOT_SOURCE_FIDELITY_ESTABLISHED if 3/3, but CONFIRMATORY_INELIGIBLE (M_c < 10) -> UNQUALIFIED
+    - Lyadov: 3 pilot scores -> PILOT_SOURCE_FIDELITY_ESTABLISHED if 3/3, but CONFIRMATORY_INELIGIBLE (M_c < 10) -> UNQUALIFIED
     """
     records: dict[str, ComposerQualificationRecord] = {}
 
@@ -174,9 +186,11 @@ def derive_russian_composer_pool(
         composer="Alexander Scriabin",
         composer_class="Russian",
         qualified_score_count=207,
+        pilot_status="NOT_APPLICABLE",
+        confirmatory_status=STATUS_CONFIRMATORY_ELIGIBLE,
         source_fidelity_authority="RC-011 / RC-012 Canonical Confirmatory Corpus",
         qualification_status="QUALIFIED",
-        qualification_reason="207 deduplicated canonical works meeting full data contract",
+        qualification_reason="207 deduplicated canonical works meeting full confirmatory data contract (M_c >= 10)",
         evidence_artifact="data/manifests/rc012_source_inventory.csv",
         evidence_sha=RC012_INVENTORY_SHA,
     )
@@ -186,62 +200,76 @@ def derive_russian_composer_pool(
         composer="Modest Mussorgsky",
         composer_class="Russian",
         qualified_score_count=18,
+        pilot_status="NOT_APPLICABLE",
+        confirmatory_status=STATUS_CONFIRMATORY_ELIGIBLE,
         source_fidelity_authority="RC-011 / RC-012 Canonical Confirmatory Corpus",
         qualification_status="QUALIFIED",
-        qualification_reason="18 deduplicated canonical works meeting full data contract",
+        qualification_reason="18 deduplicated canonical works meeting full confirmatory data contract (M_c >= 10)",
         evidence_artifact="data/manifests/rc012_source_inventory.csv",
         evidence_sha=RC012_INVENTORY_SHA,
     )
 
     # 3. Anton Arensky (RC-013 Pilot)
-    arensky_status = "QUALIFIED" if arensky_verified_count >= 3 else "UNQUALIFIED"
-    arensky_reason = (
-        f"{arensky_verified_count}/3 source-fidelity verified movements (3/3 required for pilot qualification)"
+    arensky_pilot_status = (
+        STATUS_PILOT_SOURCE_FIDELITY_ESTABLISHED
         if arensky_verified_count >= 3
-        else f"{arensky_verified_count}/3 source-fidelity verified movements (requires independent human review)"
+        else STATUS_PILOT_UNVALIDATED
+    )
+    arensky_reason = (
+        f"{arensky_verified_count}/3 pilot scores verified ({arensky_pilot_status}); CONFIRMATORY_INELIGIBLE for RC-012 (M_c = {arensky_verified_count} < 10 required works)"
     )
     records["Anton Arensky"] = ComposerQualificationRecord(
         composer="Anton Arensky",
         composer_class="Russian",
         qualified_score_count=arensky_verified_count,
+        pilot_status=arensky_pilot_status,
+        confirmatory_status=STATUS_CONFIRMATORY_INELIGIBLE,
         source_fidelity_authority="RC-013 Canonical Pilot Manifest",
-        qualification_status=arensky_status,
+        qualification_status="UNQUALIFIED",
         qualification_reason=arensky_reason,
         evidence_artifact="data/manifests/rc013_digitization_manifest.yaml",
         evidence_sha="",
     )
 
     # 4. Sergei Lyapunov (RC-013 Pilot)
-    lyapunov_status = "QUALIFIED" if lyapunov_verified_count >= 3 else "UNQUALIFIED"
-    lyapunov_reason = (
-        f"{lyapunov_verified_count}/3 source-fidelity verified movements (3/3 required for pilot qualification)"
+    lyapunov_pilot_status = (
+        STATUS_PILOT_SOURCE_FIDELITY_ESTABLISHED
         if lyapunov_verified_count >= 3
-        else f"{lyapunov_verified_count}/3 source-fidelity verified movements (requires independent human review)"
+        else STATUS_PILOT_UNVALIDATED
+    )
+    lyapunov_reason = (
+        f"{lyapunov_verified_count}/3 pilot scores verified ({lyapunov_pilot_status}); CONFIRMATORY_INELIGIBLE for RC-012 (M_c = {lyapunov_verified_count} < 10 required works)"
     )
     records["Sergei Lyapunov"] = ComposerQualificationRecord(
         composer="Sergei Lyapunov",
         composer_class="Russian",
         qualified_score_count=lyapunov_verified_count,
+        pilot_status=lyapunov_pilot_status,
+        confirmatory_status=STATUS_CONFIRMATORY_INELIGIBLE,
         source_fidelity_authority="RC-013 Canonical Pilot Manifest",
-        qualification_status=lyapunov_status,
+        qualification_status="UNQUALIFIED",
         qualification_reason=lyapunov_reason,
         evidence_artifact="data/manifests/rc013_digitization_manifest.yaml",
         evidence_sha="",
     )
 
     # 5. Anatoly Lyadov (RC-013 Pilot)
-    lyadov_status = "QUALIFIED" if lyadov_verified_count >= 3 else "UNQUALIFIED"
-    lyadov_reason = (
-        f"{lyadov_verified_count}/3 source-fidelity verified movements (3/3 required for pilot qualification)"
+    lyadov_pilot_status = (
+        STATUS_PILOT_SOURCE_FIDELITY_ESTABLISHED
         if lyadov_verified_count >= 3
-        else f"{lyadov_verified_count}/3 source-fidelity verified movements (requires independent human review)"
+        else STATUS_PILOT_UNVALIDATED
+    )
+    lyadov_reason = (
+        f"{lyadov_verified_count}/3 pilot scores verified ({lyadov_pilot_status}); CONFIRMATORY_INELIGIBLE for RC-012 (M_c = {lyadov_verified_count} < 10 required works)"
     )
     records["Anatoly Lyadov"] = ComposerQualificationRecord(
         composer="Anatoly Lyadov",
         composer_class="Russian",
         qualified_score_count=lyadov_verified_count,
+        pilot_status=lyadov_pilot_status,
+        confirmatory_status=STATUS_CONFIRMATORY_INELIGIBLE,
         source_fidelity_authority="RC-013 Canonical Pilot Manifest",
-        qualification_status=lyadov_status,
+        qualification_status="UNQUALIFIED",
         qualification_reason=lyadov_reason,
         evidence_artifact="data/manifests/rc013_digitization_manifest.yaml",
         evidence_sha="",
@@ -259,24 +287,31 @@ def derive_russian_composer_pool(
             composer=ctrl_comp,
             composer_class="Control",
             qualified_score_count=10,
+            pilot_status="NOT_APPLICABLE",
+            confirmatory_status=STATUS_CONFIRMATORY_ELIGIBLE,
             source_fidelity_authority="RC-012 Confirmatory Baseline",
             qualification_status="QUALIFIED",
-            qualification_reason="M_c >= 10 canonical works meeting data contract",
+            qualification_reason="M_c >= 10 canonical works meeting full confirmatory data contract",
             evidence_artifact="data/manifests/rc012_source_inventory.csv",
             evidence_sha=RC012_INVENTORY_SHA,
         )
 
     qualified_russian = sorted([
         r.composer for r in records.values()
-        if r.composer_class == "Russian" and r.qualification_status == "QUALIFIED"
+        if r.composer_class == "Russian"
+        and r.qualification_status == "QUALIFIED"
+        and r.confirmatory_status == STATUS_CONFIRMATORY_ELIGIBLE
     ])
     unqualified_russian = sorted([
         r.composer for r in records.values()
-        if r.composer_class == "Russian" and r.qualification_status == "UNQUALIFIED"
+        if r.composer_class == "Russian"
+        and (r.qualification_status == "UNQUALIFIED" or r.confirmatory_status == STATUS_CONFIRMATORY_INELIGIBLE)
     ])
     qualified_control = sorted([
         r.composer for r in records.values()
-        if r.composer_class == "Control" and r.qualification_status == "QUALIFIED"
+        if r.composer_class == "Control"
+        and r.qualification_status == "QUALIFIED"
+        and r.confirmatory_status == STATUS_CONFIRMATORY_ELIGIBLE
     ])
 
     n_russian = len(qualified_russian)
@@ -287,7 +322,7 @@ def derive_russian_composer_pool(
     resumption_reason = (
         "CONFIRMATORY_DATA_CONTRACT_SATISFIED"
         if rc012_unblocked
-        else f"N_Russian = {n_russian} < 4 (requires at least 4 qualified Russian composers)"
+        else f"N_Russian = {n_russian} < 4 (requires at least 4 confirmatory-qualified Russian composers with M_c >= 10 each)"
     )
 
     return RussianPoolDerivationResult(
@@ -300,3 +335,4 @@ def derive_russian_composer_pool(
         rc012_resumption_reason=resumption_reason,
         composer_records=records,
     )
+

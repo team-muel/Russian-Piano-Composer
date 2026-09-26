@@ -314,7 +314,7 @@ def test_composer_qualification_requires_strictly_three_of_three_receipts(tmp_pa
     assert res1.n_russian == 2
     assert "Anton Arensky" in res1.unqualified_russian_composers
     assert res1.composer_records["Anton Arensky"].qualification_status == "UNQUALIFIED"
-    assert "1/3 source-fidelity verified movements" in res1.composer_records["Anton Arensky"].qualification_reason
+    assert "1/3 pilot scores verified" in res1.composer_records["Anton Arensky"].qualification_reason
 
     # Case 2/3: 2 receipts -> UNQUALIFIED, N_Russian = 2
     create_receipt(arensky_targets[1][0])
@@ -327,9 +327,9 @@ def test_composer_qualification_requires_strictly_three_of_three_receipts(tmp_pa
     assert res2.n_russian == 2
     assert "Anton Arensky" in res2.unqualified_russian_composers
     assert res2.composer_records["Anton Arensky"].qualification_status == "UNQUALIFIED"
-    assert "2/3 source-fidelity verified movements" in res2.composer_records["Anton Arensky"].qualification_reason
+    assert "2/3 pilot scores verified" in res2.composer_records["Anton Arensky"].qualification_reason
 
-    # Case 3/3: 3 receipts -> QUALIFIED, N_Russian = 3
+    # Case 3/3: 3 receipts -> PILOT_SOURCE_FIDELITY_ESTABLISHED, but CONFIRMATORY_INELIGIBLE (M_c = 3 < 10), N_Russian remains 2
     create_receipt(arensky_targets[2][0])
     res3 = derive_russian_composer_pool_from_evidence(
         receipts_dir=str(tmp_receipts),
@@ -337,12 +337,56 @@ def test_composer_qualification_requires_strictly_three_of_three_receipts(tmp_pa
         packets_dir=str(tmp_packets),
         source_manifest_csv=str(tmp_manifest),
     )
-    assert res3.n_russian == 3
-    assert "Anton Arensky" in res3.qualified_russian_composers
-    assert res3.composer_records["Anton Arensky"].qualification_status == "QUALIFIED"
-    assert "3/3 source-fidelity verified movements" in res3.composer_records["Anton Arensky"].qualification_reason
-    # Still blocked because N_Russian < 4
+    assert res3.n_russian == 2
+    assert "Anton Arensky" in res3.unqualified_russian_composers
+    assert res3.composer_records["Anton Arensky"].pilot_status == "PILOT_SOURCE_FIDELITY_ESTABLISHED"
+    assert res3.composer_records["Anton Arensky"].confirmatory_status == "CONFIRMATORY_INELIGIBLE"
+    assert res3.composer_records["Anton Arensky"].qualification_status == "UNQUALIFIED"
+    assert "CONFIRMATORY_INELIGIBLE for RC-012" in res3.composer_records["Anton Arensky"].qualification_reason
+    # Still blocked because N_Russian = 2 < 4
     assert res3.rc012_resumption_status == "BLOCKED"
+
+
+def test_three_of_three_pilot_does_not_increment_n_russian() -> None:
+    """Proves that verified pilot scores establish pilot fidelity but cannot change N_Russian without M_c >= 10."""
+    from russian_piano_composer.corpus.rc013_composer_pool import derive_russian_composer_pool
+
+    # All 3 pilot composers have 3/3 verified scores
+    res = derive_russian_composer_pool(
+        arensky_verified_count=3,
+        lyapunov_verified_count=3,
+        lyadov_verified_count=3,
+    )
+    assert res.n_russian == 2
+    assert res.qualified_russian_composers == ["Alexander Scriabin", "Modest Mussorgsky"]
+    assert res.rc012_resumption_status == "BLOCKED"
+    for comp in ["Anton Arensky", "Anatoly Lyadov", "Sergei Lyapunov"]:
+        rec = res.composer_records[comp]
+        assert rec.pilot_status == "PILOT_SOURCE_FIDELITY_ESTABLISHED"
+        assert rec.confirmatory_status == "CONFIRMATORY_INELIGIBLE"
+        assert rec.qualification_status == "UNQUALIFIED"
+
+
+def test_composer_piece_count_boundary_nine_vs_ten() -> None:
+    """Proves that M_c = 9 is INELIGIBLE and M_c = 10 qualifies under the frozen RC-012 preregistration."""
+    from russian_piano_composer.corpus.rc013_composer_pool import (
+        STATUS_CONFIRMATORY_ELIGIBLE,
+        STATUS_CONFIRMATORY_INELIGIBLE,
+    )
+
+    def evaluate_piece_count(m_c: int) -> tuple[str, str]:
+        if m_c >= 10:
+            return "QUALIFIED", STATUS_CONFIRMATORY_ELIGIBLE
+        return "UNQUALIFIED", STATUS_CONFIRMATORY_INELIGIBLE
+
+    q_9, c_9 = evaluate_piece_count(9)
+    assert q_9 == "UNQUALIFIED"
+    assert c_9 == STATUS_CONFIRMATORY_INELIGIBLE
+
+    q_10, c_10 = evaluate_piece_count(10)
+    assert q_10 == "QUALIFIED"
+    assert c_10 == STATUS_CONFIRMATORY_ELIGIBLE
+
 
 
 def test_production_fidelity_gate_fails_closed_without_accepted_receipts() -> None:
