@@ -1,0 +1,50 @@
+{
+  "comparison_dimensions": [
+    "SOURCE_SCAN_TRANSPARENCY",
+    "SYMBOLIC_PROVENANCE",
+    "EDITORIAL_TRANSPARENCY",
+    "INSTITUTIONAL_AUTHORITY",
+    "VERSION_STABILITY",
+    "LICENSE_CLARITY",
+    "REPRODUCIBILITY"
+  ],
+  "corpora_evaluations": {
+    "DCMLab": {
+      "SOURCE_SCAN_TRANSPARENCY": "MEDIUM (Linked PDFs referenced in GitHub issues or repos)",
+      "SYMBOLIC_PROVENANCE": "HIGH (MuseScore files engraved by musicology students/researchers)",
+      "EDITORIAL_TRANSPARENCY": "HIGH (Open issue tracker, git commit history)",
+      "INSTITUTIONAL_AUTHORITY": "HIGH (EPFL Digital and Cognitive Musicology Lab)",
+      "VERSION_STABILITY": "HIGH (Tagged releases and pinned commit hashes)",
+      "LICENSE_CLARITY": "HIGH (CC-BY-NC-SA 4.0 or CC0 explicit root LICENSE)",
+      "REPRODUCIBILITY": "HIGH (Deterministic git cloning and ms3 parsing)"
+    },
+    "CCARH_craigsapp_scriabin": {
+      "SOURCE_SCAN_TRANSPARENCY": "MEDIUM (Bibliographic citation of historical Muzgiz/Belaieff editions)",
+      "SYMBOLIC_PROVENANCE": "HIGH (Craig Sapp / Stanford CCARH Humdrum data)",
+      "EDITORIAL_TRANSPARENCY": "HIGH (Documented Humdrum spine records)",
+      "INSTITUTIONAL_AUTHORITY": "HIGH (Stanford University CCARH)",
+      "VERSION_STABILITY": "HIGH (Permanent GitHub archive)",
+      "LICENSE_CLARITY": "HIGH (Free for non-commercial / CC-BY license terms)",
+      "REPRODUCIBILITY": "HIGH (Deterministic Humdrum parsing)"
+    },
+    "PERiScoPe": {
+      "SOURCE_SCAN_TRANSPARENCY": "MEDIUM (Bibliographic edition metadata per score)",
+      "SYMBOLIC_PROVENANCE": "HIGH (Research project aligned score database)",
+      "EDITORIAL_TRANSPARENCY": "MEDIUM (Academic publication documentation)",
+      "INSTITUTIONAL_AUTHORITY": "HIGH (Academic research consortium)",
+      "VERSION_STABILITY": "HIGH (Zenodo DOI / GitHub release)",
+      "LICENSE_CLARITY": "HIGH (Open data research license / CC-BY)",
+      "REPRODUCIBILITY": "HIGH (MusicXML and MEI direct parsers)"
+    },
+    "Tonal_Piano_Corpus": {
+      "SOURCE_SCAN_TRANSPARENCY": "VERY_HIGH (Paired high-resolution TIFF scans included for 100% of pieces)",
+      "SYMBOLIC_PROVENANCE": "HIGH (Direct Finale engraving from library print editions)",
+      "EDITORIAL_TRANSPARENCY": "HIGH (EditorialPrinciples.md, EditorialNotes.md document exact fidelity with 0 unnotated revisions in Russian works)",
+      "INSTITUTIONAL_AUTHORITY": "MEDIUM (Independent expert musicological curation)",
+      "VERSION_STABILITY": "HIGH (Pinned Git commit 3f5a08e9b2360c11aea5d6d384eb84e7845b793c)",
+      "LICENSE_CLARITY": "LOW_TO_UNDECLARED (No root LICENSE file in repository)",
+      "REPRODUCIBILITY": "HIGH (Pinned commit + blob SHAs + non-vendored reference checkout)"
+    }
+  },
+  "synthesis": "Tonal-Piano-Corpus exceeds baseline in SOURCE_SCAN_TRANSPARENCY (providing complete paired TIFFs for every score) and matches baseline in EDITORIAL_TRANSPARENCY and REPRODUCIBILITY, but is weaker in LICENSE_CLARITY (UNDECLARED root license) and INSTITUTIONAL_AUTHORITY. This dimensional profile justifies non-vendored reference ingestion while disallowing direct byte redistribution."
+}

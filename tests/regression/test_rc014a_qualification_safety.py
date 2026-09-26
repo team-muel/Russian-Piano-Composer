@@ -94,3 +94,48 @@ def test_rc014a_source_authority_symmetry() -> None:
 
     tpc_eval = data["comparison_targets"]["Tonal_Piano_Corpus"]["symmetry_assessment"]
     assert "MEETS_SOURCE_LINKED_STANDARD" in tpc_eval
+
+
+def test_rc014b_external_access_policy_manifest_safety() -> None:
+    """Verify RC-014B non-vendored policy enforces fail-closed redistribution constraints."""
+    policy_path = Path("data/manifests/rc014b_external_access_policy.json")
+    assert policy_path.exists(), "RC-014B policy manifest missing"
+
+    with open(policy_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    assert data["access_mode"] == "NON_VENDORED_REFERENCE_ACCESS"
+    assert data["license_status"] == "UNDECLARED"
+    assert data["policy_verdict"] == "RC014B_NONVENDORED_REFERENCE_PATH_VALID"
+    assert data["raw_file_redistribution_permitted"] is False
+    assert data["derived_feature_extraction_permitted"] is True
+    assert data["corpus_root_tree"] == "2e86805f11040570d1f2f45bc0f03be408ca4997"
+    assert len(data["reference_manifest"]) == 23
+
+
+def test_rc014b_source_authority_dimensional_assessment() -> None:
+    """Verify multidimensional authority evaluation separates scans from license clarity."""
+    auth_dim_path = Path("data/manifests/rc014b_source_authority_dimensions.json")
+    assert auth_dim_path.exists(), "RC-014B source authority dimensional manifest missing"
+
+    with open(auth_dim_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    tpc_eval = data["corpora_evaluations"]["Tonal_Piano_Corpus"]
+    assert "VERY_HIGH" in tpc_eval["SOURCE_SCAN_TRANSPARENCY"]
+    assert "UNDECLARED" in tpc_eval["LICENSE_CLARITY"]
+
+
+def test_rc014b_prokofiev_symbolic_coverage_audit() -> None:
+    """Verify Visions Fugitives full 20-piece coverage audit is recorded and verified."""
+    cov_path = Path("data/manifests/rc014b_prokofiev_symbolic_coverage.json")
+    assert cov_path.exists(), "Prokofiev coverage manifest missing"
+
+    with open(cov_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    vf_audit = data["visions_fugitives_op22_full_cycle_audit"]
+    assert len(vf_audit["availability_matrix"]) == 20
+    assert vf_audit["global_public_domain"] is True
+    assert data["confirmatory_supplementation_path"]["target_pieces_count"] == 10
+
