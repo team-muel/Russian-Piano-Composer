@@ -126,6 +126,37 @@ def test_rc014b_source_authority_dimensional_assessment() -> None:
     assert "UNDECLARED" in tpc_eval["LICENSE_CLARITY"]
 
 
+def test_rc014b_license_undeclared_disallows_ready_for_vendoring() -> None:
+    """Verify that undeclared digital license strictly prevents READY_FOR_VENDORING status."""
+    policy_path = Path("data/manifests/rc014b_external_access_policy.json")
+    with open(policy_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    # When license is UNDECLARED, raw redistribution cannot be permitted
+    if data["license_status"] == "UNDECLARED":
+        assert data["raw_file_redistribution_permitted"] is False
+        assert data["policy_verdict"] != "READY_FOR_VENDORING"
+        assert data["policy_verdict"] == "RC014B_NONVENDORED_REFERENCE_PATH_VALID"
+
+
+def test_rc014b_technical_compatibility_distinct_from_redistribution() -> None:
+    """Verify 56-feature extraction success does not imply redistribution rights."""
+    comp_path = Path("data/manifests/rc014a_rc011_compatibility_audit.json")
+    policy_path = Path("data/manifests/rc014b_external_access_policy.json")
+
+    with open(comp_path, encoding="utf-8") as f:
+        comp_data = json.load(f)
+    with open(policy_path, encoding="utf-8") as f:
+        policy_data = json.load(f)
+
+    # 100% technical compatibility
+    assert comp_data["prokofiev_summary"]["files_passing_56_descriptors"] == 12
+    assert comp_data["rubinstein_summary"]["files_passing_56_descriptors"] == 11
+
+    # But redistribution is strictly false
+    assert policy_data["raw_file_redistribution_permitted"] is False
+
+
 def test_rc014b_prokofiev_symbolic_coverage_audit() -> None:
     """Verify Visions Fugitives full 20-piece coverage audit is recorded and verified."""
     cov_path = Path("data/manifests/rc014b_prokofiev_symbolic_coverage.json")
@@ -138,4 +169,6 @@ def test_rc014b_prokofiev_symbolic_coverage_audit() -> None:
     assert len(vf_audit["availability_matrix"]) == 20
     assert vf_audit["global_public_domain"] is True
     assert data["confirmatory_supplementation_path"]["target_pieces_count"] == 10
+
+
 
