@@ -1,0 +1,32 @@
+{
+  "source_repository": "automata/ana-music",
+  "source_commit": "335cbdc617c919d29e9384c4e490cabca5736f73",
+  "root_tree": "a7f14da4844b47ac3484b01d5d3da2a0029e4b6a",
+  "path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-2.krn",
+  "git_blob_sha": "8ecec739bc4c7f561e2c7c141aff1cf40d9d3c0d",
+  "sha256": "944d176184b7311f3a9faee8726fb2583287fce0caf984e7118d37c4c37d71a3",
+  "converter": "music21",
+  "converter_version": "music21-10.5.0",
+  "conversion_config": {
+    "parser_module": "music21.converter",
+    "input_format": "humdrum_kern",
+    "timing_granularity_limit": 1920,
+    "preserves_ties": true,
+    "preserves_meter_changes": true,
+    "preserves_staves": true
+  },
+  "canonical_event_count": 281,
+  "canonical_measure_count": 24,
+  "canonical_score_hash": "d55701ebe75dbe6b44266a8642218e4709f00610d2e1cfbe644c3506d9980eb7",
+  "schema_hash": "924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282",
+  "rc011_56_descriptor_extraction_status": "PASS",
+  "derived_feature_bundle_hash": "caabe00c9a7e607e320b67c7b5e9a0721d517c3c8535f1aee39bd88af51e0f15",
+  "source_metadata": {
+    "COM": "Prokofiev, Sergey",
+    "OPS": "Op. 22",
+    "ONM": "No. 2",
+    "OMD": "Andante",
+    "ENC": "Craig Stuart Sapp",
+    "END": "2004/12/09/"
+  }
+}

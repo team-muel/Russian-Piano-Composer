@@ -1,4 +1,7 @@
 {
+  "artifact_status": "SUPERSEDED_BY_RC014B",
+  "superseded_by": "data/manifests/rc014b_external_access_policy.json",
+  "supersession_note": "Superseded by RC-014B/RC-014B.2 two-axis governance taxonomy (technical reproducibility vs. legal authority). Historical records preserved for provenance.",
   "corpus_repository": "hectorbellmann-art/Tonal-Piano-Corpus",
   "corpus_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
   "repository_license": "UNSPECIFIED (No root LICENSE file in repo)",

@@ -1,0 +1,32 @@
+{
+  "source_repository": "automata/ana-music",
+  "source_commit": "335cbdc617c919d29e9384c4e490cabca5736f73",
+  "root_tree": "a7f14da4844b47ac3484b01d5d3da2a0029e4b6a",
+  "path": "corpus/classical/users/craig/classical/prokofiev/op22/visions22-3.krn",
+  "git_blob_sha": "d7554373b3d67e4606f9f2f5f79b34608a000b12",
+  "sha256": "5d8d2a84e7b39df25553c4175fdf56ea52a655fa1ca58abc9aaf68db30848399",
+  "converter": "music21",
+  "converter_version": "music21-10.5.0",
+  "conversion_config": {
+    "parser_module": "music21.converter",
+    "input_format": "humdrum_kern",
+    "timing_granularity_limit": 1920,
+    "preserves_ties": true,
+    "preserves_meter_changes": true,
+    "preserves_staves": true
+  },
+  "canonical_event_count": 310,
+  "canonical_measure_count": 28,
+  "canonical_score_hash": "8f0e835d0c317be57839ef5bc536af52c379400bc25f007796a71d125dfa2f47",
+  "schema_hash": "924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282",
+  "rc011_56_descriptor_extraction_status": "PASS",
+  "derived_feature_bundle_hash": "4dc22a99e8408e949ce144d05ae7482ab570f15dbc03daf59cfcd76329ce6051",
+  "source_metadata": {
+    "COM": "Prokofiev, Sergey",
+    "OPS": "Op. 22",
+    "ONM": "No. 3",
+    "OMD": "Allegretto",
+    "ENC": "Craig Stuart Sapp",
+    "END": "2004/12/09/"
+  }
+}

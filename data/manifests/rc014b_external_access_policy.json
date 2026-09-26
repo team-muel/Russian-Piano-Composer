@@ -20,7 +20,8 @@
   },
   "upstream_permission_request_status": "PENDING_DISPATCH",
   "raw_file_redistribution_permitted": false,
-  "derived_feature_extraction_permitted": true,
+  "derived_feature_extraction_technically_supported": true,
+  "derived_feature_retention_authority": "PENDING",
   "reference_manifest": [
     {
       "composer": "Sergei Prokofiev",

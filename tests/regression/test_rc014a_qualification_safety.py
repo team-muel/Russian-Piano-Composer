@@ -66,22 +66,16 @@ def test_rc014a_compatibility_manifest_verdict() -> None:
     assert data["rubinstein_summary"]["files_failing"] == 0
 
 
-def test_rc014a_rights_audit_distinguishes_jurisdictions() -> None:
-    """Verify rights audit enforces strict US vs EU distinction for Prokofiev."""
+def test_rc014a_rights_audit_marked_superseded() -> None:
+    """Verify historical RC-014A rights manifest is explicitly marked as superseded by RC-014B."""
     rights_path = Path("data/manifests/rc014a_rights_and_license_audit.json")
     assert rights_path.exists(), "Rights manifest missing"
 
     with open(rights_path, encoding="utf-8") as f:
         data = json.load(f)
 
-    prok_legal = data["legal_analysis"]["Sergei_Prokofiev"]
-    assert prok_legal["pre_1929_eligible_count"] == 8
-    assert prok_legal["post_1928_count"] == 4
-    assert prok_legal["qualification_verdict"].startswith("PARTIALLY_PUBLIC_DOMAIN")
-
-    rub_legal = data["legal_analysis"]["Anton_Rubinstein"]
-    assert rub_legal["public_domain_status"] == "PUBLIC_DOMAIN_WORLDWIDE"
-    assert rub_legal["qualification_verdict"] == "RIGHTS_CLEAR_FOR_SCIENTIFIC_EVALUATION"
+    assert data.get("artifact_status") == "SUPERSEDED_BY_RC014B"
+    assert "data/manifests/rc014b_external_access_policy.json" in data.get("superseded_by", "")
 
 
 def test_rc014a_source_authority_symmetry() -> None:
@@ -110,7 +104,8 @@ def test_rc014b_external_access_policy_manifest_safety() -> None:
     assert data["legal_governance_axes"]["legal_redistribution_authority"] == "LEGAL_AUTHORITY_PENDING"
     assert data["legal_governance_axes"]["composite_policy_verdict"] == "RC014B_NONVENDORED_REFERENCE_PATH_TECHNICALLY_VALID_LEGAL_AUTHORITY_PENDING"
     assert data["raw_file_redistribution_permitted"] is False
-    assert data["derived_feature_extraction_permitted"] is True
+    assert data["derived_feature_extraction_technically_supported"] is True
+    assert data["derived_feature_retention_authority"] == "PENDING"
     assert data["corpus_root_tree"] == "2e86805f11040570d1f2f45bc0f03be408ca4997"
     assert len(data["reference_manifest"]) == 23
 
@@ -194,6 +189,44 @@ def test_rc014b_unicode_paths_roundtrip_integrity() -> None:
         assert "?" not in rel, f"Path {rel} contains corrupted Unicode replacement character '?'"
         assert len(entry["sha256"]) == 64
         assert len(entry["git_blob_sha"]) == 40
+
+
+def test_rc014b2_humdrum_supplement_receipts_and_invariants() -> None:
+    """Verify persisted technical receipts for Prokofiev Op.22 Nos. 2 & 3 supplements."""
+    r2_path = Path("data/reviews/rc014/prokofiev_op22_no02_technical_receipt.json")
+    r3_path = Path("data/reviews/rc014/prokofiev_op22_no03_technical_receipt.json")
+
+    assert r2_path.exists(), "Op. 22 No. 2 technical receipt missing"
+    assert r3_path.exists(), "Op. 22 No. 3 technical receipt missing"
+
+    with open(r2_path, encoding="utf-8") as f:
+        r2 = json.load(f)
+    with open(r3_path, encoding="utf-8") as f:
+        r3 = json.load(f)
+
+    # Check repository identity and frozen commit
+    for r in [r2, r3]:
+        assert r["source_repository"] == "automata/ana-music"
+        assert r["source_commit"] == "335cbdc617c919d29e9384c4e490cabca5736f73"
+        assert r["root_tree"] == "a7f14da4844b47ac3484b01d5d3da2a0029e4b6a"
+        assert r["converter"] == "music21"
+        assert r["rc011_56_descriptor_extraction_status"] == "PASS"
+        assert r["schema_hash"] == "924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282"
+
+    # Check Op. 22 No. 2 invariants
+    assert r2["canonical_measure_count"] == 24
+    assert r2["git_blob_sha"] == "8ecec739bc4c7f561e2c7c141aff1cf40d9d3c0d"
+    assert r2["sha256"] == "944d176184b7311f3a9faee8726fb2583287fce0caf984e7118d37c4c37d71a3"
+    assert r2["source_metadata"]["OMD"] == "Andante"
+    assert r2["source_metadata"]["ENC"] == "Craig Stuart Sapp"
+
+    # Check Op. 22 No. 3 invariants
+    assert r3["canonical_measure_count"] == 28
+    assert r3["git_blob_sha"] == "d7554373b3d67e4606f9f2f5f79b34608a000b12"
+    assert r3["sha256"] == "5d8d2a84e7b39df25553c4175fdf56ea52a655fa1ca58abc9aaf68db30848399"
+    assert r3["source_metadata"]["OMD"] == "Allegretto"
+    assert r3["source_metadata"]["ENC"] == "Craig Stuart Sapp"
+
 
 
 
