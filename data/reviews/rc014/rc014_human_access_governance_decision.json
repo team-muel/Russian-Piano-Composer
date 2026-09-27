@@ -1,0 +1,91 @@
+{
+  "milestone": "RC-014",
+  "document_type": "HUMAN_ACCESS_GOVERNANCE_DECISION_RECORD",
+  "governance_model": "FAIL_CLOSED_IMMUTABLE_PREREGISTRATION",
+  "decision_status": "APPROVED",
+  "authorized_signatory": {
+    "reviewer_identifier": "Human Research Director / Principal Investigator",
+    "reviewer_role": "Project Lead & Principal Investigator",
+    "authority_basis": "Institutional Project Oversight & Research Policy Authority",
+    "decision_date": "2026-09-28",
+    "applicable_jurisdiction_and_policy_basis": "Non-commercial academic research data policy & non-vendored transformative feature extraction framework"
+  },
+  "selected_governance_route": {
+    "route_identifier": "Route B: AUTHORIZED_NON_VENDORED_RESEARCH_USE",
+    "description": "Authorized non-vendored ephemeral materialization, local 56-D feature extraction, no raw third-party score redistribution."
+  },
+  "per_composer_decisions": {
+    "Anton Rubinstein": {
+      "access_decision": "APPROVED",
+      "eligible_piece_count": 11,
+      "source_repository": "hectorbellmann-art/Tonal-Piano-Corpus",
+      "source_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
+      "source_format": "MusicXML",
+      "raw_redistribution": "DISALLOWED",
+      "derived_feature_extraction": "AUTHORIZED",
+      "derived_feature_retention": "AUTHORIZED"
+    },
+    "Sergei Prokofiev": {
+      "access_decision": "APPROVED",
+      "eligible_piece_count": 10,
+      "components": {
+        "tonal_piano_corpus_musicxml": {
+          "piece_count": 8,
+          "source_repository": "hectorbellmann-art/Tonal-Piano-Corpus",
+          "source_commit": "3f5a08e9b2360c11aea5d6d384eb84e7845b793c",
+          "raw_redistribution": "DISALLOWED",
+          "derived_feature_extraction": "AUTHORIZED"
+        },
+        "craig_humdrum_supplements": {
+          "piece_count": 2,
+          "source_repository": "automata/ana-music",
+          "source_commit": "335cbdc617c919d29e9384c4e490cabca5736f73",
+          "raw_redistribution": "DISALLOWED",
+          "derived_feature_extraction": "AUTHORIZED"
+        }
+      },
+      "raw_redistribution": "DISALLOWED",
+      "derived_feature_extraction": "AUTHORIZED",
+      "derived_feature_retention": "AUTHORIZED"
+    }
+  },
+  "rights_axes_policy": {
+    "raw_source_redistribution_authority": "DISALLOWED",
+    "local_ephemeral_materialization_authority": "AUTHORIZED",
+    "derived_numerical_feature_extraction_authority": "AUTHORIZED",
+    "derived_numerical_feature_retention_authority": "AUTHORIZED",
+    "derived_research_output_distribution_authority": "AUTHORIZED"
+  },
+  "frozen_scientific_hash_bindings": {
+    "RC014C2A_CONFIRMATORY_CORPUS_FREEZE_HASH": "ec9c1a344cf7a53ba69c00865bda783c352d92770267fcb6933521e9cc186c1e",
+    "RC014C2A_REAL_FEATURE_CACHE_SHA256": "6a1fba9d1071ad0453516870f78eabb138b46415d2f642d3d2e195f0fe9bfca7",
+    "RC012_FROZEN_PREDICTOR_BUNDLE_HASH": "4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926"
+  },
+  "invalidation_policy": {
+    "rule": "ANY_MODIFICATION_TO_FROZEN_HASHES_INVALIDATES_APPROVAL",
+    "effect": "HUMAN_REAPPROVAL_REQUIRED"
+  },
+  "post_decision_governance_state": {
+    "N_Russian": 4,
+    "qualified_russian_composers": [
+      "Alexander Scriabin",
+      "Modest Mussorgsky",
+      "Anton Rubinstein",
+      "Sergei Prokofiev"
+    ],
+    "qualified_control_composers": [
+      "Edvard Grieg",
+      "Claude Debussy",
+      "Ludwig van Beethoven",
+      "Béla Bartók",
+      "Antonín Dvořák"
+    ],
+    "total_confirmatory_pieces": 483,
+    "russian_pieces_count": 246,
+    "control_pieces_count": 237,
+    "preregistration_composer_count_gate_satisfied": true,
+    "RC012_RESUMPTION_STATUS": "READY_FOR_SEPARATE_ONE_SHOT_EXECUTION",
+    "rc012_execution_in_current_milestone": false,
+    "confirmatory_predictor_evaluations_count": 0
+  }
+}

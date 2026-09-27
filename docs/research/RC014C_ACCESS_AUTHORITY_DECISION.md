@@ -29,8 +29,8 @@ To prevent collapsing distinct legal questions into a single boolean, the projec
 | Governance Axis | Definition | Current Technical State | Current Governance Status |
 |---|---|---|---|
 | **1. Raw Source Redistribution Authority** | Permission to commit, vendor, or redistribute third-party symbolic score files (MusicXML, Kern, TIFF) in the repository. | `NOT_COMMITTED` (0 raw third-party score files in repository). | **`DISALLOWED`** (`raw_file_redistribution_permitted: false`). |
-| **2. Local Source Materialization Authority** | Permission to download and ephemeral-clone public repositories to local scratch for automated analysis. | `VERIFIED` (Deterministic shallow clone and Git blob verification). | **`RESEARCH_FAIR_USE_PENDING_APPROVAL`**. |
-| **3. Derived Feature Extraction Authority** | Permission to parse notation and extract abstract musical descriptors (e.g. pitch/interval histograms). | `VERIFIED` (56 role-blind structural descriptors extracted in memory). | **`TRANSFORMATIVE_ANALYSIS_PENDING_APPROVAL`**. |
+| **2. Local Source Materialization Authority** | Permission to download and ephemeral-clone public repositories to local scratch for automated analysis. | `VERIFIED` (Deterministic shallow clone and Git blob verification). | **`SUBJECT_TO_APPLICABLE_JURISDICTION_AND_INSTITUTIONAL_POLICY`**. |
+| **3. Derived Feature Extraction Authority** | Permission to parse notation and extract abstract musical descriptors (e.g. pitch/interval histograms). | `VERIFIED` (56 role-blind structural descriptors extracted in memory). | **`SUBJECT_TO_APPLICABLE_JURISDICTION_AND_INSTITUTIONAL_POLICY`**. |
 | **4. Derived Feature Retention Authority** | Permission to persist extracted numerical feature vectors and bundle hashes in the project repository. | `VERIFIED` (JSON feature cache manifest hashed and isolated from scores). | **`HUMAN_DECISION_REQUIRED`**. |
 | **5. Derived Feature Distribution Authority** | Permission to publish aggregate statistical models, embeddings, and research outputs derived from features. | `N/A` (No models or statistics trained/published on confirmatory corpus). | **`HUMAN_DECISION_REQUIRED`**. |
 
@@ -39,48 +39,51 @@ To prevent collapsing distinct legal questions into a single boolean, the projec
 ## 3. Evidence Audit by Source Class
 
 ### 3.1 Underlying Musical Compositions
-* **Anton Rubinstein (1829–1894)**: All 11 candidate works (Op. 75 published 1866; Op. 24 published 1854–1856) are in the **Public Domain worldwide** (Life + 70, Life + 80, and US 95-year terms expired).
-* **Sergei Prokofiev (1891–1953)**: The 10 candidate works (Op. 2 No. 4 [1909], Op. 3 No. 3 [1907], Op. 11 [1912], Op. 12 Nos. 2 & 7 [1913], Op. 22 Nos. 1, 2, 3, 5, 10 [1915–1917, pub. 1918]) were published prior to 1929 and are in the **Public Domain worldwide** (US Pre-1929 rule + EU Life + 70 term expired Dec 31, 2023).
+* **Anton Rubinstein (1829–1894)**:
+  - `UNDERLYING_COMPOSITION_RIGHTS = JURISDICTION_DEPENDENT`
+  - All 11 candidate works (Op. 75 published 1866; Op. 24 published 1854–1856) have expired author terms (Life + 70/80 years, US 95-year term).
+* **Sergei Prokofiev (1891–1953)**:
+  - `UNDERLYING_COMPOSITION_RIGHTS = JURISDICTION_DEPENDENT`
+  - The 10 candidate works (Op. 2 No. 4 [1909], Op. 3 No. 3 [1907], Op. 11 [1912], Op. 12 Nos. 2 & 7 [1913], Op. 22 Nos. 1, 2, 3, 5, 10 [1915–1917, pub. 1918]) were published prior to 1929; terms are subject to local national copyright statutes.
 
 ### 3.2 Digital Encodings & Upstream Status
 * **Tonal-Piano-Corpus (`hectorbellmann-art/Tonal-Piano-Corpus`)**:
-  - Root License: `UNDECLARED` (No `LICENSE` file in repository).
+  - Root Repository License: `UNDECLARED` (No root license file).
+  - Raw Redistribution: **`DISALLOWED`**.
   - Upstream Dispatch: [`docs/research/RC014B_UPSTREAM_PERMISSION_REQUEST.md`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/docs/research/RC014B_UPSTREAM_PERMISSION_REQUEST.md) status is **`PENDING_DISPATCH`**.
 * **Humdrum KernScores Mirror (`automata/ana-music`)**:
-  - Root License: `UNDECLARED` in mirror; CCARH / KernScores upstream typically maintains non-commercial academic attribution guidelines.
+  - Root Repository License: `UNDECLARED`.
+  - Raw Redistribution: **`DISALLOWED`**.
   - License Status: **`SUPPLEMENT_LICENSE_PENDING`**.
 
 ---
 
 ## 4. Human Decision Routing
 
-Prior to unblinding RC-012 confirmatory statistics, the project oversight must record a human decision under one of three formal routes:
+Prior to unblinding RC-012 confirmatory statistics, authorized human oversight must record a decision under one of three formal routes:
 
 ```text
 ┌─────────────────────────────────────────────────────────────────────────────────────────────────┐
 │                                   Formal Governance Routes                                      │
 ├─────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Route A: Explicit Upstream Permission Obtained                                                  │
+│ Route A: Explicit Upstream Permission Obtained (EXPLICIT_UPSTREAM_PERMISSION)                   │
 │   - Formal written license waiver or explicit open-source license adopted by upstream authors. │
-│   - Enables full vendoring or unrestricted non-vendored reference caching.                      │
+│   - Evidence recorded in repository.                                                            │
 ├─────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Route B: Formally Approved Non-Vendored Transformative Research Policy                          │
-│   - Institutional determination that non-vendored ephemeral materialization and retention of    │
-│     abstract 56-descriptor numerical representations complies with academic fair use /          │
-│     text-and-data-mining research exceptions, with raw redistribution strictly prohibited.     │
+│ Route B: Authorized Non-Vendored Research Use (AUTHORIZED_NON_VENDORED_RESEARCH_USE)            │
+│   - Determination by authorized reviewer that under applicable institutional policy and law,    │
+│     the bounded workflow (public source → ephemeral materialization → 56-D feature extraction  │
+│     → raw source deletion → 0 raw redistribution) is permitted for non-commercial research.     │
 ├─────────────────────────────────────────────────────────────────────────────────────────────────┤
-│ Route C: Authority Insufficient                                                                 │
-│   - Confirmatory promotion blocked. Rubinstein and Prokofiev excluded from confirmation.       │
+│ Route C: Authority Insufficient (AUTHORITY_INSUFFICIENT)                                        │
+│   - Insufficient authority established. Candidate composers excluded from confirmation.         │
 │   - Live confirmatory pool remains N_Russian = 2 (Scriabin + Mussorgsky).                       │
 └─────────────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 5. Human Decision Record
+## 5. Status
 
-* **Current Milestone Outcome**: `RC014C_CORPUS_FROZEN_AWAITING_HUMAN_ACCESS_APPROVAL`
-* **Authorized Signatory**: `[ PENDING HUMAN OVERSIGHT REVIEW ]`
-* **Decision Date**: `[ PENDING ]`
-* **Selected Route**: `[ PENDING: Route A | Route B | Route C ]`
-* **Live Production Pool Gate**: **`BLOCKED`** ($N_{\text{Russian}} = 2$ remains active; RC-012 evaluation remains strictly prohibited until human authorization is logged).
+* **Status**: `AWAITING_HUMAN_GOVERNANCE_DECISION`
+* **Live Production Pool Gate**: **`BLOCKED`** ($N_{\text{Russian}} = 2$ active; RC-012 execution strictly prohibited until human authorization is logged).
