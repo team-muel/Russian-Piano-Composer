@@ -1,8 +1,12 @@
 # RC-012 Confirmatory Corpus Freeze Specification & Manifest Ledger
 
-**Status**: FROZEN & RECORDED  
+> [!NOTE]
+> **HISTORICAL_PRE_RC014_STATE**: This document records the historical pre-RC014 confirmatory corpus freeze state where $N_{\text{Russian}} = 2 < 4$ led to `CONFIRMATORY_DATA_CONTRACT_FAILED` (DATA AVAILABILITY FAILURE; hypothesis NOT TESTED).
+> This historical artifact is superseded by the full 9-composer, 483-piece freeze in [`RC014C2A_REAL_FEATURE_CACHE_FREEZE.md`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/docs/research/RC014C2A_REAL_FEATURE_CACHE_FREEZE.md) and [`rc014c2a_confirmatory_corpus_freeze.json`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/data/reviews/rc014/rc014c2a_confirmatory_corpus_freeze.json).
+
+**Status**: HISTORICAL BASELINE RECORD (SUPERSEDED BY RC-014)  
 **Milestone**: RC-012 Independent External Composer Confirmation  
-**Precondition Decision**: `CONFIRMATORY_DATA_CONTRACT_FAILED` (Documented in [`RC012_CONFIRMATORY_CORPUS_INVENTORY.md`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/docs/research/RC012_CONFIRMATORY_CORPUS_INVENTORY.md))
+**Historical Precondition Decision**: `CONFIRMATORY_DATA_CONTRACT_FAILED` (Documented in [`RC012_CONFIRMATORY_CORPUS_INVENTORY.md`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/docs/research/RC012_CONFIRMATORY_CORPUS_INVENTORY.md))
 
 ---
 

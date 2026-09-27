@@ -1,8 +1,12 @@
 # RC-012 External Confirmation Results & Scientific Findings
 
-**Status**: COMPLETED & RECORDED  
+> [!NOTE]
+> **HISTORICAL_PRE_RC014_STATE**: This document records the historical outcome of the initial pre-RC014 baseline execution attempt where $N_{\text{Russian}} = 2 < 4$ triggered `CONFIRMATORY_DATA_CONTRACT_FAILED` (DATA AVAILABILITY FAILURE; hypothesis NOT TESTED).
+> This historical state has been formally superseded by the RC-014 confirmatory corpus acquisition and Route B Human Access Governance Decision (`data/reviews/rc014/rc014_human_access_governance_decision.json`), which established $N_{\text{Russian}} = 4$ ($N_{\text{Total}} = 9$, $M=483$) under active execution lock (`data/reviews/rc012/rc012_one_shot_execution_lock.json`).
+
+**Status**: HISTORICAL BASELINE RECORD (SUPERSEDED BY RC-014)  
 **Milestone**: RC-012 Independent External Composer Confirmation  
-**Final Scientific Outcome**: `CONFIRMATORY_DATA_CONTRACT_FAILED`
+**Historical Scientific Outcome**: `CONFIRMATORY_DATA_CONTRACT_FAILED`
 
 ---
 

@@ -1,0 +1,96 @@
+{
+  "milestone": "RC-012",
+  "document_type": "ONE_SHOT_EXECUTION_LOCK_RECORD",
+  "execution_status": "ARMED_NOT_EXECUTED",
+  "starting_head": "6ee93c80aa6ccb884f1355b44926f45d3caefc84",
+  "governance_authority": {
+    "access_decision_file": "data/reviews/rc014/rc014_human_access_governance_decision.json",
+    "access_decision_canonical_hash": "4b50a007e2824ee1223f58a793de993b4537f4db3aa3dd006a17dc7e36ad1b31",
+    "access_route": "Route B: AUTHORIZED_NON_VENDORED_RESEARCH_USE",
+    "decision_status": "APPROVED",
+    "N_Russian": 4,
+    "N_Control": 5,
+    "qualified_russian_composers": [
+      "Alexander Scriabin",
+      "Anton Rubinstein",
+      "Modest Mussorgsky",
+      "Sergei Prokofiev"
+    ],
+    "qualified_control_composers": [
+      "Anton\u00edn Dvo\u0159\u00e1k",
+      "B\u00e9la Bart\u00f3k",
+      "Claude Debussy",
+      "Edvard Grieg",
+      "Ludwig van Beethoven"
+    ],
+    "total_pieces": 483,
+    "russian_pieces": 246,
+    "control_pieces": 237
+  },
+  "frozen_scientific_hash_bindings": {
+    "RC014C2A_CONFIRMATORY_CORPUS_FREEZE_HASH": "ec9c1a344cf7a53ba69c00865bda783c352d92770267fcb6933521e9cc186c1e",
+    "RC014C2A_REAL_FEATURE_CACHE_SHA256": "6a1fba9d1071ad0453516870f78eabb138b46415d2f642d3d2e195f0fe9bfca7",
+    "RC012_FROZEN_PREDICTOR_BUNDLE_HASH": "4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926"
+  },
+  "statistical_contract": {
+    "feature_count": 56,
+    "feature_order_definition": "predictor.feature_names matching cached feature matrix columns",
+    "piece_level_scoring": {
+      "standardization": "x_scaled_j = (x_j - mu_j) / sigma_j",
+      "logit_formula": "z_i = intercept + sum_{j=1..56}(beta_j * x_scaled_j)",
+      "probability_formula": "p_i = 1 / (1 + exp(-z_i))",
+      "decision_threshold": 0.5,
+      "binary_prediction": "y_hat_i = 1 if z_i >= 0 else 0"
+    },
+    "composer_level_aggregation": {
+      "method": "equal_composer_weighting",
+      "formula": "S_c = mean_{i in composer_c}(z_i) = (1 / M_c) * sum_{i in composer_c}(z_i)"
+    },
+    "primary_test_statistic": {
+      "name": "T_obs",
+      "formula": "T_obs = mean_{c in Russian}(S_c) - mean_{c in Control}(S_c) = (1/4)*sum_{c in Russian}(S_c) - (1/5)*sum_{c in Control}(S_c)",
+      "alternative_hypothesis": "Russian piano compositions exhibit systematically higher scores on the frozen structural linear predictor than control compositions (one-sided: T_obs > 0)"
+    },
+    "exact_permutation_test": {
+      "total_permutations": 126,
+      "formula_combinatorics": "C(9,4) = 126",
+      "permutation_formula": "T_A = mean_{c in A}(S_c) - mean_{c not in A}(S_c) for all A in combinations(all_9_composers, 4)",
+      "p_value_formula": "p_exact = count(T_A >= T_obs) / 126",
+      "significance_threshold_alpha": 0.05,
+      "pseudo_count": 0
+    },
+    "secondary_classification_metrics": {
+      "auroc": {
+        "score_basis": "continuous_piece_logits_z_i",
+        "description": "Area Under Receiver Operating Characteristic curve"
+      },
+      "balanced_accuracy": {
+        "score_basis": "binary_predictions_y_hat_i_at_threshold_0.5",
+        "formula": "0.5 * (TPR + TNR)"
+      },
+      "brier_score": {
+        "score_basis": "predicted_probabilities_p_i",
+        "formula": "(1/N) * sum_{i=1..N}((p_i - y_i)^2)"
+      }
+    },
+    "bootstrap_specification": {
+      "stratification": "WITHIN_COMPOSER",
+      "replicates_B": 10000,
+      "random_seed": 42,
+      "confidence_level": 0.95,
+      "ci_method": "PERCENTILE",
+      "percentile_lower": 2.5,
+      "percentile_upper": 97.5,
+      "sampling_procedure": "For each replicate b in 1..10000 and composer c in 1..9, sample M_c piece indices uniformly with replacement from {1..M_c}, concatenate to N=483 sample, and evaluate AUROC, Balanced Accuracy, and Brier score."
+    },
+    "feature_level_battery": {
+      "status": "EXCLUDED_FROM_ONE_SHOT_EXECUTION",
+      "rationale": "Strict family-wise error rate control and pre-registration discipline. Individual feature diagnostics reserved for separate exploratory research."
+    }
+  },
+  "safety_and_lineage_assertions": {
+    "development_confirmatory_intersection": "DISJOINT (0 common composers)",
+    "confirmatory_evaluations_count_prior_to_lock": 0,
+    "lock_state": "FAIL_CLOSED_SEALED"
+  }
+}

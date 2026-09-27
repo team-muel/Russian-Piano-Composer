@@ -1,10 +1,13 @@
 """
-Verification script for RC-012 Confirmatory Reproducibility.
+Historical verification script for RC-012 Confirmatory Reproducibility (Pre-RC014 Baseline).
 Validates:
 1. Two-process deterministic computation of predictor bundle and hash.
 2. Leakage check passing.
 3. Precondition contract evaluation reproducibility (Source Inventory & Policy).
 4. Deterministic hashes for Source Inventory, Policy, and Data Gate Result.
+
+NOTE: This script verifies the historical pre-RC014 baseline gate state (N_Russian=2).
+Active execution governance is managed via scripts/verify_rc012_one_shot_preflight.py.
 """
 
 import json
