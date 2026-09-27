@@ -20,6 +20,7 @@ from typing import Any
 import pytest
 from scripts.compute_rc013_hashes import (
     compute_authoritative_source_image_bundle_hash,
+    compute_directory_bundle_hash,
     compute_source_fidelity_gate_result,
     get_all_rc013_hashes,
 )
@@ -33,10 +34,7 @@ from russian_piano_composer.corpus.rc013_review_ingestion import (
 )
 
 
-@pytest.mark.skipif(
-    not any(Path("data/scans/rc013").glob("*.pdf")),
-    reason="Authoritative scan/calibration PDF bytes absent in checkout",
-)
+@pytest.mark.external_asset
 def test_source_image_bundle_v2_binds_to_physical_pdf_bytes(tmp_path: Path) -> None:
     """Proves that changing a single byte in any authoritative PDF triggers fail-closed error or changes hash."""
     scans_manifest_json = Path("data/scans/rc013/rc013_scans_manifest.json")
@@ -80,19 +78,15 @@ def test_source_image_bundle_v2_binds_to_physical_pdf_bytes(tmp_path: Path) -> N
     assert initial_hash != mutated_hash, "Source image bundle hash failed to change after PDF byte modification!"
 
 
-@pytest.mark.skipif(
-    not any(Path("data/scans/rc013").glob("*.pdf")),
-    reason="Authoritative scan/calibration PDF bytes absent in checkout",
-)
 def test_source_image_bundle_v2_fails_if_referenced_pdf_missing(tmp_path: Path) -> None:
-    """Proves that if an authoritative PDF referenced in manifest is missing, hashing fails."""
+    """Proves that if an authoritative PDF referenced in manifest is missing, hashing fails closed with SOURCE_BYTES_MISSING."""
     scans_manifest_json = Path("data/scans/rc013/rc013_scans_manifest.json")
     tmp_scans = tmp_path / "empty_scans"
     tmp_scans.mkdir()
     tmp_manifest = tmp_scans / "rc013_scans_manifest.json"
     shutil.copy(scans_manifest_json, tmp_manifest)
 
-    with pytest.raises(FileNotFoundError):
+    with pytest.raises(FileNotFoundError, match="SOURCE_BYTES_MISSING"):
         compute_authoritative_source_image_bundle_hash(
             scans_manifest_path=str(tmp_manifest),
             scans_dir=str(tmp_scans),
@@ -399,6 +393,24 @@ def test_composer_piece_count_boundary_nine_vs_ten() -> None:
 
 def test_production_fidelity_gate_fails_closed_without_accepted_receipts() -> None:
     """Proves that compute_source_fidelity_gate_result returns PENDING_SOURCE_COMPARISON when no receipts exist."""
+    source_comparison_bundle_hash = compute_directory_bundle_hash("data/reviews/rc013", extension=".source_comparison.json")
+    corpus_bundle_hash = compute_directory_bundle_hash("data/scores/rc013/canonical", extension=".musicxml")
+    dummy_source_img_hash = "0" * 64
+
+    verdict, gate_hash = compute_source_fidelity_gate_result(
+        source_comparison_bundle_hash=source_comparison_bundle_hash,
+        source_img_bundle_hash=dummy_source_img_hash,
+        corpus_bundle_hash=corpus_bundle_hash,
+        reviews_dir="data/reviews/rc013",
+        receipts_dir="data/reviews/rc013/accepted",
+    )
+    assert verdict == "PENDING_SOURCE_COMPARISON"
+    assert len(gate_hash) == 64
+
+
+@pytest.mark.external_asset
+def test_production_fidelity_gate_with_live_hashes() -> None:
+    """Proves that compute_source_fidelity_gate_result with live source image bundle hash returns PENDING_SOURCE_COMPARISON."""
     hashes = get_all_rc013_hashes()
     verdict, gate_hash = compute_source_fidelity_gate_result(
         source_comparison_bundle_hash=hashes["RC013_SOURCE_COMPARISON_BUNDLE_HASH"],

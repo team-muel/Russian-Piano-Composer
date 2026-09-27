@@ -5,8 +5,13 @@ from __future__ import annotations
 import os
 
 import pandas as pd
+import pytest
 import yaml
-from scripts.compute_rc013_hashes import get_all_rc013_hashes
+from scripts.compute_rc013_hashes import (
+    compute_directory_bundle_hash,
+    compute_normalized_text_sha256,
+    get_all_rc013_hashes,
+)
 
 from russian_piano_composer.corpus.rc013_validator import RC013ScoreValidator
 
@@ -83,6 +88,29 @@ def test_rc013_anti_synthetic_guard_catches_synthetic_fixtures() -> None:
         assert any(e.code == "SYNTHETIC_REPETITIVE_PATTERN_DETECTED" for e in report.errors)
 
 
+def test_rc013_tracked_metadata_hashes_present_and_reproducible() -> None:
+    """Verifies that all tracked metadata and symbolic corpus hashes are computable in clean CI."""
+    source_inv_hash = compute_normalized_text_sha256("data/manifests/rc013_source_candidates.csv")
+    policy_hash = compute_normalized_text_sha256("docs/research/RC013_SCORE_ENTRY_POLICY.md")
+    manifest_hash = compute_normalized_text_sha256("data/manifests/rc013_digitization_manifest.yaml")
+    error_log_hash = compute_normalized_text_sha256("data/manifests/rc013_error_log.json")
+    corpus_bundle_hash = compute_directory_bundle_hash("data/scores/rc013/canonical", extension=".musicxml")
+    automated_review_bundle_hash = compute_directory_bundle_hash("data/reviews/rc013", extension=".review.json")
+    source_comparison_bundle_hash = compute_directory_bundle_hash("data/reviews/rc013", extension=".source_comparison.json")
+
+    for h in [
+        source_inv_hash,
+        policy_hash,
+        manifest_hash,
+        error_log_hash,
+        corpus_bundle_hash,
+        automated_review_bundle_hash,
+        source_comparison_bundle_hash,
+    ]:
+        assert len(h) == 64
+
+
+@pytest.mark.external_asset
 def test_rc013_cryptographic_hashes_present_and_reproducible() -> None:
     hashes = get_all_rc013_hashes()
     assert hashes["RC013_CANONICAL_HASH_SCHEMA_VERSION"] == "2"

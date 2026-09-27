@@ -32,7 +32,6 @@ import pytest
 from scripts.compute_rc013_hashes import (
     compute_directory_bundle_hash,
     compute_source_fidelity_gate_result,
-    get_all_rc013_hashes,
 )
 
 from russian_piano_composer.corpus.rc013_fidelity import (
@@ -440,12 +439,13 @@ def test_summary_verdict_mutation_cannot_bypass_production_validation(tmp_path: 
 
     # Recompute gate result
     new_bundle_hash = compute_directory_bundle_hash(str(tmp_path), extension=".source_comparison.json")
-    hashes = get_all_rc013_hashes()
+    corpus_bundle_hash = compute_directory_bundle_hash("data/scores/rc013/canonical", extension=".musicxml")
+    dummy_source_img_hash = "0" * 64
 
     overall_verdict, _ = compute_source_fidelity_gate_result(
         source_comparison_bundle_hash=new_bundle_hash,
-        source_img_bundle_hash=hashes["RC013_SOURCE_IMAGE_BUNDLE_HASH"],
-        corpus_bundle_hash=hashes["RC013_CANONICAL_SYMBOLIC_CORPUS_HASH"],
+        source_img_bundle_hash=dummy_source_img_hash,
+        corpus_bundle_hash=corpus_bundle_hash,
         reviews_dir=str(tmp_path),
     )
 
@@ -490,8 +490,15 @@ def test_comparison_bundle_mutation_changes_hash(tmp_path: Any) -> None:
 
 def test_single_measure_mutation_changes_fidelity_result_hash(tmp_path: Any) -> None:
     """Mutating a single measure status mutates bundle hash and therefore fidelity gate result hash."""
-    hashes = get_all_rc013_hashes()
-    original_gate_hash = hashes["RC013_SOURCE_FIDELITY_GATE_RESULT_HASH"]
+    initial_bundle_hash = compute_directory_bundle_hash(REVIEWS_DIR, extension=".source_comparison.json")
+    corpus_bundle_hash = compute_directory_bundle_hash("data/scores/rc013/canonical", extension=".musicxml")
+    dummy_source_img_hash = "0" * 64
+    _, original_gate_hash = compute_source_fidelity_gate_result(
+        source_comparison_bundle_hash=initial_bundle_hash,
+        source_img_bundle_hash=dummy_source_img_hash,
+        corpus_bundle_hash=corpus_bundle_hash,
+        reviews_dir=REVIEWS_DIR,
+    )
 
     for f in os.listdir(REVIEWS_DIR):
         if f.endswith(".source_comparison.json"):
@@ -512,8 +519,8 @@ def test_single_measure_mutation_changes_fidelity_result_hash(tmp_path: Any) -> 
     new_bundle_hash = compute_directory_bundle_hash(str(tmp_path), extension=".source_comparison.json")
     _, mutated_gate_hash = compute_source_fidelity_gate_result(
         source_comparison_bundle_hash=new_bundle_hash,
-        source_img_bundle_hash=hashes["RC013_SOURCE_IMAGE_BUNDLE_HASH"],
-        corpus_bundle_hash=hashes["RC013_CANONICAL_SYMBOLIC_CORPUS_HASH"],
+        source_img_bundle_hash=dummy_source_img_hash,
+        corpus_bundle_hash=corpus_bundle_hash,
         reviews_dir=str(tmp_path),
     )
 

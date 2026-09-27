@@ -303,12 +303,27 @@ def test_calibration_v3_corpus_registry_excludes_rc013_pilot_scores() -> None:
         if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V3_FINAL_HOLDOUT"}:
             assert entry["provenance_class"] == "REAL_HISTORICAL_SCAN"
             assert "DCMLab" in entry["dataset_name"]
+            assert len(entry["ground_truth_path"]) > 0
+            assert len(entry["image_path"]) > 0
+            assert len(entry["historical_pdf_path"]) > 0
             if Path(entry["ground_truth_path"]).exists():
                 assert Path(entry["ground_truth_path"]).is_file()
-            if Path(entry["image_path"]).parent.exists():
-                assert Path(entry["image_path"]).exists()
-            if Path(entry["historical_pdf_path"]).parent.exists():
-                assert Path(entry["historical_pdf_path"]).exists()
+            if Path(entry["image_path"]).exists():
+                assert Path(entry["image_path"]).is_file()
+            if Path(entry["historical_pdf_path"]).exists():
+                assert Path(entry["historical_pdf_path"]).is_file()
+
+
+@pytest.mark.external_asset
+def test_calibration_v3_physical_assets_present() -> None:
+    """Verifies that all calibration V3 physical scans and ground truth files are present on disk."""
+    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_v3_registry.json")
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    for entry in registry:
+        if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V3_FINAL_HOLDOUT"}:
+            assert Path(entry["ground_truth_path"]).is_file()
+            assert Path(entry["image_path"]).is_file()
+            assert Path(entry["historical_pdf_path"]).is_file()
 
 
 def test_frozen_protocol_v3_manifest_matches_disk() -> None:
@@ -402,11 +417,24 @@ def test_calibration_v4_corpus_registry_excludes_rc013_pilot_scores() -> None:
         if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V4_FINAL_HOLDOUT"}:
             assert entry["provenance_class"] == "REAL_HISTORICAL_SCAN"
             assert "DCMLab" in entry["dataset_name"]
+            assert len(entry["ground_truth_path"]) > 0
+            assert len(entry["historical_pdf_path"]) > 0
             if Path(entry["ground_truth_path"]).exists():
                 assert Path(entry["ground_truth_path"]).is_file()
-            if Path(entry["historical_pdf_path"]).parent.exists():
-                assert Path(entry["historical_pdf_path"]).exists()
+            if Path(entry["historical_pdf_path"]).exists():
+                assert Path(entry["historical_pdf_path"]).is_file()
             assert len(entry["historical_page_image_paths"]) > 0
+
+
+@pytest.mark.external_asset
+def test_calibration_v4_physical_assets_present() -> None:
+    """Verifies that all calibration V4 physical scans and ground truth files are present on disk."""
+    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_v4_registry.json")
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    for entry in registry:
+        if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V4_FINAL_HOLDOUT"}:
+            assert Path(entry["ground_truth_path"]).is_file()
+            assert Path(entry["historical_pdf_path"]).is_file()
 
 
 def test_frozen_protocol_v4_manifest_matches_disk() -> None:
@@ -587,11 +615,24 @@ def test_calibration_v5_corpus_registry_excludes_rc013_pilot_scores() -> None:
         if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V5_FINAL_HOLDOUT"}:
             assert entry["provenance_class"] == "REAL_HISTORICAL_SCAN"
             assert "DCMLab" in entry["dataset_name"]
+            assert len(entry["ground_truth_path"]) > 0
+            assert len(entry["historical_pdf_path"]) > 0
             if Path(entry["ground_truth_path"]).exists():
                 assert Path(entry["ground_truth_path"]).is_file()
-            if Path(entry["historical_pdf_path"]).parent.exists():
-                assert Path(entry["historical_pdf_path"]).exists()
+            if Path(entry["historical_pdf_path"]).exists():
+                assert Path(entry["historical_pdf_path"]).is_file()
             assert len(entry["historical_page_image_paths"]) > 0
+
+
+@pytest.mark.external_asset
+def test_calibration_v5_physical_assets_present() -> None:
+    """Verifies that all calibration V5 physical scans and ground truth files are present on disk."""
+    registry_path = Path("data/calibration/rc013_machine_validation/rc013_calibration_v5_registry.json")
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    for entry in registry:
+        if entry["split"] in {"REAL_SCAN_THRESHOLD_CALIBRATION", "CALIBRATION_V5_FINAL_HOLDOUT"}:
+            assert Path(entry["ground_truth_path"]).is_file()
+            assert Path(entry["historical_pdf_path"]).is_file()
 
 
 def test_frozen_protocol_v5_manifest_matches_disk() -> None:

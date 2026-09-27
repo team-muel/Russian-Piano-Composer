@@ -105,5 +105,6 @@ markers = [
     "corpus_integration: marks tests requiring local canonical corpus parquet cache in data/interim",
     "regression: marks tests as regression tests",
     "property: marks tests as property-based tests",
+    "external_asset: marks tests requiring untracked external physical source bytes (e.g. historical PDF scans)",
 ]
 
