@@ -14,13 +14,9 @@ from __future__ import annotations
 
 import itertools
 import json
-import math
 from pathlib import Path
-from typing import List
 
 import numpy as np
-import pytest
-
 from scripts.verify_rc012_one_shot_preflight import (
     EXPECTED_EXECUTION_PLAN_HASH,
     EXPECTED_FEATURE_CACHE_SHA256,
@@ -117,7 +113,7 @@ def test_synthetic_exact_permutation_test_combinatorics() -> None:
     all_scores = np.array([synthetic_scores[c] for c in composers])
     all_indices = set(range(9))
 
-    perm_t_stats: List[float] = []
+    perm_t_stats: list[float] = []
     for idx_set in combs:
         idx_a = list(idx_set)
         idx_b = list(all_indices - set(idx_set))

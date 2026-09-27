@@ -20,7 +20,7 @@ import json
 import os
 import sys
 from pathlib import Path
-from typing import Any, Dict
+from typing import Any
 
 # Ensure project root is in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -61,12 +61,12 @@ DEVELOPMENT_COMPOSERS: set[str] = {
 }
 
 
-def compute_canonical_json_hash(payload: Dict[str, Any]) -> str:
+def compute_canonical_json_hash(payload: dict[str, Any]) -> str:
     canonical_bytes = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
     return hashlib.sha256(canonical_bytes).hexdigest()
 
 
-def verify_rc012_one_shot_preflight() -> Dict[str, Any]:
+def verify_rc012_one_shot_preflight() -> dict[str, Any]:
     print("=== Running RC-012 One-Shot Pre-Execution Preflight Verification ===")
 
     # 1. Human Access Governance Decision Record
@@ -163,7 +163,7 @@ def verify_rc012_one_shot_preflight() -> Dict[str, Any]:
     if len(pieces) != 483:
         raise ValueError(f"Expected exactly 483 pieces in feature cache, found {len(pieces)}")
 
-    per_composer_counts: Dict[str, int] = {}
+    per_composer_counts: dict[str, int] = {}
     russian_count = 0
     control_count = 0
 
