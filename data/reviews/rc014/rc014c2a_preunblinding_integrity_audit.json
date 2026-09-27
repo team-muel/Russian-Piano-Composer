@@ -1,0 +1,34 @@
+{
+  "milestone": "RC-014C.2A",
+  "status": "RC014C2A_TRUE_FULL_CORPUS_FROZEN_READY_FOR_HUMAN_ACCESS_DECISION",
+  "rc014c2a_confirmatory_corpus_freeze_hash": "ec9c1a344cf7a53ba69c00865bda783c352d92770267fcb6933521e9cc186c1e",
+  "superseded_freeze_hash_rc014c2": "d634349e5e9950345c62b43d66af61b0f8936631639bf0b22254330fb9aa2996",
+  "superseded_freeze_explanation_rc014c2": "PROVISIONAL_REAL_FEATURE_FREEZE_PRE_SOURCE_IDENTITY_NORMALIZATION",
+  "superseded_freeze_hash_rc014c1": "06173918554380617153cadd4de66443733c33d52dbbe54813a10846b24e6330",
+  "superseded_feature_cache_sha256_rc014c1": "093d262da6ee7decce2026966be4b251d843c2c5836a2c4359d7609fefd8b28b",
+  "superseded_freeze_hash_rc014c": "782f0cbd26e252985ba28d7cdd8bc69486ed2c3f933c2333711c435d4c40d9a8",
+  "superseded_freeze_explanation": "RC-014C.1 contained 462 zero-valued placeholder rows; RC-014C contained only 21 pieces for Rubinstein + Prokofiev; RC-014C.2 had provisional non-typed source identities",
+  "feature_cache_matrix_sha256": "6a1fba9d1071ad0453516870f78eabb138b46415d2f642d3d2e195f0fe9bfca7",
+  "schema_hash": "924a19913f831c4f0ffba2dfa88188b88e598af635046b05e580e5b807355282",
+  "total_confirmatory_pieces": 483,
+  "total_composers_count": 9,
+  "russian_composers_count": 4,
+  "control_composers_count": 5,
+  "russian_pieces_count": 246,
+  "control_pieces_count": 237,
+  "typed_source_breakdown": {
+    "GIT_BLOB": 465,
+    "HF_DATASET_ARCHIVE_ENTRY": 18
+  },
+  "eol_normalization_audit": {
+    "IDENTICAL": 37,
+    "CHECKOUT_NORMALIZATION_DIFFERENCE": 446
+  },
+  "live_n_russian": 2,
+  "rc012_resumption_gate": "BLOCKED",
+  "gate_reason": "Live N_Russian = 2 < 4 until human governance approval is logged; predictor execution strictly prohibited",
+  "invalidation_policy": {
+    "trigger": "ANY_CHANGE_TO_EXTERNAL_BYTES_OR_PARSERS_OR_FEATURES",
+    "effect": "INVALIDATES_CONFIRMATORY_CORPUS_FREEZE_AND_DOWNSTREAM_STATISTICS"
+  }
+}
