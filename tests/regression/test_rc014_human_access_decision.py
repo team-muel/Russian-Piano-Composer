@@ -1,4 +1,4 @@
-"""Regression tests for RC-014 Human Access Governance Decision Record."""
+"""Regression tests for RC-014 Human Access Governance Decision Record and State Synchronization."""
 
 from __future__ import annotations
 
@@ -76,3 +76,48 @@ def test_human_access_governance_decision_markdown_report_exists() -> None:
     assert "Anton Rubinstein" in content
     assert "Sergei Prokofiev" in content
     assert "READY_FOR_SEPARATE_ONE_SHOT_EXECUTION" in content
+
+
+def test_rc014c_access_authority_decision_state_transition() -> None:
+    doc_path = Path("docs/research/RC014C_ACCESS_AUTHORITY_DECISION.md")
+    assert doc_path.exists()
+    content = doc_path.read_text(encoding="utf-8")
+
+    # Assert explicit historical transition sections
+    assert "## 5. Governance State Transition" in content
+    assert "### 5.1 Pre-Decision State" in content
+    assert "AWAITING_HUMAN_GOVERNANCE_DECISION" in content
+    assert "### 5.2 Superseded By" in content
+    assert "rc014_human_access_governance_decision.json" in content
+    assert "### 5.3 Final Human Decision" in content
+    assert "Route B = AUTHORIZED_NON_VENDORED_RESEARCH_USE" in content
+    assert "Anton Rubinstein" in content and "APPROVED" in content
+    assert "Sergei Prokofiev" in content and "APPROVED" in content
+    assert "### 5.4 Post-Decision State" in content
+    assert "N_{\\text{Russian}} = 4" in content or "N_Russian = 4" in content
+    assert "RC012_RESUMPTION_STATUS = READY_FOR_SEPARATE_ONE_SHOT_EXECUTION" in content
+
+    # Assert decision binding hashes
+    assert FROZEN_RC014C2A_MASTER_FREEZE_HASH in content
+    assert FROZEN_RC014C2A_FEATURE_CACHE_MATRIX_SHA256 in content
+    assert FROZEN_RC012_PREDICTOR_BUNDLE_HASH in content
+
+
+def test_no_active_governance_state_claims_awaiting_or_unapproved() -> None:
+    """Verifies that active post-decision governance state reflects APPROVED and N_Russian = 4."""
+    json_path = Path("data/reviews/rc014/rc014_human_access_governance_decision.json")
+    with open(json_path, encoding="utf-8") as f:
+        data = json.load(f)
+
+    assert data["decision_status"] == "APPROVED"
+    assert data["post_decision_governance_state"]["N_Russian"] == 4
+    assert data["post_decision_governance_state"]["RC012_RESUMPTION_STATUS"] == "READY_FOR_SEPARATE_ONE_SHOT_EXECUTION"
+
+    # Verify report reflects final active status
+    report_path = Path("docs/research/RC014_HUMAN_ACCESS_GOVERNANCE_DECISION.md")
+    report_content = report_path.read_text(encoding="utf-8")
+    assert "APPROVED" in report_content
+    assert "4" in report_content
+    assert "RC012_RESUMPTION_STATUS" in report_content
+    assert "READY_FOR_SEPARATE_ONE_SHOT_EXECUTION" in report_content
+    assert "AWAITING_HUMAN_GOVERNANCE_DECISION" not in report_content
