@@ -3,7 +3,7 @@
 **Version**: `RC012_FROZEN_PREDICTOR_V1`  
 **Parent Manifest Hash**: `cc94004e6003e60e0af1162eb046fce537c9de0c8274b7564c225364d2b34212`  
 **Parent Structural Matrix Hash**: `7e141a62bed72d10a894d7fa3123619aacce85797b1953423fd8de2b5b069bc0`  
-**Bundle Artifact**: `models/rc012_predictor/frozen_predictor_bundle.json`  
+**Bundle Artifact**: `models/rc012_predictor/frozen_predictor_bundle.json` (tracked: `data/manifests/rc012_frozen_predictor_bundle.json`)  
 **Bundle SHA-256 Hash**: `4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926`
 
 ---

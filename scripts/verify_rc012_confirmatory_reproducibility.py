@@ -34,6 +34,8 @@ def main() -> None:
     # 1. Verify frozen predictor exists and bundle hash matches
     bundle_path = Path("models/rc012_predictor/frozen_predictor_bundle.json")
     if not bundle_path.exists():
+        bundle_path = Path("data/manifests/rc012_frozen_predictor_bundle.json")
+    if not bundle_path.exists():
         raise RuntimeError(f"Predictor bundle not found at {bundle_path}")
 
     with open(bundle_path, encoding="utf-8") as f:
