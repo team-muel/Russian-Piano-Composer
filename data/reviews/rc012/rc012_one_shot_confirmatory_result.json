@@ -1,0 +1,6705 @@
+{
+  "milestone": "RC-012",
+  "document_type": "CONFIRMATORY_ONE_SHOT_EXECUTION_RESULT",
+  "execution_status": "COMPLETED_AUTHORITATIVE",
+  "timestamp_iso": "2026-09-28T15:10:56Z",
+  "runner_commit": "e2af2110d754a90c57b625821ad2952fd5970721",
+  "runtime_environment": {
+    "numpy_version": "1.26.4",
+    "bootstrap_rng_engine": "NUMPY_RANDOMSTATE_MT19937",
+    "bootstrap_seed": 42,
+    "bootstrap_replicates_B": 10000,
+    "bootstrap_percentile_method": "linear"
+  },
+  "frozen_input_hash_bindings": {
+    "RC014C2A_CONFIRMATORY_CORPUS_FREEZE_HASH": "ec9c1a344cf7a53ba69c00865bda783c352d92770267fcb6933521e9cc186c1e",
+    "RC014C2A_REAL_FEATURE_CACHE_SHA256": "6a1fba9d1071ad0453516870f78eabb138b46415d2f642d3d2e195f0fe9bfca7",
+    "RC012_FROZEN_PREDICTOR_BUNDLE_HASH": "4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926",
+    "HUMAN_ACCESS_DECISION_CANONICAL_HASH": "4b50a007e2824ee1223f58a793de993b4537f4db3aa3dd006a17dc7e36ad1b31",
+    "RC012_ONE_SHOT_EXECUTION_PLAN_HASH": "11685bb1217e67a64c5b610f4cc9afd96436fcb12da79fcbc921d1120e8fe962"
+  },
+  "repertoire_summary": {
+    "total_pieces": 483,
+    "total_composers": 9,
+    "russian_composers_count": 4,
+    "control_composers_count": 5,
+    "russian_pieces_count": 246,
+    "control_pieces_count": 237,
+    "piece_ledger_sha256": "66513dc4901b48ee865ba826cb4dad824f448b242b94834fd25202d39c5aa634"
+  },
+  "piece_score_ledger": [
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.30901535985328493,
+      "p_i": 0.4233550965353134,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op02_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5616295125822977,
+      "p_i": 0.3631705058490864,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 4.964281349979677,
+      "p_i": 0.9930654564742379,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op05_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.24554676259332586,
+      "p_i": 0.43891989438388246,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op05_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.6642750869318,
+      "p_i": 0.3397799274350072,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op08_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.4896200762320905,
+      "p_i": 0.3799830720707683,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op08_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.5748730092928556,
+      "p_i": 0.6398868345764284,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op08_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.22541960323659663,
+      "p_i": 0.44388252761092284,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op08_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7417690869116663,
+      "p_i": 0.6773825856436326,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op08_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.10885374621569022,
+      "p_i": 0.47281340295793084,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op08_no06",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2618814963096462,
+      "p_i": 0.43490125110652117,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op10_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2790418273978519,
+      "p_i": 0.43068870047642005,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op10_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.39419220317034576,
+      "p_i": 0.4027085217931254,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.0316683954846604,
+      "p_i": 0.5079164372743746,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.32452193886460495,
+      "p_i": 0.5804258862690702,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.16623728707793153,
+      "p_i": 0.4585361215685437,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.20094864923104752,
+      "p_i": 0.4499312073986992,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.09868349424385861,
+      "p_i": 0.4753491282627416,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no06",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.45053875914842334,
+      "p_i": 0.38923267887411206,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no07",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.048459461256837075,
+      "p_i": 0.4878875049269396,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no08",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.21545078543585683,
+      "p_i": 0.5536553044402149,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no09",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5978524201733808,
+      "p_i": 0.3548351797457707,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no10",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.08006245233381705,
+      "p_i": 0.4799950717347402,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no11",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.29369898599576705,
+      "p_i": 0.42709853618655313,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no12",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.3579291929632114,
+      "p_i": 0.41146094219783835,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no13",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 7.912030334793603,
+      "p_i": 0.9996338240410053,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no14",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.10298187284108783,
+      "p_i": 0.4742772608138066,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no15",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5205430712002885,
+      "p_i": 0.37272525424796527,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no16",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.28933472982664726,
+      "p_i": 0.5718332559830177,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no17",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.00812420231443632,
+      "p_i": 0.4979689605925462,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no18",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.18053759490737065,
+      "p_i": 0.5450122051028641,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no19",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 5.1276265395270215,
+      "p_i": 0.9941043450144114,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no20",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.07698847133297476,
+      "p_i": 0.5192376166320648,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no21",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.32405526222767306,
+      "p_i": 0.5803122314614167,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no22",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.40952302688791525,
+      "p_i": 0.3990264958687961,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no23",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.0352959100914412,
+      "p_i": 0.5088230615601045,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op11_no24",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5760214135073377,
+      "p_i": 0.35984857925251573,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op12_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.18017597663815457,
+      "p_i": 0.455077468248825,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op12_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.42043831806821175,
+      "p_i": 0.39641186923022725,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op13_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.6447432841840561,
+      "p_i": 0.6558248979911458,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op13_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7524152482481121,
+      "p_i": 0.6797047417708892,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op13_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.339991208736415,
+      "p_i": 0.41581161256920496,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op13_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.4987701356950553,
+      "p_i": 0.6221702650253415,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op13_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.06901300248024884,
+      "p_i": 0.4827535939273186,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op13_no06",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.04527423443794694,
+      "p_i": 0.48868337435154285,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op14_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5041114587027602,
+      "p_i": 0.37657494832802163,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op14_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.024241939180108973,
+      "p_i": 0.5060601880145608,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op15_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3697791882231249,
+      "p_i": 0.5914056214453702,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op15_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.17649113851451642,
+      "p_i": 0.544008608098625,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op15_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.4077497467823148,
+      "p_i": 0.39945181219775155,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op15_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.14015187195104958,
+      "p_i": 0.46501927249168334,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op15_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.1614495245881673,
+      "p_i": 0.7615960012345813,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op16_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.07343330501817956,
+      "p_i": 0.5183500810039218,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op16_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.5490898080593953,
+      "p_i": 0.1752177670366636,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op16_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2947314688384292,
+      "p_i": 0.42684592176999486,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op16_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.022706022478532494,
+      "p_i": 0.4943237382510322,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op16_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.4434565527156398,
+      "p_i": 0.3909176508417079,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op17_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 4.101501873821736,
+      "p_i": 0.9837215682818232,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op17_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.12826371312496934,
+      "p_i": 0.5320220392186258,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op17_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7267809971960406,
+      "p_i": 0.6740984874776939,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op17_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3486073104306617,
+      "p_i": 0.5862798146343061,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op17_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3005830266117795,
+      "p_i": 0.5745850363231809,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op17_no06",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.21255813209881308,
+      "p_i": 0.44705964172393015,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op17_no07",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.13584792725317849,
+      "p_i": 0.46609015171191065,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op18",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.9123519547545345,
+      "p_i": 0.2865187957649439,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op19_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.43262071768405985,
+      "p_i": 0.6064992976675895,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op19_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.0911531444679807,
+      "p_i": 0.5227725204252823,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op21",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.96111569421697,
+      "p_i": 0.7233451300774589,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op22_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.27647598123443984,
+      "p_i": 0.5686820528906645,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op22_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.14963896718906392,
+      "p_i": 0.537340091733671,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op22_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.09252231644760897,
+      "p_i": 0.47688590731895114,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op22_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.009052263683210554,
+      "p_i": 0.4977369495326951,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op23_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.8371456210583013,
+      "p_i": 0.6978637104649562,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op23_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.6705572239741645,
+      "p_i": 0.6616279197420267,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op23_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.8554420859453131,
+      "p_i": 0.7017074966816288,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op23_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 36.66279468503292,
+      "p_i": 0.9999999999999998,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.26392443719564557,
+      "p_i": 0.5656007595054097,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.1597202903989433,
+      "p_i": 0.5398454020127909,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.5481956534282322,
+      "p_i": 0.6337168675863136,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7788716729844937,
+      "p_i": 0.6854368826999824,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 6.036247185297748,
+      "p_i": 0.9976151876710776,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no06",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.8040727875539486,
+      "p_i": 0.6908450151194063,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no07",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.021053188736373154,
+      "p_i": 0.505263102785479,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no08",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.27005316948815705,
+      "p_i": 0.5671059579507144,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op25_no09",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.2769324640801627,
+      "p_i": 0.5687940167578268,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op27_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.009213644028339567,
+      "p_i": 0.5023033947122726,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op27_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.5002040268371856,
+      "p_i": 0.6225072770678887,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op28",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.5177995463252352,
+      "p_i": 0.8202142240282775,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op2_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.589524737707217,
+      "p_i": 0.35674390897286856,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op2_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.47090765913689764,
+      "p_i": 0.3844014353753725,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op30_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5344453457668682,
+      "p_i": 0.3694806798529728,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op30_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.4164605437072582,
+      "p_i": 0.8047829415868808,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op31_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.38985910361906095,
+      "p_i": 0.4037512190986057,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op31_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.16383908982126888,
+      "p_i": 0.459131606703147,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op31_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.1611591473456939,
+      "p_i": 0.540202811286934,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op31_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.688068512124319,
+      "p_i": 0.8439699815163334,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op32_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.11325098820605366,
+      "p_i": 0.5282825247097773,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op32_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.7877262730726176,
+      "p_i": 0.31265709106218387,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op33_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.056349244758116285,
+      "p_i": 0.514083584826305,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op33_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.7304318065448442,
+      "p_i": 0.3250999775970681,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op33_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.4460425758168039,
+      "p_i": 0.3903020900352788,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op33_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.1447228277930596,
+      "p_i": 0.5361176894382313,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op34",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.36963673107608136,
+      "p_i": 0.5913711969381145,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op35_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7547168935781909,
+      "p_i": 0.6802056168514073,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op35_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.09944421459195354,
+      "p_i": 0.5248405859940384,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op35_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.8120348104186157,
+      "p_i": 0.30745705951483826,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op36",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 13.387305188656201,
+      "p_i": 0.9999984655011666,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op37_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.13024438270377614,
+      "p_i": 0.46748485582346466,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op37_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.43367380843625813,
+      "p_i": 0.3932494021128114,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op37_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.21958030862745928,
+      "p_i": 0.44532443072270167,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op37_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3184966232275111,
+      "p_i": 0.5789578240798008,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op38",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 7.95114193923524,
+      "p_i": 0.9996478643674653,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op39_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3034830279268123,
+      "p_i": 0.5752937503652563,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op39_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.16430366843936864,
+      "p_i": 0.5409837598077998,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op39_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.451490060911921,
+      "p_i": 0.6109934508203969,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op39_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.9696177925736146,
+      "p_i": 0.7250433091879511,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 5.221569860363196,
+      "p_i": 0.9946301439967913,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2330291264004276,
+      "p_i": 0.4420049213565614,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.3358398003178774,
+      "p_i": 0.41682039192038944,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5581601622352576,
+      "p_i": 0.363973269455796,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.8865388057621905,
+      "p_i": 0.7081753874950887,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no06",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.13535186807991229,
+      "p_i": 0.5337864018282116,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no07",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3647891567137667,
+      "p_i": 0.5901992574797899,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no08",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.3301853274260178,
+      "p_i": 0.4181955308239543,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no09",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.42482801006411147,
+      "p_i": 0.3953620288940865,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op3_no10",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.18011323318692632,
+      "p_i": 0.5449069724629267,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op40_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.502235810736864,
+      "p_i": 0.37701538901346326,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op40_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.23370099777058803,
+      "p_i": 0.558160780231395,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op41",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.037252851609568455,
+      "p_i": 0.4906878640017913,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.08350930751794852,
+      "p_i": 0.5208652024684997,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.19995234635688183,
+      "p_i": 0.5498222022180477,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.5638797486446565,
+      "p_i": 0.8269093669453712,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 3.400063735485564,
+      "p_i": 0.9677065271333748,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 11.205780546556676,
+      "p_i": 0.999986404805073,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no06",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.2608190956016614,
+      "p_i": 0.5648376329737831,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no07",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.15335506795793882,
+      "p_i": 0.46173619360541746,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op42_no08",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.2713432805952372,
+      "p_i": 0.7809726086798549,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op44_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.25642628846753684,
+      "p_i": 0.5637575923145256,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op44_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.299171322540222,
+      "p_i": 0.42576007276701644,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op45_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7280545739572096,
+      "p_i": 0.6743782171338494,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op45_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.45109059668614565,
+      "p_i": 0.3891014982266722,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op45_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.1018886416342673,
+      "p_i": 0.4745498529072906,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op46",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.26505696357358455,
+      "p_i": 0.43412100338292464,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op47",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.14730998221660538,
+      "p_i": 0.4632389573415507,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op48_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.1006598942209598,
+      "p_i": 0.2496162705245633,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op48_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.5102500500263789,
+      "p_i": 0.6248650902021858,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op48_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.32641270896729335,
+      "p_i": 0.5808862785350891,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op48_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.9535613027647986,
+      "p_i": 0.2781691795175763,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op49_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2763874814896575,
+      "p_i": 0.4313396547043086,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op49_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 2.635924334351372,
+      "p_i": 0.9331381265466363,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op49_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.23735027090873234,
+      "p_i": 0.5590605622335718,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op51_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.95746425395285,
+      "p_i": 0.27738618061607245,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op51_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.889581763204467,
+      "p_i": 0.2911961443664808,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op51_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.49746393122752175,
+      "p_i": 0.3781368392043793,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op51_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.3954518436258671,
+      "p_i": 0.4024055721391401,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op52_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.36912066722769454,
+      "p_i": 0.591246483558125,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op52_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.0281633090298042,
+      "p_i": 0.4929596380878779,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op52_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.5021304392168118,
+      "p_i": 0.6229598615526639,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op53",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.6805742294208335,
+      "p_i": 0.15701944641673368,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op56_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.48829245649584996,
+      "p_i": 0.38029590368617405,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op56_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.03797973614187321,
+      "p_i": 0.4905062071387506,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op56_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.8104258213901423,
+      "p_i": 0.6922002368351645,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op56_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.8383861201115617,
+      "p_i": 0.30187479458650907,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op57_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.4858710976579467,
+      "p_i": 0.38086671274189476,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op57_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2977895144034175,
+      "p_i": 0.4260979434801928,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op58",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7603955057485364,
+      "p_i": 0.6814395962079616,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op59_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.1628261132853295,
+      "p_i": 0.4593831693306796,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op59_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.41477250750253963,
+      "p_i": 0.6022316826280611,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op61",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3722754469113276,
+      "p_i": 0.5920086919899368,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op62",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 6.758500798207738,
+      "p_i": 0.9988403778888657,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op63_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 2.647078023079376,
+      "p_i": 0.9338306674868372,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op63_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.779388607670397,
+      "p_i": 0.3144516700632415,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op64",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -3.3780988643089787,
+      "p_i": 0.03298698501506955,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op65_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.03700051468728542,
+      "p_i": 0.490750926498594,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op65_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.6293084853813877,
+      "p_i": 0.6523326468227411,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op65_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.8671969768996415,
+      "p_i": 0.29583788734540234,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op66",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.7050650806123615,
+      "p_i": 0.846195106384887,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op67_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.7347488923517199,
+      "p_i": 0.32415348200663785,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op67_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.08458717648729289,
+      "p_i": 0.5211341943777276,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op68",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.4916309328274084,
+      "p_i": 0.8163229404883805,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op69_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.07494967536197898,
+      "p_i": 0.4812713476171343,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op69_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.36187267225111164,
+      "p_i": 0.4105063205048438,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op6_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 2.590459883136191,
+      "p_i": 0.9302450644702354,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op6_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7538783248215895,
+      "p_i": 0.6800231788396236,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op6_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 8.613811670489579,
+      "p_i": 0.9998184525007191,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op6_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.11226204334071795,
+      "p_i": 0.5280360726784898,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op70",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.26999234486772794,
+      "p_i": 0.4329089743593233,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op71_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.19581075640298132,
+      "p_i": 0.54879687509522,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op71_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.1930048042999081,
+      "p_i": 0.5481019737291282,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op72",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.7003950069655728,
+      "p_i": 0.6682753444784391,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op73_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.09545242001160312,
+      "p_i": 0.4761549968939113,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op73_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2759938923587427,
+      "p_i": 0.43143619911999226,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op74_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.608491607244061,
+      "p_i": 0.6475966405655756,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op74_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.04547258392646439,
+      "p_i": 0.48863381249265353,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op74_no03",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 2.4083326103072356,
+      "p_i": 0.9174605037646377,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op74_no04",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5365704521600382,
+      "p_i": 0.3689857425303624,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op74_no05",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.8331189356678348,
+      "p_i": 0.6970140082039774,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op7_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.21912602556296962,
+      "p_i": 0.5545633537677899,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op7_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.09990838254936457,
+      "p_i": 0.5249563402296173,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op8_no07",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.024198354403789354,
+      "p_i": 0.5060492934182942,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op8_no08",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 1.8241512057389857,
+      "p_i": 0.8610634936351085,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op8_no09",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.03329314328380802,
+      "p_i": 0.5083225170888344,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op8_no10",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.0997175086631966,
+      "p_i": 0.47509125958865533,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op8_no11",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.0790163503030669,
+      "p_i": 0.4802561840359077,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op8_no12",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.8998205352259754,
+      "p_i": 0.2890873788373748,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op9_no01",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.040295360342584005,
+      "p_i": 0.5100724772189377,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "craigsapp_scriabin:scriabin-op9_no02",
+      "composer": "Alexander Scriabin",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.10034892816079341,
+      "p_i": 0.5250662010427024,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "tonal_piano_corpus:10_mazurka",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -2.116953230110431,
+      "p_i": 0.10745994390716884,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:11_romance",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.0909355423228109,
+      "p_i": 0.25144215061340935,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:1_souvenir",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -2.810980439347999,
+      "p_i": 0.05673368981024498,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:2_aubade",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.8127007053749854,
+      "p_i": 0.30731529053750123,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:3_marche_fun\u00e8bre",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -2.4506550785925,
+      "p_i": 0.0793906577492149,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:4_impromptu",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -2.323293869864721,
+      "p_i": 0.08921205925976103,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:5_r\u00eaverie",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.9969652260204225,
+      "p_i": 0.11952192222547631,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:6_caprice_russe",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -3.583927636588381,
+      "p_i": 0.027016281746521917,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:pr\u00e8lude1",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -3.691653711797588,
+      "p_i": 0.024324316473542433,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:pr\u00e8lude4",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.8078829987916223,
+      "p_i": 0.14089417917692057,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:pr\u00e9lude6",
+      "composer": "Anton Rubinstein",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.6194558846110134,
+      "p_i": 0.1652799240229139,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n01",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3322269504864665,
+      "p_i": 0.417698870663179,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n02",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3149617904042136,
+      "p_i": 0.4219040864475835,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n03",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.7132798298299272,
+      "p_i": 0.3288745231543063,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n04",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.41175335732628143,
+      "p_i": 0.6015082264321158,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n05",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.11145677434071406,
+      "p_i": 0.47216461613288985,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n06",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.08860759641512246,
+      "p_i": 0.5221374170288696,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n07",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.0878931392093051,
+      "p_i": 0.5219591500461223,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n08",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.5820735063304752,
+      "p_i": 0.6415443804264351,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n09",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3140886011106753,
+      "p_i": 0.42211707272470333,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n10",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.14042052909955777,
+      "p_i": 0.46495243757572924,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n11",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.7464200777659993,
+      "p_i": 0.3216018478024263,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_dvorak_silhouettes:op08n12",
+      "composer": "Anton\u00edn Dvo\u0159\u00e1k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.34987495553657755,
+      "p_i": 0.5865872556322946,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n01",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.42283889104363614,
+      "p_i": 0.6041623715905782,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n02",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.05589627847583126,
+      "p_i": 0.513970432380492,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n03",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 1.1324344717221202,
+      "p_i": 0.7562878923581312,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n04",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.14111634568120998,
+      "p_i": 0.5352206576479658,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n05",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -1.2123544789325083,
+      "p_i": 0.22928471818624882,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n06",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.49222681823780357,
+      "p_i": 0.3793691266678037,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n07",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.08458787103697925,
+      "p_i": 0.4788656322950769,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n08",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.6513853921309204,
+      "p_i": 0.6573225896799224,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n09",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.6872248497075745,
+      "p_i": 0.6653492966775467,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n10",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2574531252730936,
+      "p_i": 0.564010110838669,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n11",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.26742249939737167,
+      "p_i": 0.4335399767698878,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n12",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.5262245701552428,
+      "p_i": 0.6286021232671554,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n13",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.6291851197810014,
+      "p_i": 0.6523046676246612,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_bartok_bagatelles:op06n14",
+      "composer": "B\u00e9la Bart\u00f3k",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.10794517056397691,
+      "p_i": 0.5269601190887826,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_childrens_corner:l113-01_childrens_doctor",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.682714161590022,
+      "p_i": 0.6643442006843295,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_childrens_corner:l113-02_childrens_jimbos",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.11603924000802414,
+      "p_i": 0.5289773020948654,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_childrens_corner:l113-03_childrens_serenade",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.06670359772307378,
+      "p_i": 0.4833302809231949,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_childrens_corner:l113-04_childrens_snow",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.19527698194640972,
+      "p_i": 0.5486646990305389,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_childrens_corner:l113-05_childrens_little",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.0979148160062118,
+      "p_i": 0.47554083434604544,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_childrens_corner:l113-06_childrens_golliwoggs",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.027970796533164654,
+      "p_i": 0.5069922432651013,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_deux_arabesques:l066-01_arabesques_premiere",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.22905813326202434,
+      "p_i": 0.5570154621964146,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_deux_arabesques:l066-02_arabesques_deuxieme",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.3846140586389458,
+      "p_i": 0.5949854739919801,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_estampes:l100-01_estampes_pagode",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.06914928242611695,
+      "p_i": 0.4827195645557906,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_estampes:l100-02_estampes_soiree",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.08262579519752859,
+      "p_i": 0.4793552950190736,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_estampes:l100-03_estampes_jardins",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.05501459046358634,
+      "p_i": 0.486249820239599,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-01_etudes_cinq",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.46712773439242444,
+      "p_i": 0.6147037047322186,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-02_etudes_tierces",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.30958527124335367,
+      "p_i": 0.5767840273204308,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-03_etudes_quartes",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.10091245320498708,
+      "p_i": 0.47479327375586666,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-04_etudes_sixtes",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3227759657796079,
+      "p_i": 0.4199993730914959,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-05_etudes_octaves",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2734463298591329,
+      "p_i": 0.5679387774979943,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-06_etudes_huit",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.027294852108954888,
+      "p_i": 0.5068232894148574,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-07_etudes_degres",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.8879154674589701,
+      "p_i": 0.7084598109853822,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-08_etudes_agrements",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3654335759540156,
+      "p_i": 0.40964488970905866,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-09_etudes_notes",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.21681973263581686,
+      "p_i": 0.4460064247097728,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-10_etudes_sonorites",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2062188838170894,
+      "p_i": 0.5513727922708584,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-11_etudes_arpeges",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1446776932206392,
+      "p_i": 0.4638935353456849,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_etudes:l136-12_etudes_accords",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.0960434619167059,
+      "p_i": 0.5239924254433185,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_pour_le_piano:l095-01_pour_prelude",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.3899267374862795,
+      "p_i": 0.5962650627137024,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_pour_le_piano:l095-02_pour_sarabande",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.17303151732492547,
+      "p_i": 0.4568497265791976,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_pour_le_piano:l095-03_pour_toccata",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.16586088141004887,
+      "p_i": 0.4586295773063424,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-01_preludes_danseuses",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.02080450180837695,
+      "p_i": 0.49479906213887487,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-02_preludes_voiles",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.05788054814168897,
+      "p_i": 0.5144660986180816,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-03_preludes_vent",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.7327775611223831,
+      "p_i": 0.6754144930638618,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-04_preludes_sons",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.05308911619021535,
+      "p_i": 0.48673083735005607,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-05_preludes_collines",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2395003151974546,
+      "p_i": 0.5595905061308221,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-06_preludes_pas",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.24234258565231542,
+      "p_i": 0.43970913833096587,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-07_preludes_ce",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5795520818730675,
+      "p_i": 0.3590356661313894,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-08_preludes_fille",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.6276589665401885,
+      "p_i": 0.3480415493562491,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-09_preludes_serenade",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.0914732553947108,
+      "p_i": 0.4771476184314683,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-10_preludes_cathedrale",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.47859137782623273,
+      "p_i": 0.6174151940311156,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-11_preludes_danse",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.27282929566150516,
+      "p_i": 0.5677873606367687,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l117-12_preludes_minstrels",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.24527733726091988,
+      "p_i": 0.4389862466420567,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-01_preludes_brouillards",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2880189572298985,
+      "p_i": 0.5715110718372085,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-02_preludes_feuilles",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.020739794363423047,
+      "p_i": 0.4948152372552308,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-03_preludes_puerta",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.151392504484024,
+      "p_i": 0.46222399752279797,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-04_preludes_fees",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5235160575094521,
+      "p_i": 0.3720304300859367,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-05_preludes_bruyeres",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1595733045413493,
+      "p_i": 0.46019111130240203,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-06_preludes_general",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.04576227843784833,
+      "p_i": 0.4885614265293579,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-07_preludes_terrasse",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.023457750787959322,
+      "p_i": 0.4941358312049714,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-08_preludes_ondine",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.3117325575902715,
+      "p_i": 0.5773081023551075,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-09_preludes_hommage",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.6273097547832589,
+      "p_i": 0.6518792072783607,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-10_preludes_canope",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.17764758123844232,
+      "p_i": 0.5442954643993156,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-11_preludes_tierces",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.4760041430906439,
+      "p_i": 0.6168038684454628,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_preludes:l123-12_preludes_feux",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5702119745678486,
+      "p_i": 0.3611879142647272,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_suite_bergamasque:l075-01_suite_prelude",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.18726153829358144,
+      "p_i": 0.45332094319151045,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_suite_bergamasque:l075-02_suite_menuet",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1783684740228429,
+      "p_i": 0.4555257325771175,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_debussy_suite_bergamasque:l075-03_suite_clair",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.32929126667058445,
+      "p_i": 0.5815869211194189,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_debussy_suite_bergamasque:l075-04_suite_passepied",
+      "composer": "Claude Debussy",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.10092970719767251,
+      "p_i": 0.5252110287776078,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.07509746048952887,
+      "p_i": 0.48123445327489967,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.2372191874002854,
+      "p_i": 0.440971751654722,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.14570543596896623,
+      "p_i": 0.536362050990195,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.11488990322051831,
+      "p_i": 0.4713090765284811,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5039905784429147,
+      "p_i": 0.37660332735749547,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1561915262070337,
+      "p_i": 0.46103130893154765,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n07",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.52467428870437,
+      "p_i": 0.37175987985619147,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op12n08",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.8038928592458522,
+      "p_i": 0.30919341496072866,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.47376782614008456,
+      "p_i": 0.38372483828208775,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.16735328978265235,
+      "p_i": 0.45825905243339937,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.008420881621382924,
+      "p_i": 0.5021052079651169,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.2628870554549445,
+      "p_i": 0.43465413892305643,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.14678403715309363,
+      "p_i": 0.4633697353842948,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5868878330090734,
+      "p_i": 0.35734924809574065,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n07",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.19007713831391743,
+      "p_i": 0.5473767296502527,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op38n08",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.9797747025073478,
+      "p_i": 0.27293648989327196,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op43n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.13032929844650162,
+      "p_i": 0.5325362832779764,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op43n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5241751501636285,
+      "p_i": 0.37187646335436336,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op43n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.4608729073280704,
+      "p_i": 0.38677876641867265,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op43n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.3515595614110454,
+      "p_i": 0.5869957173392502,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op43n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.10752033622300868,
+      "p_i": 0.4731457819178127,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op43n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.0005444831834497533,
+      "p_i": 0.5001361207924996,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op47n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1340571532747708,
+      "p_i": 0.4665358129788765,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op47n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.11963961689221939,
+      "p_i": 0.47012572141286635,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op47n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -1.241216983144763,
+      "p_i": 0.22422422324203606,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op47n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.27113750360083716,
+      "p_i": 0.5673721391002801,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op47n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.4741914707667138,
+      "p_i": 0.3836246597002538,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op47n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3502169781242756,
+      "p_i": 0.4133298054418273,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op47n07",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.10620762665720078,
+      "p_i": 0.4734730241389177,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op54n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.8876562827484028,
+      "p_i": 0.2915937250851692,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op54n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.08991822697386007,
+      "p_i": 0.47753557716046385,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op54n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.13876797882322936,
+      "p_i": 0.5346364310166795,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op54n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.6654102124400806,
+      "p_i": 0.33952533159577475,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op54n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.32220069418745106,
+      "p_i": 0.57986048436057,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op54n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.35402220956152197,
+      "p_i": 0.4124073867524517,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op57n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.07300021299770146,
+      "p_i": 0.48175804702571534,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op57n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.31328070640270445,
+      "p_i": 0.4223141583042219,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op57n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.14215706048846602,
+      "p_i": 0.4645204641639067,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op57n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.14369851816555732,
+      "p_i": 0.5358629388280486,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op57n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.2732600625496796,
+      "p_i": 0.43210693015782997,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op57n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.005380849449675904,
+      "p_i": 0.4986547908832934,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op62n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.36816156048817156,
+      "p_i": 0.4089853279492816,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op62n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3465197937891729,
+      "p_i": 0.41422661565082514,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op62n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.044148656993723126,
+      "p_i": 0.48896462811722274,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op62n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.7048687275608806,
+      "p_i": 0.6692663464125995,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op62n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.21219037331708324,
+      "p_i": 0.5528494475224416,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op62n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1571660989078057,
+      "p_i": 0.4607891549180356,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op65n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.5003165153066745,
+      "p_i": 0.6225337105903068,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op65n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5014499633837243,
+      "p_i": 0.37719998257287485,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op65n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2507810307729091,
+      "p_i": 0.56236872983393,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op65n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5349251891269888,
+      "p_i": 0.36936890028791164,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op65n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.24285026112540936,
+      "p_i": 0.4395840686877872,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op65n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.084785675690694,
+      "p_i": 0.4788162696898914,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op68n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.655219984212775,
+      "p_i": 0.34181419178664835,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op68n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.33252538773030366,
+      "p_i": 0.5823737154069268,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op68n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.4134875818820048,
+      "p_i": 0.3980761600080641,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op68n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5066938954581289,
+      "p_i": 0.37596887283375297,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op68n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.04672978989022537,
+      "p_i": 0.48831967795067144,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op68n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5570836365587649,
+      "p_i": 0.3642225181031041,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op71n01",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.09738062474041721,
+      "p_i": 0.5243259356802521,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op71n02",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.026199968853630743,
+      "p_i": 0.5065496175586284,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op71n03",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.3485358031530265,
+      "p_i": 0.5862624700228296,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op71n04",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.20068075230655408,
+      "p_i": 0.449997510932262,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op71n05",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.6299282477941041,
+      "p_i": 0.347526807580105,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op71n06",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.06555319187434587,
+      "p_i": 0.48361756818874313,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_grieg_lyric_pieces:op71n07",
+      "composer": "Edvard Grieg",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.4559857977979529,
+      "p_i": 0.3879385351310695,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:01-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.11536864004910061,
+      "p_i": 0.47118978804344847,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:01-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.5757385796629919,
+      "p_i": 0.6400862652454659,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:01-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.0535485708714053,
+      "p_i": 0.4866160552780528,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:01-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2532513623331242,
+      "p_i": 0.5629766095178292,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:02-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.4392551072139956,
+      "p_i": 0.39191847659954976,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:02-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.12319979058919808,
+      "p_i": 0.5307610494027099,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:02-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.10139618077710398,
+      "p_i": 0.5253273493136664,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:02-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.05703912232448974,
+      "p_i": 0.5142559157013105,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:03-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.010308968603109772,
+      "p_i": 0.5025772193263549,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:03-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.19482485768249824,
+      "p_i": 0.4514472637523783,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:03-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.23944043677698357,
+      "p_i": 0.4404242508969742,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:03-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.18395102622811224,
+      "p_i": 0.5458585161305037,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:04-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.04061492462705976,
+      "p_i": 0.48984766438900124,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:04-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.02356243344821566,
+      "p_i": 0.4941096641558717,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:04-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.018738019187319842,
+      "p_i": 0.4953156322643771,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:04-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.07070959456987001,
+      "p_i": 0.5176700369661373,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:05-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.01052728235044058,
+      "p_i": 0.4973682037177893,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:05-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.07316752590040472,
+      "p_i": 0.48171627460415306,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:05-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.22213645818179995,
+      "p_i": 0.5553068766921209,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:06-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.18341919542751725,
+      "p_i": 0.5457266736599964,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:06-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.062365318201219475,
+      "p_i": 0.4844137219374896,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:06-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5993169489409048,
+      "p_i": 0.35449998063496463,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:07-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.06300130604352266,
+      "p_i": 0.5157451189413539,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:07-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.07459083196694781,
+      "p_i": 0.5186390668017733,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:07-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.2901487524590238,
+      "p_i": 0.5720325496062836,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:07-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.27602334657931504,
+      "p_i": 0.5685710259564218,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:08-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -1.1040651496796008,
+      "p_i": 0.24897898295623566,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:08-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.4880259285672729,
+      "p_i": 0.38035871857449793,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:08-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.23949074213615468,
+      "p_i": 0.559588146858364,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:09-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.2557205845027301,
+      "p_i": 0.4364159727706621,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:09-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3438183161283081,
+      "p_i": 0.41488226162061986,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:09-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.32110564703566863,
+      "p_i": 0.5795936831461468,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:10-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.21577769031619962,
+      "p_i": 0.553736088118876,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:10-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.8540616008857036,
+      "p_i": 0.7014184612762241,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:10-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.12435709710715485,
+      "p_i": 0.5310492706471444,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:11-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.43889847172303326,
+      "p_i": 0.6079965273311276,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:11-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.31813876592300117,
+      "p_i": 0.5788705882930879,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:11-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.4321186235707027,
+      "p_i": 0.606379462535709,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:11-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.006342017715819378,
+      "p_i": 0.4984145008852632,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:12-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3227762414517686,
+      "p_i": 0.41999930593778656,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:12-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -1.185255377110854,
+      "p_i": 0.23410858150721278,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:12-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.5444682630314683,
+      "p_i": 0.36714876396608753,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:12-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.10507471733340218,
+      "p_i": 0.5262445372784521,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:13-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.22501638732783324,
+      "p_i": 0.5560179359567071,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:13-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3202323014880829,
+      "p_i": 0.4206191352419367,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:13-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.7089969014012506,
+      "p_i": 0.6701794738130658,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:13-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.11131797960689081,
+      "p_i": 0.5278007925894225,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:14-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.008295030251816429,
+      "p_i": 0.5020737456721918,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:14-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.19128634260793187,
+      "p_i": 0.45232370059949534,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:14-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.10028852016439622,
+      "p_i": 0.5250511369760138,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:15-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.24830250892834793,
+      "p_i": 0.4382413535237906,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:15-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.004680652438960918,
+      "p_i": 0.5011701609733676,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:15-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1112745338801059,
+      "p_i": 0.47221003527684013,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:15-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.20753066074318538,
+      "p_i": 0.5516972525964319,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:16-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.10581242605783378,
+      "p_i": 0.4735715472254067,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:16-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.11989758584465254,
+      "p_i": 0.5299385400994441,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:16-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.03285041930147173,
+      "p_i": 0.508211866352319,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:17-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.06535309594945547,
+      "p_i": 0.5163324613689542,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:17-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.3461957893766071,
+      "p_i": 0.4143052352139261,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:17-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.07982634599351847,
+      "p_i": 0.5199459958911897,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:18-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.0736778323178101,
+      "p_i": 0.481588869783979,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:18-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.10657070307491975,
+      "p_i": 0.5266174886029842,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:18-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.0985453842420997,
+      "p_i": 0.4753835719557111,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:18-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.44529216516791215,
+      "p_i": 0.39048067722496194,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:19-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.01740106402412445,
+      "p_i": 0.4956498437612804,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:19-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.6969266834647264,
+      "p_i": 0.33249397352523896,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:20-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.00011587698480320426,
+      "p_i": 0.4999710307538316,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:20-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.1746029604550037,
+      "p_i": 0.45645981825829907,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:21-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.15870221641662893,
+      "p_i": 0.46040751036914807,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:21-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.3393666630880917,
+      "p_i": 0.584036669628961,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:21-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.06370237043209866,
+      "p_i": 0.5159202092986087,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:23-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.13041149998859136,
+      "p_i": 0.5325567465894054,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:23-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.546857738013839,
+      "p_i": 0.6334062554060508,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:23-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.08628998910830603,
+      "p_i": 0.5215591215698457,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:24-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.24622540693004166,
+      "p_i": 0.5612472278941404,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:24-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.24978605381804864,
+      "p_i": 0.5621238407382415,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:26-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.24825752221320024,
+      "p_i": 0.43825242864814745,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:26-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.18127267499183858,
+      "p_i": 0.4548055202599883,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:26-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.49734492455985324,
+      "p_i": 0.3781648239531288,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:29-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.6759494856982521,
+      "p_i": 0.33716593415858936,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:29-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.008967126205424105,
+      "p_i": 0.49775823347020676,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:29-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.21906524503173624,
+      "p_i": 0.5545483395385336,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:29-4",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.05337801815339503,
+      "p_i": 0.486658663003607,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:30-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.11678182458436141,
+      "p_i": 0.5291623207127842,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:30-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.13266237350431034,
+      "p_i": 0.4668829621218036,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:30-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.20334826319920854,
+      "p_i": 0.5506626089100358,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:31-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.08867480848737226,
+      "p_i": 0.5221541870836738,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:31-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": -0.30353737740890574,
+      "p_i": 0.42469297043386806,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:31-3",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.20463849078987678,
+      "p_i": 0.5509818332698233,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:32-1",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.483309901316315,
+      "p_i": 0.6185291545618214,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "DCMLab_beethoven_piano_sonatas:32-2",
+      "composer": "Ludwig van Beethoven",
+      "true_class": "Control",
+      "true_label": 0,
+      "z_i": 0.22645815183964557,
+      "p_i": 0.5563738240096016,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Impromptu_passione/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.42774871147060656,
+      "p_i": 0.3946640464198058,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Memories_of_Childhood/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.3397274753123744,
+      "p_i": 0.5841243219120131,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/I._Gnomus/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.5419191992726758,
+      "p_i": 0.6322587593506993,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/II._Old_Castle/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5152309415554959,
+      "p_i": 0.37396807355744155,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/III._Tuileries/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.04809897893766725,
+      "p_i": 0.512022426988251,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/IV._Bydlo/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2560926426029412,
+      "p_i": 0.43632446461577296,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/IX._The_Hut_on_Fowl's_Legs_(Baba-Yaga)/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.6186264947700337,
+      "p_i": 0.6499061018361417,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/Promenade/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.8468655249509061,
+      "p_i": 0.300090798291272,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/Promenade_II._Moderato_commodo_assai_e_con_delicatezza/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.2431900220236509,
+      "p_i": 0.43950037033818107,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/Promenade_III._Moderato_non_tanto,_pesamente/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.8508445858292133,
+      "p_i": 0.7007442836086885,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/Promenade_IV._Tranquillo/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.4165953184171939,
+      "p_i": 0.6026682531067825,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/Promenade_V/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.7613706657229704,
+      "p_i": 0.31834875384828976,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/V._Ballet_of_the_Chickens_in_their_Shells/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.31669786124157173,
+      "p_i": 0.42148071449229446,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/VI._Samuel_Goldenberg_and_Schmuyle/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.47480305848801907,
+      "p_i": 0.383480055933379,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/VII._The_Market-Place_at_Limoges/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.15313384477669048,
+      "p_i": 0.538208824031114,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/VIII._Catacombae_(Sepulcrum_romanum)/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.6054919106813463,
+      "p_i": 0.3530882385938561,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/Pictures_at_an_Exhibition/X._The_Great_Gate_at_Kiev/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.4142301210644322,
+      "p_i": 0.39789825253050026,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "SyMuPe_PERiScoPe:Modest_Mussorgsky/The_Seamstress/score.mxl",
+      "composer": "Modest Mussorgsky",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.15750995722973,
+      "p_i": 0.5392962798308297,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "ana_music:prokofiev_op22_no02",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.5963356363046741,
+      "p_i": 0.35518248919713885,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "ana_music:prokofiev_op22_no03",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": 0.23414120719967868,
+      "p_i": 0.5582693407214206,
+      "y_hat_i": 1
+    },
+    {
+      "piece_id": "tonal_piano_corpus:etude",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -3.5909950594724047,
+      "p_i": 0.02683112433603359,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:legend",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.3501183441027058,
+      "p_i": 0.2058510246619395,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:march",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.1793709204880964,
+      "p_i": 0.23516532525848202,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:op22no1",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.3599385792678309,
+      "p_i": 0.41097443424990515,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:op22no10",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.48168570850624,
+      "p_i": 0.18517293798919407,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:op22no5",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -1.6835763446900267,
+      "p_i": 0.15662248244983426,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:prelude",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -0.9424232885980306,
+      "p_i": 0.28041110957266663,
+      "y_hat_i": 0
+    },
+    {
+      "piece_id": "tonal_piano_corpus:toccata",
+      "composer": "Sergei Prokofiev",
+      "true_class": "Russian",
+      "true_label": 1,
+      "z_i": -2.4515655549588087,
+      "p_i": 0.07932413853020975,
+      "y_hat_i": 0
+    }
+  ],
+  "composer_level_scores": {
+    "Anton Rubinstein": -2.209582211220225,
+    "Edvard Grieg": -0.19684431433435945,
+    "B\u00e9la Bart\u00f3k": 0.1825080390664246,
+    "Sergei Prokofiev": -1.340186822918914,
+    "Modest Mussorgsky": -0.09640364473646451,
+    "Ludwig van Beethoven": -0.007708362319577323,
+    "Claude Debussy": 0.05193229172105288,
+    "Anton\u00edn Dvo\u0159\u00e1k": -0.09605433318498269,
+    "Alexander Scriabin": 0.6559063801471983
+  },
+  "primary_hypothesis_result": {
+    "statistic_name": "T_obs",
+    "T_obs": -0.7343332388718129,
+    "russian_mean_score": -0.7475665746821013,
+    "control_mean_score": -0.013233335810288396,
+    "permutation_count": 126,
+    "extreme_count": 110,
+    "strictly_greater_count": 109,
+    "tie_count": 1,
+    "observed_rank_min": 110,
+    "observed_rank_max": 110,
+    "p_exact": 0.873015873015873,
+    "alpha": 0.05,
+    "primary_inferential_status": "PRIMARY_TEST_DOES_NOT_REJECT_NULL",
+    "all_126_permutation_assignments": [
+      {
+        "assignment_index": 1,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k"
+        ],
+        "class_0_composers": [
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.04896336078024366,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 2,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy"
+        ],
+        "class_0_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.10772244708566092,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 3,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.21967191981059653,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 4,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.13456074140394453,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 5,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.1744736184915438,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 6,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.734176048673646,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 7,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.01763062042747232,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 8,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.09431885229746328,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 9,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.009207673890811285,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 10,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.049120550978410504,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 11,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.6088229811605127,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 12,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.15307793860288055,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 13,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.06796676019622855,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 14,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.10787963728382777,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 15,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.6675820674659301,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 16,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.17991623292116415,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 17,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.21982911000876337,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 18,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.7795315401908656,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 19,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.13471793160211137,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 20,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.6944203617842136,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 21,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -0.7343332388718129,
+        "is_observed_assignment": true
+      },
+      {
+        "assignment_index": 22,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.9687181655433313,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 23,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.8567686928183957,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 24,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.9418798712250478,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 25,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.9019669941374485,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 26,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.34226456395534627,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 27,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.7980096065129785,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 28,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.8831207849196305,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 29,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.8432079078320313,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 30,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.283505477649929,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 31,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.7711713121946949,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 32,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.7312584351070955,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 33,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.17155600492499337,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 34,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.8163696135137477,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 35,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.2566671833316454,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 36,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": 0.21675430624404612,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 37,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.9233626740261118,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 38,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 1.0084738524327639,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 39,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.9685609753451645,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 40,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.4088585451630623,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 41,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.8965243797078283,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 42,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.856611502620229,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 43,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.29690907243812675,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 44,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.9417226810268811,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 45,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.38202025084477875,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 46,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": 0.3421073737571795,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 47,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.837765293402411,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 48,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.7978524163148117,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 49,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.23814998613270946,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 50,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.8829635947214637,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 51,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.3232611645393614,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 52,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": 0.28334828745176216,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 53,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.7710141219965281,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 54,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.21131169181442588,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 55,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": 0.1713988147268266,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 56,
+        "class_1_composers": [
+          "Alexander Scriabin",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "T_A": 0.25650999313347855,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 57,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.32075170057200914,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 58,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.4327011732969447,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 59,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.3475899948902928,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 60,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.387502871977892,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 61,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.9472053021599942,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 62,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.491460259602362,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 63,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.4063490811957101,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 64,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.44626195828330933,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 65,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -1.0059643884654115,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 66,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.5182985539206456,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 67,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.5582114310082449,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 68,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -1.1179138611903472,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 69,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.47310025260159294,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 70,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -1.0328026827836951,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 71,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -1.0727155598712945,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 72,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.36610719208922865,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 73,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.28099601368257665,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 74,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.320908890770176,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 75,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.8806113209522782,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 76,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.3929454864075123,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 77,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.43285836349511153,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 78,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.9925607936772138,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 79,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.34774718508845964,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 80,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.9074496152705619,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 81,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -0.9473624923581611,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 82,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.4517045727129296,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 83,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.4916174498005288,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 84,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -1.051319879982631,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 85,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.4065062713938769,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 86,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.9662087015759792,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 87,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -1.0061215786635784,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 88,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "T_A": -0.5184557441188125,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 89,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -1.0781581743009148,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 90,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -1.118071051388514,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 91,
+        "class_1_composers": [
+          "Anton Rubinstein",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "T_A": -1.032959872981862,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 92,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.5849803530266304,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 93,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.6700915314332823,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 94,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.630178654345683,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 95,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.07047622416358079,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 96,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.5581420587083468,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 97,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.5182291816207476,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 98,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.041473248561354814,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 99,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.6033403600273995,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 100,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.043637929845297185,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 101,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": 0.0037250527576979664,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 102,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.49938297240292945,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 103,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.4594700953153303,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 104,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.10023233486677208,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 105,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.5445812737219823,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 106,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.015121156460120078,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 107,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -0.0550340335477193,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 108,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.4326318009970467,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 109,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.12707062918505568,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 110,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -0.1669835062726549,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 111,
+        "class_1_composers": [
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "T_A": -0.0818723278660029,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 112,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.6247360399160627,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 113,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.5848231628284635,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 114,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.02512073264636122,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 115,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.6699343412351154,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 116,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Modest Mussorgsky"
+        ],
+        "T_A": 0.11023191105301317,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 117,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": 0.07031903396541395,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 118,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.5579848685101799,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 119,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.0017175616719223297,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 120,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -0.04163043875952166,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 121,
+        "class_1_composers": [
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "Claude Debussy",
+          "Edvard Grieg"
+        ],
+        "T_A": 0.04348073964713034,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 122,
+        "class_1_composers": [
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Sergei Prokofiev"
+        ],
+        "T_A": 0.4992257822047626,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 123,
+        "class_1_composers": [
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Modest Mussorgsky"
+        ],
+        "T_A": -0.06047664797733965,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 124,
+        "class_1_composers": [
+          "Claude Debussy",
+          "Edvard Grieg",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Ludwig van Beethoven"
+        ],
+        "T_A": -0.10038952506493892,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 125,
+        "class_1_composers": [
+          "Claude Debussy",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Edvard Grieg"
+        ],
+        "T_A": -0.015278346658286923,
+        "is_observed_assignment": false
+      },
+      {
+        "assignment_index": 126,
+        "class_1_composers": [
+          "Edvard Grieg",
+          "Ludwig van Beethoven",
+          "Modest Mussorgsky",
+          "Sergei Prokofiev"
+        ],
+        "class_0_composers": [
+          "Alexander Scriabin",
+          "Anton Rubinstein",
+          "Anton\u00edn Dvo\u0159\u00e1k",
+          "B\u00e9la Bart\u00f3k",
+          "Claude Debussy"
+        ],
+        "T_A": -0.12722781938322247,
+        "is_observed_assignment": false
+      }
+    ]
+  },
+  "secondary_metrics": {
+    "auroc": {
+      "point_estimate": 0.5113203663682206,
+      "ci_95_percentile": [
+        0.46200816438544134,
+        0.5605305135329834
+      ]
+    },
+    "balanced_accuracy": {
+      "point_estimate": 0.5160543377585675,
+      "ci_95_percentile": [
+        0.4727539364001235,
+        0.557630956056396
+      ],
+      "decision_threshold": 0.5
+    },
+    "brier_score": {
+      "point_estimate": 0.2659867577132047,
+      "ci_95_percentile": [
+        0.2551150108569776,
+        0.2768011229753268
+      ]
+    },
+    "bootstrap_replicate_matrix_sha256": "d606705dd1621a4b0fef85c1dbec2f2f1347891c8576a2162e64ac9306b5b739"
+  },
+  "feature_battery_status": {
+    "56_feature_significance_battery": "EXCLUDED_FROM_ONE_SHOT_CONFIRMATION",
+    "rationale": "Preregistered strict FWER protection and single-endpoint confirmation."
+  },
+  "confirmatory_result_hash": "a933ac2b21fe50cff9c0a43e8216ee37593acded32e22ecb0e9502b231cffded"
+}

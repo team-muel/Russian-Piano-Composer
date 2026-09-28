@@ -1,0 +1,21 @@
+{
+  "milestone": "RC-012",
+  "document_type": "ONE_SHOT_EXECUTION_RECEIPT",
+  "execution_status": "EXECUTED",
+  "execution_timestamp": "2026-09-28T15:10:56Z",
+  "starting_runner_commit": "e2af2110d754a90c57b625821ad2952fd5970721",
+  "execution_plan_hash": "11685bb1217e67a64c5b610f4cc9afd96436fcb12da79fcbc921d1120e8fe962",
+  "corpus_freeze_hash": "ec9c1a344cf7a53ba69c00865bda783c352d92770267fcb6933521e9cc186c1e",
+  "feature_cache_hash": "6a1fba9d1071ad0453516870f78eabb138b46415d2f642d3d2e195f0fe9bfca7",
+  "predictor_bundle_hash": "4e783889d8f9bbd83699bf27357bdd7873a43e15b81d2d04d9ea84ec5525f926",
+  "human_decision_hash": "4b50a007e2824ee1223f58a793de993b4537f4db3aa3dd006a17dc7e36ad1b31",
+  "result_hash": "a933ac2b21fe50cff9c0a43e8216ee37593acded32e22ecb0e9502b231cffded",
+  "piece_score_ledger_hash": "66513dc4901b48ee865ba826cb4dad824f448b242b94834fd25202d39c5aa634",
+  "bootstrap_replicate_matrix_sha256": "d606705dd1621a4b0fef85c1dbec2f2f1347891c8576a2162e64ac9306b5b739",
+  "primary_inferential_status": "PRIMARY_TEST_DOES_NOT_REJECT_NULL",
+  "T_obs": -0.7343332388718129,
+  "p_exact": 0.873015873015873,
+  "secondary_auroc": 0.5113203663682206,
+  "secondary_balanced_accuracy": 0.5160543377585675,
+  "secondary_brier_score": 0.2659867577132047
+}

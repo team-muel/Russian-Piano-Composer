@@ -1,0 +1,48 @@
+{
+  "milestone": "RC-012",
+  "document_type": "CONFIRMATORY_TWO_PROCESS_REPRODUCIBILITY_AUDIT",
+  "two_process_reproducibility": "PASS",
+  "audit_timestamp_iso": "2026-09-28T15:11:35Z",
+  "verified_result_hash": "a933ac2b21fe50cff9c0a43e8216ee37593acded32e22ecb0e9502b231cffded",
+  "verified_receipt_result_hash": "a933ac2b21fe50cff9c0a43e8216ee37593acded32e22ecb0e9502b231cffded",
+  "piece_scores_count_verified": 483,
+  "composer_scores_count_verified": 9,
+  "permutation_assignments_count_verified": 126,
+  "bootstrap_replicates_count_verified": 10000,
+  "primary_statistic_verified": {
+    "T_obs": -0.7343332388718129,
+    "p_exact": 0.873015873015873,
+    "extreme_count": 110,
+    "primary_inferential_status": "PRIMARY_TEST_DOES_NOT_REJECT_NULL"
+  },
+  "secondary_metrics_verified": {
+    "auroc": {
+      "point_estimate": 0.5113203663682206,
+      "ci_95_percentile": [
+        0.46200816438544134,
+        0.5605305135329834
+      ]
+    },
+    "balanced_accuracy": {
+      "point_estimate": 0.5160543377585675,
+      "ci_95_percentile": [
+        0.4727539364001235,
+        0.557630956056396
+      ],
+      "decision_threshold": 0.5
+    },
+    "brier_score": {
+      "point_estimate": 0.2659867577132047,
+      "ci_95_percentile": [
+        0.2551150108569776,
+        0.2768011229753268
+      ]
+    }
+  },
+  "deterministic_hash_bindings": {
+    "piece_ledger_sha256": "66513dc4901b48ee865ba826cb4dad824f448b242b94834fd25202d39c5aa634",
+    "bootstrap_replicate_matrix_sha256": "d606705dd1621a4b0fef85c1dbec2f2f1347891c8576a2162e64ac9306b5b739",
+    "result_canonical_hash": "a933ac2b21fe50cff9c0a43e8216ee37593acded32e22ecb0e9502b231cffded"
+  },
+  "audit_record_hash": "4ea0b2a6534604816e655174baa32dc744800f0bdf74c534a43a52abab320460"
+}
