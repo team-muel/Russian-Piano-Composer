@@ -6,9 +6,7 @@ Validates pure algorithmic correctness without exposing real confirmatory data.
 from __future__ import annotations
 
 import numpy as np
-
 from scripts.run_rc012_one_shot_confirmation import (
-    EXPECTED_CONTROL_COMPOSERS,
     EXPECTED_RUSSIAN_COMPOSERS,
     compute_piece_ledger_sha256,
     compute_replicate_matrix_sha256,
@@ -67,7 +65,7 @@ def test_synthetic_confirmatory_pipeline_execution() -> None:
 
     cache_data = {"cached_pieces": cached_pieces}
 
-    result_data, receipt_data, boot_matrix = run_confirmatory_pipeline(
+    result_data, _receipt_data, boot_matrix = run_confirmatory_pipeline(
         cache_data=cache_data,
         bundle_data=bundle_data,
         runner_commit_sha="SYNTHETIC_TEST_COMMIT",

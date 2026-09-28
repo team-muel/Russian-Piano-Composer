@@ -21,12 +21,8 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-
 from scripts.run_rc012_one_shot_confirmation import (
-    BOOTSTRAP_PERCENTILE_METHOD,
     BOOTSTRAP_REPLICATES_B,
-    BOOTSTRAP_RNG_ENGINE,
-    BOOTSTRAP_SEED,
     RECEIPT_PATH,
     RESULT_PATH,
     compute_piece_ledger_sha256,
@@ -72,7 +68,7 @@ def audit_rc012_reproducibility() -> dict[str, Any]:
 
     runner_commit = auth_result.get("runner_commit", "UNKNOWN")
 
-    recomputed_result, recomputed_receipt, recomputed_bootstrap_matrix = run_confirmatory_pipeline(
+    recomputed_result, _recomputed_receipt, recomputed_bootstrap_matrix = run_confirmatory_pipeline(
         cache_data=cache_data,
         bundle_data=bundle_data,
         runner_commit_sha=runner_commit,

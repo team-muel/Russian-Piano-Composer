@@ -26,8 +26,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-from sklearn.metrics import balanced_accuracy_score, brier_score_loss, roc_auc_score
-
 from scripts.verify_rc012_one_shot_preflight import (
     EXPECTED_CONTROL_COMPOSERS,
     EXPECTED_EXECUTION_PLAN_HASH,
@@ -39,6 +37,7 @@ from scripts.verify_rc012_one_shot_preflight import (
     compute_canonical_json_hash,
     verify_rc012_one_shot_preflight,
 )
+from sklearn.metrics import balanced_accuracy_score, brier_score_loss, roc_auc_score
 
 # Ensure project root is in sys.path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
