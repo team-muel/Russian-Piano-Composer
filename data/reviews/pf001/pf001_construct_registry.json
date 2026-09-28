@@ -1,0 +1,696 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "registry_version": "1.0.0",
+  "milestone": "PF-001",
+  "project": "team-muel/Russian-Piano-Composer",
+  "subsystem": "Perception-First Artificial Listener",
+  "created_at": "2026-09-29T08:00:00Z",
+  "status_governance": {
+    "allowed_statuses": [
+      "MEASURABLE_NOW",
+      "LATENT_NEEDS_VALIDATION",
+      "HIGH_LEVEL_NOT_OPERATIONAL",
+      "REJECTED_AS_DIRECT_SCALAR"
+    ],
+    "stage_0_approved_constructs": [
+      "expectation",
+      "uncertainty",
+      "closure",
+      "recognition",
+      "memory"
+    ]
+  },
+  "constructs": [
+    {
+      "construct_id": "CST-EXP-001",
+      "construct_name": "Expectation",
+      "conceptual_definition": "The listener's conditional predictive probability distribution over immediate subsequent musical events (pitches, onsets, durations, harmonies) given the accumulated musical context.",
+      "timescale": "event_level",
+      "measurement_class": "behavioral_continuation_distribution",
+      "human_observable": "human_continuation_distribution: Empirical choice probability distribution over continuation candidates from forced-choice continuation tasks or multi-point betting allocations, paired with subjective continuation confidence.",
+      "stimulus_unit": "musical_context_with_candidate_continuations",
+      "response_type": "discrete_choice_distribution_and_confidence",
+      "model_output": "model_prediction_distribution: P_AI(x_next | context)",
+      "derived_variables": [
+        "shannon_entropy",
+        "top1_candidate",
+        "predictive_mass_ratio",
+        "tonal_stability"
+      ],
+      "primary_validation_metric": "jensen_shannon_divergence_and_cross_entropy",
+      "secondary_validation_metrics": [
+        "earth_movers_distance_pitch_space",
+        "brier_score",
+        "spearman_rank_correlation_candidates"
+      ],
+      "intervention_test": "INT-EXP-001: Insert high-expectation diatonic voice-leading continuation vs unexpected chromatic aberration; verify directional collapse in human choice and AI probability mass.",
+      "known_confounders": [
+        "tonal_hierarchy_base_rate",
+        "pitch_proximity_bias",
+        "recent_repetition_priming",
+        "dynamic_accent_salience",
+        "listener_formal_training"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "expectation"
+    },
+    {
+      "construct_id": "CST-UNC-001",
+      "construct_name": "Uncertainty",
+      "conceptual_definition": "The dispersion or informational entropy of the listener's expectation distribution over future musical states, reflecting subjective doubt and open possibilities.",
+      "timescale": "event_level_to_phrase_level",
+      "measurement_class": "response_distribution_dispersion_and_confidence",
+      "human_observable": "human_uncertainty: Empirical Shannon entropy of aggregate human continuation choice distribution and inverted subjective confidence rating (1 - confidence), correlated with decision reaction time.",
+      "stimulus_unit": "musical_context_truncated_at_decision_point",
+      "response_type": "distribution_entropy_and_subjective_confidence",
+      "model_output": "model_uncertainty: H_AI(context) = -sum_x P_AI(x|context) log P_AI(x|context)",
+      "derived_variables": [
+        "entropy_change_delta",
+        "max_entropy_ratio",
+        "perceptual_hesitation_index"
+      ],
+      "primary_validation_metric": "spearman_rank_correlation_entropy_to_human_dispersion",
+      "secondary_validation_metrics": [
+        "linear_regression_r2_against_response_time",
+        "calibration_error_of_confidence"
+      ],
+      "intervention_test": "INT-UNC-001: Contrast clear dominant-seventh preparation (low uncertainty) with ambiguous diminished-seventh / whole-tone symmetrical harmony (high uncertainty); measure response entropy increase in both human and AI.",
+      "known_confounders": [
+        "listener_cognitive_fatigue",
+        "task_ambiguity",
+        "perceptual_acuity",
+        "harmonic_ambiguity_vs_acoustic_roughness"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "uncertainty"
+    },
+    {
+      "construct_id": "CST-SUR-001",
+      "construct_name": "Surprise",
+      "conceptual_definition": "The negative log-probability (surprisal) of an observed musical event relative to the listener's prior conditional expectation, capturing the informational shock of the realized event.",
+      "timescale": "event_level",
+      "measurement_class": "derived_information_and_subjective_salience",
+      "human_observable": "human_surprise_rating: Graded subjective unexpectedness rating (1-7 scale) and unexpectedness response latency peak following realization of observed event.",
+      "stimulus_unit": "context_plus_realized_event",
+      "response_type": "subjective_likert_rating_and_rt",
+      "model_output": "model_surprise: S_AI(x_t) = -log2 P_AI(x_t | context)",
+      "derived_variables": [
+        "cumulative_surprisal",
+        "local_surprisal_spike",
+        "information_density"
+      ],
+      "primary_validation_metric": "spearman_rank_correlation_surprisal_to_human_unexpectedness",
+      "secondary_validation_metrics": [
+        "root_mean_squared_error_normalized",
+        "inter_rater_reliability_noise_ceiling_ratio"
+      ],
+      "intervention_test": "INT-SUR-001: In a cadence context, substitute expected tonic resolution with deceptive submediant chord or foreign tritone root; confirm proportional surge in human unexpectedness rating and AI surprisal.",
+      "known_confounders": [
+        "acoustic_loudness_transient",
+        "register_extremity",
+        "sensory_pleasantness_halo"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "expectation.derived_surprise"
+    },
+    {
+      "construct_id": "CST-CLO-001",
+      "construct_name": "Closure Expectation",
+      "conceptual_definition": "The subjective probability that the musical context can terminate naturally and syntactically at time t, versus demanding immediate structural continuation.",
+      "timescale": "phrase_level_to_section_level",
+      "measurement_class": "continuous_rating_and_boundary_detection",
+      "human_observable": "human_closure_rating: Proportion of listeners judging that a phrase can terminate naturally at time t on probe trials, and continuous slider rating [0, 1] of structural completeness.",
+      "stimulus_unit": "musical_phrase_truncated_at_candidate_boundary",
+      "response_type": "binary_termination_judgment_and_graded_completeness",
+      "model_output": "model_closure_probability: C_AI(t) = P_AI(termination | context_<=t)",
+      "derived_variables": [
+        "closure_gradient",
+        "cadential_resolution_index",
+        "premature_truncation_penalty"
+      ],
+      "primary_validation_metric": "area_under_roc_curve_boundary_termination",
+      "secondary_validation_metrics": [
+        "brier_score_closure",
+        "precision_recall_auc_at_cadence_points"
+      ],
+      "intervention_test": "INT-CLO-001: Truncate phrase on authentic cadence tonic downbeat vs on leading tone / dominant seventh suspension; verify collapse of closure rating from >0.85 to <0.15 in both human and AI.",
+      "known_confounders": [
+        "ritardando_tempo_cues",
+        "decrescendo_dynamics",
+        "fermata_duration",
+        "metric_hypermetric_accent"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "closure"
+    },
+    {
+      "construct_id": "CST-REC-001",
+      "construct_name": "Theme Recognition",
+      "conceptual_definition": "The probability that a listener recognizes a candidate motif or transformed phrase M_i as an instance of a previously exposed thematic entity M.",
+      "timescale": "motif_to_phrase_level",
+      "measurement_class": "binary_and_graded_theme_discrimination",
+      "human_observable": "recognition_response: Graded rating (1-6 scale) and binary identification of whether M_i derives from theme M, paired with decision reaction time and confidence.",
+      "stimulus_unit": "theme_pair_or_in_context_target_motif",
+      "response_type": "binary_identification_and_confidence_and_rt",
+      "model_output": "model_recognition_score: R_AI(M, M_i) in [0, 1]",
+      "derived_variables": [
+        "signal_detection_d_prime",
+        "recognition_confidence_margin",
+        "contour_similarity_weight"
+      ],
+      "primary_validation_metric": "spearman_rank_correlation_human_recognition_probability",
+      "secondary_validation_metrics": [
+        "area_under_roc_curve_theme_vs_foil",
+        "mean_absolute_error_graded_score"
+      ],
+      "intervention_test": "INT-REC-001: Systematically deform motif M via rhythmic augmentation, inversion, retrograde, and chromatic substitution; verify monotonic decrease in human recognition probability matching model score decay.",
+      "known_confounders": [
+        "pitch_transposition_distance",
+        "timbre_instrument_change",
+        "accompaniment_density_masking",
+        "absolute_pitch_memory"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "recognition"
+    },
+    {
+      "construct_id": "CST-MEM-REC-001",
+      "construct_name": "Recognition Memory",
+      "conceptual_definition": "The listener's capacity to discriminate previously presented musical themes/motifs from novel distractors (foils) after an elapsed temporal interval or intervening musical material.",
+      "timescale": "section_to_piece_level",
+      "measurement_class": "signal_detection_discrimination",
+      "human_observable": "recognition_memory_hit_and_false_alarm: Hit rate H, false alarm rate FA, and signal detection sensitivity index d' = Phi^-1(H) - Phi^-1(FA) across delay intervals.",
+      "stimulus_unit": "old_vs_new_motif_probe_pairs",
+      "response_type": "binary_old_new_decision_with_confidence",
+      "model_output": "model_recognition_memory_activation: M_AI_rec(M, delta_t) in [0, 1]",
+      "derived_variables": [
+        "d_prime_sensitivity",
+        "response_bias_c",
+        "retention_rate"
+      ],
+      "primary_validation_metric": "root_mean_squared_error_d_prime_across_delays",
+      "secondary_validation_metrics": [
+        "rank_order_retention_correlation",
+        "brier_score_old_new"
+      ],
+      "intervention_test": "INT-MEM-001: Insert varying quantities of intervening thematic interference vs silent delay between theme exposition and probe; observe empirical forgetting curve and test against AI memory retention.",
+      "known_confounders": [
+        "intervening_tonal_interference",
+        "incidental_repetition_in_development",
+        "individual_working_memory_capacity"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "memory"
+    },
+    {
+      "construct_id": "CST-MEM-RCL-001",
+      "construct_name": "Recall Memory",
+      "conceptual_definition": "The listener's ability to actively reconstruct, hum, play back, or complete a thematic fragment from memory upon cue or prompt without direct full perceptual presentation.",
+      "timescale": "phrase_to_piece_level",
+      "measurement_class": "active_reconstruction_fidelity",
+      "human_observable": "recall_representation: Symbolic or pitch-audio recording of participant reproduction (e.g. hummed, sung, MIDI-tapped), measured for edit distance, pitch contour alignment, and rhythmic IoU against original.",
+      "stimulus_unit": "retrieval_cue_or_open_continuation_prompt",
+      "response_type": "symbolic_or_audio_reconstruction_token_sequence",
+      "model_output": "model_recalled_representation: generated token sequence from memory buffer",
+      "derived_variables": [
+        "levenshtein_pitch_distance",
+        "dynamic_time_warping_alignment",
+        "recall_accuracy_fraction"
+      ],
+      "primary_validation_metric": "contour_alignment_score_human_to_model_recall",
+      "secondary_validation_metrics": [
+        "recall_decay_parameter_fit",
+        "pitch_class_jaccard_similarity"
+      ],
+      "intervention_test": "INT-MEM-002: Provide varying length retrieval cues (1 note vs 3 notes vs head motif) after 5-minute distractor task; measure reconstruction accuracy restoration in human vs AI recall generator.",
+      "known_confounders": [
+        "vocal_motor_production_skill",
+        "pitch_singing_accuracy",
+        "ear_training_proficiency"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "memory"
+    },
+    {
+      "construct_id": "CST-MEM-FAM-001",
+      "construct_name": "Familiarity",
+      "conceptual_definition": "A graded subjective sense of prior exposure and cognitive ease (feeling of knowing) toward a musical passage in the absence of explicit episodic source recollection.",
+      "timescale": "phrase_level_to_piece_level",
+      "measurement_class": "subjective_graded_familiarity_scale",
+      "human_observable": "human_familiarity_rating: Likert-type rating (1-7 scale) answering 'How familiar does this musical theme sound to you?'",
+      "stimulus_unit": "phrase_or_theme_excerpt",
+      "response_type": "continuous_or_ordinal_rating",
+      "model_output": "model_familiarity_score: fluency / processing speed proxy in memory network",
+      "derived_variables": [
+        "exposure_frequency_weight",
+        "warmth_index",
+        "false_familiarity_bias"
+      ],
+      "primary_validation_metric": "spearman_rank_correlation_familiarity_ratings",
+      "secondary_validation_metrics": [
+        "r2_score_across_exposure_indices",
+        "contrast_between_exposed_and_unexposed_excerpts"
+      ],
+      "intervention_test": "INT-FAM-001: Present unexposed themes vs themes exposed 1, 3, or 6 times in prior blocks; verify monotonic rise in human familiarity ratings matching model familiarity score accumulation.",
+      "known_confounders": [
+        "prior_repertoire_exposure_outside_lab",
+        "generic_schema_typicality_mere_exposure_effect",
+        "stylistic_convention_similarity"
+      ],
+      "current_status": "MEASURABLE_NOW",
+      "stage_0_scope": true,
+      "stage_0_namespace": "memory"
+    },
+    {
+      "construct_id": "CST-TFR-001",
+      "construct_name": "Theme Fertility",
+      "conceptual_definition": "The morphological generative capacity and developmental breadth of a theme, operationalized as the volume, diversity, and coverage of its recognizable transformation space T_R(M; theta).",
+      "timescale": "piece_level",
+      "measurement_class": "transformation_space_admissibility_manifold",
+      "human_observable": "human_recognizable_transformation_set_coverage: Fraction and diversity of systematically sampled formal transformations {M_i} of theme M achieving empirical human recognizability above prospectively frozen threshold theta.",
+      "stimulus_unit": "theme_and_systematic_transformation_battery",
+      "response_type": "empirical_transformation_recognition_rate_vector",
+      "model_output": null,
+      "derived_variables": [
+        "transformation_diversity_index",
+        "morphological_dispersion",
+        "admissible_transformation_entropy"
+      ],
+      "primary_validation_metric": "jaccard_similarity_human_vs_model_recognizable_sets",
+      "secondary_validation_metrics": [
+        "spearman_rank_order_fertility_across_themes",
+        "boundary_precision_recall_curve"
+      ],
+      "intervention_test": "INT-TFR-001: Compare a highly fertile theme (e.g. Beethoven Op. 67 or Rachmaninoff Paganini theme) with an idiosyncratic, rigid episodic melody; verify greater volume and variety of human-recognized transformations.",
+      "known_confounders": [
+        "transformation_class_selection_bias",
+        "listener_analytic_music_training",
+        "exposure_ceiling"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-TEN-001",
+      "construct_name": "Tension",
+      "conceptual_definition": "The dynamic subjective feeling of musical strain, instability, and forward urge, driven by dissonant harmony, rhythmic acceleration, registral expansion, and delayed resolution.",
+      "timescale": "continuous_temporal_trajectory",
+      "measurement_class": "continuous_dial_rating",
+      "human_observable": "continuous_tension_dial_trajectory: Real-time slider displacement [0, 1] recorded during continuous listening.",
+      "stimulus_unit": "continuous_musical_excerpt_or_movement",
+      "response_type": "continuous_time_series_signal",
+      "model_output": null,
+      "derived_variables": [
+        "tension_peak_count",
+        "tension_buildup_slope",
+        "tension_relaxation_decay_rate"
+      ],
+      "primary_validation_metric": "cross_correlation_and_lagged_dtw_distance",
+      "secondary_validation_metrics": [
+        "peak_alignment_temporal_window_accuracy",
+        "inter_rater_icc_tension"
+      ],
+      "intervention_test": "INT-TEN-001: Insert prolonged dominant pedal point and chromatic voice-leading leading up to climax vs sudden premature resolution; confirm continuous dial elevation.",
+      "known_confounders": [
+        "physical_slider_motor_friction",
+        "perceptual_motor_reaction_lag_1000_1500ms",
+        "acoustic_rms_loudness_coupling"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-DPR-001",
+      "construct_name": "Delayed Preference",
+      "conceptual_definition": "The stability, enhancement, or decay of subjective aesthetic appraisal of a musical passage after an elapsed incubation period (sleep/days) compared to immediate reaction.",
+      "timescale": "multi_day_longitudinal",
+      "measurement_class": "paired_longitudinal_aesthetic_choice",
+      "human_observable": "delayed_vs_immediate_preference_choice: 2AFC preference choice between musical passages tested immediately post-listening vs re-tested after 48-hour incubation.",
+      "stimulus_unit": "curated_paired_passages",
+      "response_type": "binary_preference_choice_with_hedonic_slider",
+      "model_output": null,
+      "derived_variables": [
+        "preference_drift_direction",
+        "incubation_valence_delta",
+        "fatigue_adjusted_liking"
+      ],
+      "primary_validation_metric": "cohens_kappa_longitudinal_stability",
+      "secondary_validation_metrics": [
+        "logistic_regression_odds_ratio_retention"
+      ],
+      "intervention_test": "INT-DPR-001: Compare passages with immediate surface accessibility (earworms) vs high structural depth across 7-day re-listen logs; test whether structural depth resists preference decay.",
+      "known_confounders": [
+        "external_re-listening_uncontrolled_exposure",
+        "mood_state_variability_at_session_2"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-CNN-001",
+      "construct_name": "Counterfactual Note Necessity",
+      "conceptual_definition": "The multi-dimensional vector of perceptual deficits induced across listener states when a single note or chord is counterfactually perturbed or removed.",
+      "timescale": "event_level",
+      "measurement_class": "vector_perturbation_sensitivity",
+      "human_observable": "human_counterfactual_impact_vector: Differential vector [Delta_E, Delta_R, Delta_Tension, Delta_C, Delta_Attention, Delta_Clarity] measured by contrasting perturbed stimulus against pristine stimulus.",
+      "stimulus_unit": "original_vs_perturbed_note_pair",
+      "response_type": "multivariate_differential_rating_vector",
+      "model_output": null,
+      "derived_variables": [
+        "perturbation_sensitivity_norm",
+        "harmonic_anchor_index",
+        "voice_leading_criticality"
+      ],
+      "primary_validation_metric": "vector_cosine_similarity_and_euclidean_distance",
+      "secondary_validation_metrics": [
+        "directional_sign_agreement_across_dimensions"
+      ],
+      "intervention_test": "INT-CNN-001: Perform 5 controlled perturbations on critical voice-leading note n (deletion, pitch substitution, duration cut, onset shift, octave transposition); measure vector response.",
+      "known_confounders": [
+        "acoustic_roughness_induced_by_clashing_overtones",
+        "performer_expressive_timing_disruption"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-PBR-001",
+      "construct_name": "Phrase Breath",
+      "conceptual_definition": "The perceptual punctuation, respiratory-like micro-pause, or expressive timing dilation occurring at phrase boundaries that enables perceptual segmentation and cognitive consolidation.",
+      "timescale": "phrase_boundary_level",
+      "measurement_class": "temporal_boundary_microtiming_detection",
+      "human_observable": "human_phrase_breath_detection: Listener boundary click detection accuracy and continuous ratings of natural musical breathing vs mechanical continuity.",
+      "stimulus_unit": "phrase_transition_with_varying_rubato_and_rest",
+      "response_type": "boundary_detection_timestamp_and_naturalness_rating",
+      "model_output": null,
+      "derived_variables": [
+        "microtiming_dilation_factor",
+        "boundary_consolidation_latency"
+      ],
+      "primary_validation_metric": "temporal_boundary_alignment_within_200ms",
+      "secondary_validation_metrics": [
+        "phrase_naturalness_spearman_correlation"
+      ],
+      "intervention_test": "INT-PBR-001: Remove expressive agogic elongation at major cadence vs artificially insert pause mid-phrase; measure degradation in subjective phrasing naturalness.",
+      "known_confounders": [
+        "performer_physical_respiration_noise",
+        "acoustical_reverberation_decay_time"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-AAR-001",
+      "construct_name": "Auditory Attention Routing",
+      "conceptual_definition": "The selective cognitive allocation of listener attentional focus across polyphonic streams, registers, or timbral layers over time.",
+      "timescale": "polyphonic_layer_level",
+      "measurement_class": "selective_stream_auditory_probe",
+      "human_observable": "attended_stream_probe_accuracy: Reaction time and target-detection accuracy for subtle micro-deviations inserted into specific polyphonic voices (e.g. soprano melody vs inner countermelody vs bass pedal).",
+      "stimulus_unit": "polyphonic_multi_voice_passage_with_stream_probes",
+      "response_type": "probe_detection_accuracy_and_rt",
+      "model_output": null,
+      "derived_variables": [
+        "attentional_salience_map",
+        "stream_dominance_ratio"
+      ],
+      "primary_validation_metric": "probe_detection_rate_correlation_per_voice",
+      "secondary_validation_metrics": [
+        "confusion_matrix_voice_attribution"
+      ],
+      "intervention_test": "INT-AAR-001: Dynamically boost inner voice register and articulation while lowering soprano volume; measure switch in listener probe detection advantage from soprano to inner voice.",
+      "known_confounders": [
+        "frequency_audibility_equal_loudness_curves",
+        "auditory_stream_segregation_thresholds"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-SMR-001",
+      "construct_name": "Semantic Reinterpretation",
+      "conceptual_definition": "The cognitive re-framing of a musical gesture's structural role when subsequent musical events alter its tonal, metric, or thematic context.",
+      "timescale": "phrase_to_section_level",
+      "measurement_class": "retrospective_role_reassignment_task",
+      "human_observable": "reinterpretation_judgment_and_surprise_biphasic_rt: Sudden increase in processing time and qualitative structural reassignment rating upon presentation of recontextualizing chord.",
+      "stimulus_unit": "pivot_gesture_followed_by_divergent_continuations",
+      "response_type": "functional_role_choice_and_reaction_time",
+      "model_output": null,
+      "derived_variables": [
+        "belief_update_magnitude",
+        "retrospective_entropy_reduction"
+      ],
+      "primary_validation_metric": "kullback_leibler_divergence_of_prior_vs_posterior_belief",
+      "secondary_validation_metrics": [
+        "reaction_time_spike_at_pivot"
+      ],
+      "intervention_test": "INT-SMR-001: Present an enharmonic pivot chord (e.g. German sixth resolving conventionally vs reinterpreted as dominant seventh of remote key); observe retrospective reassignment in human categorization.",
+      "known_confounders": [
+        "music_theoretic_analytic_fluency",
+        "immediate_sensory_dissonance"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-RTM-001",
+      "construct_name": "Retrospective Meaning",
+      "conceptual_definition": "The perceived expressive or structural purpose of an earlier ambiguous passage that only crystallizes upon the arrival of later thematic or formal realizations.",
+      "timescale": "multi_section_level",
+      "measurement_class": "retrospective_coherence_evaluation",
+      "human_observable": "retrospective_satisfaction_rating: Increase in coherence and satisfaction ratings assigned to an early puzzling excerpt when probed before vs after hearing the full recapitulation/resolution.",
+      "stimulus_unit": "ambiguous_opening_probed_at_different_listening_stages",
+      "response_type": "pre_post_coherence_differential_rating",
+      "model_output": null,
+      "derived_variables": [
+        "retrospective_gain_score",
+        "formal_teleology_index"
+      ],
+      "primary_validation_metric": "pre_post_difference_t_statistic_alignment",
+      "secondary_validation_metrics": [
+        "correlation_with_memory_retention_of_opening"
+      ],
+      "intervention_test": "INT-RTM-001: Present a work with its authentic resolving recapitulation vs a spliced arbitrary ending; verify that retrospective coherence rating of the exposition rises only in authentic resolution.",
+      "known_confounders": [
+        "mere_exposure_effect_from_repeated_testing",
+        "overall_duration_fatigue"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-EMC-001",
+      "construct_name": "Emotional Causality",
+      "conceptual_definition": "The listener's perception that an emotional shift in the music was earned and necessitated by preceding musical events rather than arbitrary, unmotivated juxtaposition.",
+      "timescale": "transition_level",
+      "measurement_class": "affective_transition_plausibility_rating",
+      "human_observable": "affective_causality_rating: Graded judgment (1-7 scale) evaluating whether a sudden affective transition feels structurally motivated and organically prepared.",
+      "stimulus_unit": "affective_transition_with_varied_preparation",
+      "response_type": "continuous_plausibility_and_organicism_rating",
+      "model_output": null,
+      "derived_variables": [
+        "transition_smoothness_index",
+        "affective_momentum"
+      ],
+      "primary_validation_metric": "spearman_rank_correlation_organicism_ratings",
+      "secondary_validation_metrics": [
+        "contrast_effect_size_prepared_vs_unprepared"
+      ],
+      "intervention_test": "INT-EMC-001: Cut out the preparatory harmonic and dynamic transition leading into a triumphant secondary theme; test whether human affective causality ratings drop significantly.",
+      "known_confounders": [
+        "listener_baseline_emotional_state",
+        "extramusical_programmatic_associations"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-ACI-001",
+      "construct_name": "Acoustic Intent",
+      "conceptual_definition": "The listener's attribution of deliberate artistic agency and expressive purpose (vs mechanical noise, accidental slip, or random generation) behind subtle expressive nuances, pauses, or unusual harmonies.",
+      "timescale": "gesture_level",
+      "measurement_class": "intentionality_attribution_rating",
+      "human_observable": "human_intent_attribution: Binary or graded judgment of whether an unusual inflection or dissonance is an intentional expressive statement vs performance error or computer artifact.",
+      "stimulus_unit": "expressive_inflection_or_unusual_pitch_event",
+      "response_type": "binary_intentional_vs_error_classification",
+      "model_output": null,
+      "derived_variables": [
+        "intentionality_confidence_ratio",
+        "perceived_virtuosity_weight"
+      ],
+      "primary_validation_metric": "area_under_roc_curve_intent_attribution",
+      "secondary_validation_metrics": [
+        "brier_score_intent"
+      ],
+      "intervention_test": "INT-ACI-001: Contrast a deliberate expressive rubato / voicing accent by a master pianist against a random algorithmic microtiming jitter; verify human attribution accuracy.",
+      "known_confounders": [
+        "performance_mastery_heuristics",
+        "recording_audio_quality_hiss"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-AFC-001",
+      "construct_name": "Affective Counterpoint",
+      "conceptual_definition": "The simultaneous perception of conflicting emotional valences across concurrent musical streams (e.g. mournful singing melody over urgent, turbulent agitated bass accompaniment).",
+      "timescale": "phrase_level",
+      "measurement_class": "bivariate_affective_grid_rating",
+      "human_observable": "bivariate_valence_arousal_stream_ratings: Independent reporting of positive/negative valence and calmness/agitation for upper vs lower voices on a 2D evaluative space grid.",
+      "stimulus_unit": "multi_layered_affective_texture",
+      "response_type": "two_coordinate_evaluative_space_grid",
+      "model_output": null,
+      "derived_variables": [
+        "affective_divergence_magnitude",
+        "mixed_affect_index"
+      ],
+      "primary_validation_metric": "streamwise_valence_correlation",
+      "secondary_validation_metrics": [
+        "mixed_emotional_state_coexistence_prevalence"
+      ],
+      "intervention_test": "INT-AFC-001: Invert accompaniment mood (substitute serene arpeggios for turbulent chromatic drive while keeping tragic melody unchanged); measure collapse of affective counterpoint score.",
+      "known_confounders": [
+        "stream_segregation_failure_fusion",
+        "perceptual_attentional_switching_delay"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-NRC-001",
+      "construct_name": "Narrative Coherence",
+      "conceptual_definition": "The listener's sense that an entire multi-movement or extended piece unfolds as an intelligible dramatic trajectory with exposition, complication, climax, and denouement.",
+      "timescale": "piece_level_to_work_level",
+      "measurement_class": "retrospective_narrative_mapping",
+      "human_observable": "narrative_arc_segmentation_and_coherence_rating: Consistency of listener placement of narrative milestones (crisis, breakthrough, return) and overall trajectory coherence score.",
+      "stimulus_unit": "complete_musical_work_or_movement",
+      "response_type": "formal_milestone_annotations_and_likert_coherence",
+      "model_output": null,
+      "derived_variables": [
+        "narrative_milestone_entropy",
+        "global_arc_consistency"
+      ],
+      "primary_validation_metric": "inter_rater_fleiss_kappa_narrative_milestones",
+      "secondary_validation_metrics": [
+        "correlation_with_memory_recall_organization"
+      ],
+      "intervention_test": "INT-NRC-001: Shuffle section order (e.g. play development before exposition, or place quiet prelude after grand apotheosis); observe catastrophic drop in narrative coherence rating.",
+      "known_confounders": [
+        "listener_literary_metaphor_bias",
+        "programmatic_title_priming"
+      ],
+      "current_status": "LATENT_NEEDS_VALIDATION",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-MMN-001",
+      "construct_name": "Musical Meaning",
+      "conceptual_definition": "The high-level emergent semiotic, cultural, philosophical, and aesthetic significance attributed by a human listener to a work.",
+      "timescale": "piece_level_and_cultural_lifespan",
+      "measurement_class": "open_hermeneutic_and_semiotic_discourse",
+      "human_observable": null,
+      "stimulus_unit": "complete_cultural_musical_work",
+      "response_type": "qualitative_verbal_interview_and_hermeneutic_essay",
+      "model_output": null,
+      "derived_variables": [],
+      "primary_validation_metric": "none_not_directly_scalarizable",
+      "secondary_validation_metrics": [],
+      "intervention_test": "none_emergent_cultural_construct",
+      "known_confounders": [
+        "cultural_background",
+        "philosophical_worldview",
+        "biographical_knowledge_of_composer"
+      ],
+      "current_status": "HIGH_LEVEL_NOT_OPERATIONAL",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-OMQ-001",
+      "construct_name": "Overall Musical Quality",
+      "conceptual_definition": "A global scalar valuation purporting to grade the total artistic excellence, beauty, or worth of a piece of music.",
+      "timescale": "piece_level",
+      "measurement_class": "unidimensional_scalar_judgment",
+      "human_observable": null,
+      "stimulus_unit": "complete_piece",
+      "response_type": "arbitrary_scalar_score",
+      "model_output": null,
+      "derived_variables": [],
+      "primary_validation_metric": "none_scientifically_invalid_as_scalar",
+      "secondary_validation_metrics": [],
+      "intervention_test": "none_rejected_construct",
+      "known_confounders": [
+        "social_prestige_bias",
+        "canonical_reputation_halo",
+        "performer_celebrity_effect",
+        "idiosyncratic_taste"
+      ],
+      "current_status": "REJECTED_AS_DIRECT_SCALAR",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-EMD-001",
+      "construct_name": "Emotional Depth",
+      "conceptual_definition": "The subjective perception of profound psychological resonance, existential gravity, and multi-layered emotional complexity in a musical work.",
+      "timescale": "piece_level",
+      "measurement_class": "subjective_holistic_valuation",
+      "human_observable": null,
+      "stimulus_unit": "complete_work",
+      "response_type": "qualitative_subjective_report",
+      "model_output": null,
+      "derived_variables": [],
+      "primary_validation_metric": "none_not_directly_scalarizable",
+      "secondary_validation_metrics": [],
+      "intervention_test": "none_emergent_construct",
+      "known_confounders": [
+        "personal_emotional_trauma_resonance",
+        "sentimental_kitsch_vulnerability",
+        "cultural_affective_norms"
+      ],
+      "current_status": "HIGH_LEVEL_NOT_OPERATIONAL",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    },
+    {
+      "construct_id": "CST-NRD-001",
+      "construct_name": "Narrative Depth",
+      "conceptual_definition": "The degree of psychological, structural, and dramaturgical complexity and multi-leveled meaning embedded in a musical narrative.",
+      "timescale": "piece_level",
+      "measurement_class": "subjective_holistic_valuation",
+      "human_observable": null,
+      "stimulus_unit": "complete_work",
+      "response_type": "qualitative_dramaturgical_analysis",
+      "model_output": null,
+      "derived_variables": [],
+      "primary_validation_metric": "none_not_directly_scalarizable",
+      "secondary_validation_metrics": [],
+      "intervention_test": "none_emergent_construct",
+      "known_confounders": [
+        "literary_sophistication_of_listener",
+        "familiarity_with_romantic_tragic_archetypes"
+      ],
+      "current_status": "HIGH_LEVEL_NOT_OPERATIONAL",
+      "stage_0_scope": false,
+      "stage_0_namespace": null
+    }
+  ]
+}

@@ -153,7 +153,7 @@ class RC013ScoreValidator:
             )
 
         # 2. Extract global metadata and signatures
-        time_sigs = [ts.ratioString for ts in score.recurse().getElementsByClass(m21.meter.TimeSignature)]
+        time_sigs = [ts.ratioString for ts in score.recurse().getElementsByClass(m21.meter.TimeSignature)]  # type: ignore[attr-defined]
         key_sigs = [str(ks) for ks in score.recurse().getElementsByClass(m21.key.KeySignature)]
 
         # 3. Measures count & iteration
@@ -186,7 +186,7 @@ class RC013ScoreValidator:
                     )
 
         # 4. Detailed Measure-level duration, voice, underflow/overflow checks
-        current_ts = m21.meter.TimeSignature("4/4")
+        current_ts = m21.meter.TimeSignature("4/4")  # type: ignore[attr-defined]
         measure_patterns: list[tuple[str, ...]] = []
 
         for p_idx, part in enumerate(parts):

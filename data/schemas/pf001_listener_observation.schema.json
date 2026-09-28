@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://russian-piano-composer.org/schemas/pf001_listener_observation.schema.json",
+  "title": "PF001ListenerObservation",
+  "description": "Standardized human listening response and paired artificial listener target observation record for PF-001. All listener IDs are strictly pseudonymous; no personally identifying information (PII) is permitted.",
+  "type": "object",
+  "required": [
+    "listener_id",
+    "trial_id",
+    "piece_id",
+    "composer_id",
+    "performance_id",
+    "segment_id",
+    "event_time",
+    "beat_position",
+    "musical_timescale",
+    "task_type",
+    "condition_id",
+    "exposure_index",
+    "split_id",
+    "source_version",
+    "annotation_version"
+  ],
+  "properties": {
+    "listener_id": {
+      "type": "string",
+      "pattern": "^LST-[A-Z0-9]{8,16}$",
+      "description": "Strictly pseudonymous participant identifier. No PII (names, emails, dates of birth) allowed."
+    },
+    "trial_id": {
+      "type": "string",
+      "pattern": "^TRL-[A-Za-z0-9_\\-\\.:]+$",
+      "description": "Unique identifier for the experimental observation trial."
+    },
+    "piece_id": {
+      "type": "string",
+      "description": "Canonical piece identifier within the research corpus."
+    },
+    "composer_id": {
+      "type": "string",
+      "description": "Identifier for the composer (e.g. CMP-TCHAIKOVSKY, CMP-RACHMANINOFF)."
+    },
+    "performance_id": {
+      "type": "string",
+      "description": "Identifier for the specific audio performance rendering or symbolic score realization."
+    },
+    "segment_id": {
+      "type": "string",
+      "description": "Identifier for the stimulus segment or excerpt."
+    },
+    "motif_id": {
+      "type": ["string", "null"],
+      "description": "Thematic or motivic identifier if the trial tests a specific theme or motif; null otherwise."
+    },
+    "event_time": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Elapsed event timestamp in seconds from piece onset."
+    },
+    "beat_position": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Metric position of the event in quarter notes or measure beats."
+    },
+    "musical_timescale": {
+      "type": "string",
+      "enum": [
+        "event_level",
+        "phrase_level",
+        "section_level",
+        "piece_level"
+      ],
+      "description": "Perceptual timescale of the stimulus unit and observation."
+    },
+    "task_type": {
+      "type": "string",
+      "enum": [
+        "continuation_choice",
+        "uncertainty_confidence",
+        "closure_boundary",
+        "theme_recognition",
+        "delayed_memory",
+        "continuous_rating",
+        "synthetic_intervention"
+      ],
+      "description": "Experimental protocol task type generating the observation."
+    },
+    "condition_id": {
+      "type": "string",
+      "description": "Experimental condition identifier (e.g. COND-PRISTINE, COND-PERTURBED-PITCH)."
+    },
+    "exposure_index": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Cumulative exposure count of the listener to this specific musical material within the session."
+    },
+    "human_response": {
+      "description": "Primary behavioral response emitted by the human participant (choice key, scalar rating, or token string)."
+    },
+    "human_confidence": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 7.0,
+      "description": "Self-reported subjective confidence rating (normalized 0.0-1.0 or Likert 1-7)."
+    },
+    "response_time": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "description": "Reaction latency in milliseconds from probe presentation to response emission."
+    },
+    "human_continuation_distribution": {
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "description": "Empirical continuation probability distribution over continuation candidates from human cohort."
+    },
+    "human_closure_rating": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Empirical human closure or structural completeness rating [0.0, 1.0]."
+    },
+    "recognition_response": {
+      "description": "Human theme recognition judgment: binary identification (0/1) or graded similarity rating."
+    },
+    "recognition_confidence": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 7.0,
+      "description": "Subjective confidence associated with the recognition decision."
+    },
+    "recognition_rt": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "description": "Reaction time in milliseconds for the recognition judgment."
+    },
+    "recall_delay": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "description": "Elapsed retention interval in seconds between motif presentation and recall cue."
+    },
+    "recall_representation": {
+      "type": ["string", "object", "null"],
+      "description": "Symbolic transcription, pitch sequence, or audio representation of human recall reproduction."
+    },
+    "recall_similarity": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Fidelity score between human recall reproduction and reference theme [0.0, 1.0]."
+    },
+    "model_prediction_distribution": {
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "description": "Artificial Listener conditional prediction distribution P_AI(x_next | context)."
+    },
+    "model_uncertainty": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "description": "Artificial Listener predictive entropy H_AI(context) in bits."
+    },
+    "model_surprise": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "description": "Artificial Listener event surprisal -log2 P_AI(x_observed | context) in bits."
+    },
+    "model_closure_probability": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Artificial Listener predicted boundary termination probability C_AI(t)."
+    },
+    "model_recognition_score": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Artificial Listener theme similarity / recognition score R_AI(M, M_i)."
+    },
+    "split_id": {
+      "type": "string",
+      "enum": [
+        "development",
+        "validation",
+        "external_test_held_out"
+      ],
+      "description": "Generalization partition assignment enforcing strict composer and listener isolation."
+    },
+    "source_version": {
+      "type": "string",
+      "description": "Git commit hash or canonical version tag of score/audio source asset."
+    },
+    "annotation_version": {
+      "type": "string",
+      "description": "Version string of the measurement protocol and experimental specification."
+    }
+  },
+  "additionalProperties": false
+}
