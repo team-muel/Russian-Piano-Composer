@@ -1,38 +1,48 @@
-# PF-001: Perception-First Artificial Listener
-## Construct Operationalization & Measurement Contract Report
+# PF-001 / PF-001A: Perception-First Artificial Listener
+## Construct Operationalization & Autonomous Measurement Contract Report
 
 **Authoritative Scientific Lineage:** Russian Piano Composer Project  
-**Milestone:** PF-001  
-**Status:** MEASUREMENT_CONTRACT_FROZEN_READY_FOR_PILOT_DESIGN  
+**Milestone:** PF-001A (Autonomous Structural Learning Contract)  
+**Status:** AUTONOMOUS_CONTRACT_FROZEN_READY_FOR_CORPUS_FEASIBILITY  
 **Branch:** `pf/001-listener-measurement-operationalization`  
-**Governing Standard:** Empirical Construct Validity & Falsifiable Measurement Protocols  
+**Governing Standard:** Corpus-Observable Structural Supervision & Multi-Scale Representation Learning  
 
 ---
 
-### Executive Summary & Governing Principles
+### Executive Summary & Governing Scientific Inversion
 
 Traditional symbolic music generation systems optimize language-modeling objectives over note sequences:
 $$\min_\theta \mathbb{E}\left[-\log P_\theta(x_{t} \mid x_{<t})\right]$$
-While statistical fluency over token n-grams can produce local stylistic coherence, optimizing next-token cross-entropy alone does not construct, represent, or track **human musical experience**. A system trained solely to maximize symbolic likelihood lacks an internal model of the perceptual, cognitive, and affective states induced in a human listener over time.
+While statistical fluency over token n-grams can produce local stylistic coherence, optimizing next-token cross-entropy alone does not construct, represent, or track **musical experience**. A system trained solely to maximize symbolic likelihood lacks an internal model of structural expectation, closure, and motivic memory.
 
-The **Perception-First Classical Composition** paradigm inverts this dependency:
+The **Perception-First Classical Composition** paradigm establishes that:
 1. Music composition is fundamentally the intentional shaping of a dynamic **Listener Experience Trajectory (LET)** across time:
-   $$\mathbf{LET}(t) = \left[ E(t), U(t), S(t), C(t), R(t), M(t), T(t), \dots \right]^T$$
-2. An **Artificial Listener** model must be developed and validated against empirical human cognitive data **before** it can act as an evaluation critic, reward model, or guidance objective for a Composer model.
-3. Under no circumstances may an unvalidated Artificial Listener, arbitrary synthetic heuristic, or LLM-generated proxy be used as perceptual ground truth.
+   $$\mathbf{LET}(t) = \left[ E_s(t), U_s(t), S_s(t), C_s(t), R_m(t), M_s(t), T_s(t), \dots \right]^T$$
+2. Under PF-001A, **human participant judgments are NOT a prerequisite for building or gating Stage-0**. The primary teacher is the **corpus of human-composed classical music itself**.
+3. The governing architectural flow is:
+   $$\text{HUMAN CLASSICAL CORPUS} \longrightarrow \text{SELF-SUPERVISED LEARNER} \longrightarrow \text{ARTIFICIAL LISTENER}$$
+   $$\longrightarrow \text{STRUCTURAL WORLD MODEL} \longrightarrow \text{COMPOSER} \longrightarrow \text{COUNTERFACTUAL CRITIC} \longrightarrow \text{REVISION}$$
+4. Human listening studies are preserved as an **`OPTIONAL_EXTERNAL_VALIDATION`** layer. They are mandatory only when asserting an explicit empirical claim about human subjective perception (e.g. *"human listeners perceive this passage as tense"*).
 
-To enforce scientific rigor, PF-001 establishes the **Operationalization Chain**:
-$$\text{CONCEPT} \longrightarrow \text{HUMAN OBSERVABLE} \longrightarrow \text{MEASUREMENT PROTOCOL} \longrightarrow \text{MODEL TARGET} \longrightarrow \text{VALIDATION} \longrightarrow \text{INTERVENTION}$$
-
-Any musical concept that fails to complete this chain cannot be used as an optimization objective; it must remain designated as `MEASUREMENT_DEFINITION_OPEN` or `LATENT_NEEDS_VALIDATION`.
+Internal variables in Stage-0 are strictly designated as **structural constructs**:
+- $E_s(t) = \text{Structural Expectation}$
+- $U_s(t) = \text{Structural Uncertainty}$
+- $S_s(t) = \text{Structural Surprise}$
+- $C_s(t) = \text{Structural Closure}$
+- $R_m(t) = \text{Motif Identity / Contrastive Recognition}$
+- $M_s(t) = \text{Long-Range Structural Memory Trace}$
 
 ```mermaid
 flowchart LR
-    A["Theoretical Concept"] --> B["Human Observable<br/>(Empirical Response)"]
-    B --> C["Standardized Protocol<br/>(EXP-001 - EXP-005)"]
-    C --> D["Model Target<br/>(P_AI, H_AI, C_AI, R_AI)"]
-    D --> E["Four-Axis Validation<br/>(Pred / Temp / Interv / Gen)"]
-    E --> F["Causal Intervention<br/>(Note & Motif Perturbations)"]
+    CC["Human Classical Corpus"] --> SL["Self-Supervised & Weakly-Supervised<br/>Representation Learner"]
+    SL --> AL["Autonomous Artificial Listener<br/>(Stage-0 Structural Model)"]
+    AL --> SWM["Structural World Model<br/>(Multi-Scale Syntactic Dynamics)"]
+    SWM --> COMP["Composer Critic & Revision"]
+
+    subgraph Optional Human Layer
+        HL["Optional External Human Studies<br/>(EXP-001 - EXP-005)"]
+    end
+    AL -.->|Optional Subjective Validation| HL
 ```
 
 ---

@@ -1,0 +1,204 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://russian-piano-composer.org/schemas/pf001_autonomous_listener_observation.schema.json",
+  "title": "PF001AutonomousListenerObservation",
+  "description": "Standardized autonomous observation schema for PF-001A. Records corpus-observable structures, transformations, counterfactual perturbations, multi-scale structural representations, and internal Listener state trajectories without requiring human participant data.",
+  "type": "object",
+  "required": [
+    "piece_id",
+    "composer_id",
+    "source_id",
+    "segment_id",
+    "event_index",
+    "event_time",
+    "beat_position",
+    "timescale",
+    "input_context_span",
+    "target_event",
+    "target_boundary",
+    "structural_expectation",
+    "structural_uncertainty",
+    "structural_surprise",
+    "structural_closure",
+    "motif_identity_score",
+    "structural_memory_trace",
+    "split_id",
+    "corpus_version",
+    "feature_version",
+    "model_version"
+  ],
+  "properties": {
+    "piece_id": {
+      "type": "string",
+      "description": "Canonical piece identifier within the classical corpus."
+    },
+    "composer_id": {
+      "type": "string",
+      "description": "Composer identifier (e.g. CMP-TCHAIKOVSKY, CMP-RACHMANINOFF)."
+    },
+    "source_id": {
+      "type": "string",
+      "description": "Identifier for the underlying symbolic score edition or recording."
+    },
+    "segment_id": {
+      "type": "string",
+      "description": "Identifier for the musical segment, measure range, or structural block."
+    },
+    "motif_id": {
+      "type": ["string", "null"],
+      "description": "Thematic or motivic identifier if the unit tracks an identified motif; null otherwise."
+    },
+    "event_index": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Sequential integer index of the symbolic event."
+    },
+    "event_time": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Elapsed event timestamp in seconds."
+    },
+    "beat_position": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Metrical beat position within the piece/measure."
+    },
+    "timescale": {
+      "type": "string",
+      "enum": [
+        "event",
+        "motif",
+        "phrase",
+        "section",
+        "whole-piece"
+      ],
+      "description": "Hierarchical musical timescale of the representation."
+    },
+    "input_context_span": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Context span in events or quarter-notes provided to the model."
+    },
+    "target_event": {
+      "description": "Symbolic token, pitch class, sonority, or feature vector of the target continuation event."
+    },
+    "target_boundary": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "phrase_boundary",
+        "cadential_boundary",
+        "section_boundary",
+        "formal_boundary",
+        "piece_boundary"
+      ],
+      "description": "Corpus-observable structural boundary label if present; null otherwise."
+    },
+    "transformation_id": {
+      "type": ["string", "null"],
+      "description": "Identifier of controlled morphological transformation applied, if any."
+    },
+    "transformation_type": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "transposition",
+        "register_displacement",
+        "rhythmic_augmentation",
+        "rhythmic_diminution",
+        "controlled_ornamentation",
+        "fragmentation",
+        "context_change",
+        "unrelated_negative_foil"
+      ],
+      "description": "Type of transformation operator."
+    },
+    "is_identity_preserving": {
+      "type": ["boolean", "null"],
+      "description": "Ground-truth structural designation whether transformation preserves motif identity."
+    },
+    "perturbation_id": {
+      "type": ["string", "null"],
+      "description": "Identifier of counterfactual perturbation test, if any."
+    },
+    "perturbation_type": {
+      "type": ["string", "null"],
+      "enum": [
+        null,
+        "note_deletion",
+        "pitch_substitution",
+        "duration_shift",
+        "onset_shift",
+        "register_shift",
+        "cadential_disruption",
+        "motif_cue_deletion",
+        "recurrence_timing_displacement"
+      ],
+      "description": "Type of counterfactual perturbation operator."
+    },
+    "perturbation_strength": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "description": "Quantitative magnitude or parameter of the applied perturbation."
+    },
+    "structural_expectation": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0.0,
+        "maximum": 1.0
+      },
+      "description": "Model conditional predictive distribution P(x_{t+1} | x_{<=t}) over structural continuation candidates."
+    },
+    "structural_uncertainty": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Shannon entropy H[P(x_{t+1} | x_{<=t})] in bits."
+    },
+    "structural_surprise": {
+      "type": "number",
+      "minimum": 0.0,
+      "description": "Surprisal -log2 P(x_t | x_{<t}) in bits."
+    },
+    "structural_closure": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Predicted structural boundary probability C_s(t) in [0.0, 1.0]."
+    },
+    "motif_identity_score": {
+      "type": ["number", "null"],
+      "minimum": -1.0,
+      "maximum": 1.0,
+      "description": "Cosine similarity or metric distance between motif representation z(M) and z(T(M))."
+    },
+    "structural_memory_trace": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Structural activation trace m_k(t) = similarity(z(M_k), h_t) of motif k in working/long-range memory buffer."
+    },
+    "split_id": {
+      "type": "string",
+      "enum": [
+        "development",
+        "validation",
+        "external_test_held_out"
+      ],
+      "description": "Generalization partition assignment enforcing strict composer isolation."
+    },
+    "corpus_version": {
+      "type": "string",
+      "description": "Hash or version tag of the underlying classical corpus dataset."
+    },
+    "feature_version": {
+      "type": "string",
+      "description": "Version string of the symbolic feature extractor pipeline."
+    },
+    "model_version": {
+      "type": "string",
+      "description": "Version identifier of the Artificial Listener model."
+    }
+  },
+  "additionalProperties": false
+}

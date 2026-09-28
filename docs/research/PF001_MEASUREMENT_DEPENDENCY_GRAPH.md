@@ -1,24 +1,22 @@
-# PF-001: Measurement Dependency Graph & Construct Precedence
-## Formal Directed Acyclic Graph (DAG) for Perceptual Construct Operationalization
+# PF-001 / PF-001A: Measurement Dependency Graph & Construct Precedence
+## Formal Directed Acyclic Graph (DAG) for Autonomous Structural Learning & Optional Human Validation
 
 **Document Type:** Measurement Dependency Architecture  
-**Milestone:** PF-001  
+**Milestone:** PF-001 / PF-001A  
 **Project:** Russian Piano Composer  
 **Status:** DEPENDENCY_GRAPH_FROZEN  
-**Governing Rule:** Strict Upstream Construct Precedence (Fail-Closed Propagation)  
+**Governing Rule:** Autonomous Corpus-Observable Grounding & Strict Upstream Precedence  
 
 ---
 
 ### 1. Conceptual Rationale & The Upstream Gating Invariant
 
-In complex cognitive systems, higher-order perceptual experiences (such as the perception of dramatic narrative, thematic fertility, or structural tension) are not autonomous, isolated sensations. They are mathematically and psychologically built upon lower-level sensory and cognitive mechanisms.
+In complex cognitive systems, higher-order perceptual experiences (such as the perception of dramatic narrative, thematic fertility, or structural tension) are built upon lower-level structural mechanisms.
 
-Attempting to model or optimize a higher-order construct (e.g. *Narrative Coherence* or *Tension*) while its foundational components (e.g. *Expectation*, *Closure*, and *Theme Memory*) remain unvalidated creates illusory correlations and spurious optimization.
-
-#### 1.1 The Upstream Gating Invariant
-$$\text{Status}(C_{\text{target}}) = \text{VERIFIED} \iff \forall C_{\text{parent}} \in \text{Parents}(C_{\text{target}}), \quad \text{Status}(C_{\text{parent}}) = \text{VERIFIED}$$
-
-If any parent construct is `LATENT_NEEDS_VALIDATION`, `MEASUREMENT_DEFINITION_OPEN`, or `REJECTED_AS_DIRECT_SCALAR`, the downstream target construct **cannot** be verified, nor may it be used as an objective function in composer training.
+PF-001A establishes that:
+1. Stage-0 constructs are **corpus-observable structural representations** learned directly from the classical corpus.
+2. Human participant measurements represent an **`OPTIONAL_EXTERNAL_VALIDATION`** layer.
+3. No high-level construct may become verified if its upstream structural representations remain unvalidated.
 
 ---
 
@@ -27,20 +25,29 @@ If any parent construct is `LATENT_NEEDS_VALIDATION`, `MEASUREMENT_DEFINITION_OP
 ```mermaid
 graph TD
     %% Stimulus Level
-    subgraph S0["Raw Stimulus & Context Infrastructure"]
-        CTX["Musical Context & Token Stream<br/>(Score / MIDI / Performance)"]
-        THM["Theme & Motif Definition<br/>(Canonical Thematic Identity)"]
-        TRF["Transformation Battery<br/>(Systematic Morphological Ops)"]
+    subgraph S0["Human Classical Corpus & Structural Infrastructure"]
+        CTX["Musical Context & Token Stream<br/>(Score / MIDI / Symbolic Polyphony)"]
+        THM["Theme & Motif Ground Truth<br/>(Annotated & Extracted Thematic Cells)"]
+        TRF["Controlled Transformation Battery<br/>(Transposition, Diminution, Augmentation)"]
     end
 
     %% Stage-0 Perceptual Primitives
-    subgraph STAGE0["Stage-0 Approved Perceptual Primitives (MEASURABLE_NOW)"]
-        EXP["Expectation E(t)<br/>P_human(x_next | context)"]
-        SUR["Surprise S(t)<br/>-log2 P_AI(x_t | context)"]
-        UNC["Uncertainty U(t)<br/>H(P(x | context)) + Hesitation"]
-        CLO["Closure Expectation C(t)<br/>P(termination | context)"]
-        REC["Theme Recognition R(M, M_i)<br/>Discrimination & Latency"]
-        MEM["Tripartite Memory M(t)<br/>[Recognition d', Recall, Familiarity]"]
+    subgraph STAGE0["Stage-0 Autonomous Structural Primitives (MEASURABLE_NOW)"]
+        EXP["Structural Expectation E_s(t)<br/>P(x_next | context)"]
+        SUR["Structural Surprise S_s(t)<br/>-log2 P(x_t | context)"]
+        UNC["Structural Uncertainty U_s(t)<br/>H[P(x | context)]"]
+        CLO["Structural Closure C_s(t)<br/>P(boundary | context)"]
+        REC["Motif Identity R_m(t)<br/>Contrastive Embedding Invariance"]
+        MEM["Structural Memory M_s(t)<br/>m_k(t) Buffer Activation Trace"]
+    end
+
+    %% Optional Human Validation Layer
+    subgraph OPT_HUMAN["Optional External Human Validation Layer"]
+        H_EXP["Human Continuation (EXP-001)"]
+        H_UNC["Human Uncertainty (EXP-002)"]
+        H_CLO["Human Closure (EXP-003)"]
+        H_REC["Human Discrimination (EXP-004)"]
+        H_MEM["Human Retention (EXP-005)"]
     end
 
     %% Intermediate Latent Constructs

@@ -1,17 +1,21 @@
-# PF-001: Pilot versus Confirmatory Boundary Specification
-## Methodological Firewalls, Pre-Registration Protocols, and Freezing Gates
+# PF-001 / PF-001A: Pilot versus Confirmatory Boundary Specification
+## Autonomous Corpus Freezing, Pre-Registration Protocols, and Optional Human Validation Firewalls
 
 **Document Type:** Scientific Methodology Specification  
-**Milestone:** PF-001  
+**Milestone:** PF-001 / PF-001A  
 **Project:** Russian Piano Composer  
 **Status:** BOUNDARY_SPECIFICATION_FROZEN  
-**Governing Standard:** Open Science Preregistration & Anti-HARK-ing Integrity  
+**Governing Standard:** Open Science Preregistration, Anti-HARK-ing Integrity & Feasibility-First Sourcing  
 
 ---
 
-### 1. The Methodological Firewall Between Pilot and Confirmatory Phases
+### PF-001A Scope Clarification & Methodological Firewall
 
-A primary cause of reproducibility failure in computational behavioral science is the silent migration of exploratory pilot findings into confirmatory evidence. When model architectures, evaluation thresholds, or hypothesis formulations are adjusted after observing experimental data, statistical error rates (Type I false-positive inflation) become uncalibrated.
+> **PF-001A SCIENTIFIC REFINEMENT:**  
+> Under PF-001A, the primary training pipeline is autonomous self-supervised learning from the classical corpus. The pilot-confirmatory boundary applies directly to:
+> 1. **Autonomous Model Freezing:** Architecture, multi-scale token vocabulary, transformation batteries, and counterfactual tests must be frozen prior to unblinding held-out evaluation splits.
+> 2. **Composer Cohort Freezing:** No external composer cohort may become `FROZEN` until a physical score feasibility audit is completed.
+> 3. **Optional Human Validation:** If and when human behavioral studies (EXP-001 through EXP-005) are executed to validate subjective claims, the exploratory pilot study must remain strictly separated from the confirmatory test dataset via the firewall detailed below.
 
 PF-001 erects an impenetrable **Methodological Firewall** between exploratory pilot studies and formal confirmatory testing:
 

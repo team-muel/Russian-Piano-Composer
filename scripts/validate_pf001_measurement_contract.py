@@ -26,11 +26,12 @@ RC012_EXPECTED_BOOTSTRAP_MATRIX_HASH = (
 )
 
 STAGE_0_APPROVED_NAMESPACES = {
-    "expectation",
-    "uncertainty",
-    "closure",
-    "recognition",
-    "memory",
+    "structural_expectation",
+    "structural_uncertainty",
+    "structural_surprise",
+    "structural_closure",
+    "motif_identity",
+    "structural_memory",
 }
 
 ALLOWED_STATUSES = {

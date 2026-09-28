@@ -43,28 +43,28 @@ graph TD
 
 ---
 
-### 2. Standardized Composer Partitioning
+### 2. Standardized Composer Partitioning (Provisional Status)
 
-To ensure scientific replicability and prevent post-hoc cohort selection, composer partitions are prospectively defined and frozen:
+To ensure scientific replicability and prevent repeating the RC-013 mistake of premature cohort freezing, all candidate composer partitions are designated **`PROVISIONAL_PENDING_CORPUS_FEASIBILITY_AUDIT`**:
 
 ```mermaid
-pie title Composer Cohort Allocation (Repertoire Partition)
-    "Development Composers" : 45
-    "Validation Composers" : 25
-    "External-Test Composers (Frozen)" : 30
+pie title Composer Cohort Allocation (Provisional Repertoire Partition)
+    "Development Composers (Provisional)" : 45
+    "Validation Composers (Provisional)" : 25
+    "External-Test Composers (Provisional Blocked)" : 30
 ```
 
-| Partition ID | Role & Purpose | Assigned Composers | Repertoire Scope & Constraint |
+| Partition ID | Role & Purpose | Assigned Composers | Cohort Status & Feasibility Requirement |
 | :--- | :--- | :--- | :--- |
-| **`development`** | Feature extraction, exploratory modeling, baseline listener calibration | **Pyotr Ilyich Tchaikovsky**<br/>**Sergei Rachmaninoff**<br/>**Alexander Scriabin**<br/>**Anton Arensky** | Primary exploratory corpus; permits iterative inspection and diagnostic probing. |
-| **`validation`** | Hyperparameter selection, checkpoint selection, prompt tuning | **Nikolai Medtner**<br/>**Mily Balakirev**<br/>**Anatoly Liadov**<br/>**Reinhold Glière** | Used strictly for tuning; zero direct weight fitting. |
-| **`external_test_held_out`** | **Strict Confirmatory Test** (Untouched during model design) | **Sergei Taneyev**<br/>**Sergei Bortkiewicz**<br/>**Felix Blumenfeld**<br/>**Georgy Catoire** | **AIR-GAPPED FIREWALL.** Completely untouched until final preregistered one-shot confirmatory execution. |
+| **`development`** | Feature extraction, exploratory modeling, baseline listener calibration | **Pyotr Ilyich Tchaikovsky**<br/>**Sergei Rachmaninoff**<br/>**Alexander Scriabin**<br/>**Anton Arensky** | `PROVISIONAL_PENDING_CORPUS_FEASIBILITY_AUDIT`<br/>(Passes preliminary feasibility with ~294 usable scores). |
+| **`validation`** | Hyperparameter selection, checkpoint selection, prompt tuning | **Nikolai Medtner**<br/>**Mily Balakirev**<br/>**Anatoly Liadov**<br/>**Reinhold Glière** | `PROVISIONAL_PENDING_CORPUS_FEASIBILITY_AUDIT`<br/>(Requires targeted expansion for Medtner/Balakirev). |
+| **`external_test_held_out`** | **Strict Confirmatory Test** (Untouched during model design) | **Sergei Taneyev**<br/>**Sergei Bortkiewicz**<br/>**Felix Blumenfeld**<br/>**Georgy Catoire** | `PROVISIONAL_PENDING_CORPUS_FEASIBILITY_AUDIT`<br/>**BLOCKED FROM FREEZING** (< 45 verified symbolic scores available; requires physical score acquisition). |
 
-#### 2.1 The Untouched External Test Rule
-The four composers in `external_test_held_out` represent an unbreached evaluation horizon. During model design, architecture exploration, and pilot parameter fitting:
-- No feature caches or token streams from `external_test_held_out` may be unblinded.
-- No human listening trials using these stimuli may be inspected for model tuning.
-- The external test set is locked with a cryptographic SHA-256 manifest prior to confirmatory execution.
+#### 2.1 The Untouched External Test Rule & Feasibility Gate
+The four composers in `external_test_held_out` represent an unbreached evaluation horizon. However, in accordance with PF-001A:
+- **No external composer split may become FROZEN until physical machine-readable source availability, rights, format validity, and solo-piano eligibility are verified.**
+- Freezing an external cohort prematurely without confirmed physical score assets is strictly forbidden.
+- During model design, architecture exploration, and parameter fitting, the external test set remains behind an air-gapped firewall.
 
 ---
 

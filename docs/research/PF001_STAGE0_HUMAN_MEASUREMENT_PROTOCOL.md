@@ -1,18 +1,21 @@
-# PF-001: Stage-0 Human Measurement Protocol Specification
-## Controlled Behavioral Experiments & Noise Ceiling Estimation Protocols
+# PF-001 / PF-001A: Stage-0 Human Measurement Protocol Specification
+## Optional External Human Validation Layer (EXP-001 through EXP-005)
 
 **Document Type:** Empirical Measurement Protocol Specification  
-**Milestone:** PF-001  
+**Milestone:** PF-001 / PF-001A  
 **Project:** Russian Piano Composer  
 **Status:** PROTOCOL_SPECIFICATION_FROZEN_NO_PARTICIPANT_DATA_COLLECTED  
+**Role:** OPTIONAL_HUMAN_VALIDATION_LAYER  
 **Scope:** Stage-0 Behavioral Tasks (EXP-001 through EXP-005)  
 
 ---
 
-### Non-Collection Precondition & Governance Statement
+### Non-Collection Precondition & PF-001A Scope Clarification
 
-> **CRITICAL SCIENTIFIC GOVERNANCE NOTICE:**  
-> This document specifies experimental protocols **only**. In accordance with PF-001 governance, **no human participants have been recruited, contacted, or tested**, and **no participant data has been collected**. Prior to any physical execution of these experiments in subsequent milestones, formal Institutional Review Board (IRB) / Ethics Committee approval, written informed consent protocols, secure pseudonymous key storage, and institutional data retention agreements must be formally completed and approved. No ethical clearance is claimed at this stage.
+> **PF-001A SCIENTIFIC SCOPE CLARIFICATION:**  
+> Under PF-001A, human participant judgments are **not** required as a Stage-0 training or gating prerequisite. Stage-0 Artificial Listener development proceeds via self-supervised and weakly-supervised representation learning from the human classical corpus.  
+> 
+> The protocols specified in this document (EXP-001 through EXP-005) are preserved in their entirety as an **`OPTIONAL_EXTERNAL_VALIDATION`** layer. They are activated only when validating explicit claims of subjective human perception. **No human participants have been recruited or tested, and no participant data has been collected.** Prior to any physical execution of these experiments, formal IRB approval and consent protocols remain mandatory. No ethical approval is claimed.
 
 ---
 
