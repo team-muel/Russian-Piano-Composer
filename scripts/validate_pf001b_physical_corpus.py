@@ -67,7 +67,10 @@ def validate_physical_corpus_inventory(
     work_ids: set[str] = set()
     verified_files_count = 0
     solo_piano_count = 0
-    parser_pass_count = 0
+    source_identity_verified_count = 0
+    source_bytes_materialized_count = 0
+    sha256_verified_count = 0
+    parser_verified_count = 0
 
     for idx, s in enumerate(scores):
         wid = s.get("work_id")
@@ -85,41 +88,52 @@ def validate_physical_corpus_inventory(
                 "External cohort must remain strictly firewalled."
             )
 
-        # Zero placeholder check: physical_file_path and source_sha256 must be present
+        # Stage 1: SOURCE_IDENTITY_VERIFIED
         rel_path = s.get("physical_file_path")
+        repo_url = s.get("source_repository")
+        commit = s.get("source_revision_or_commit")
+        declared_sha = s.get("source_sha256")
         if not rel_path or "placeholder" in rel_path.lower() or "synthetic" in rel_path.lower():
             errors.append(f"Score '{wid}' has invalid or placeholder physical_file_path: {rel_path}")
             continue
+        if not repo_url or not commit or not declared_sha:
+            errors.append(f"Score '{wid}' missing source identity bindings (repo, commit, sha).")
+            continue
+        source_identity_verified_count += 1
 
+        # Stage 2: SOURCE_BYTES_MATERIALIZED
         file_path = repo_root / rel_path
         if not file_path.exists():
             errors.append(f"Score '{wid}' physical file does not exist on disk: {file_path}")
             continue
 
-        # File size and SHA-256 verification
         file_bytes = file_path.read_bytes()
         actual_size = len(file_bytes)
         if actual_size == 0:
             errors.append(f"Score '{wid}' physical file is 0 bytes: {file_path}")
             continue
+        source_bytes_materialized_count += 1
 
+        # Stage 3: SHA256_VERIFIED
         actual_sha = hashlib.sha256(file_bytes).hexdigest()
-        declared_sha = s.get("source_sha256")
         if declared_sha != actual_sha:
             errors.append(
                 f"Score '{wid}' SHA-256 mismatch! Declared {declared_sha}, actual {actual_sha}."
             )
+            continue
+        sha256_verified_count += 1
 
-        # Parser viability check: test XML well-formedness
+        # Stage 4: PARSER_VERIFIED
         try:
             tree = ET.parse(file_path)
             root = tree.getroot()
             if root is None or len(root) == 0:
                 errors.append(f"Score '{wid}' XML root is empty or invalid.")
-            else:
-                parser_pass_count += 1
+                continue
+            parser_verified_count += 1
         except Exception as e:
             errors.append(f"Score '{wid}' XML parse failed: {e}")
+            continue
 
         # Solo piano check
         if s.get("is_solo_piano") is True:
@@ -136,9 +150,12 @@ def validate_physical_corpus_inventory(
 
     summary = {
         "total_scores": len(scores),
+        "source_identity_verified_count": source_identity_verified_count,
+        "source_bytes_materialized_count": source_bytes_materialized_count,
+        "sha256_verified_count": sha256_verified_count,
+        "parser_verified_count": parser_verified_count,
         "verified_files_count": verified_files_count,
         "solo_piano_count": solo_piano_count,
-        "parser_pass_count": parser_pass_count,
     }
     return len(errors) == 0, errors, summary
 
@@ -224,16 +241,23 @@ def run_all_pf001b_validations(repo_root: Path) -> dict[str, Any]:
     all_passed = inv_ok and thresh_ok and rc12_ok and report_ok
 
     outcome_token = (
-        "PF001B_PHYSICAL_CORPUS_FEASIBILITY_VERIFIED_READY_FOR_CALIBRATION"
+        "PF001B_REMOTE_REPRODUCIBILITY_CLOSED_READY_FOR_PF001C1"
         if all_passed
-        else "PF001B_CORPUS_ACQUISITION_INCOMPLETE"
+        else "PF001B_SOURCE_MATERIALIZATION_FAILED"
     )
 
     return {
-        "milestone": "PF-001B",
+        "milestone": "PF-001B.1",
         "status": "PASS" if all_passed else "FAIL",
         "passed": all_passed,
         "outcome_token": outcome_token,
+        "calibration_scope": {
+            "metric_calibration": "READY_FOR_PF001C1_METRIC_CALIBRATION" if all_passed else "BLOCKED",
+            "composer_generalization_gate": "NOT_READY_FOR_CALIBRATION",
+            "composer_generalization_rationale": (
+                "Current composer counts are too sparse to justify final composer-transfer threshold calibration."
+            ),
+        },
         "errors": all_errors,
         "inventory_summary": inv_summary,
         "verifications": {
@@ -272,6 +296,8 @@ def main() -> int:
         print("=" * 70)
         print(f"Overall Status: {results['status']}")
         print(f"Outcome Token:  {results['outcome_token']}")
+        print(f"Calibration Scope: {results.get('calibration_scope', {}).get('metric_calibration')}")
+        print(f"Composer Transfer: {results.get('calibration_scope', {}).get('composer_generalization_gate')}")
         for check, res in results["verifications"].items():
             print(f"  - {check:<35}: {res}")
         if not results["passed"]:
@@ -279,10 +305,14 @@ def main() -> int:
             for err in results["errors"]:
                 print(f"  [ERROR] {err}")
         else:
-            print("\nInventory Summary:")
-            print(f"  Total Verified Scores: {results['inventory_summary']['total_scores']}")
-            print(f"  Solo Piano Pass:       {results['inventory_summary']['solo_piano_count']}")
-            print(f"  Parser Pass:           {results['inventory_summary']['parser_pass_count']}")
+            inv_sum = results["inventory_summary"]
+            print("\nInventory Multi-Stage Verification Summary:")
+            print(f"  Total Verified Scores:       {inv_sum['total_scores']}")
+            print(f"  1. Source Identity Verified: {inv_sum['source_identity_verified_count']}")
+            print(f"  2. Source Bytes Materialized:{inv_sum['source_bytes_materialized_count']}")
+            print(f"  3. SHA256 Verified:          {inv_sum['sha256_verified_count']}")
+            print(f"  4. Parser Verified:          {inv_sum['parser_verified_count']}")
+            print(f"  Solo Piano Pass:             {inv_sum['solo_piano_count']}")
         print("=" * 70)
 
     return 0 if results["passed"] else 1

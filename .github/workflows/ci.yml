@@ -26,6 +26,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
 
+      - name: Materialize PF-001B physical corpus
+        run: python scripts/materialize_pf001b_physical_corpus.py
+
+      - name: Validate PF-001B physical corpus
+        run: python scripts/validate_pf001b_physical_corpus.py
+
       - name: Lint with ruff
         run: ruff check src/ tests/ scripts/
 
@@ -34,3 +40,4 @@ jobs:
 
       - name: Run tests
         run: pytest tests/ -v -m "not external_asset" --tb=short
+

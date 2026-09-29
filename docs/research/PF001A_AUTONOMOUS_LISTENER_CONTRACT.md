@@ -168,5 +168,6 @@ The following activities remain strictly **prohibited** in PF-001A:
 - Building or training a new composition generator model.
 - Defining or training an overall scalar "musical quality" reward function.
 - Reinforcement learning with human feedback (RLHF) against unvalidated preferences.
-- Prematurely unblinding the frozen RC-012 483-piece corpus as a new test cohort.
+- Prematurely unblinding the frozen RC-012 483-piece corpus as a new test cohort (including Scriabin's 207 pieces, which are designated `PREVIOUSLY_EXPOSED_IN_RC012`, `EXCLUDED_FROM_PF_DEVELOPMENT_BY_LINEAGE_POLICY`, and `NOT_ELIGIBLE_AS_UNTOUCHED_EXTERNAL_DATA`).
 - Freezing candidate external composer cohorts before a physical machine-readable corpus feasibility audit is certified.
+

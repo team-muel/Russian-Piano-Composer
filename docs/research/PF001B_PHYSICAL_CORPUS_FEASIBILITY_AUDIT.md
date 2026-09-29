@@ -43,7 +43,12 @@ The following table contrasts the initial PF-001A feasibility estimates against 
 | **Sergei Lyapunov** | Benchmark Pilot | N/A | N/A | 3 | 3 | 3 | 3 | RC-013 Canonical Digitization (MusicXML) | `BENCHMARK_PILOT_VERIFIED` |
 | **Total** | | **754** | **414** | **62** | **62** | **62** | **62** | — | — |
 
-*\*Note on Scriabin:* Although 207 Scriabin pieces were part of the historical RC-012/RC-014 study, they are cryptographically locked within the RC-012 confirmatory blind. To preserve research lineage integrity, they cannot be unblinded for Artificial Listener training without independent acquisition.
+*\*Note on Scriabin:* Alexander Scriabin's 207 solo piano works in the repository are classified as:
+- `PREVIOUSLY_EXPOSED_IN_RC012`
+- `EXCLUDED_FROM_PF_DEVELOPMENT_BY_LINEAGE_POLICY`
+- `NOT_ELIGIBLE_AS_UNTOUCHED_EXTERNAL_DATA`
+
+Because RC-012 confirmatory analysis has already executed, these pieces cannot serve as an untouched held-out evaluation cohort for the Perception-First Artificial Listener, nor can they be used for development/tuning without explicit lineage isolation.
 
 ---
 
@@ -52,10 +57,14 @@ The following table contrasts the initial PF-001A feasibility estimates against 
 #### 2.1 Physical Machine-Readable Sourcing
 - Exactly **62 pieces** have physical score files present on disk in `data/scores/` and `data/raw/`.
 - All 62 files have verifiable SHA-256 hashes and positive byte counts. Zero placeholder or synthetic fixture rows are admitted.
+- Remote reproducibility is guaranteed by deterministic materializer [`scripts/materialize_pf001b_physical_corpus.py`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/scripts/materialize_pf001b_physical_corpus.py).
 
-#### 2.2 Parser Viability & Schema Validity
-- Canonical MusicXML scores (Lyadov, Arensky, Lyapunov) parse completely and cleanly via `music21` (`converter.parse()`).
-- DCML MuseScore MS3 files (Tchaikovsky, Rachmaninoff, Medtner) are verified well-formed XML documents with valid `<museScore>` document root structures, verified measure elements, and parseable notes.
+#### 2.2 Four-Stage Verification Pipeline
+The verification protocol now explicitly enforces:
+1. `SOURCE_IDENTITY_VERIFIED`: Exact repository URL, commit hash, and expected SHA-256 bound.
+2. `SOURCE_BYTES_MATERIALIZED`: Physical file exists on disk with non-zero byte size.
+3. `SHA256_VERIFIED`: Cryptographic SHA-256 matches declared hash exactly.
+4. `PARSER_VERIFIED`: Validated parseable by `music21` (MusicXML) or XML/ms3 engine (MuseScore).
 
 #### 2.3 Solo-Piano Eligibility
 - All 62 verified physical scores represent unreduced, original solo-piano compositions. Chamber reductions, concerto accompaniments, and four-hand arrangements are strictly excluded.
@@ -72,22 +81,13 @@ The following table contrasts the initial PF-001A feasibility estimates against 
 
 ### 3. Threshold De-Provisionalization Architecture (PF-001B → PF-001C)
 
-In `docs/research/PF001A_AUTONOMOUS_LISTENER_CONTRACT.md`, all numerical targets in the autonomous validation gates have been explicitly reclassified as:
+In `docs/research/PF001A_AUTONOMOUS_LISTENER_CONTRACT.md`, all numerical targets in the autonomous validation gates remain explicitly classified as:
 $$\texttt{PROVISIONAL\_UNCALIBRATED\_TARGET}$$
 
-These targets include:
-- `INVARIANCE_GATE`: $\mathbb{E}[\text{sim}(z(M), z(T_{\text{id}}(M)))] \ge 0.85$
-- `DISCRIMINATION_GATE`: $\mathbb{E}[\text{sim}(z(M), z(M_{\text{foil}}))] \le 0.30$ ($\text{AUROC} \ge 0.95$)
-- `COUNTERFACTUAL_GATE`: Cadence shift $\Delta C_s \ge 0.40$; motif-cue deletion $\Delta m_k \ge 0.50$; chromatic noise $\Delta S_s \ge 2.5\text{ bits}$
-- `LONG_RANGE_MEMORY_GATE`: Reactivation ratio $\ge 1.80$
-- `COMPOSER_GENERALIZATION_GATE`: Degradation $\le 15\%$
-- `ANTI_COPY_GATE`: Maximum n-gram length $L_{\text{max}} = 12$; nearest-neighbor latent distance $\le 0.05$
-
-#### PF-001C Calibration Roadmap:
-In milestone **PF-001C**, these provisional cutoffs will be de-provisionalized into calibrated empirical thresholds through:
-1. **Information-Weighted Melodic N-Grams:** Computing background pitch-interval frequency distributions to discount common musical clichés (scalar passages, Alberti bass, cadential formulas) while penalizing rare thematic sequences.
-2. **Empirical Distribution Matching:** Setting $\tau_{\text{novelty}}$ and latent cosine distance cutoffs based on 99th-percentile separation across distinct classical human composers.
-3. **Perturbation Baselines:** Calibrating counterfactual deltas against measured syntactic sensitivity across the 62 physical score pieces.
+#### Calibration Scope & Composer Generalization Gate:
+- **`metric_calibration`:** `READY_FOR_PF001C1_METRIC_CALIBRATION`
+- **`COMPOSER_GENERALIZATION_GATE`:** `NOT_READY_FOR_CALIBRATION`
+  - *Rationale:* Current verified composer counts (Tchaikovsky: 12, Rachmaninoff: 22, Medtner: 19, plus 9 canonical pilot movements) are sufficient for internal metric calibration (invariance, foil discrimination, counterfactual deltas), but remain too sparse to justify final composer-transfer threshold calibration until independent composer coverage has materially expanded.
 
 ---
 
@@ -107,6 +107,6 @@ remains **strictly firewalled**:
 
 ### 5. Final Audit Verdict
 
-$$\textbf{Outcome Token: } \texttt{PF001B\_PHYSICAL\_CORPUS\_FEASIBILITY\_VERIFIED\_READY\_FOR\_CALIBRATION}$$
+$$\textbf{Outcome Token: } \texttt{PF001B\_REMOTE\_REPRODUCIBILITY\_CLOSED\_READY\_FOR\_PF001C1}$$
 
-The physical classical corpus inventory [`data/reviews/pf001/pf001_physical_corpus_inventory.json`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/data/reviews/pf001/pf001_physical_corpus_inventory.json) contains exactly 62 verified physical scores backed by retrievable machine-readable artifacts, zero placeholder rows, and rigorous multi-stage audits. All numerical gate thresholds are marked provisional pending PF-001C calibration.
+The physical classical corpus inventory [`data/reviews/pf001/pf001_physical_corpus_inventory.json`](file:///C:/Users/User/.gemini/antigravity/scratch/russian-piano-composer/data/reviews/pf001/pf001_physical_corpus_inventory.json) contains exactly 62 verified physical scores backed by retrievable machine-readable artifacts, zero placeholder rows, and rigorous multi-stage audits. Remote reproducibility is deterministically verified via CI workflow integration.

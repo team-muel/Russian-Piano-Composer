@@ -85,5 +85,6 @@ def test_full_pf001b_validator_pipeline_passes() -> None:
     assert res["passed"] is True, f"Validation pipeline failed: {res['errors']}"
     assert (
         res["outcome_token"]
-        == "PF001B_PHYSICAL_CORPUS_FEASIBILITY_VERIFIED_READY_FOR_CALIBRATION"
+        == "PF001B_REMOTE_REPRODUCIBILITY_CLOSED_READY_FOR_PF001C1"
     )
+
