@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "pf001c1_transformation_registry_v1",
+  "milestone": "PF-001C1",
+  "registry_title": "Identity-Preserving Transformation Registry for SOURCE_SEGMENT_IDENTITY",
+  "status": "CALIBRATION_TRANSFORMATION_REGISTRY_FROZEN",
+  "created_at": "2026-09-30T00:00:00Z",
+  "governing_policy": "Every identity-preserving transformation must preserve a precisely stated structural invariant. Destructive perturbations are strictly segregated into the counterfactual registry.",
+  "transformations": [
+    {
+      "transformation_id": "T_ID_PITCH_TRANSPOSITION",
+      "name": "Global Pitch Transposition",
+      "applicable_timescale": "SOURCE_SEGMENT",
+      "parameter_domain": {
+        "interval_semitones": [-7, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 7],
+        "step_bound_spelled": "Diatonic/chromatic exact transposition"
+      },
+      "identity_claim_scope": "SOURCE_SEGMENT_IDENTITY",
+      "preserved_structural_invariant": "Preserves exact melodic contour, successive voice-leading pitch intervals, rhythmic ratios, harmonic function relations, and relative voice spacing.",
+      "deterministic_implementation": "Transpose all note pitches in the source segment by delta semitones while updating SpelledPitch letter and alteration deterministically.",
+      "randomness_policy": "Sample interval from parameter_domain using RandomContext stream 'transform.transposition'.",
+      "invalidity_conditions": [
+        "Transposition shifts any note outside standard 88-key piano compass (MIDI 21 to 108).",
+        "Interval is 0 semitones (degenerate identity)."
+      ]
+    },
+    {
+      "transformation_id": "T_ID_OCTAVE_DISPLACEMENT",
+      "name": "Octave / Register Displacement",
+      "applicable_timescale": "SOURCE_SEGMENT",
+      "parameter_domain": {
+        "octave_shift": [-2, -1, 1, 2],
+        "target_voice": ["all", "top_voice", "bottom_voice"]
+      },
+      "identity_claim_scope": "SOURCE_SEGMENT_IDENTITY",
+      "preserved_structural_invariant": "Preserves pitch-class profile, rhythmic duration structure, metric placement, and harmonic root identity under octave equivalence.",
+      "deterministic_implementation": "Shift octave field of SpelledPitch by delta octaves (+/-12 semitones per octave).",
+      "randomness_policy": "Sample octave_shift and target_voice using RandomContext stream 'transform.octave_displacement'.",
+      "invalidity_conditions": [
+        "Displacement shifts any note outside 88-key piano compass (MIDI 21 to 108).",
+        "Displacement causes voice crossing inversion when target_voice is single voice."
+      ]
+    },
+    {
+      "transformation_id": "T_ID_RHYTHMIC_AUGMENTATION",
+      "name": "Global Rhythmic Augmentation",
+      "applicable_timescale": "SOURCE_SEGMENT",
+      "parameter_domain": {
+        "scaling_factor": [2, 3]
+      },
+      "identity_claim_scope": "SOURCE_SEGMENT_IDENTITY",
+      "preserved_structural_invariant": "Preserves relative proportional duration ratios (IOI ratios) and pitch sequence identically, scaling metric tempo uniformly.",
+      "deterministic_implementation": "Multiply all note and rest durations and measure relative offsets by scaling_factor.",
+      "randomness_policy": "Sample scaling_factor using RandomContext stream 'transform.rhythmic_augmentation'.",
+      "invalidity_conditions": [
+        "Total duration exceeds maximum segment boundary limit."
+      ]
+    },
+    {
+      "transformation_id": "T_ID_RHYTHMIC_DIMINUTION",
+      "name": "Global Rhythmic Diminution",
+      "applicable_timescale": "SOURCE_SEGMENT",
+      "parameter_domain": {
+        "scaling_factor": [0.5]
+      },
+      "identity_claim_scope": "SOURCE_SEGMENT_IDENTITY",
+      "preserved_structural_invariant": "Preserves relative proportional duration ratios (IOI ratios) and pitch sequence identically at doubled tempo.",
+      "deterministic_implementation": "Multiply all note and rest durations and measure relative offsets by Fraction(1, 2).",
+      "randomness_policy": "Sample scaling_factor using RandomContext stream 'transform.rhythmic_diminution'.",
+      "invalidity_conditions": [
+        "Resulting duration is shorter than minimum allowed event resolution (1/64 note)."
+      ]
+    },
+    {
+      "transformation_id": "T_ID_LIMITED_ORNAMENT_INSERTION",
+      "name": "Controlled Diatonic Neighbor Ornament Insertion",
+      "applicable_timescale": "SOURCE_SEGMENT",
+      "parameter_domain": {
+        "ornament_type": ["upper_neighbor", "lower_neighbor", "passing_tone"],
+        "max_fraction_events_modified": 0.15
+      },
+      "identity_claim_scope": "SOURCE_SEGMENT_IDENTITY",
+      "preserved_structural_invariant": "Preserves harmonic skeleton, metric downbeat arrival pitches, structural voice leading, and global phrase contour.",
+      "deterministic_implementation": "Split selected long notes (> quarter note on unaccented beat) into main note plus diatonic neighbor note sharing total duration.",
+      "randomness_policy": "Select eligible events and neighbor direction using RandomContext stream 'transform.ornament_insertion'.",
+      "invalidity_conditions": [
+        "Modification applied to strong downbeat notes or final cadential arrival event."
+      ]
+    },
+    {
+      "transformation_id": "T_ID_LIMITED_ORNAMENT_DELETION",
+      "name": "Controlled Surface Ornament Deletion",
+      "applicable_timescale": "SOURCE_SEGMENT",
+      "parameter_domain": {
+        "target_event_types": ["grace_notes", "passing_sixteenths"],
+        "max_fraction_events_deleted": 0.15
+      },
+      "identity_claim_scope": "SOURCE_SEGMENT_IDENTITY",
+      "preserved_structural_invariant": "Preserves structural pitch skeleton, harmonic progression, and metric pulse while pruning ornamental surface figuration.",
+      "deterministic_implementation": "Remove unaccented grace notes or passing tones, absorbing their duration into preceding or succeeding structural notes.",
+      "randomness_policy": "Select target ornaments using RandomContext stream 'transform.ornament_deletion'.",
+      "invalidity_conditions": [
+        "Attempting to delete a structural harmonic downbeat pitch."
+      ]
+    },
+    {
+      "transformation_id": "T_ID_ACCOMPANIMENT_TEXTURE_VARIATION",
+      "name": "Voice-Preserving Accompaniment Texture Variation",
+      "applicable_timescale": "SOURCE_SEGMENT",
+      "parameter_domain": {
+        "variation_mode": ["block_chord_to_arpeggio", "arpeggio_to_block_chord"],
+        "target_staff": [2]
+      },
+      "identity_claim_scope": "SOURCE_SEGMENT_IDENTITY",
+      "preserved_structural_invariant": "Preserves primary melodic line in Staff 1, harmonic pitch-class content, bass line progression, and meter.",
+      "deterministic_implementation": "Restructure accompaniment figurations in Staff 2 while strictly holding identical harmonic pitch-class multiset per measure.",
+      "randomness_policy": "Select accompaniment bars using RandomContext stream 'transform.accompaniment_variation'.",
+      "invalidity_conditions": [
+        "Primary melodic voice in Staff 1 is altered."
+      ]
+    }
+  ]
+}

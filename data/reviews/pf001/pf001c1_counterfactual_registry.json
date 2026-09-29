@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "schema_version": "pf001c1_counterfactual_registry_v1",
+  "milestone": "PF-001C1",
+  "registry_title": "Counterfactual Perturbation and Matched Control Registry",
+  "status": "CALIBRATION_COUNTERFACTUAL_REGISTRY_FROZEN",
+  "created_at": "2026-09-30T00:00:00Z",
+  "governing_policy": "For each targeted construct perturbation, define a matched neutral control perturbation modifying an equivalent number of events without disrupting the target construct.",
+  "perturbation_families": [
+    {
+      "family_id": "CF-CLOSURE",
+      "target_construct": "structural_closure",
+      "expected_directional_response": "DECREASE",
+      "targeted_perturbation": {
+        "perturbation_id": "P_TARGET_CADENTIAL_DISRUPTION",
+        "name": "Cadential Resolution Pitch / Harmony Disruption",
+        "description": "Replaces the final tonic/resolution chord of an authentic or half cadence with an open dissonant harmony or unresolved deceptive pitch (e.g. V7 -> bVI or unresolved tritone).",
+        "affected_events_count": "1 to 4 notes (final cadential arrival)",
+        "implementation": "Substitute tonic pitch/root at cadential arrival with foreign non-tonic pitch."
+      },
+      "matched_control_perturbation": {
+        "perturbation_id": "P_CONTROL_MID_PHRASE_VOICE_SWAP",
+        "name": "Matched Mid-Phrase Neutral Voice Inversion",
+        "description": "Swaps pitches of two inner voices at a mid-phrase non-cadential bar without altering harmonic function or phrase boundary.",
+        "affected_events_count": "1 to 4 notes (identical count to target perturbation)",
+        "implementation": "Exchange octave/voice positions of identical pitch classes in inner voices."
+      },
+      "directional_contrast_statistic": {
+        "formula": "ClosureContrast(X) = (Closure(X) - Closure(T_target(X))) - (Closure(X) - Closure(T_control(X)))",
+        "directional_requirement": "Mean ClosureContrast across pieces > 0 with bootstrap 95% CI lower bound > 0."
+      }
+    },
+    {
+      "family_id": "CF-MEMORY",
+      "target_construct": "structural_memory",
+      "expected_directional_response": "DECREASE",
+      "targeted_perturbation": {
+        "perturbation_id": "P_TARGET_RECURRENCE_CUE_DELETION",
+        "name": "Thematic / Recurrence Cue Incipit Deletion",
+        "description": "Replaces the initial 2 to 4 bars of a recurrent thematic statement or recapitulation arrival with generic neutral accompaniment texture.",
+        "affected_events_count": "4 to 16 notes (thematic incipit)",
+        "implementation": "Zero out primary melodic voice in recurrence window, substituting background diatonic accompaniment."
+      },
+      "matched_control_perturbation": {
+        "perturbation_id": "P_CONTROL_POST_CUE_TEXTURE_SHIFT",
+        "name": "Matched Neutral Accompaniment Texture Variation",
+        "description": "Alters accompaniment figuration pattern 4 bars after the cue arrival, preserving the thematic incipit and harmonic progression.",
+        "affected_events_count": "4 to 16 notes (identical count to target perturbation)",
+        "implementation": "Apply block-to-arpeggio variation to accompaniment Staff 2 while leaving thematic Staff 1 intact."
+      },
+      "directional_contrast_statistic": {
+        "formula": "MemoryContrast(X) = (Memory(T_control(X)) - Memory(T_target(X)))",
+        "directional_requirement": "Mean MemoryContrast across pieces > 0 with bootstrap 95% CI lower bound > 0."
+      }
+    },
+    {
+      "family_id": "CF-SURPRISE",
+      "target_construct": "structural_surprise",
+      "expected_directional_response": "INCREASE",
+      "targeted_perturbation": {
+        "perturbation_id": "P_TARGET_CHROMATIC_CORRUPTION",
+        "name": "Controlled Out-of-Key Chromatic Pitch Injection",
+        "description": "Injects foreign non-diatonic chromatic pitches (tritone or minor second displacements) into an established diatonic harmonic context.",
+        "affected_events_count": "2 to 6 notes",
+        "implementation": "Shift selected notes by +/-1 or +/-6 semitones outside current local key scale."
+      },
+      "matched_control_perturbation": {
+        "perturbation_id": "P_CONTROL_DIATONIC_OCTAVE_DISPLACEMENT",
+        "name": "Matched In-Key Diatonic Octave Shift",
+        "description": "Shifts an identical number of notes by exactly +1 or -1 octave, preserving diatonic key membership and chord identity.",
+        "affected_events_count": "2 to 6 notes (identical count to target perturbation)",
+        "implementation": "Shift note pitch by +/-12 semitones strictly within same spelled pitch class."
+      },
+      "directional_contrast_statistic": {
+        "formula": "SurpriseContrast(X) = (Surprise(T_target(X)) - Surprise(X)) - (Surprise(T_control(X)) - Surprise(X))",
+        "directional_requirement": "Mean SurpriseContrast across pieces > 0 with bootstrap 95% CI lower bound > 0."
+      }
+    }
+  ]
+}

@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "contract_name": "PF001C1_METRIC_AND_CALIBRATION_CONTRACT",
+  "version": "1.0.0",
+  "ratification_date": "2026-09-30",
+  "authoritative_receipt_hash": "db2370c0fdc6010e0d917be4c953d48a1d37d59d680a5d76d8f8a63e474c689d",
+  "external_test_firewall": {
+    "status": "ENFORCED_BLINDED",
+    "cohort": [
+      "Taneyev",
+      "Bortkiewicz",
+      "Blumenfeld",
+      "Catoire"
+    ],
+    "prohibition": "External test cohort scores, audio, metadata, and features MUST NOT be loaded, inspected, or processed during metric calibration or model selection."
+  },
+  "random_seed_policy": {
+    "framework": "russian_piano_composer.runtime.random_context.RandomContext",
+    "root_seed": 20260930,
+    "hierarchical_paths": {
+      "resampling": "pf001c1/resampling",
+      "transformation": "pf001c1/transformations",
+      "counterfactual": "pf001c1/counterfactuals",
+      "cross_validation": "pf001c1/cv_folds"
+    }
+  },
+  "evaluation_units": {
+    "primary_cluster_unit": {
+      "name": "piece_id",
+      "description": "The musical piece is the mandatory unit of statistical independence. All segments, slices, transforms, and negative foils derived from a piece must belong strictly to the fold containing that piece. Segment counts must NEVER be treated as independent degrees of freedom."
+    },
+    "sub_units": [
+      {
+        "name": "segment_4m",
+        "description": "Contiguous 4-measure window aligned to score measure boundaries.",
+        "usage": "Invariance, hard-negative discrimination, and baseline n-gram evaluation."
+      },
+      {
+        "name": "segment_8m",
+        "description": "Contiguous 8-measure window aligned to score measure boundaries.",
+        "usage": "Closure contrast, surprise contrast, and formal boundary evaluation."
+      },
+      {
+        "name": "section_window",
+        "description": "Formal structural section (Exposition, Development, Recapitulation, Theme, Variation) derived from ground-truth formal metadata or cadence boundaries.",
+        "usage": "Long-range memory reactivation and structural world model evaluation."
+      }
+    ]
+  },
+  "theme_identity_readiness": {
+    "status": "THEME_MOTIF_IDENTITY_NOT_READY",
+    "rationale": "Canonical theme manifest data/annotations/theme_v1/manifest.yaml contains 0 accepted annotations. RC-008B pilot contains 20 candidate proposals but 0 human-accepted annotations.",
+    "operational_scope": "SOURCE_SEGMENT_IDENTITY_ONLY"
+  },
+  "baseline_models": {
+    "description": "Standard non-neural references against which representation and listener predictability are calibrated.",
+    "models": [
+      {
+        "model_id": "BASE_EMPIRICAL_MARGINAL",
+        "type": "Unigram pitch-class and duration marginal distributions",
+        "purpose": "Floor perplexity reference ignoring context."
+      },
+      {
+        "model_id": "BASE_MARKOV_ORDER_1",
+        "type": "First-order Markov transition matrix over pitch-class x duration tokens",
+        "purpose": "Immediate-transition baseline."
+      },
+      {
+        "model_id": "BASE_NGRAM_4",
+        "type": "Kneser-Ney smoothed 4-gram symbolic event language model",
+        "purpose": "Local surface predictability baseline."
+      }
+    ]
+  },
+  "metrics": {
+    "PERPLEXITY": {
+      "formula": "PPL(W) = exp(-1/N * sum_{i=1}^N log P(w_i | w_{<i}))",
+      "unit": "effective vocabulary size / perplexity per symbolic token",
+      "bitrate_formula": "H(W) = log2(PPL(W)) bits/token"
+    },
+    "COSINE_SIMILARITY": {
+      "formula": "cos_sim(u, v) = (u . v) / (||u||_2 * ||v||_2)",
+      "domain": "[-1.0, 1.0]",
+      "unit": "dimensionless correlation"
+    },
+    "CLOSURE_CONTRAST": {
+      "formula": "ClosureContrast(S, P_cad, P_ctl) = [ListenerClosureScore(S o P_cad) - ListenerClosureScore(S)] - [ListenerClosureScore(S o P_ctl) - ListenerClosureScore(S)]",
+      "simplified_formula": "ClosureContrast(S, P_cad, P_ctl) = ListenerClosureScore(S o P_cad) - ListenerClosureScore(S o P_ctl)",
+      "directional_hypothesis": "ClosureContrast > 0 (cadential preparation increases listener closure relative to matched event-count control)"
+    },
+    "SURPRISE_CONTRAST": {
+      "formula": "SurpriseContrast(S, P_dis, P_ctl) = [ListenerSurpriseScore(S o P_dis) - ListenerSurpriseScore(S)] - [ListenerSurpriseScore(S o P_ctl) - ListenerSurpriseScore(S)]",
+      "simplified_formula": "SurpriseContrast(S, P_dis, P_ctl) = ListenerSurpriseScore(S o P_dis) - ListenerSurpriseScore(S o P_ctl)",
+      "directional_hypothesis": "SurpriseContrast > 0 (foreign harmonic disruption increases listener surprise relative to matched in-key control)"
+    },
+    "MEMORY_REACTIVATION_RATIO": {
+      "formula": "ReactivationRatio(S_reprise, S_prime, S_novel) = cos_sim(h(S_reprise), h(S_theme)) / cos_sim(h(S_novel), h(S_theme))",
+      "directional_hypothesis": "ReactivationRatio > 1.0"
+    },
+    "ANTI_COPY_METRICS": {
+      "tier_1_symbolic_ngram": {
+        "formula": "L_max = max { |g| : g in Ngrams(G) cap Ngrams(Corpus_dev) }",
+        "description": "Maximum contiguous matched token length."
+      },
+      "tier_2_weighted_interval_ngram": {
+        "formula": "W_ngram(G) = sum_{g in Ngrams_k(G) cap Ngrams_k(Corpus)} w(g), where w(g) = -log2 P_corpus(g)",
+        "smoothing": "Add-alpha (alpha=0.1) or Good-Turing smoothed n-gram language model estimated strictly on development corpus."
+      },
+      "tier_3_latent_retrieval": {
+        "formula": "D_min(G, Corpus) = min_{S in Corpus} (1 - cos_sim(h(G), h(S)))",
+        "description": "Minimum latent cosine distance to any development training segment."
+      }
+    }
+  },
+  "hard_negative_foil_construction": {
+    "foil_types": [
+      {
+        "type": "WITHIN_PIECE_DISTANT",
+        "description": "Segment from the same piece but separated by at least 16 measures, matched for tempo, key signature, and register."
+      },
+      {
+        "type": "CROSS_PIECE_SAME_COMPOSER",
+        "description": "Segment from a different piece by the same composer with matching meter and primary key center."
+      },
+      {
+        "type": "CROSS_COMPOSER_MATCHED_GENRE",
+        "description": "Segment from a different development composer with matching genre (e.g. Prelude to Prelude) and density."
+      }
+    ],
+    "matching_tolerances": {
+      "duration_measure_tolerance": 0,
+      "event_density_tolerance_percent": 15,
+      "pitch_register_mean_midi_tolerance": 6.0
+    }
+  },
+  "closure_label_provenance_hierarchy": [
+    {
+      "rank": 1,
+      "provenance_code": "EXPLICIT_SCORE_BOUNDARY",
+      "description": "Double barlines, fine barlines, end-of-piece barlines, repeat barlines."
+    },
+    {
+      "rank": 2,
+      "provenance_code": "CADENCE_RULE_DERIVED",
+      "description": "Verified Roman numeral cadence analysis (PAC, IAC, HC) from annotated corpus files (e.g. Tchaikovsky/Chopin harmony annotations)."
+    },
+    {
+      "rank": 3,
+      "provenance_code": "FORMAL_METADATA_DERIVED",
+      "description": "Movement or variation terminal measure indicators from catalog metadata."
+    },
+    {
+      "rank": 4,
+      "provenance_code": "HEURISTIC_WEAK_LABEL",
+      "description": "Algorithmic root-position tonic arrival preceded by dominant harmony with fermata or rest; tagged as weak label."
+    }
+  ],
+  "threshold_selection_algorithm": {
+    "method": "GROUPED_KFOLD_YOUDENS_J",
+    "n_splits": 5,
+    "group_key": "piece_id",
+    "description": "For calibration of binary operational threshold tau (e.g. positive pair identity vs negative foil):",
+    "steps": [
+      "1. Partition the development pieces into 5 grouped folds such that all segments of any piece are in the same fold.",
+      "2. For each fold k in 1..5: compute the empirical ROC curve across pooled positive pairs and matched negative foils.",
+      "3. For threshold candidates tau in [-1.0, 1.0] with step 0.005: compute Youden's J_k(tau) = TPR_k(tau) - FPR_k(tau).",
+      "4. Let tau_k^* = argmax_{tau} J_k(tau). If multiple tau maximize J_k, select the one with higher similarity (tie-breaking toward specificity).",
+      "5. The prospectively selected threshold is tau^* = median(tau_1^*, ..., tau_5^*).",
+      "6. Uncertainty bounds for tau^* are computed via piece-clustered bootstrap across folds."
+    ]
+  },
+  "resampling_and_uncertainty_policy": {
+    "bootstrap_replicates": 2000,
+    "confidence_interval_type": "BCa (Bias-Corrected and Accelerated) or Percentile bootstrap",
+    "alpha": 0.05,
+    "confidence_level": 0.95,
+    "clustering_rule": "Cluster resampling strictly at piece_id level. Sampling with replacement draws pieces; all segments belonging to selected pieces are included in the bootstrap replicate."
+  },
+  "registries": {
+    "transformation_registry_file": "data/reviews/pf001/pf001c1_transformation_registry.json",
+    "counterfactual_registry_file": "data/reviews/pf001/pf001c1_counterfactual_registry.json",
+    "theme_identity_readiness_file": "data/reviews/pf001/pf001c1_theme_identity_readiness.json",
+    "gate_readiness_file": "data/reviews/pf001/pf001c1_gate_readiness.json"
+  }
+}
