@@ -1,11 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "schema_version": "pf001b_physical_corpus_inventory_v1",
-  "milestone": "PF-001B",
+  "schema_version": "pf001b2_physical_corpus_inventory_v2",
+  "milestone": "PF-001B.2",
   "audit_title": "Physical Machine-Readable Classical Corpus Feasibility Inventory",
   "status": "PHYSICAL_CORPUS_INVENTORY_AUDITED",
   "created_at": "2026-09-29T15:35:00Z",
-  "governing_policy": "Zero synthetic or placeholder entries. Every verified piece must resolve to a physical machine-readable file with verifiable SHA-256 or git blob, known parser, rights check, and solo-piano eligibility.",
+  "governing_policy": "Zero synthetic or placeholder entries. Every verified piece must resolve to a physical machine-readable file with verified upstream raw SHA-256 and canonical materialized SHA-256, explicit canonicalization policy, XML well-formedness, canonical parser verification (ms3 / music21), rights check, and solo-piano eligibility.",
   "scores": [
     {
       "work_id": "lyadov_op40_no02",
@@ -18,7 +18,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no02.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -26,8 +25,28 @@
       "canonical_representative": true,
       "source_sha256": "0fc25451fa355a46b04598ae80c48f79acc33af5b06e6f60f7b12f1d6e481adb",
       "file_size_bytes": 94353,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "0fc25451fa355a46b04598ae80c48f79acc33af5b06e6f60f7b12f1d6e481adb",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 32,
+        "num_notes": 309,
+        "num_rests": 30,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "6/8",
+          "6/8"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 1 flat>",
+          "<music21.key.KeySignature of 1 flat>"
+        ]
+      }
     },
     {
       "work_id": "lyadov_op40_no03",
@@ -40,7 +59,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no03.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -48,8 +66,28 @@
       "canonical_representative": true,
       "source_sha256": "5784b8f95bf897e828a6a9b0918f1f2118d37c5198db93184c81f1a43e5582cd",
       "file_size_bytes": 54675,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "5784b8f95bf897e828a6a9b0918f1f2118d37c5198db93184c81f1a43e5582cd",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 23,
+        "num_notes": 123,
+        "num_rests": 14,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "3/4",
+          "3/4"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 2 flats>",
+          "<music21.key.KeySignature of 2 flats>"
+        ]
+      }
     },
     {
       "work_id": "lyadov_op46_no04",
@@ -62,7 +100,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/anatoly_lyadov_op46_no04.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -70,8 +107,28 @@
       "canonical_representative": true,
       "source_sha256": "1d7fe5a91edcb402449d0067fcfecbf156f38da9f710c515c7c1783b55daa748",
       "file_size_bytes": 101225,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "1d7fe5a91edcb402449d0067fcfecbf156f38da9f710c515c7c1783b55daa748",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 45,
+        "num_notes": 276,
+        "num_rests": 4,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "3/4",
+          "3/4"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 1 sharp>",
+          "<music21.key.KeySignature of 1 sharp>"
+        ]
+      }
     },
     {
       "work_id": "arensky_op36_no01",
@@ -84,7 +141,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -92,8 +148,28 @@
       "canonical_representative": true,
       "source_sha256": "50f37ea7d2e5327f07bfd518ab0950c25130bc485ee9ddedc032cb26b697376e",
       "file_size_bytes": 191044,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "50f37ea7d2e5327f07bfd518ab0950c25130bc485ee9ddedc032cb26b697376e",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 36,
+        "num_notes": 455,
+        "num_rests": 24,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "4/4",
+          "4/4"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of no sharps or flats>",
+          "<music21.key.KeySignature of no sharps or flats>"
+        ]
+      }
     },
     {
       "work_id": "arensky_op36_no02",
@@ -106,7 +182,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -114,8 +189,28 @@
       "canonical_representative": true,
       "source_sha256": "35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee",
       "file_size_bytes": 445955,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 102,
+        "num_notes": 1315,
+        "num_rests": 4,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "3/4",
+          "3/4"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 3 flats>",
+          "<music21.key.KeySignature of 3 flats>"
+        ]
+      }
     },
     {
       "work_id": "arensky_op36_no13",
@@ -128,7 +223,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/anton_arensky_op36_no13.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -136,8 +230,28 @@
       "canonical_representative": true,
       "source_sha256": "13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8",
       "file_size_bytes": 261658,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 60,
+        "num_notes": 758,
+        "num_rests": 0,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "3/4",
+          "3/4"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 6 sharps>",
+          "<music21.key.KeySignature of 6 sharps>"
+        ]
+      }
     },
     {
       "work_id": "lyapunov_op11_no01",
@@ -150,7 +264,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no01.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -158,8 +271,28 @@
       "canonical_representative": true,
       "source_sha256": "37e92865e95c04747d537c8d80ecc5d09340c818ee3a135d97536221255b1b9a",
       "file_size_bytes": 232878,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "37e92865e95c04747d537c8d80ecc5d09340c818ee3a135d97536221255b1b9a",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 64,
+        "num_notes": 757,
+        "num_rests": 1,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "2/4",
+          "2/4"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 6 sharps>",
+          "<music21.key.KeySignature of 6 sharps>"
+        ]
+      }
     },
     {
       "work_id": "lyapunov_op11_no02",
@@ -172,7 +305,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no02.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -180,8 +312,28 @@
       "canonical_representative": true,
       "source_sha256": "1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b",
       "file_size_bytes": 678940,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 168,
+        "num_notes": 1672,
+        "num_rests": 334,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "2/4",
+          "2/4"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 6 sharps>",
+          "<music21.key.KeySignature of 6 sharps>"
+        ]
+      }
     },
     {
       "work_id": "lyapunov_op11_no03",
@@ -194,7 +346,6 @@
       "source_revision_or_commit": "rc013-pilot-digitized",
       "physical_file_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no03.musicxml",
       "raw_format": "MusicXML",
-      "parser": "music21",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "Historical score PD, transcribed under open scientific project license",
@@ -202,8 +353,28 @@
       "canonical_representative": true,
       "source_sha256": "fc10d4d7d1006d1a5888fb7eb83d9ce6f05b392ce3834d1bb0a02d30c18a683a",
       "file_size_bytes": 405619,
-      "parser_status": "PARSER_PASS",
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "repository_blob_or_commit_identity": "rc013-pilot-digitized",
+      "canonical_materialized_sha256": "fc10d4d7d1006d1a5888fb7eb83d9ce6f05b392ce3834d1bb0a02d30c18a683a",
+      "canonicalization_policy": "IDENTITY",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "music21",
+      "canonical_parser_version": "10.5.0",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 114,
+        "num_notes": 906,
+        "num_rests": 0,
+        "num_parts_or_staves": 2,
+        "time_signatures": [
+          "6/8",
+          "6/8"
+        ],
+        "key_signatures": [
+          "<music21.key.KeySignature of 5 sharps>",
+          "<music21.key.KeySignature of 5 sharps>"
+        ]
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_01",
@@ -218,14 +389,35 @@
       "source_sha256": "faf79464f912792ba35851491d63b7f476b1032d3971a23ae4d348abb2df4736",
       "file_size_bytes": 768406,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "429def7bd3ea09615a6598e5406c152af6ed4c2cd6766deda049b9432b20a8a5",
+      "canonical_materialized_sha256": "faf79464f912792ba35851491d63b7f476b1032d3971a23ae4d348abb2df4736",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 103,
+        "num_events": 1847,
+        "num_notes": 1574,
+        "num_rests": 273,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 103,
+        "canonical_score_events": 1847
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_02",
@@ -240,14 +432,35 @@
       "source_sha256": "950993514ec903c0e255050dd9a14c76c136c3ad2aa53a2177a4d5eaa6ff1e0d",
       "file_size_bytes": 871289,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_02",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "f8e24b00e79916c88c354f87502eb15014bbda5bc685014dbc7ed388b66e5d70",
+      "canonical_materialized_sha256": "950993514ec903c0e255050dd9a14c76c136c3ad2aa53a2177a4d5eaa6ff1e0d",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 169,
+        "num_events": 2248,
+        "num_notes": 2051,
+        "num_rests": 197,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 169,
+        "canonical_score_events": 2248
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_03",
@@ -262,14 +475,35 @@
       "source_sha256": "2d263bb6c99bcc847caa1d192d5017900342d050742d696f3decd4a22a50abdc",
       "file_size_bytes": 288654,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_03",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "196203b8d53992d832655243e0a09edd5bf3416d146a5995e3b9cd75b6ad77b9",
+      "canonical_materialized_sha256": "2d263bb6c99bcc847caa1d192d5017900342d050742d696f3decd4a22a50abdc",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 46,
+        "num_events": 741,
+        "num_notes": 626,
+        "num_rests": 115,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 46,
+        "canonical_score_events": 741
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_04",
@@ -284,14 +518,35 @@
       "source_sha256": "178f58d22af771dfaa6dec0a4772d6a69e74fcf9af42ac0de1ebd9f572d09acd",
       "file_size_bytes": 435224,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_04",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "5b244969023022916cf40af3459ff06a41781ac8764f00e54a30b7a1d76332f5",
+      "canonical_materialized_sha256": "178f58d22af771dfaa6dec0a4772d6a69e74fcf9af42ac0de1ebd9f572d09acd",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 87,
+        "num_events": 1651,
+        "num_notes": 1382,
+        "num_rests": 269,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 87,
+        "canonical_score_events": 1651
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_05",
@@ -306,14 +561,35 @@
       "source_sha256": "b84d470ca8024efab266a6932e853a8b96dd37f290ef1dc6ddb8e42b14215e26",
       "file_size_bytes": 524533,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_05",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "cca288b81527aab40c6456963daf33dba4632de54ffab1c3f0237659b23bc4e4",
+      "canonical_materialized_sha256": "b84d470ca8024efab266a6932e853a8b96dd37f290ef1dc6ddb8e42b14215e26",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 88,
+        "num_events": 1379,
+        "num_notes": 1099,
+        "num_rests": 280,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 88,
+        "canonical_score_events": 1379
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_06",
@@ -328,14 +604,35 @@
       "source_sha256": "d76acbf37b7791a0b40045c4bb64c28482de0e8d22802dd4ee3884b4ed3e3329",
       "file_size_bytes": 644964,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_06",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "bbbe625822c1b67fa7efe7dfb5e5de6fad6c57b38aaf3f8e45f9cdcd409353f3",
+      "canonical_materialized_sha256": "d76acbf37b7791a0b40045c4bb64c28482de0e8d22802dd4ee3884b4ed3e3329",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 99,
+        "num_events": 1900,
+        "num_notes": 1597,
+        "num_rests": 303,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 99,
+        "canonical_score_events": 1900
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_07",
@@ -350,14 +647,35 @@
       "source_sha256": "280f38868a67294960b19157fc85f1055f38da0ce842e1e88aafd83a269c0d0d",
       "file_size_bytes": 408818,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_07",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "b63455c45d40c179afe79877f1727ea27d18c9827872d1193e26a21fb11cc276",
+      "canonical_materialized_sha256": "280f38868a67294960b19157fc85f1055f38da0ce842e1e88aafd83a269c0d0d",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 56,
+        "num_events": 1227,
+        "num_notes": 1118,
+        "num_rests": 109,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 56,
+        "canonical_score_events": 1227
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_08",
@@ -372,14 +690,35 @@
       "source_sha256": "2804c7e9c00b0d6ee035df2a68221c7e7d7a8c8769096b7c2fa880b5e6b078fc",
       "file_size_bytes": 893316,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_08",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "9f399ff7c2b8aa73960ceb80bb37d502268c95bc9dcd8c0533555d6d4b5eae20",
+      "canonical_materialized_sha256": "2804c7e9c00b0d6ee035df2a68221c7e7d7a8c8769096b7c2fa880b5e6b078fc",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 199,
+        "num_events": 2915,
+        "num_notes": 2523,
+        "num_rests": 392,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 199,
+        "canonical_score_events": 2915
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_09",
@@ -394,14 +733,35 @@
       "source_sha256": "6fbcbb75e187e5b5d12010ad0aceb835e87cf1e1736003b77733ecedfbbb02eb",
       "file_size_bytes": 672529,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_09",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "588021c4ed36d3a9c73423d6e323ca2025e00bbeefc91c3309cb6a34b1973915",
+      "canonical_materialized_sha256": "6fbcbb75e187e5b5d12010ad0aceb835e87cf1e1736003b77733ecedfbbb02eb",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 90,
+        "num_events": 2526,
+        "num_notes": 2348,
+        "num_rests": 178,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 90,
+        "canonical_score_events": 2526
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_10",
@@ -416,14 +776,35 @@
       "source_sha256": "c7a07a18f45dd839a78249279f7112da660424496b39cc181ed8699743ae75cf",
       "file_size_bytes": 436557,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_10",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "8a2d4ec089348a5147c1248109a618dd4aec3b8a3f7d2ca752f1cfe4664336f1",
+      "canonical_materialized_sha256": "c7a07a18f45dd839a78249279f7112da660424496b39cc181ed8699743ae75cf",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 56,
+        "num_events": 1008,
+        "num_notes": 919,
+        "num_rests": 89,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 56,
+        "canonical_score_events": 1008
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_11",
@@ -438,14 +819,35 @@
       "source_sha256": "cc945a0322fdb125b9bb22b2a490c3203da62f96b7e45bbbc4747642177ff377",
       "file_size_bytes": 699740,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_11",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "3e31ddf1d298c57e490b11b8c6ddad4e3ec0c60ca48a46101dc0753bde618fee",
+      "canonical_materialized_sha256": "cc945a0322fdb125b9bb22b2a490c3203da62f96b7e45bbbc4747642177ff377",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 83,
+        "num_events": 2163,
+        "num_notes": 1863,
+        "num_rests": 300,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 83,
+        "canonical_score_events": 2163
+      }
     },
     {
       "work_id": "tchaikovsky_op37a_12",
@@ -460,14 +862,35 @@
       "source_sha256": "911337929dc90d7b3953daf4d9b297cf06a7dc6bbcb34ab61ba9cac933e81ad4",
       "file_size_bytes": 567656,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "tchaikovsky_op37a_12",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "30363dcb55f22a13d2b3708e6654ffcc52d6a67abd6d14c23e51b34b987cf01b",
+      "canonical_materialized_sha256": "911337929dc90d7b3953daf4d9b297cf06a7dc6bbcb34ab61ba9cac933e81ad4",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 176,
+        "num_events": 1854,
+        "num_notes": 1651,
+        "num_rests": 203,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 176,
+        "canonical_score_events": 1854
+      }
     },
     {
       "work_id": "rachmaninoff_op42_01a",
@@ -482,14 +905,35 @@
       "source_sha256": "e6b6eb30557a6d700baec77e8f2fe437b74a39964fd2ce88781aeb5146aeeed7",
       "file_size_bytes": 56427,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_01a",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "aa2150267feabd0b45b84fa9556b07f5247c4133456030fe41d7b12317c3f3e5",
+      "canonical_materialized_sha256": "e6b6eb30557a6d700baec77e8f2fe437b74a39964fd2ce88781aeb5146aeeed7",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 125,
+        "num_notes": 125,
+        "num_rests": 0,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 125
+      }
     },
     {
       "work_id": "rachmaninoff_op42_01b",
@@ -504,14 +948,36 @@
       "source_sha256": "053cc83e7009e3135de7d03d848e9acdf8ccf9321066159a0ef10e2f8c9a7c38",
       "file_size_bytes": 120896,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_01b",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "36954a26d0567c56b470a3096a9e33591619e2d5606d99c52fe06579b6d054b6",
+      "canonical_materialized_sha256": "053cc83e7009e3135de7d03d848e9acdf8ccf9321066159a0ef10e2f8c9a7c38",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 353,
+        "num_notes": 261,
+        "num_rests": 92,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 353
+      }
     },
     {
       "work_id": "rachmaninoff_op42_02",
@@ -526,14 +992,35 @@
       "source_sha256": "5970a43d7499e30f1d93fcbc98e1bff158e278b9142ccccafd51e41a09475964",
       "file_size_bytes": 231295,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_02",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "614ac734980423d9ae82e24081df722d9e80ab93c24d48518b123acd67df6d17",
+      "canonical_materialized_sha256": "5970a43d7499e30f1d93fcbc98e1bff158e278b9142ccccafd51e41a09475964",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 527,
+        "num_notes": 440,
+        "num_rests": 87,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 527
+      }
     },
     {
       "work_id": "rachmaninoff_op42_03",
@@ -548,14 +1035,36 @@
       "source_sha256": "4fe5633d78738b2e1b3f1a6b320c7fb073dc77cb08fb57eccf49f347f674d478",
       "file_size_bytes": 124254,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_03",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "375e838e0c2e737794ee2b8f296bee1dfdf235bbf05032df5c4f7f3a95103854",
+      "canonical_materialized_sha256": "4fe5633d78738b2e1b3f1a6b320c7fb073dc77cb08fb57eccf49f347f674d478",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 380,
+        "num_notes": 337,
+        "num_rests": 43,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 380
+      }
     },
     {
       "work_id": "rachmaninoff_op42_04",
@@ -570,14 +1079,36 @@
       "source_sha256": "dfbd32724b70d27efd01d8974ff0661d2e8f0a413e834d4140c9cba12879827f",
       "file_size_bytes": 124826,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_04",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "182d230dc162e987218f47cfd616970095d747002a237ff9271c8131d1d5fad5",
+      "canonical_materialized_sha256": "dfbd32724b70d27efd01d8974ff0661d2e8f0a413e834d4140c9cba12879827f",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 355,
+        "num_notes": 310,
+        "num_rests": 45,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 355
+      }
     },
     {
       "work_id": "rachmaninoff_op42_05",
@@ -592,14 +1123,35 @@
       "source_sha256": "e232caf1ed9a6960827da5f5783a8b9846513a1d7a589e3edbe7b5c1a33a3f4b",
       "file_size_bytes": 123973,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_05",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "9461231e813ead17399000ae645cc9eb256d2eff92364db29b28495bba2917c1",
+      "canonical_materialized_sha256": "e232caf1ed9a6960827da5f5783a8b9846513a1d7a589e3edbe7b5c1a33a3f4b",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 333,
+        "num_notes": 300,
+        "num_rests": 33,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 333
+      }
     },
     {
       "work_id": "rachmaninoff_op42_06",
@@ -614,14 +1166,34 @@
       "source_sha256": "ddaf609693c0b22f447e0a9044f0d78ee5c369186808ab4a8e990909f63d0c71",
       "file_size_bytes": 134111,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_06",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "5411dadb2bce7ce07472d7410195e33b031ac0aaad957e41895d5eca121214b3",
+      "canonical_materialized_sha256": "ddaf609693c0b22f447e0a9044f0d78ee5c369186808ab4a8e990909f63d0c71",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 457,
+        "num_notes": 419,
+        "num_rests": 38,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 457
+      }
     },
     {
       "work_id": "rachmaninoff_op42_07",
@@ -636,14 +1208,36 @@
       "source_sha256": "f4a64d6e993cb3726970d2c13bbf137cc1ba9ed007e9ff0070466dc4786e5621",
       "file_size_bytes": 140425,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_07",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "da4a581f90a1aa1dc6bd7a7e35da1ffbc22e7159c3cd3f584158ad38cd5c56b7",
+      "canonical_materialized_sha256": "f4a64d6e993cb3726970d2c13bbf137cc1ba9ed007e9ff0070466dc4786e5621",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 18,
+        "num_events": 486,
+        "num_notes": 448,
+        "num_rests": 38,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 18,
+        "canonical_score_events": 486
+      }
     },
     {
       "work_id": "rachmaninoff_op42_08",
@@ -658,14 +1252,35 @@
       "source_sha256": "2279c566107aaa1403d60d01d8189c6c63d69e3b2a43164adcad4312f6ae9bc9",
       "file_size_bytes": 151648,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_08",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "da45da812b36da649a8246c371de393810fe58c30659d20cafb902b1ceca34f8",
+      "canonical_materialized_sha256": "2279c566107aaa1403d60d01d8189c6c63d69e3b2a43164adcad4312f6ae9bc9",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 15,
+        "num_events": 334,
+        "num_notes": 312,
+        "num_rests": 22,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 15,
+        "canonical_score_events": 334
+      }
     },
     {
       "work_id": "rachmaninoff_op42_09",
@@ -680,14 +1295,35 @@
       "source_sha256": "1e42fb9551b9e3b7da758689a801c6b2ae8a27a5734f2eb78493f1a9ed7e4da6",
       "file_size_bytes": 152076,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_09",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "923b7d36980405886518ca880a49d7ddc46ee090bf0884f882975d66db91a947",
+      "canonical_materialized_sha256": "1e42fb9551b9e3b7da758689a801c6b2ae8a27a5734f2eb78493f1a9ed7e4da6",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 19,
+        "num_events": 449,
+        "num_notes": 407,
+        "num_rests": 42,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 19,
+        "canonical_score_events": 449
+      }
     },
     {
       "work_id": "rachmaninoff_op42_10",
@@ -702,14 +1338,34 @@
       "source_sha256": "a4d66881f44485ed9fa4a942eff5c3efb0e10db69bb56e027cd162ed88032f5c",
       "file_size_bytes": 197890,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_10",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "5e7e5e9820873b5a689993934a20a62dd6dc0466668455c4ca21e7a855058441",
+      "canonical_materialized_sha256": "a4d66881f44485ed9fa4a942eff5c3efb0e10db69bb56e027cd162ed88032f5c",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 25,
+        "num_events": 713,
+        "num_notes": 635,
+        "num_rests": 78,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1
+        ],
+        "canonical_score_measures": 25,
+        "canonical_score_events": 713
+      }
     },
     {
       "work_id": "rachmaninoff_op42_11",
@@ -724,14 +1380,35 @@
       "source_sha256": "d7281cc7304fc85b702d4ed52a8d54dcd3f11f97286971aa8ea7541fc1563559",
       "file_size_bytes": 135165,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_11",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "958ad97ea1590ce15e47d024247d94570acff8f7e2e48a345a13edd4b5820020",
+      "canonical_materialized_sha256": "d7281cc7304fc85b702d4ed52a8d54dcd3f11f97286971aa8ea7541fc1563559",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 470,
+        "num_notes": 407,
+        "num_rests": 63,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 470
+      }
     },
     {
       "work_id": "rachmaninoff_op42_12",
@@ -746,14 +1423,35 @@
       "source_sha256": "1e4805b8f946e4fe64ddcc63569b5e3b2fe0c50b4d66f3b91a5a113276f4c860",
       "file_size_bytes": 110549,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_12",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "6faaf8610b88b72f3a8021167db2056f2ebed98feebdda939ba12e3530a3dc93",
+      "canonical_materialized_sha256": "1e4805b8f946e4fe64ddcc63569b5e3b2fe0c50b4d66f3b91a5a113276f4c860",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 23,
+        "num_events": 422,
+        "num_notes": 340,
+        "num_rests": 82,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 23,
+        "canonical_score_events": 422
+      }
     },
     {
       "work_id": "rachmaninoff_op42_13a",
@@ -768,14 +1466,35 @@
       "source_sha256": "694e91c8dec8c23d509b8dd7dfb212b825565af4f4c13320f68be8ea150a8617",
       "file_size_bytes": 162676,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_13a",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "228a24ab176bd2795397e047fc12e697d41314cde5c6b4618a1239bfba328a3a",
+      "canonical_materialized_sha256": "694e91c8dec8c23d509b8dd7dfb212b825565af4f4c13320f68be8ea150a8617",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 17,
+        "num_events": 547,
+        "num_notes": 452,
+        "num_rests": 95,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 17,
+        "canonical_score_events": 547
+      }
     },
     {
       "work_id": "rachmaninoff_op42_13b",
@@ -790,14 +1509,36 @@
       "source_sha256": "befdf859235b996b8b631fdd344063f9280f4c91599032656f83184c2e0559aa",
       "file_size_bytes": 174455,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_13b",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "cd41577a61f8effbd41e5b033ff80f2abbc134b0437bb6a659dbca4acc81e32f",
+      "canonical_materialized_sha256": "befdf859235b996b8b631fdd344063f9280f4c91599032656f83184c2e0559aa",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 14,
+        "num_events": 491,
+        "num_notes": 447,
+        "num_rests": 44,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 14,
+        "canonical_score_events": 491
+      }
     },
     {
       "work_id": "rachmaninoff_op42_14",
@@ -812,14 +1553,36 @@
       "source_sha256": "6896bb7ba19d181ad77ea50e4c285397a834557515e46665f67043268c3f367b",
       "file_size_bytes": 77738,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_14",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "3f9b61c8245dfef62150101709a23de85761e23a94af0f5f563b90af9d9f4c5b",
+      "canonical_materialized_sha256": "6896bb7ba19d181ad77ea50e4c285397a834557515e46665f67043268c3f367b",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 186,
+        "num_notes": 175,
+        "num_rests": 11,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 186
+      }
     },
     {
       "work_id": "rachmaninoff_op42_15",
@@ -834,14 +1597,35 @@
       "source_sha256": "9dc334f4d1109f1e13943f74a066da77dec1338a282dadf961a45fddf975aee4",
       "file_size_bytes": 210545,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_15",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "6309b12706c231c5817972be6d0087ef3d95fa56351e82aee8e81fddc8da2f09",
+      "canonical_materialized_sha256": "9dc334f4d1109f1e13943f74a066da77dec1338a282dadf961a45fddf975aee4",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 26,
+        "num_events": 544,
+        "num_notes": 505,
+        "num_rests": 39,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 26,
+        "canonical_score_events": 544
+      }
     },
     {
       "work_id": "rachmaninoff_op42_16",
@@ -856,14 +1640,36 @@
       "source_sha256": "b86c65bc575dba78f943de3f812bf4b86eb480aa49cee0a05d21be15ff72703e",
       "file_size_bytes": 187756,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_16",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "d9a83d6b24d11fc08007ccffce9bdd4061428e49e87efa9a171384f83d64e9af",
+      "canonical_materialized_sha256": "b86c65bc575dba78f943de3f812bf4b86eb480aa49cee0a05d21be15ff72703e",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 570,
+        "num_notes": 469,
+        "num_rests": 101,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 570
+      }
     },
     {
       "work_id": "rachmaninoff_op42_17",
@@ -878,14 +1684,35 @@
       "source_sha256": "21559365aa55d123aa0168382b07af4a61983823b4bcb7feedf988fc54b462b4",
       "file_size_bytes": 186824,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_17",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "fa10ed013041aa19bcbe0eff685cb9bb523dca94df7725cdfe17f7e66dcdb53a",
+      "canonical_materialized_sha256": "21559365aa55d123aa0168382b07af4a61983823b4bcb7feedf988fc54b462b4",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 23,
+        "num_events": 514,
+        "num_notes": 497,
+        "num_rests": 17,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 23,
+        "canonical_score_events": 514
+      }
     },
     {
       "work_id": "rachmaninoff_op42_18",
@@ -900,14 +1727,35 @@
       "source_sha256": "f1d5547f844c032873af0b7b16c84558152ccb23f26554aae08f047a01b1e8ec",
       "file_size_bytes": 203821,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_18",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "feca955bf02b57099a5dfeee2ceafccdd09983a4ceae0438f4cf4a222b58c4e7",
+      "canonical_materialized_sha256": "f1d5547f844c032873af0b7b16c84558152ccb23f26554aae08f047a01b1e8ec",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 16,
+        "num_events": 881,
+        "num_notes": 791,
+        "num_rests": 90,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 16,
+        "canonical_score_events": 881
+      }
     },
     {
       "work_id": "rachmaninoff_op42_19",
@@ -922,14 +1770,37 @@
       "source_sha256": "6381583ed31e25dfa46de8e2ebca396f6c088611c388618368fcd5fc9168499c",
       "file_size_bytes": 312097,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_19",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "93c4ab35ba3ab34166e1f83d9b8ede471fc1041a9c87a655c88c450114542312",
+      "canonical_materialized_sha256": "6381583ed31e25dfa46de8e2ebca396f6c088611c388618368fcd5fc9168499c",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 17,
+        "num_events": 1031,
+        "num_notes": 927,
+        "num_rests": 104,
+        "staves": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 17,
+        "canonical_score_events": 1031
+      }
     },
     {
       "work_id": "rachmaninoff_op42_20",
@@ -944,14 +1815,36 @@
       "source_sha256": "7cf8b90c64c1475fa7134dcdcbda80280293431c6fa4f34aa2435f577a9c6412",
       "file_size_bytes": 390449,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN_US_CLEAR_JURISDICTION_DEPENDENT",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, composition published 1931",
       "duplicate_group_id": "rachmaninoff_op42_20",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "c30ca799ee6267672c8e55e1a04dfb7ad56a8f37af6f72ad74d11178780cc514",
+      "canonical_materialized_sha256": "7cf8b90c64c1475fa7134dcdcbda80280293431c6fa4f34aa2435f577a9c6412",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 44,
+        "num_events": 1145,
+        "num_notes": 1083,
+        "num_rests": 62,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 44,
+        "canonical_score_events": 1145
+      }
     },
     {
       "work_id": "medtner_op08n01",
@@ -966,14 +1859,36 @@
       "source_sha256": "d9231efa8e23447c96484304674c42cce874692e6ca2441124c891df3ae868a6",
       "file_size_bytes": 619865,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op08n01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "94294ccfbc414ef3d675d1556fc63dc8826a0a4c91f82a958d32c9f316a15406",
+      "canonical_materialized_sha256": "d9231efa8e23447c96484304674c42cce874692e6ca2441124c891df3ae868a6",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 81,
+        "num_events": 1697,
+        "num_notes": 1587,
+        "num_rests": 110,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 81,
+        "canonical_score_events": 1697
+      }
     },
     {
       "work_id": "medtner_op14n01",
@@ -988,14 +1903,36 @@
       "source_sha256": "e9928944da1d981ef8757725c5ef2a851bff8ff7515c014787573972b4163725",
       "file_size_bytes": 509501,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op14n01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "c344d9ee5ab36766168af7a0381693c5c1bb3249d9bf9b5debdd706cc928bb2b",
+      "canonical_materialized_sha256": "e9928944da1d981ef8757725c5ef2a851bff8ff7515c014787573972b4163725",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 86,
+        "num_events": 1302,
+        "num_notes": 1266,
+        "num_rests": 36,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 86,
+        "canonical_score_events": 1302
+      }
     },
     {
       "work_id": "medtner_op26n01",
@@ -1010,14 +1947,36 @@
       "source_sha256": "2ef6583635c85926c40f9742c91e22049140532befaca2f00dec5b71ae75e824",
       "file_size_bytes": 527684,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op26n01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "5c1514755ae4f5be1d0babc1dd8c0abd04ccae8571f067c25fcf03fbc74306f3",
+      "canonical_materialized_sha256": "2ef6583635c85926c40f9742c91e22049140532befaca2f00dec5b71ae75e824",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 48,
+        "num_events": 1104,
+        "num_notes": 1052,
+        "num_rests": 52,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 48,
+        "canonical_score_events": 1104
+      }
     },
     {
       "work_id": "medtner_op26n02",
@@ -1032,14 +1991,35 @@
       "source_sha256": "e8afc54ab0e532b4be2a79dc24a230e829c8caae8be85d1f8210fbd494497796",
       "file_size_bytes": 593348,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op26n02",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "5b5a90155ac4b1cb0b9e475bd741dc69c8bb9aec8a49fe4a11b2ab6ee944cf1c",
+      "canonical_materialized_sha256": "e8afc54ab0e532b4be2a79dc24a230e829c8caae8be85d1f8210fbd494497796",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 65,
+        "num_events": 1262,
+        "num_notes": 1190,
+        "num_rests": 72,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 65,
+        "canonical_score_events": 1262
+      }
     },
     {
       "work_id": "medtner_op26n03",
@@ -1054,14 +2034,35 @@
       "source_sha256": "9fd6fd8485002e1cd049e73f2116b0c1bf233286b3e94f8aa5f240bcf1f95cc4",
       "file_size_bytes": 345599,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op26n03",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "427e54b4152fda709fb6fa64dce5e35d1e2bdd81a16ee91d5d5c6336516deefb",
+      "canonical_materialized_sha256": "9fd6fd8485002e1cd049e73f2116b0c1bf233286b3e94f8aa5f240bcf1f95cc4",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 81,
+        "num_events": 920,
+        "num_notes": 826,
+        "num_rests": 94,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 81,
+        "canonical_score_events": 920
+      }
     },
     {
       "work_id": "medtner_op26n04",
@@ -1076,14 +2077,36 @@
       "source_sha256": "7effccf1a34d30ec17c77dbf94f09a7c1c3fc64446b19be787c6342daadf47c1",
       "file_size_bytes": 786162,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op26n04",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "e002140678c0e25dc2ebd63f70f60d9b9253f0ea6c391e7a0cfb65ef45dba3fe",
+      "canonical_materialized_sha256": "7effccf1a34d30ec17c77dbf94f09a7c1c3fc64446b19be787c6342daadf47c1",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 78,
+        "num_events": 2159,
+        "num_notes": 1917,
+        "num_rests": 242,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 78,
+        "canonical_score_events": 2159
+      }
     },
     {
       "work_id": "medtner_op34n01",
@@ -1098,14 +2121,36 @@
       "source_sha256": "9df3b8efe49d75247b400bf1c442efca39d681d3bd147a5361f82954e01a7285",
       "file_size_bytes": 1557578,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op34n01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "069937deee9fcc275095eaab7880004bff891d763f0ba3b4932515f0d8273a84",
+      "canonical_materialized_sha256": "9df3b8efe49d75247b400bf1c442efca39d681d3bd147a5361f82954e01a7285",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 237,
+        "num_events": 3826,
+        "num_notes": 3558,
+        "num_rests": 268,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 237,
+        "canonical_score_events": 3826
+      }
     },
     {
       "work_id": "medtner_op34n02",
@@ -1120,14 +2165,35 @@
       "source_sha256": "1b1f601c59f21f4c49e5c3ea8f269ace2d9f0319842c67a89a9e44ba56c57219",
       "file_size_bytes": 668808,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op34n02",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "8dd006025448fa2fb207d4453ad16b97770422d30f59c7ec8146b3ebf2167942",
+      "canonical_materialized_sha256": "1b1f601c59f21f4c49e5c3ea8f269ace2d9f0319842c67a89a9e44ba56c57219",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 48,
+        "num_events": 1826,
+        "num_notes": 1761,
+        "num_rests": 65,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2
+        ],
+        "canonical_score_measures": 48,
+        "canonical_score_events": 1826
+      }
     },
     {
       "work_id": "medtner_op34n03",
@@ -1142,14 +2208,38 @@
       "source_sha256": "ed566a83929c651aa8f53e639572a725a9ac239701342b380ca3e3f6ddf34bd4",
       "file_size_bytes": 1069794,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op34n03",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "91d8785bc6eb9da943dd4be22e70ed0805ec1cc3f485e4912868da5f2e013c33",
+      "canonical_materialized_sha256": "ed566a83929c651aa8f53e639572a725a9ac239701342b380ca3e3f6ddf34bd4",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 144,
+        "num_events": 2478,
+        "num_notes": 2124,
+        "num_rests": 354,
+        "staves": [
+          1,
+          2,
+          3
+        ],
+        "voices": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "canonical_score_measures": 144,
+        "canonical_score_events": 2478
+      }
     },
     {
       "work_id": "medtner_op34n04",
@@ -1164,14 +2254,37 @@
       "source_sha256": "3b03c180bd951e3ac642d557045677f00046b2d722da1857de3d73191cebb22d",
       "file_size_bytes": 1003200,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op34n04",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "45b9f5c44c93a2dd0cb7061559e49382487d27ea3059816c536a8e39c7ab46e7",
+      "canonical_materialized_sha256": "3b03c180bd951e3ac642d557045677f00046b2d722da1857de3d73191cebb22d",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 61,
+        "num_events": 2960,
+        "num_notes": 2677,
+        "num_rests": 283,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "canonical_score_measures": 61,
+        "canonical_score_events": 2960
+      }
     },
     {
       "work_id": "medtner_op35n01",
@@ -1186,14 +2299,36 @@
       "source_sha256": "66dc608435738c33bf0329d7c9d198b9be5f52c756f80566b7ce73fd16329a6b",
       "file_size_bytes": 570402,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op35n01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "2f4b3a8816b245f91eaafc6e52b292c23366b495c1d55c24b1ba47c095a751f2",
+      "canonical_materialized_sha256": "66dc608435738c33bf0329d7c9d198b9be5f52c756f80566b7ce73fd16329a6b",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 76,
+        "num_events": 1621,
+        "num_notes": 1538,
+        "num_rests": 83,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 76,
+        "canonical_score_events": 1621
+      }
     },
     {
       "work_id": "medtner_op35n02",
@@ -1208,14 +2343,36 @@
       "source_sha256": "2bae037429ab8ffb4ef51f26f430f9b4c081ef4fe847982cb204cf2e5f1d85ed",
       "file_size_bytes": 983407,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op35n02",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "4d7e3244e18ab359488b41b381758041afacb716b5cd85496de53d943f8f5981",
+      "canonical_materialized_sha256": "2bae037429ab8ffb4ef51f26f430f9b4c081ef4fe847982cb204cf2e5f1d85ed",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 141,
+        "num_events": 2362,
+        "num_notes": 2255,
+        "num_rests": 107,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 141,
+        "canonical_score_events": 2362
+      }
     },
     {
       "work_id": "medtner_op35n03",
@@ -1230,14 +2387,36 @@
       "source_sha256": "ee4fbdcc186cf7e3d72a0f78aec03998976a8491ae52896e05aa72012452b8ec",
       "file_size_bytes": 802919,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op35n03",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "6f8365b4691e66a710d3e6602be976c77d1d5204dc8e3298044d83e1de8a3453",
+      "canonical_materialized_sha256": "ee4fbdcc186cf7e3d72a0f78aec03998976a8491ae52896e05aa72012452b8ec",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 80,
+        "num_events": 1853,
+        "num_notes": 1685,
+        "num_rests": 168,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 80,
+        "canonical_score_events": 1853
+      }
     },
     {
       "work_id": "medtner_op35n04",
@@ -1252,14 +2431,37 @@
       "source_sha256": "0edb81c14319aaaf06456e4befddec28b9d64eea227a3b086f918b2a5c49942e",
       "file_size_bytes": 1445918,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op35n04",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "f9bcab191d3199e4a9b69cf583079f9a73bffcbe3f1599b3041c06c94c64e65a",
+      "canonical_materialized_sha256": "0edb81c14319aaaf06456e4befddec28b9d64eea227a3b086f918b2a5c49942e",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 122,
+        "num_events": 3669,
+        "num_notes": 3359,
+        "num_rests": 310,
+        "staves": [
+          1,
+          2,
+          3
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 122,
+        "canonical_score_events": 3669
+      }
     },
     {
       "work_id": "medtner_op42n01",
@@ -1274,14 +2476,36 @@
       "source_sha256": "cee888c79083ef175970523fb3249d88ad55cdb4107107de827b781c45a0e3ef",
       "file_size_bytes": 1167174,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op42n01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "d12a5ee1b67026eddf0d3e207531f3ff2eec5a64bbe217ed3d54c918e73fc7d6",
+      "canonical_materialized_sha256": "cee888c79083ef175970523fb3249d88ad55cdb4107107de827b781c45a0e3ef",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 135,
+        "num_events": 3241,
+        "num_notes": 3064,
+        "num_rests": 177,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 135,
+        "canonical_score_events": 3241
+      }
     },
     {
       "work_id": "medtner_op42n02",
@@ -1296,14 +2520,36 @@
       "source_sha256": "deef25bd88c879a417edd473d35e2d598f2735c387de41e1807a83c14b14b436",
       "file_size_bytes": 436852,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op42n02",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "4313216b8a272afcf264d3bf654bfa862ee2ff82ecc9cb721ed817bd8f0e4173",
+      "canonical_materialized_sha256": "deef25bd88c879a417edd473d35e2d598f2735c387de41e1807a83c14b14b436",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 67,
+        "num_events": 1142,
+        "num_notes": 1091,
+        "num_rests": 51,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 67,
+        "canonical_score_events": 1142
+      }
     },
     {
       "work_id": "medtner_op42n03",
@@ -1318,14 +2564,36 @@
       "source_sha256": "1588b75f8b48b80413f0372c9933e281b3a6c4de2f27ea4d0ad3861a86256180",
       "file_size_bytes": 1280068,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op42n03",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "0d700bf447a9e2fd0e4922114d34367d000c65d68bb5069ce9928a85cb8fdf50",
+      "canonical_materialized_sha256": "1588b75f8b48b80413f0372c9933e281b3a6c4de2f27ea4d0ad3861a86256180",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 183,
+        "num_events": 3272,
+        "num_notes": 3059,
+        "num_rests": 213,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 183,
+        "canonical_score_events": 3272
+      }
     },
     {
       "work_id": "medtner_op48n01",
@@ -1340,14 +2608,36 @@
       "source_sha256": "3386995a613dc748b7a34993c49eba17416aa7bf0fa039257d2b7794d50609d8",
       "file_size_bytes": 2475333,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op48n01",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "68c45b17c3d1b17eebcfbd0f0d29a7dfee11d4710912514a4dee551e1938fc95",
+      "canonical_materialized_sha256": "3386995a613dc748b7a34993c49eba17416aa7bf0fa039257d2b7794d50609d8",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 554,
+        "num_events": 7386,
+        "num_notes": 6944,
+        "num_rests": 442,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3
+        ],
+        "canonical_score_measures": 554,
+        "canonical_score_events": 7386
+      }
     },
     {
       "work_id": "medtner_op48n02",
@@ -1362,14 +2652,37 @@
       "source_sha256": "65ce5edbef7c60ae043b775ea9d78cda387e344f5eeacabb9437c6386d3f2cc5",
       "file_size_bytes": 949319,
       "raw_format": "MuseScore (MS3)",
-      "parser": "ms3/xml",
-      "parser_status": "PARSER_PASS",
       "is_solo_piano": true,
       "rights_access_status": "PUBLIC_DOMAIN",
       "license_notes": "CC-BY-NC-SA-4.0 DCML repo, underlying composition PD",
       "duplicate_group_id": "medtner_op48n02",
       "canonical_representative": true,
-      "inventory_status": "VERIFIED_USABLE"
+      "inventory_status": "VERIFIED_USABLE",
+      "upstream_raw_sha256": "ffdb031b27f7d95d6c4581684e69e30d0bf7951be099ddfb38fae23830043583",
+      "canonical_materialized_sha256": "65ce5edbef7c60ae043b775ea9d78cda387e344f5eeacabb9437c6386d3f2cc5",
+      "canonicalization_policy": "LF_TO_CRLF",
+      "xml_well_formed_status": "XML_WELL_FORMED_VERIFIED",
+      "canonical_parser_name": "ms3",
+      "canonical_parser_version": "2.6.4",
+      "canonical_parser_status": "CANONICAL_PARSE_PASS",
+      "canonical_parser_metrics": {
+        "num_measures": 187,
+        "num_events": 2208,
+        "num_notes": 2006,
+        "num_rests": 202,
+        "staves": [
+          1,
+          2
+        ],
+        "voices": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "canonical_score_measures": 187,
+        "canonical_score_events": 2208
+      }
     }
   ],
   "inventory_metrics": {

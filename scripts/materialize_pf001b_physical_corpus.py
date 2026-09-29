@@ -118,20 +118,33 @@ def materialize_score(
     except Exception as e:
         return False, f"Network error fetching {download_url} for '{wid}': {e}"
 
-    # Verify if downloaded raw bytes match, or if CRLF line-ending normalization is required
-    # (Local acquisition environment checked out DCML files with Windows CRLF)
-    candidate_bytes = downloaded_bytes
-    if compute_sha256(candidate_bytes) != expected_sha:
-        # Try CRLF normalization
-        crlf_bytes = downloaded_bytes.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
-        if compute_sha256(crlf_bytes) == expected_sha:
-            candidate_bytes = crlf_bytes
-        else:
-            return False, (
-                f"SHA-256 mismatch for '{wid}' from {download_url}! "
-                f"Expected {expected_sha}, got {compute_sha256(downloaded_bytes)} (LF) "
-                f"or {compute_sha256(crlf_bytes)} (CRLF)."
-            )
+    # Verify upstream raw hash if declared
+    expected_upstream_sha = score_entry.get("upstream_raw_sha256")
+    actual_upstream_sha = compute_sha256(downloaded_bytes)
+    if expected_upstream_sha and actual_upstream_sha != expected_upstream_sha:
+        return False, (
+            f"Upstream raw SHA-256 mismatch for '{wid}' from {download_url}! "
+            f"Expected {expected_upstream_sha}, got {actual_upstream_sha}."
+        )
+
+    # Apply declared canonicalization policy
+    policy = score_entry.get("canonicalization_policy", "IDENTITY")
+    if policy == "IDENTITY":
+        candidate_bytes = downloaded_bytes
+    elif policy == "LF_TO_CRLF":
+        candidate_bytes = downloaded_bytes.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+    elif policy == "CRLF_TO_LF":
+        candidate_bytes = downloaded_bytes.replace(b"\r\n", b"\n")
+    else:
+        return False, f"Unknown canonicalization policy '{policy}' for score '{wid}'."
+
+    # Verify canonical materialized hash
+    actual_materialized_sha = compute_sha256(candidate_bytes)
+    if actual_materialized_sha != expected_sha:
+        return False, (
+            f"Canonical materialized SHA-256 mismatch for '{wid}' after policy {policy}! "
+            f"Expected {expected_sha}, got {actual_materialized_sha}."
+        )
 
     # Write target file
     target_path.parent.mkdir(parents=True, exist_ok=True)
@@ -144,6 +157,7 @@ def materialize_score(
             cache_file.write_bytes(candidate_bytes)
         except Exception:
             pass
+
 
     return True, f"Successfully materialized '{wid}' -> {rel_path_str}"
 

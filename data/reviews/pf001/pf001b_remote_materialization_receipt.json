@@ -1,0 +1,672 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "milestone": "PF-001B.2",
+  "receipt_title": "PF-001B Remote Materialization & Dual-Hash Provenance Receipt",
+  "status": "MATERIALIZATION_AND_PROVENANCE_VERIFIED",
+  "total_source_families": 4,
+  "total_scores_verified": 62,
+  "total_scores_failed": 0,
+  "source_families": [
+    {
+      "source_repository": "https://github.com/DCMLab/medtner_tales",
+      "immutable_revision": "1d2e58ba8d329463829e45e75900af43be4256bf",
+      "is_repository_tracked": false,
+      "canonicalization_policy": "LF_TO_CRLF",
+      "materialization_count": 19,
+      "failure_count": 0,
+      "artifacts": [
+        {
+          "work_id": "medtner_op08n01",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op08n01.mscx",
+          "upstream_raw_sha256": "94294ccfbc414ef3d675d1556fc63dc8826a0a4c91f82a958d32c9f316a15406",
+          "canonical_materialized_sha256": "d9231efa8e23447c96484304674c42cce874692e6ca2441124c891df3ae868a6",
+          "actual_disk_sha256": "d9231efa8e23447c96484304674c42cce874692e6ca2441124c891df3ae868a6",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 619865,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op14n01",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op14n01.mscx",
+          "upstream_raw_sha256": "c344d9ee5ab36766168af7a0381693c5c1bb3249d9bf9b5debdd706cc928bb2b",
+          "canonical_materialized_sha256": "e9928944da1d981ef8757725c5ef2a851bff8ff7515c014787573972b4163725",
+          "actual_disk_sha256": "e9928944da1d981ef8757725c5ef2a851bff8ff7515c014787573972b4163725",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 509501,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op26n01",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op26n01.mscx",
+          "upstream_raw_sha256": "5c1514755ae4f5be1d0babc1dd8c0abd04ccae8571f067c25fcf03fbc74306f3",
+          "canonical_materialized_sha256": "2ef6583635c85926c40f9742c91e22049140532befaca2f00dec5b71ae75e824",
+          "actual_disk_sha256": "2ef6583635c85926c40f9742c91e22049140532befaca2f00dec5b71ae75e824",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 527684,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op26n02",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op26n02.mscx",
+          "upstream_raw_sha256": "5b5a90155ac4b1cb0b9e475bd741dc69c8bb9aec8a49fe4a11b2ab6ee944cf1c",
+          "canonical_materialized_sha256": "e8afc54ab0e532b4be2a79dc24a230e829c8caae8be85d1f8210fbd494497796",
+          "actual_disk_sha256": "e8afc54ab0e532b4be2a79dc24a230e829c8caae8be85d1f8210fbd494497796",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 593348,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op26n03",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op26n03.mscx",
+          "upstream_raw_sha256": "427e54b4152fda709fb6fa64dce5e35d1e2bdd81a16ee91d5d5c6336516deefb",
+          "canonical_materialized_sha256": "9fd6fd8485002e1cd049e73f2116b0c1bf233286b3e94f8aa5f240bcf1f95cc4",
+          "actual_disk_sha256": "9fd6fd8485002e1cd049e73f2116b0c1bf233286b3e94f8aa5f240bcf1f95cc4",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 345599,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op26n04",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op26n04.mscx",
+          "upstream_raw_sha256": "e002140678c0e25dc2ebd63f70f60d9b9253f0ea6c391e7a0cfb65ef45dba3fe",
+          "canonical_materialized_sha256": "7effccf1a34d30ec17c77dbf94f09a7c1c3fc64446b19be787c6342daadf47c1",
+          "actual_disk_sha256": "7effccf1a34d30ec17c77dbf94f09a7c1c3fc64446b19be787c6342daadf47c1",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 786162,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op34n01",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op34n01.mscx",
+          "upstream_raw_sha256": "069937deee9fcc275095eaab7880004bff891d763f0ba3b4932515f0d8273a84",
+          "canonical_materialized_sha256": "9df3b8efe49d75247b400bf1c442efca39d681d3bd147a5361f82954e01a7285",
+          "actual_disk_sha256": "9df3b8efe49d75247b400bf1c442efca39d681d3bd147a5361f82954e01a7285",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 1557578,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op34n02",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op34n02.mscx",
+          "upstream_raw_sha256": "8dd006025448fa2fb207d4453ad16b97770422d30f59c7ec8146b3ebf2167942",
+          "canonical_materialized_sha256": "1b1f601c59f21f4c49e5c3ea8f269ace2d9f0319842c67a89a9e44ba56c57219",
+          "actual_disk_sha256": "1b1f601c59f21f4c49e5c3ea8f269ace2d9f0319842c67a89a9e44ba56c57219",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 668808,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op34n03",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op34n03.mscx",
+          "upstream_raw_sha256": "91d8785bc6eb9da943dd4be22e70ed0805ec1cc3f485e4912868da5f2e013c33",
+          "canonical_materialized_sha256": "ed566a83929c651aa8f53e639572a725a9ac239701342b380ca3e3f6ddf34bd4",
+          "actual_disk_sha256": "ed566a83929c651aa8f53e639572a725a9ac239701342b380ca3e3f6ddf34bd4",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 1069794,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op34n04",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op34n04.mscx",
+          "upstream_raw_sha256": "45b9f5c44c93a2dd0cb7061559e49382487d27ea3059816c536a8e39c7ab46e7",
+          "canonical_materialized_sha256": "3b03c180bd951e3ac642d557045677f00046b2d722da1857de3d73191cebb22d",
+          "actual_disk_sha256": "3b03c180bd951e3ac642d557045677f00046b2d722da1857de3d73191cebb22d",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 1003200,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op35n01",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op35n01.mscx",
+          "upstream_raw_sha256": "2f4b3a8816b245f91eaafc6e52b292c23366b495c1d55c24b1ba47c095a751f2",
+          "canonical_materialized_sha256": "66dc608435738c33bf0329d7c9d198b9be5f52c756f80566b7ce73fd16329a6b",
+          "actual_disk_sha256": "66dc608435738c33bf0329d7c9d198b9be5f52c756f80566b7ce73fd16329a6b",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 570402,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op35n02",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op35n02.mscx",
+          "upstream_raw_sha256": "4d7e3244e18ab359488b41b381758041afacb716b5cd85496de53d943f8f5981",
+          "canonical_materialized_sha256": "2bae037429ab8ffb4ef51f26f430f9b4c081ef4fe847982cb204cf2e5f1d85ed",
+          "actual_disk_sha256": "2bae037429ab8ffb4ef51f26f430f9b4c081ef4fe847982cb204cf2e5f1d85ed",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 983407,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op35n03",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op35n03.mscx",
+          "upstream_raw_sha256": "6f8365b4691e66a710d3e6602be976c77d1d5204dc8e3298044d83e1de8a3453",
+          "canonical_materialized_sha256": "ee4fbdcc186cf7e3d72a0f78aec03998976a8491ae52896e05aa72012452b8ec",
+          "actual_disk_sha256": "ee4fbdcc186cf7e3d72a0f78aec03998976a8491ae52896e05aa72012452b8ec",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 802919,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op35n04",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op35n04.mscx",
+          "upstream_raw_sha256": "f9bcab191d3199e4a9b69cf583079f9a73bffcbe3f1599b3041c06c94c64e65a",
+          "canonical_materialized_sha256": "0edb81c14319aaaf06456e4befddec28b9d64eea227a3b086f918b2a5c49942e",
+          "actual_disk_sha256": "0edb81c14319aaaf06456e4befddec28b9d64eea227a3b086f918b2a5c49942e",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 1445918,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op42n01",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op42n01.mscx",
+          "upstream_raw_sha256": "d12a5ee1b67026eddf0d3e207531f3ff2eec5a64bbe217ed3d54c918e73fc7d6",
+          "canonical_materialized_sha256": "cee888c79083ef175970523fb3249d88ad55cdb4107107de827b781c45a0e3ef",
+          "actual_disk_sha256": "cee888c79083ef175970523fb3249d88ad55cdb4107107de827b781c45a0e3ef",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 1167174,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op42n02",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op42n02.mscx",
+          "upstream_raw_sha256": "4313216b8a272afcf264d3bf654bfa862ee2ff82ecc9cb721ed817bd8f0e4173",
+          "canonical_materialized_sha256": "deef25bd88c879a417edd473d35e2d598f2735c387de41e1807a83c14b14b436",
+          "actual_disk_sha256": "deef25bd88c879a417edd473d35e2d598f2735c387de41e1807a83c14b14b436",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 436852,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op42n03",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op42n03.mscx",
+          "upstream_raw_sha256": "0d700bf447a9e2fd0e4922114d34367d000c65d68bb5069ce9928a85cb8fdf50",
+          "canonical_materialized_sha256": "1588b75f8b48b80413f0372c9933e281b3a6c4de2f27ea4d0ad3861a86256180",
+          "actual_disk_sha256": "1588b75f8b48b80413f0372c9933e281b3a6c4de2f27ea4d0ad3861a86256180",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 1280068,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op48n01",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op48n01.mscx",
+          "upstream_raw_sha256": "68c45b17c3d1b17eebcfbd0f0d29a7dfee11d4710912514a4dee551e1938fc95",
+          "canonical_materialized_sha256": "3386995a613dc748b7a34993c49eba17416aa7bf0fa039257d2b7794d50609d8",
+          "actual_disk_sha256": "3386995a613dc748b7a34993c49eba17416aa7bf0fa039257d2b7794d50609d8",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 2475333,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "medtner_op48n02",
+          "relative_path": "data/raw/dcml_medtner_tales/1d2e58ba8d329463829e45e75900af43be4256bf/repository/MS3/op48n02.mscx",
+          "upstream_raw_sha256": "ffdb031b27f7d95d6c4581684e69e30d0bf7951be099ddfb38fae23830043583",
+          "canonical_materialized_sha256": "65ce5edbef7c60ae043b775ea9d78cda387e344f5eeacabb9437c6386d3f2cc5",
+          "actual_disk_sha256": "65ce5edbef7c60ae043b775ea9d78cda387e344f5eeacabb9437c6386d3f2cc5",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 949319,
+          "status": "VERIFIED_MATCH"
+        }
+      ]
+    },
+    {
+      "source_repository": "https://github.com/DCMLab/rachmaninoff_piano",
+      "immutable_revision": "a73f3246a764215863000357c81309b210a43f15",
+      "is_repository_tracked": false,
+      "canonicalization_policy": "LF_TO_CRLF",
+      "materialization_count": 22,
+      "failure_count": 0,
+      "artifacts": [
+        {
+          "work_id": "rachmaninoff_op42_01a",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_01a.mscx",
+          "upstream_raw_sha256": "aa2150267feabd0b45b84fa9556b07f5247c4133456030fe41d7b12317c3f3e5",
+          "canonical_materialized_sha256": "e6b6eb30557a6d700baec77e8f2fe437b74a39964fd2ce88781aeb5146aeeed7",
+          "actual_disk_sha256": "e6b6eb30557a6d700baec77e8f2fe437b74a39964fd2ce88781aeb5146aeeed7",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 56427,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_01b",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_01b.mscx",
+          "upstream_raw_sha256": "36954a26d0567c56b470a3096a9e33591619e2d5606d99c52fe06579b6d054b6",
+          "canonical_materialized_sha256": "053cc83e7009e3135de7d03d848e9acdf8ccf9321066159a0ef10e2f8c9a7c38",
+          "actual_disk_sha256": "053cc83e7009e3135de7d03d848e9acdf8ccf9321066159a0ef10e2f8c9a7c38",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 120896,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_02",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_02.mscx",
+          "upstream_raw_sha256": "614ac734980423d9ae82e24081df722d9e80ab93c24d48518b123acd67df6d17",
+          "canonical_materialized_sha256": "5970a43d7499e30f1d93fcbc98e1bff158e278b9142ccccafd51e41a09475964",
+          "actual_disk_sha256": "5970a43d7499e30f1d93fcbc98e1bff158e278b9142ccccafd51e41a09475964",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 231295,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_03",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_03.mscx",
+          "upstream_raw_sha256": "375e838e0c2e737794ee2b8f296bee1dfdf235bbf05032df5c4f7f3a95103854",
+          "canonical_materialized_sha256": "4fe5633d78738b2e1b3f1a6b320c7fb073dc77cb08fb57eccf49f347f674d478",
+          "actual_disk_sha256": "4fe5633d78738b2e1b3f1a6b320c7fb073dc77cb08fb57eccf49f347f674d478",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 124254,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_04",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_04.mscx",
+          "upstream_raw_sha256": "182d230dc162e987218f47cfd616970095d747002a237ff9271c8131d1d5fad5",
+          "canonical_materialized_sha256": "dfbd32724b70d27efd01d8974ff0661d2e8f0a413e834d4140c9cba12879827f",
+          "actual_disk_sha256": "dfbd32724b70d27efd01d8974ff0661d2e8f0a413e834d4140c9cba12879827f",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 124826,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_05",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_05.mscx",
+          "upstream_raw_sha256": "9461231e813ead17399000ae645cc9eb256d2eff92364db29b28495bba2917c1",
+          "canonical_materialized_sha256": "e232caf1ed9a6960827da5f5783a8b9846513a1d7a589e3edbe7b5c1a33a3f4b",
+          "actual_disk_sha256": "e232caf1ed9a6960827da5f5783a8b9846513a1d7a589e3edbe7b5c1a33a3f4b",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 123973,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_06",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_06.mscx",
+          "upstream_raw_sha256": "5411dadb2bce7ce07472d7410195e33b031ac0aaad957e41895d5eca121214b3",
+          "canonical_materialized_sha256": "ddaf609693c0b22f447e0a9044f0d78ee5c369186808ab4a8e990909f63d0c71",
+          "actual_disk_sha256": "ddaf609693c0b22f447e0a9044f0d78ee5c369186808ab4a8e990909f63d0c71",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 134111,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_07",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_07.mscx",
+          "upstream_raw_sha256": "da4a581f90a1aa1dc6bd7a7e35da1ffbc22e7159c3cd3f584158ad38cd5c56b7",
+          "canonical_materialized_sha256": "f4a64d6e993cb3726970d2c13bbf137cc1ba9ed007e9ff0070466dc4786e5621",
+          "actual_disk_sha256": "f4a64d6e993cb3726970d2c13bbf137cc1ba9ed007e9ff0070466dc4786e5621",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 140425,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_08",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_08.mscx",
+          "upstream_raw_sha256": "da45da812b36da649a8246c371de393810fe58c30659d20cafb902b1ceca34f8",
+          "canonical_materialized_sha256": "2279c566107aaa1403d60d01d8189c6c63d69e3b2a43164adcad4312f6ae9bc9",
+          "actual_disk_sha256": "2279c566107aaa1403d60d01d8189c6c63d69e3b2a43164adcad4312f6ae9bc9",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 151648,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_09",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_09.mscx",
+          "upstream_raw_sha256": "923b7d36980405886518ca880a49d7ddc46ee090bf0884f882975d66db91a947",
+          "canonical_materialized_sha256": "1e42fb9551b9e3b7da758689a801c6b2ae8a27a5734f2eb78493f1a9ed7e4da6",
+          "actual_disk_sha256": "1e42fb9551b9e3b7da758689a801c6b2ae8a27a5734f2eb78493f1a9ed7e4da6",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 152076,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_10",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_10.mscx",
+          "upstream_raw_sha256": "5e7e5e9820873b5a689993934a20a62dd6dc0466668455c4ca21e7a855058441",
+          "canonical_materialized_sha256": "a4d66881f44485ed9fa4a942eff5c3efb0e10db69bb56e027cd162ed88032f5c",
+          "actual_disk_sha256": "a4d66881f44485ed9fa4a942eff5c3efb0e10db69bb56e027cd162ed88032f5c",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 197890,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_11",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_11.mscx",
+          "upstream_raw_sha256": "958ad97ea1590ce15e47d024247d94570acff8f7e2e48a345a13edd4b5820020",
+          "canonical_materialized_sha256": "d7281cc7304fc85b702d4ed52a8d54dcd3f11f97286971aa8ea7541fc1563559",
+          "actual_disk_sha256": "d7281cc7304fc85b702d4ed52a8d54dcd3f11f97286971aa8ea7541fc1563559",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 135165,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_12",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_12.mscx",
+          "upstream_raw_sha256": "6faaf8610b88b72f3a8021167db2056f2ebed98feebdda939ba12e3530a3dc93",
+          "canonical_materialized_sha256": "1e4805b8f946e4fe64ddcc63569b5e3b2fe0c50b4d66f3b91a5a113276f4c860",
+          "actual_disk_sha256": "1e4805b8f946e4fe64ddcc63569b5e3b2fe0c50b4d66f3b91a5a113276f4c860",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 110549,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_13a",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_13a.mscx",
+          "upstream_raw_sha256": "228a24ab176bd2795397e047fc12e697d41314cde5c6b4618a1239bfba328a3a",
+          "canonical_materialized_sha256": "694e91c8dec8c23d509b8dd7dfb212b825565af4f4c13320f68be8ea150a8617",
+          "actual_disk_sha256": "694e91c8dec8c23d509b8dd7dfb212b825565af4f4c13320f68be8ea150a8617",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 162676,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_13b",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_13b.mscx",
+          "upstream_raw_sha256": "cd41577a61f8effbd41e5b033ff80f2abbc134b0437bb6a659dbca4acc81e32f",
+          "canonical_materialized_sha256": "befdf859235b996b8b631fdd344063f9280f4c91599032656f83184c2e0559aa",
+          "actual_disk_sha256": "befdf859235b996b8b631fdd344063f9280f4c91599032656f83184c2e0559aa",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 174455,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_14",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_14.mscx",
+          "upstream_raw_sha256": "3f9b61c8245dfef62150101709a23de85761e23a94af0f5f563b90af9d9f4c5b",
+          "canonical_materialized_sha256": "6896bb7ba19d181ad77ea50e4c285397a834557515e46665f67043268c3f367b",
+          "actual_disk_sha256": "6896bb7ba19d181ad77ea50e4c285397a834557515e46665f67043268c3f367b",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 77738,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_15",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_15.mscx",
+          "upstream_raw_sha256": "6309b12706c231c5817972be6d0087ef3d95fa56351e82aee8e81fddc8da2f09",
+          "canonical_materialized_sha256": "9dc334f4d1109f1e13943f74a066da77dec1338a282dadf961a45fddf975aee4",
+          "actual_disk_sha256": "9dc334f4d1109f1e13943f74a066da77dec1338a282dadf961a45fddf975aee4",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 210545,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_16",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_16.mscx",
+          "upstream_raw_sha256": "d9a83d6b24d11fc08007ccffce9bdd4061428e49e87efa9a171384f83d64e9af",
+          "canonical_materialized_sha256": "b86c65bc575dba78f943de3f812bf4b86eb480aa49cee0a05d21be15ff72703e",
+          "actual_disk_sha256": "b86c65bc575dba78f943de3f812bf4b86eb480aa49cee0a05d21be15ff72703e",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 187756,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_17",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_17.mscx",
+          "upstream_raw_sha256": "fa10ed013041aa19bcbe0eff685cb9bb523dca94df7725cdfe17f7e66dcdb53a",
+          "canonical_materialized_sha256": "21559365aa55d123aa0168382b07af4a61983823b4bcb7feedf988fc54b462b4",
+          "actual_disk_sha256": "21559365aa55d123aa0168382b07af4a61983823b4bcb7feedf988fc54b462b4",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 186824,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_18",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_18.mscx",
+          "upstream_raw_sha256": "feca955bf02b57099a5dfeee2ceafccdd09983a4ceae0438f4cf4a222b58c4e7",
+          "canonical_materialized_sha256": "f1d5547f844c032873af0b7b16c84558152ccb23f26554aae08f047a01b1e8ec",
+          "actual_disk_sha256": "f1d5547f844c032873af0b7b16c84558152ccb23f26554aae08f047a01b1e8ec",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 203821,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_19",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_19.mscx",
+          "upstream_raw_sha256": "93c4ab35ba3ab34166e1f83d9b8ede471fc1041a9c87a655c88c450114542312",
+          "canonical_materialized_sha256": "6381583ed31e25dfa46de8e2ebca396f6c088611c388618368fcd5fc9168499c",
+          "actual_disk_sha256": "6381583ed31e25dfa46de8e2ebca396f6c088611c388618368fcd5fc9168499c",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 312097,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "rachmaninoff_op42_20",
+          "relative_path": "data/raw/dcml_rachmaninoff_op42/a73f3246a764215863000357c81309b210a43f15/repository/MS3/op42_20.mscx",
+          "upstream_raw_sha256": "c30ca799ee6267672c8e55e1a04dfb7ad56a8f37af6f72ad74d11178780cc514",
+          "canonical_materialized_sha256": "7cf8b90c64c1475fa7134dcdcbda80280293431c6fa4f34aa2435f577a9c6412",
+          "actual_disk_sha256": "7cf8b90c64c1475fa7134dcdcbda80280293431c6fa4f34aa2435f577a9c6412",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 390449,
+          "status": "VERIFIED_MATCH"
+        }
+      ]
+    },
+    {
+      "source_repository": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "immutable_revision": "5af15033c5f9c282f38fcf71234b86349e61e8c3",
+      "is_repository_tracked": false,
+      "canonicalization_policy": "LF_TO_CRLF",
+      "materialization_count": 12,
+      "failure_count": 0,
+      "artifacts": [
+        {
+          "work_id": "tchaikovsky_op37a_01",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a01.mscx",
+          "upstream_raw_sha256": "429def7bd3ea09615a6598e5406c152af6ed4c2cd6766deda049b9432b20a8a5",
+          "canonical_materialized_sha256": "faf79464f912792ba35851491d63b7f476b1032d3971a23ae4d348abb2df4736",
+          "actual_disk_sha256": "faf79464f912792ba35851491d63b7f476b1032d3971a23ae4d348abb2df4736",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 768406,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_02",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a02.mscx",
+          "upstream_raw_sha256": "f8e24b00e79916c88c354f87502eb15014bbda5bc685014dbc7ed388b66e5d70",
+          "canonical_materialized_sha256": "950993514ec903c0e255050dd9a14c76c136c3ad2aa53a2177a4d5eaa6ff1e0d",
+          "actual_disk_sha256": "950993514ec903c0e255050dd9a14c76c136c3ad2aa53a2177a4d5eaa6ff1e0d",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 871289,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_03",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a03.mscx",
+          "upstream_raw_sha256": "196203b8d53992d832655243e0a09edd5bf3416d146a5995e3b9cd75b6ad77b9",
+          "canonical_materialized_sha256": "2d263bb6c99bcc847caa1d192d5017900342d050742d696f3decd4a22a50abdc",
+          "actual_disk_sha256": "2d263bb6c99bcc847caa1d192d5017900342d050742d696f3decd4a22a50abdc",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 288654,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_04",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a04.mscx",
+          "upstream_raw_sha256": "5b244969023022916cf40af3459ff06a41781ac8764f00e54a30b7a1d76332f5",
+          "canonical_materialized_sha256": "178f58d22af771dfaa6dec0a4772d6a69e74fcf9af42ac0de1ebd9f572d09acd",
+          "actual_disk_sha256": "178f58d22af771dfaa6dec0a4772d6a69e74fcf9af42ac0de1ebd9f572d09acd",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 435224,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_05",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a05.mscx",
+          "upstream_raw_sha256": "cca288b81527aab40c6456963daf33dba4632de54ffab1c3f0237659b23bc4e4",
+          "canonical_materialized_sha256": "b84d470ca8024efab266a6932e853a8b96dd37f290ef1dc6ddb8e42b14215e26",
+          "actual_disk_sha256": "b84d470ca8024efab266a6932e853a8b96dd37f290ef1dc6ddb8e42b14215e26",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 524533,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_06",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a06.mscx",
+          "upstream_raw_sha256": "bbbe625822c1b67fa7efe7dfb5e5de6fad6c57b38aaf3f8e45f9cdcd409353f3",
+          "canonical_materialized_sha256": "d76acbf37b7791a0b40045c4bb64c28482de0e8d22802dd4ee3884b4ed3e3329",
+          "actual_disk_sha256": "d76acbf37b7791a0b40045c4bb64c28482de0e8d22802dd4ee3884b4ed3e3329",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 644964,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_07",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a07.mscx",
+          "upstream_raw_sha256": "b63455c45d40c179afe79877f1727ea27d18c9827872d1193e26a21fb11cc276",
+          "canonical_materialized_sha256": "280f38868a67294960b19157fc85f1055f38da0ce842e1e88aafd83a269c0d0d",
+          "actual_disk_sha256": "280f38868a67294960b19157fc85f1055f38da0ce842e1e88aafd83a269c0d0d",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 408818,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_08",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a08.mscx",
+          "upstream_raw_sha256": "9f399ff7c2b8aa73960ceb80bb37d502268c95bc9dcd8c0533555d6d4b5eae20",
+          "canonical_materialized_sha256": "2804c7e9c00b0d6ee035df2a68221c7e7d7a8c8769096b7c2fa880b5e6b078fc",
+          "actual_disk_sha256": "2804c7e9c00b0d6ee035df2a68221c7e7d7a8c8769096b7c2fa880b5e6b078fc",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 893316,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_09",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a09.mscx",
+          "upstream_raw_sha256": "588021c4ed36d3a9c73423d6e323ca2025e00bbeefc91c3309cb6a34b1973915",
+          "canonical_materialized_sha256": "6fbcbb75e187e5b5d12010ad0aceb835e87cf1e1736003b77733ecedfbbb02eb",
+          "actual_disk_sha256": "6fbcbb75e187e5b5d12010ad0aceb835e87cf1e1736003b77733ecedfbbb02eb",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 672529,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_10",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a10.mscx",
+          "upstream_raw_sha256": "8a2d4ec089348a5147c1248109a618dd4aec3b8a3f7d2ca752f1cfe4664336f1",
+          "canonical_materialized_sha256": "c7a07a18f45dd839a78249279f7112da660424496b39cc181ed8699743ae75cf",
+          "actual_disk_sha256": "c7a07a18f45dd839a78249279f7112da660424496b39cc181ed8699743ae75cf",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 436557,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_11",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a11.mscx",
+          "upstream_raw_sha256": "3e31ddf1d298c57e490b11b8c6ddad4e3ec0c60ca48a46101dc0753bde618fee",
+          "canonical_materialized_sha256": "cc945a0322fdb125b9bb22b2a490c3203da62f96b7e45bbbc4747642177ff377",
+          "actual_disk_sha256": "cc945a0322fdb125b9bb22b2a490c3203da62f96b7e45bbbc4747642177ff377",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 699740,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "tchaikovsky_op37a_12",
+          "relative_path": "data/raw/dcml_tchaikovsky_seasons/5af15033c5f9c282f38fcf71234b86349e61e8c3/repository/MS3/op37a12.mscx",
+          "upstream_raw_sha256": "30363dcb55f22a13d2b3708e6654ffcc52d6a67abd6d14c23e51b34b987cf01b",
+          "canonical_materialized_sha256": "911337929dc90d7b3953daf4d9b297cf06a7dc6bbcb34ab61ba9cac933e81ad4",
+          "actual_disk_sha256": "911337929dc90d7b3953daf4d9b297cf06a7dc6bbcb34ab61ba9cac933e81ad4",
+          "canonicalization_policy": "LF_TO_CRLF",
+          "file_size_bytes": 567656,
+          "status": "VERIFIED_MATCH"
+        }
+      ]
+    },
+    {
+      "source_repository": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "immutable_revision": "rc013-pilot-digitized",
+      "is_repository_tracked": true,
+      "canonicalization_policy": "IDENTITY",
+      "materialization_count": 9,
+      "failure_count": 0,
+      "artifacts": [
+        {
+          "work_id": "arensky_op36_no01",
+          "relative_path": "data/scores/rc013/canonical/anton_arensky_op36_no01.musicxml",
+          "upstream_raw_sha256": "50f37ea7d2e5327f07bfd518ab0950c25130bc485ee9ddedc032cb26b697376e",
+          "canonical_materialized_sha256": "50f37ea7d2e5327f07bfd518ab0950c25130bc485ee9ddedc032cb26b697376e",
+          "actual_disk_sha256": "50f37ea7d2e5327f07bfd518ab0950c25130bc485ee9ddedc032cb26b697376e",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 191044,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "arensky_op36_no02",
+          "relative_path": "data/scores/rc013/canonical/anton_arensky_op36_no02.musicxml",
+          "upstream_raw_sha256": "35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee",
+          "canonical_materialized_sha256": "35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee",
+          "actual_disk_sha256": "35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 445955,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "arensky_op36_no13",
+          "relative_path": "data/scores/rc013/canonical/anton_arensky_op36_no13.musicxml",
+          "upstream_raw_sha256": "13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8",
+          "canonical_materialized_sha256": "13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8",
+          "actual_disk_sha256": "13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 261658,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "lyadov_op40_no02",
+          "relative_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no02.musicxml",
+          "upstream_raw_sha256": "0fc25451fa355a46b04598ae80c48f79acc33af5b06e6f60f7b12f1d6e481adb",
+          "canonical_materialized_sha256": "0fc25451fa355a46b04598ae80c48f79acc33af5b06e6f60f7b12f1d6e481adb",
+          "actual_disk_sha256": "0fc25451fa355a46b04598ae80c48f79acc33af5b06e6f60f7b12f1d6e481adb",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 94353,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "lyadov_op40_no03",
+          "relative_path": "data/scores/rc013/canonical/anatoly_lyadov_op40_no03.musicxml",
+          "upstream_raw_sha256": "5784b8f95bf897e828a6a9b0918f1f2118d37c5198db93184c81f1a43e5582cd",
+          "canonical_materialized_sha256": "5784b8f95bf897e828a6a9b0918f1f2118d37c5198db93184c81f1a43e5582cd",
+          "actual_disk_sha256": "5784b8f95bf897e828a6a9b0918f1f2118d37c5198db93184c81f1a43e5582cd",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 54675,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "lyadov_op46_no04",
+          "relative_path": "data/scores/rc013/canonical/anatoly_lyadov_op46_no04.musicxml",
+          "upstream_raw_sha256": "1d7fe5a91edcb402449d0067fcfecbf156f38da9f710c515c7c1783b55daa748",
+          "canonical_materialized_sha256": "1d7fe5a91edcb402449d0067fcfecbf156f38da9f710c515c7c1783b55daa748",
+          "actual_disk_sha256": "1d7fe5a91edcb402449d0067fcfecbf156f38da9f710c515c7c1783b55daa748",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 101225,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "lyapunov_op11_no01",
+          "relative_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no01.musicxml",
+          "upstream_raw_sha256": "37e92865e95c04747d537c8d80ecc5d09340c818ee3a135d97536221255b1b9a",
+          "canonical_materialized_sha256": "37e92865e95c04747d537c8d80ecc5d09340c818ee3a135d97536221255b1b9a",
+          "actual_disk_sha256": "37e92865e95c04747d537c8d80ecc5d09340c818ee3a135d97536221255b1b9a",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 232878,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "lyapunov_op11_no02",
+          "relative_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no02.musicxml",
+          "upstream_raw_sha256": "1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b",
+          "canonical_materialized_sha256": "1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b",
+          "actual_disk_sha256": "1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 678940,
+          "status": "VERIFIED_MATCH"
+        },
+        {
+          "work_id": "lyapunov_op11_no03",
+          "relative_path": "data/scores/rc013/canonical/sergei_lyapunov_op11_no03.musicxml",
+          "upstream_raw_sha256": "fc10d4d7d1006d1a5888fb7eb83d9ce6f05b392ce3834d1bb0a02d30c18a683a",
+          "canonical_materialized_sha256": "fc10d4d7d1006d1a5888fb7eb83d9ce6f05b392ce3834d1bb0a02d30c18a683a",
+          "actual_disk_sha256": "fc10d4d7d1006d1a5888fb7eb83d9ce6f05b392ce3834d1bb0a02d30c18a683a",
+          "canonicalization_policy": "IDENTITY",
+          "file_size_bytes": 405619,
+          "status": "VERIFIED_MATCH"
+        }
+      ]
+    }
+  ],
+  "receipt_hash": "db2370c0fdc6010e0d917be4c953d48a1d37d59d680a5d76d8f8a63e474c689d"
+}
