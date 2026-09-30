@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "contract_name": "PF001C1_AUTONOMOUS_LISTENER_GATE_READINESS_LEDGER",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "audit_date": "2026-09-30",
-  "governing_principle": "Listener gate thresholds remain uncalibrated pending frozen model representations. Composer generalization gate is not ready for calibration pending Stage-1 Composer generation.",
+  "governing_principle": "Listener gate thresholds remain uncalibrated pending frozen model representations. Composer generalization gate is a Listener-only property evaluating performance degradation on composer-disjoint human repertoire.",
   "external_test_firewall_status": "ENFORCED_BLINDED",
   "external_test_composers": [
     "Taneyev",
@@ -15,65 +15,97 @@
     "PREDICTIVE_GATE": {
       "status": "PROVISIONAL_UNCALIBRATED_TARGET",
       "metric": "Negative log-likelihood perplexity / bit-rate on held-out human corpus segments",
-      "provisional_threshold_description": "Perplexity improvement over empirical n-gram and Markov baselines",
+      "symbolic_threshold": "tau_perplexity",
+      "provisional_threshold_description": "Perplexity improvement over empirical unigram and first-order Markov baselines",
       "calibration_prerequisite": "Stage-0 Artificial Listener representation model trained on development cohort",
       "target_milestone": "PF-002A"
     },
     "INVARIANCE_GATE": {
       "status": "PROVISIONAL_UNCALIBRATED_TARGET",
       "metric": "Cosine similarity of representations under identity-preserving transformations T_ID",
-      "provisional_threshold_description": "Median cosine similarity >= tau_inv (provisional 0.85 pending Youden's J calibration)",
+      "symbolic_threshold": "tau_identity",
+      "provisional_threshold_description": "Median cosine similarity >= tau_identity prospective calibration via Youden's J on development folds",
       "calibration_prerequisite": "Frozen Listener encoder representation evaluated on transformation registry T_ID",
       "target_milestone": "PF-002A"
     },
     "DISCRIMINATION_GATE": {
       "status": "PROVISIONAL_UNCALIBRATED_TARGET",
       "metric": "Negative-foil similarity separation (cosine distance margin or AUROC) against matched foils",
-      "provisional_threshold_description": "AUROC >= tau_auroc (provisional 0.95) and foil cosine similarity <= tau_foil (provisional 0.30)",
+      "symbolic_threshold": "tau_discrimination",
+      "provisional_threshold_description": "AUROC >= tau_auroc and foil cosine similarity <= tau_foil",
       "calibration_prerequisite": "Frozen Listener encoder representation evaluated on matched negative-foil pool",
       "target_milestone": "PF-002A"
     },
     "COUNTERFACTUAL_GATE": {
       "status": "PROVISIONAL_UNCALIBRATED_TARGET",
       "metric": "Directional contrast response (ClosureContrast, SurpriseContrast) vs matched neutral controls",
-      "provisional_threshold_description": "Statistically significant directional separation: lower 95% BCa bootstrap CI > 0",
+      "symbolic_threshold": "tau_counterfactual",
+      "provisional_threshold_description": "Statistically significant directional separation: lower 95% percentile bootstrap CI > 0",
       "calibration_prerequisite": "Counterfactual perturbations CF-CLOSURE and CF-SURPRISE applied to frozen Listener",
       "target_milestone": "PF-002A"
     },
-    "LONG_RANGE_MEMORY_GATE": {
+    "SOURCE_SEGMENT_STRUCTURAL_MEMORY_GATE": {
       "status": "PROVISIONAL_UNCALIBRATED_TARGET",
-      "metric": "Memory reactivation ratio and latent divergence upon theme reprise vs novel material",
-      "provisional_threshold_description": "Reactivation ratio >= tau_react (provisional 1.80) and memory delta >= tau_mem (provisional 0.50)",
-      "calibration_prerequisite": "Frozen Listener state dynamics evaluated on multi-section development pieces with matched neutral controls",
+      "metric": "Source-segment recurrence retrieval similarity m_A(t) = sim(z(A), h_t) across intervening context and MemoryContrast vs matched control",
+      "symbolic_threshold": "tau_memory",
+      "provisional_threshold_description": "MemoryContrast > 0 with lower 95% percentile bootstrap CI > 0 and separation over matched unrelated-segment foil",
+      "calibration_prerequisite": "Frozen Listener state dynamics evaluated on multi-section development pieces with literal and transformed source-segment recurrences",
       "target_milestone": "PF-002A"
     },
     "ANTI_COPY_GATE": {
       "status": "PROVISIONAL_UNCALIBRATED_TARGET",
-      "metric": "Three-tier anti-copy metric: symbolic n-gram overlap, information-weighted interval n-gram, nearest-neighbor latent retrieval",
-      "provisional_threshold_description": "Max contiguous match <= 12 notes and latent nearest-neighbor distance >= tau_copy (provisional 0.05)",
-      "calibration_prerequisite": "Corpus development n-gram language models and frozen representation lookup index",
+      "metric": "Three-tier anti-copy metric: symbolic n-gram overlap, information-weighted interval n-gram with ADD_ALPHA smoothing, nearest-neighbor latent retrieval",
+      "symbolic_threshold": "tau_copy",
+      "provisional_threshold_description": "Max contiguous match <= tau_copy_ngram and latent nearest-neighbor distance >= tau_copy_latent",
+      "calibration_prerequisite": "Corpus development n-gram language models with ADD_ALPHA estimator and frozen representation lookup index",
       "target_milestone": "PF-002A"
     },
     "COMPOSER_GENERALIZATION_GATE": {
       "status": "NOT_READY_FOR_CALIBRATION",
-      "metric": "Composer perplexity degradation on held-out human pieces vs generated repertoire distribution",
-      "provisional_threshold_description": "Degradation <= 15% under Stage-1 critic evaluation",
-      "calibration_prerequisite": "Stage-1 Composer generation and Stage-0 Artificial Listener counterfactual critic operationalization",
-      "target_milestone": "STAGE_1_COMPOSER"
+      "metric": "Performance degradation of a frozen Listener on composer-disjoint human-composed repertoire relative to development composer distribution",
+      "symbolic_threshold": "tau_generalization",
+      "provisional_threshold_description": "Relative degradation <= tau_generalization on held-out human composer disjoint partitions without involving generated repertoire",
+      "calibration_prerequisite": "Sufficient verified composer-disjoint physical corpus coverage (Stage-1 Composer generation is NOT a prerequisite)",
+      "target_milestone": "STAGE_0_LISTENER_GENERALIZATION"
     },
     "SOURCE_SEGMENT_INVARIANCE": {
       "status": "PROVISIONAL_UNCALIBRATED_TARGET",
       "metric": "Representation cosine similarity under algorithmic identity-preserving transformations T_ID_1..7 applied to physical score segments",
-      "provisional_threshold_description": "Optimal operational threshold tau_id prospective calibration via Youden's J on development folds",
+      "symbolic_threshold": "tau_identity",
+      "provisional_threshold_description": "Optimal operational threshold tau_identity prospective calibration via Youden's J on development folds",
       "calibration_prerequisite": "Frozen representation embeddings of development segments and their T_ID transforms",
       "target_milestone": "PF-002A"
     },
     "THEME_MOTIF_IDENTITY": {
       "status": "THEME_MOTIF_IDENTITY_NOT_READY",
       "metric": "Cross-variation and development-section thematic motif embedding concordance",
-      "provisional_threshold_description": "Unassigned pending verified human thematic motif annotations",
-      "calibration_prerequisite": "Dual-blind musicological annotation of motif boundaries and variants with inter-annotator agreement Cohen's kappa >= 0.80",
+      "symbolic_threshold": "tau_thematic_identity",
+      "provisional_threshold_description": "Unassigned pending verified human thematic motif annotations (Route A) or explicit recurrence metadata (Route B)",
+      "calibration_prerequisite": "Independently adjudicated annotations (Route A) or lineage-valid explicit recurrence-family metadata (Route B)",
       "target_milestone": "PF-FUTURE_THEME_ANNOTATIONS"
+    },
+    "THEMATIC_MEMORY_GATE": {
+      "status": "THEME_IDENTITY_DEPENDENT_NOT_READY",
+      "metric": "Thematic motif memory reactivation and developmental variation tracing",
+      "symbolic_threshold": "tau_thematic_memory",
+      "provisional_threshold_description": "Unassigned pending operational theme motif identity; does not block PF-002A source-segment structural memory",
+      "calibration_prerequisite": "THEME_MOTIF_IDENTITY operational status achieved via Route A or Route B",
+      "target_milestone": "PF-FUTURE_THEME_ANNOTATIONS"
+    }
+  },
+  "historical_provisional_appendix": {
+    "notice": "The following numerical values are strictly historical references from PF-001A and must NOT be used as active operating points:",
+    "historical_values": {
+      "invariance_similarity": 0.85,
+      "negative_foil_similarity": 0.30,
+      "auroc": 0.95,
+      "closure_delta": 0.40,
+      "memory_delta": 0.50,
+      "surprise_delta_bits": 2.5,
+      "memory_reactivation_ratio": 1.80,
+      "composer_perplexity_degradation": 0.15,
+      "latent_cosine_distance": 0.05,
+      "contiguous_ngram_notes": 12
     }
   }
 }

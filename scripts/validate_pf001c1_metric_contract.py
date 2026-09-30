@@ -1,13 +1,23 @@
 #!/usr/bin/env python3
-"""Validation script for PF-001C1 metric and calibration contract.
+"""Validation script for PF-001C1 / PF-001C1.1 metric and calibration contract.
 
 Enforces fail-closed validation of:
 1. Master contract file and sub-registries presence and JSON schema validity.
 2. Invariant preservation: physical inventory (62 pieces), materialization receipt hash,
    and RC-012 baseline preservation.
-3. Zero premature numerical threshold freezing (all gates remain PROVISIONAL_UNCALIBRATED_TARGET
-   or NOT_READY_FOR_CALIBRATION).
-4. THEME_MOTIF_IDENTITY_NOT_READY certification with restricted operational scope SOURCE_SEGMENT_IDENTITY_ONLY.
+3. Zero premature numerical threshold freezing (all gates remain PROVISIONAL_UNCALIBRATED_TARGET,
+   NOT_READY_FOR_CALIBRATION, or THEME_IDENTITY_DEPENDENT_NOT_READY).
+4. Semantic consistency across artifacts:
+   - ClosureContrast sign and intervention semantics: ClosureContrast = Cc - Ct > 0
+     (cadential disruption lowers closure more than matched control).
+   - Single anti-copy smoothing estimator: ADD_ALPHA with alpha=0.1 on development corpus only.
+   - Single bootstrap CI procedure: PERCENTILE, B=2000, piece_id clustering, alpha=0.05.
+   - Separation of SOURCE_SEGMENT_STRUCTURAL_MEMORY from thematic memory.
+   - CF-SOURCE-SEGMENT-MEMORY target and control definitions.
+   - THEMATIC_MEMORY_GATE status = THEME_IDENTITY_DEPENDENT_NOT_READY.
+   - COMPOSER_GENERALIZATION_GATE evaluated on frozen Listener across composer-disjoint
+     human repertoire without involving generated repertoire.
+   - Two admissible future theme-identity evidence routes (Route A and Route B).
 5. External-test firewall protection (Taneyev, Bortkiewicz, Blumenfeld, Catoire).
 6. RandomContext seed policy and piece-clustered resampling policies.
 7. Contract SHA256 integrity computation.
@@ -44,7 +54,7 @@ def compute_sha256(path: Path) -> str:
 
 
 def validate_contract() -> int:
-    print("[PF-001C1] Starting metric calibration contract validation...")
+    print("[PF-001C1.1] Starting metric calibration contract validation...")
     errors: list[str] = []
 
     # 1. File existence
@@ -112,9 +122,39 @@ def validate_contract() -> int:
     if primary_cluster != "piece_id":
         errors.append("primary_cluster_unit must be 'piece_id'")
 
+    # 4.1 Strict single bootstrap CI procedure
     resamp_policy = contract.get("resampling_and_uncertainty_policy", {})
-    if resamp_policy.get("bootstrap_replicates", 0) < 1000:
-        errors.append("bootstrap_replicates must be >= 1000")
+    if resamp_policy.get("bootstrap_replicates") != 2000:
+        errors.append(f"bootstrap_replicates must be exactly 2000, got {resamp_policy.get('bootstrap_replicates')}")
+    if resamp_policy.get("cluster_unit") != "piece_id":
+        errors.append("resampling cluster_unit must be 'piece_id'")
+    if resamp_policy.get("confidence_interval_method") != "PERCENTILE":
+        errors.append(f"confidence_interval_method must be strictly 'PERCENTILE', got {resamp_policy.get('confidence_interval_method')}")
+    if resamp_policy.get("confidence_level") != 0.95:
+        errors.append("confidence_level must be 0.95")
+
+    # 4.2 Single anti-copy smoothing estimator
+    tier2 = contract.get("metrics", {}).get("ANTI_COPY_METRICS", {}).get("tier_2_weighted_interval_ngram", {})
+    if tier2.get("smoothing_method") != "ADD_ALPHA":
+        errors.append(f"Anti-copy smoothing method must be strictly 'ADD_ALPHA', got {tier2.get('smoothing_method')}")
+    if tier2.get("alpha") != 0.1:
+        errors.append(f"Anti-copy alpha must be 0.1, got {tier2.get('alpha')}")
+    if tier2.get("corpus_scope") != "DEVELOPMENT_CORPUS_ONLY":
+        errors.append(f"Anti-copy corpus_scope must be 'DEVELOPMENT_CORPUS_ONLY', got {tier2.get('corpus_scope')}")
+
+    # 4.3 ClosureContrast formula consistency
+    closure_metric = contract.get("metrics", {}).get("CLOSURE_CONTRAST", {})
+    if "Cc - Ct" not in closure_metric.get("formula", ""):
+        errors.append("ClosureContrast formula must specify Cc - Ct")
+    if "preparation increases" in closure_metric.get("interpretation", "").lower():
+        errors.append("Contradictory 'preparation increases closure' language found in contract")
+
+    # 4.4 Composer Generalization Listener-only semantics
+    comp_gen = contract.get("metrics", {}).get("COMPOSER_GENERALIZATION", {})
+    if comp_gen.get("target_system") != "FROZEN_STAGE_0_ARTIFICIAL_LISTENER":
+        errors.append("COMPOSER_GENERALIZATION target_system must be FROZEN_STAGE_0_ARTIFICIAL_LISTENER")
+    if "generated repertoire" in comp_gen.get("description", "").lower() and "does not involve" not in comp_gen.get("description", "").lower():
+        errors.append("Composer generalization must not depend on generated repertoire")
 
     algo = contract.get("threshold_selection_algorithm", {})
     if algo.get("method") != "GROUPED_KFOLD_YOUDENS_J":
@@ -130,6 +170,10 @@ def validate_contract() -> int:
     op_scope = theme_data.get("lineage_policy_verdict", {}).get("operational_scope_for_pf002a")
     if op_scope != "SOURCE_SEGMENT_IDENTITY_ONLY":
         errors.append(f"Theme identity operational_scope must be SOURCE_SEGMENT_IDENTITY_ONLY, got {op_scope}")
+
+    admissible_routes = theme_data.get("admissible_evidence_routes", {})
+    if "ROUTE_A" not in admissible_routes or "ROUTE_B" not in admissible_routes:
+        errors.append("Theme identity must specify both ROUTE_A and ROUTE_B admissible routes")
 
     # 6. Check transformation registry
     with open(TRANSFORMATION_REGISTRY_PATH, encoding="utf-8") as f:
@@ -157,7 +201,7 @@ def validate_contract() -> int:
     if len(cf_families) < 3:
         errors.append(f"Counterfactual registry must contain at least 3 families, found {len(cf_families)}")
     family_ids = {cf["family_id"] for cf in cf_families}
-    expected_cf = {"CF-CLOSURE", "CF-MEMORY", "CF-SURPRISE"}
+    expected_cf = {"CF-CLOSURE", "CF-SOURCE-SEGMENT-MEMORY", "CF-SURPRISE"}
     if not expected_cf.issubset(family_ids):
         errors.append(f"Missing expected counterfactual families: {expected_cf - family_ids}")
 
@@ -166,6 +210,13 @@ def validate_contract() -> int:
             errors.append(f"Counterfactual family {cf.get('family_id')} missing matched_control_perturbation")
         if not cf.get("directional_contrast_statistic"):
             errors.append(f"Counterfactual family {cf.get('family_id')} missing directional_contrast_statistic")
+
+    # Semantic check on CF-CLOSURE formula
+    cf_closure = next((cf for cf in cf_families if cf["family_id"] == "CF-CLOSURE"), None)
+    if cf_closure:
+        formula = cf_closure.get("directional_contrast_statistic", {}).get("formula", "")
+        if "Closure(T_matched_control(X)) - Closure(T_target_disruption(X))" not in formula:
+            errors.append("CF-CLOSURE formula must equal Closure(T_matched_control(X)) - Closure(T_target_disruption(X))")
 
     # 8. Check gate readiness: NO PREMATURE NUMERICAL FREEZING
     with open(GATE_READINESS_PATH, encoding="utf-8") as f:
@@ -176,19 +227,38 @@ def validate_contract() -> int:
     elif gates["COMPOSER_GENERALIZATION_GATE"]["status"] != "NOT_READY_FOR_CALIBRATION":
         errors.append("COMPOSER_GENERALIZATION_GATE status must be NOT_READY_FOR_CALIBRATION")
 
+    if "THEMATIC_MEMORY_GATE" not in gates:
+        errors.append("THEMATIC_MEMORY_GATE missing from gate readiness")
+    elif gates["THEMATIC_MEMORY_GATE"]["status"] != "THEME_IDENTITY_DEPENDENT_NOT_READY":
+        errors.append("THEMATIC_MEMORY_GATE status must be THEME_IDENTITY_DEPENDENT_NOT_READY")
+
+    if "SOURCE_SEGMENT_STRUCTURAL_MEMORY_GATE" not in gates:
+        errors.append("SOURCE_SEGMENT_STRUCTURAL_MEMORY_GATE missing from gate readiness")
+
     for g_id, g_info in gates.items():
         st = g_info.get("status")
-        if st not in {"PROVISIONAL_UNCALIBRATED_TARGET", "NOT_READY_FOR_CALIBRATION", "THEME_MOTIF_IDENTITY_NOT_READY"}:
+        if st not in {
+            "PROVISIONAL_UNCALIBRATED_TARGET",
+            "NOT_READY_FOR_CALIBRATION",
+            "THEME_MOTIF_IDENTITY_NOT_READY",
+            "THEME_IDENTITY_DEPENDENT_NOT_READY",
+        }:
             errors.append(f"Gate {g_id} has invalid status {st}; cannot be finalized in PF-001C1")
 
+        # Confirm no numerical thresholds in active gate descriptions
+        desc = g_info.get("provisional_threshold_description", "")
+        for stale_val in ["0.85", "0.30", "0.95", "1.80", "0.50", "15%"]:
+            if stale_val in desc:
+                errors.append(f"Gate {g_id} provisional description contains stale numerical value '{stale_val}'")
+
     if errors:
-        print("[PF-001C1] Contract validation FAILED with errors:", file=sys.stderr)
+        print("[PF-001C1.1] Contract validation FAILED with errors:", file=sys.stderr)
         for e in errors:
             print(f"  - {e}", file=sys.stderr)
         return 1
 
     contract_sha256 = compute_sha256(CONTRACT_PATH)
-    print("[PF-001C1] Contract validation SUCCESSFUL.")
+    print("[PF-001C1.1] Contract validation SUCCESSFUL.")
     print(f"PF001C1_METRIC_CONTRACT_HASH={contract_sha256}")
     return 0
 

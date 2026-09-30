@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "schema_version": "pf001c1_counterfactual_registry_v1",
-  "milestone": "PF-001C1",
+  "schema_version": "pf001c1_counterfactual_registry_v2",
+  "milestone": "PF-001C1.1",
   "registry_title": "Counterfactual Perturbation and Matched Control Registry",
   "status": "CALIBRATION_COUNTERFACTUAL_REGISTRY_FROZEN",
   "created_at": "2026-09-30T00:00:00Z",
@@ -26,31 +26,31 @@
         "implementation": "Exchange octave/voice positions of identical pitch classes in inner voices."
       },
       "directional_contrast_statistic": {
-        "formula": "ClosureContrast(X) = (Closure(X) - Closure(T_target(X))) - (Closure(X) - Closure(T_control(X)))",
-        "directional_requirement": "Mean ClosureContrast across pieces > 0 with bootstrap 95% CI lower bound > 0."
+        "formula": "ClosureContrast(X) = (Closure(X) - Closure(T_target_disruption(X))) - (Closure(X) - Closure(T_matched_control(X))) = Closure(T_matched_control(X)) - Closure(T_target_disruption(X))",
+        "directional_requirement": "ClosureContrast > 0 (cadential disruption lowers structural closure more than the matched neutral perturbation). Mean ClosureContrast across pieces > 0 with percentile bootstrap 95% CI lower bound > 0."
       }
     },
     {
-      "family_id": "CF-MEMORY",
-      "target_construct": "structural_memory",
+      "family_id": "CF-SOURCE-SEGMENT-MEMORY",
+      "target_construct": "source_segment_structural_memory",
       "expected_directional_response": "DECREASE",
       "targeted_perturbation": {
         "perturbation_id": "P_TARGET_RECURRENCE_CUE_DELETION",
-        "name": "Thematic / Recurrence Cue Incipit Deletion",
-        "description": "Replaces the initial 2 to 4 bars of a recurrent thematic statement or recapitulation arrival with generic neutral accompaniment texture.",
-        "affected_events_count": "4 to 16 notes (thematic incipit)",
-        "implementation": "Zero out primary melodic voice in recurrence window, substituting background diatonic accompaniment."
+        "name": "Source-Segment Recurrence Cue Deletion / Corruption",
+        "description": "Replaces or corrupts the initial 2 to 4 bars of a known source-segment recurrence cue with generic neutral accompaniment texture.",
+        "affected_events_count": "4 to 16 notes (recurrence cue window)",
+        "implementation": "Zero out primary voice in recurrence window, substituting background diatonic accompaniment."
       },
       "matched_control_perturbation": {
         "perturbation_id": "P_CONTROL_POST_CUE_TEXTURE_SHIFT",
-        "name": "Matched Neutral Accompaniment Texture Variation",
-        "description": "Alters accompaniment figuration pattern 4 bars after the cue arrival, preserving the thematic incipit and harmonic progression.",
+        "name": "Matched Control Perturbation Outside Recurrence Cue",
+        "description": "Applies the same event-count perturbation outside the recurrence cue while preserving the source-segment recurrence.",
         "affected_events_count": "4 to 16 notes (identical count to target perturbation)",
-        "implementation": "Apply block-to-arpeggio variation to accompaniment Staff 2 while leaving thematic Staff 1 intact."
+        "implementation": "Apply texture variation 4 bars after recurrence cue arrival while leaving the source-segment recurrence intact."
       },
       "directional_contrast_statistic": {
-        "formula": "MemoryContrast(X) = (Memory(T_control(X)) - Memory(T_target(X)))",
-        "directional_requirement": "Mean MemoryContrast across pieces > 0 with bootstrap 95% CI lower bound > 0."
+        "formula": "MemoryContrast(X) = Memory(T_control(X)) - Memory(T_target(X))",
+        "directional_requirement": "MemoryContrast > 0 (corruption of source-segment recurrence cue reduces memory retrieval more than matched control perturbation outside cue). Mean MemoryContrast across pieces > 0 with percentile bootstrap 95% CI lower bound > 0."
       }
     },
     {
@@ -72,8 +72,8 @@
         "implementation": "Shift note pitch by +/-12 semitones strictly within same spelled pitch class."
       },
       "directional_contrast_statistic": {
-        "formula": "SurpriseContrast(X) = (Surprise(T_target(X)) - Surprise(X)) - (Surprise(T_control(X)) - Surprise(X))",
-        "directional_requirement": "Mean SurpriseContrast across pieces > 0 with bootstrap 95% CI lower bound > 0."
+        "formula": "SurpriseContrast(X) = (Surprise(T_target(X)) - Surprise(X)) - (Surprise(T_control(X)) - Surprise(X)) = Surprise(T_target(X)) - Surprise(T_control(X))",
+        "directional_requirement": "SurpriseContrast > 0 (chromatic corruption increases listener surprise relative to matched in-key control). Mean SurpriseContrast across pieces > 0 with percentile bootstrap 95% CI lower bound > 0."
       }
     }
   ]

@@ -1,12 +1,24 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "audit_version": "1.0.0",
-  "milestone": "PF-001C1",
+  "audit_version": "1.1.0",
+  "milestone": "PF-001C1.1",
   "project": "team-muel/Russian-Piano-Composer",
   "audit_title": "Theme / Motif Identity Evidence Readiness Audit for PF-001 Physical Classical Corpus",
   "status": "THEME_MOTIF_IDENTITY_NOT_READY",
   "created_at": "2026-09-30T00:00:00Z",
-  "governing_principle": "Do not promote synthetic segment identity into thematic identity. Theme/motif identity requires accepted, lineage-valid human annotations or explicit recurrence-family metadata.",
+  "governing_principle": "Do not promote synthetic segment identity into thematic identity. Theme/motif identity requires accepted, lineage-valid evidence across admissible routes. Human participation remains optional unless a subjective-human claim is made.",
+  "admissible_evidence_routes": {
+    "ROUTE_A": {
+      "name": "Independently adjudicated musicological/theme annotations",
+      "description": "Dual-blind musicological annotation of motif boundaries and variants with inter-annotator agreement Cohen's kappa >= 0.80.",
+      "status": "UNSATISFIED"
+    },
+    "ROUTE_B": {
+      "name": "Lineage-valid explicit recurrence-family metadata with reproducible identity evidence",
+      "description": "Formal catalog or score metadata documenting explicit recurrence families (e.g. variation themes, fugal subjects) with reproducible machine-checkable identity evidence.",
+      "status": "UNSATISFIED"
+    }
+  },
   "audit_findings": {
     "verified_physical_scores_count": 62,
     "theme_annotation_manifest_path": "data/annotations/theme_v1/manifest.yaml",
@@ -14,7 +26,8 @@
     "pilot_candidates_path": "data/annotations/theme_v1/pilots/rc008b/candidates.yaml",
     "pilot_candidates_count": 20,
     "pilot_candidates_human_accepted_count": 0,
-    "human_adjudication_status": "PENDING_FORMAL_HUMAN_STUDY",
+    "route_a_coverage": "0 / 62 pieces",
+    "route_b_coverage": "0 / 62 pieces",
     "thematic_coverage_across_62_physical_scores": {
       "scores_with_accepted_theme_annotations": 0,
       "scores_without_accepted_theme_annotations": 62,
@@ -24,6 +37,7 @@
   "lineage_policy_verdict": {
     "theme_motif_identity_status": "THEME_MOTIF_IDENTITY_NOT_READY",
     "operational_scope_for_pf002a": "SOURCE_SEGMENT_IDENTITY_ONLY",
-    "rationale": "The canonical theme manifest (data/annotations/theme_v1/manifest.yaml) contains 0 accepted annotations across the 62 verified physical scores. The RC-008B pilot candidate set contains 20 algorithmic/AI-reviewed proposals with human_accepted_count = 0. Assigning theme identity to arbitrary sampled musical windows without independently documented human or musicological thematic adjudication violates the Perception-First Measurement Contract. Therefore, THEME_MOTIF_IDENTITY remains non-operational for calibration until formal human adjudication is executed."
+    "thematic_memory_gate_status": "THEME_IDENTITY_DEPENDENT_NOT_READY",
+    "rationale": "Neither Route A (independently adjudicated annotations) nor Route B (lineage-valid explicit recurrence-family metadata) currently provides sufficient physical score coverage across the 62 verified physical scores. Therefore, THEME_MOTIF_IDENTITY and THEMATIC_MEMORY_GATE remain non-operational. PF-002A operational scope is strictly restricted to SOURCE_SEGMENT_IDENTITY_ONLY and SOURCE_SEGMENT_STRUCTURAL_MEMORY."
   }
 }

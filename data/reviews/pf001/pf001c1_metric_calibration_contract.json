@@ -1,9 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "contract_name": "PF001C1_METRIC_AND_CALIBRATION_CONTRACT",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "ratification_date": "2026-09-30",
   "authoritative_receipt_hash": "db2370c0fdc6010e0d917be4c953d48a1d37d59d680a5d76d8f8a63e474c689d",
+  "historical_superseded_contract_hashes": [
+    {
+      "hash": "243244eabd0e8c8e30690250f77ca7c1a44a6cc353bcc318544dbc0e503c2881",
+      "reason": "SUPERSEDED_BY_SEMANTIC_CLOSURE",
+      "description": "Superseded by PF-001C1.1 semantic consistency repair (ClosureContrast sign, ADD_ALPHA single estimator, PERCENTILE single bootstrap CI, SOURCE_SEGMENT_STRUCTURAL_MEMORY split, Listener-only Composer Generalization, and Route A/B Theme Identity)."
+    }
+  ],
   "external_test_firewall": {
     "status": "ENFORCED_BLINDED",
     "cohort": [
@@ -43,14 +50,18 @@
       {
         "name": "section_window",
         "description": "Formal structural section (Exposition, Development, Recapitulation, Theme, Variation) derived from ground-truth formal metadata or cadence boundaries.",
-        "usage": "Long-range memory reactivation and structural world model evaluation."
+        "usage": "Long-range source-segment structural memory reactivation and structural world model evaluation."
       }
     ]
   },
   "theme_identity_readiness": {
     "status": "THEME_MOTIF_IDENTITY_NOT_READY",
-    "rationale": "Canonical theme manifest data/annotations/theme_v1/manifest.yaml contains 0 accepted annotations. RC-008B pilot contains 20 candidate proposals but 0 human-accepted annotations.",
-    "operational_scope": "SOURCE_SEGMENT_IDENTITY_ONLY"
+    "operational_scope": "SOURCE_SEGMENT_IDENTITY_ONLY",
+    "admissible_evidence_routes": [
+      "ROUTE_A: independently adjudicated musicological/theme annotations",
+      "ROUTE_B: lineage-valid explicit recurrence-family metadata with reproducible identity evidence"
+    ],
+    "rationale": "Neither Route A nor Route B currently has sufficient coverage across the 62 verified physical scores. Human participation is optional unless a subjective-human claim is made."
   },
   "baseline_models": {
     "description": "Standard non-neural references against which representation and listener predictability are calibrated.",
@@ -84,18 +95,30 @@
       "unit": "dimensionless correlation"
     },
     "CLOSURE_CONTRAST": {
-      "formula": "ClosureContrast(S, P_cad, P_ctl) = [ListenerClosureScore(S o P_cad) - ListenerClosureScore(S)] - [ListenerClosureScore(S o P_ctl) - ListenerClosureScore(S)]",
-      "simplified_formula": "ClosureContrast(S, P_cad, P_ctl) = ListenerClosureScore(S o P_cad) - ListenerClosureScore(S o P_ctl)",
-      "directional_hypothesis": "ClosureContrast > 0 (cadential preparation increases listener closure relative to matched event-count control)"
+      "definitions": {
+        "C0": "Closure(X)",
+        "Ct": "Closure(T_target_disruption(X))",
+        "Cc": "Closure(T_matched_control(X))"
+      },
+      "formula": "ClosureContrast(X) = (C0 - Ct) - (C0 - Cc) = Cc - Ct",
+      "directional_hypothesis": "ClosureContrast > 0",
+      "interpretation": "Cadential disruption lowers structural closure more than the matched neutral perturbation."
     },
     "SURPRISE_CONTRAST": {
-      "formula": "SurpriseContrast(S, P_dis, P_ctl) = [ListenerSurpriseScore(S o P_dis) - ListenerSurpriseScore(S)] - [ListenerSurpriseScore(S o P_ctl) - ListenerSurpriseScore(S)]",
-      "simplified_formula": "SurpriseContrast(S, P_dis, P_ctl) = ListenerSurpriseScore(S o P_dis) - ListenerSurpriseScore(S o P_ctl)",
-      "directional_hypothesis": "SurpriseContrast > 0 (foreign harmonic disruption increases listener surprise relative to matched in-key control)"
+      "formula": "SurpriseContrast(X) = Surprise(T_target(X)) - Surprise(T_control(X))",
+      "directional_hypothesis": "SurpriseContrast > 0",
+      "interpretation": "Foreign harmonic disruption increases listener surprise relative to matched in-key control."
     },
-    "MEMORY_REACTIVATION_RATIO": {
-      "formula": "ReactivationRatio(S_reprise, S_prime, S_novel) = cos_sim(h(S_reprise), h(S_theme)) / cos_sim(h(S_novel), h(S_theme))",
-      "directional_hypothesis": "ReactivationRatio > 1.0"
+    "SOURCE_SEGMENT_STRUCTURAL_MEMORY": {
+      "similarity_metric": "m_A(t) = sim(z(A), h_t)",
+      "evaluations": [
+        "literal source-segment recurrence: A -> intervening context -> A",
+        "transformed source-segment recurrence: A -> intervening context -> T_ID(A)",
+        "matched unrelated-segment foil"
+      ],
+      "contrast_formula": "MemoryContrast = Memory(T_control(X)) - Memory(T_target(X))",
+      "directional_hypothesis": "MemoryContrast > 0",
+      "interpretation": "Corruption or deletion of a known source-segment recurrence cue reduces memory retrieval more than matched control perturbation outside the cue."
     },
     "ANTI_COPY_METRICS": {
       "tier_1_symbolic_ngram": {
@@ -103,13 +126,28 @@
         "description": "Maximum contiguous matched token length."
       },
       "tier_2_weighted_interval_ngram": {
-        "formula": "W_ngram(G) = sum_{g in Ngrams_k(G) cap Ngrams_k(Corpus)} w(g), where w(g) = -log2 P_corpus(g)",
-        "smoothing": "Add-alpha (alpha=0.1) or Good-Turing smoothed n-gram language model estimated strictly on development corpus."
+        "smoothing_method": "ADD_ALPHA",
+        "alpha": 0.1,
+        "corpus_scope": "DEVELOPMENT_CORPUS_ONLY",
+        "formula": "W_ngram(G) = sum_{g in Ngrams_k(G) cap Ngrams_k(Corpus_dev)} w(g), where w(g) = -log2 P_dev(g)",
+        "probability_estimator": "P_dev(g) = (count(g) + 0.1) / (N_dev + 0.1 * |V|^k)"
       },
       "tier_3_latent_retrieval": {
-        "formula": "D_min(G, Corpus) = min_{S in Corpus} (1 - cos_sim(h(G), h(S)))",
+        "formula": "D_min(G, Corpus_dev) = min_{S in Corpus_dev} (1 - cos_sim(h(G), h(S)))",
         "description": "Minimum latent cosine distance to any development training segment."
       }
+    },
+    "COMPOSER_GENERALIZATION": {
+      "target_system": "FROZEN_STAGE_0_ARTIFICIAL_LISTENER",
+      "description": "Performance degradation of a frozen Listener on composer-disjoint human-composed repertoire relative to the development/validation composer distribution. Does NOT involve generated repertoire.",
+      "metric_families": [
+        "predictive NLL degradation",
+        "source-segment invariance degradation",
+        "counterfactual-gate degradation",
+        "representation distribution shift"
+      ],
+      "status": "NOT_READY_FOR_CALIBRATION",
+      "reason": "Insufficient verified composer-disjoint physical corpus coverage."
     }
   },
   "hard_negative_foil_construction": {
@@ -159,7 +197,7 @@
     "method": "GROUPED_KFOLD_YOUDENS_J",
     "n_splits": 5,
     "group_key": "piece_id",
-    "description": "For calibration of binary operational threshold tau (e.g. positive pair identity vs negative foil):",
+    "description": "For prospective calibration of binary operational threshold tau (e.g. tau_identity):",
     "steps": [
       "1. Partition the development pieces into 5 grouped folds such that all segments of any piece are in the same fold.",
       "2. For each fold k in 1..5: compute the empirical ROC curve across pooled positive pairs and matched negative foils.",
@@ -171,10 +209,13 @@
   },
   "resampling_and_uncertainty_policy": {
     "bootstrap_replicates": 2000,
-    "confidence_interval_type": "BCa (Bias-Corrected and Accelerated) or Percentile bootstrap",
-    "alpha": 0.05,
+    "cluster_unit": "piece_id",
+    "sampling": "piece clusters with replacement",
+    "confidence_interval_method": "PERCENTILE",
     "confidence_level": 0.95,
-    "clustering_rule": "Cluster resampling strictly at piece_id level. Sampling with replacement draws pieces; all segments belonging to selected pieces are included in the bootstrap replicate."
+    "lower_quantile": 0.025,
+    "upper_quantile": 0.975,
+    "random_context_stream": "pf001c1/resampling"
   },
   "registries": {
     "transformation_registry_file": "data/reviews/pf001/pf001c1_transformation_registry.json",
