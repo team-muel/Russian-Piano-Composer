@@ -2,7 +2,7 @@
 ## Multi-Axis Data Isolation, Contamination Firewalls, and Validation Criteria
 
 **Document Type:** Research Policy & Split Protocol  
-**Milestone:** PF-001C1.2  
+**Milestone:** PF-001C1.3  
 **Project:** Russian Piano Composer  
 **Status:** STAGE0_SPLIT_MANIFEST_FROZEN  
 **Governing Principle:** Zero-Leakage Scientific Isolation & Exact Physical Piece Role Binding  
@@ -39,7 +39,7 @@ graph TD
 - **Rule 1 (Composition Integrity):** All variants, revisions, movements, and transcriptions of a single work ID must be assigned to the **exact same split**. Random splitting at the measure, note, or segment level is strictly forbidden.
 - **Rule 2 (Performance Binding):** Multiple audio performances or MIDI realizations of the same piece must remain within the same split, unless explicitly running a designated performance-generalization control experiment.
 - **Rule 3 (Composer-Disjoint Validation):** Confirmatory testing must evaluate compositions from composers who have **zero works** in the development or hyperparameter-tuning splits.
-- **Rule 4 (Listener Disjointness):** Listener generalization must be evaluated separately from stimulus generalization. Models must be tested on held-out human listeners to evaluate population-level calibration.
+- **Rule 4 (Listener Disjointness & Optional Human Validation):** Listener generalization must be evaluated separately from stimulus generalization. Human-listener evaluation is `OPTIONAL_EXTERNAL_HUMAN_VALIDATION` and becomes mandatory only for explicit subjective-human claims (e.g., "humans prefer this", "humans perceive this as tense", "humans recognize this theme"). Structural Stage-0 Listener claims do not require human participants.
 
 ---
 
@@ -96,10 +96,16 @@ pie title Stage-0 Physical Repertoire Partition (62 Pieces)
 ### 5. Multi-Dimensional Scientific Validation Framework
 
 To prevent reductionist optimization of a single composite score, an Artificial Listener must demonstrate certified competence across four orthogonal dimensions:
-- `PREDICTIVE_VALIDITY`: Statistical agreement with held-out corpus distributions and human behavioral choice distributions.
-- `TEMPORAL_VALIDITY`: Preservation of biological, real-time causal constraints and temporal dynamics of auditory cognition.
-- `INTERVENTION_VALIDITY`: Causal responsiveness of the model to controlled structural perturbations (e.g. cadential disruption, chromatic injection).
-- `GENERALIZATION_VALIDITY`: Stability of predictive and structural performance when transferred across unseen musical composers.
+- `PREDICTIVE_VALIDITY`: Predictive agreement with held-out symbolic corpus targets and predeclared non-neural baselines. No human behavioral distribution is required for PF-002A.
+- `STRUCTURAL_TEMPORAL_VALIDITY` (also referenced as `TEMPORAL_VALIDITY`): Ability to encode and predict musical dependencies across event, segment, phrase/section-proxy, and long-range source-segment timescales (multi-scale temporal structural modeling). Stage-0 does not claim biological real-time auditory cognition.
+- `INTERVENTION_VALIDITY`: Directionally correct response to frozen structural counterfactuals, including cadential disruption, controlled surprise perturbation, and source-segment recurrence-cue disruption.
+- `GENERALIZATION_VALIDITY`: Stability of a frozen Listener across held-out human-composed pieces and, when sufficient corpus coverage exists, composer-disjoint repertoire. Keep `COMPOSER_GENERALIZATION_GATE = NOT_READY_FOR_CALIBRATION`.
+
+#### 5.1 Optional External Human Validation Layer
+- `OPTIONAL_EXTERNAL_HUMAN_VALIDATION`: Human studies are not used for Stage-0 model fitting, checkpoint selection, threshold selection, or PF-002A pass/fail.
+- Human participant evaluation becomes relevant only when testing correspondence between structural proxies and subjective human perception (e.g., explicit claims such as "humans prefer this", "humans perceive this as tense", or "humans recognize this theme").
+- Human validation must not retroactively redefine autonomous metrics or control Stage-0 training gates.
+
 
 ### 6. Programmatic Split Verification Rules
 

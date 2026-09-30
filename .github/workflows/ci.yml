@@ -38,6 +38,9 @@ jobs:
       - name: Validate PF-001C1.2 Stage-0 split manifest
         run: python scripts/validate_pf001c1_stage0_split.py
 
+      - name: Validate PF-001C1.3 Autonomous Stage-0 policy
+        run: python scripts/validate_pf001c1_autonomous_policy.py
+
       - name: Lint with ruff
         run: ruff check src/ tests/ scripts/
 
