@@ -1,0 +1,634 @@
+{
+  "": "https://json-schema.org/draft/2020-12/schema",
+  "manifest_name": "PF001C1_STAGE0_SPLIT_MANIFEST",
+  "version": "1.0.0",
+  "milestone": "PF-001C1.2",
+  "ratification_date": "2026-10-01",
+  "status": "STAGE0_SPLIT_MANIFEST_FROZEN",
+  "physical_inventory_hash": "1416c387704067717406c365399ec64c6ce0463ecc16b3453ed061bda368daba",
+  "materialization_receipt_hash": "db2370c0fdc6010e0d917be4c953d48a1d37d59d680a5d76d8f8a63e474c689d",
+  "PF001C1_METRIC_CONTRACT_HASH": "5b681c6b02ecb2c573b06d463705ab8b4fd17b9aec9b5c4e56f6a7e5830e214a",
+  "composer_role": {
+    "Pyotr Ilyich Tchaikovsky": "DEVELOPMENT",
+    "Sergei Rachmaninoff": "DEVELOPMENT",
+    "Anton Arensky": "DEVELOPMENT",
+    "Nikolai Medtner": "VALIDATION",
+    "Anatoly Lyadov": "VALIDATION",
+    "Sergei Lyapunov": "BENCHMARK_PILOT_ONLY"
+  },
+  "piece_count_by_role": {
+    "DEVELOPMENT": 37,
+    "VALIDATION": 22,
+    "BENCHMARK_PILOT_ONLY": 3,
+    "TOTAL": 62
+  },
+  "piece_count_by_composer": {
+    "Pyotr Ilyich Tchaikovsky": 12,
+    "Sergei Rachmaninoff": 22,
+    "Anton Arensky": 3,
+    "Nikolai Medtner": 19,
+    "Anatoly Lyadov": 3,
+    "Sergei Lyapunov": 3
+  },
+  "rules_and_policies": {
+    "transformation_inheritance_rule": "Any derivative generated from a source piece (including T_ID, T_counterfactual, and negative candidates) strictly inherits the source piece role. No transformed or perturbed derivative may cross split boundaries.",
+    "negative_pair_split_rule": "Hard-negative construction must never create a pair that leaks a VALIDATION or BENCHMARK source into DEVELOPMENT training. For DEVELOPMENT training, both anchor and negative source must originate strictly within DEVELOPMENT data.",
+    "model_selection_boundary": [
+      "1. Fit candidate models only on DEVELOPMENT.",
+      "2. Internal development diagnostics may use grouped folds within DEVELOPMENT.",
+      "3. Use VALIDATION only for bounded architecture/checkpoint selection.",
+      "4. Once a final PF-002A checkpoint is selected, freeze it.",
+      "5. Only then evaluate BENCHMARK_PILOT_ONLY exactly once.",
+      "6. Do not return from benchmark result to architecture tuning."
+    ],
+    "bounded_architecture_search": "PF-002A architecture search must use a bounded candidate set frozen before validation outcomes are inspected. The validation cohort may not expand because a model performs poorly.",
+    "composer_generalization_boundary": "COMPOSER_GENERALIZATION_GATE remains NOT_READY_FOR_CALIBRATION. Current verified independent composer coverage is insufficient for final external composer-generalization inference."
+  },
+  "firewalled_external_composers": {
+    "status": "EXTERNAL_TEST_CANDIDATE_FIREWALLED",
+    "composers": [
+      "Taneyev",
+      "Bortkiewicz",
+      "Blumenfeld",
+      "Catoire"
+    ],
+    "prohibition": "No scores, notes, tokens, features, or embeddings may be materialized or inspected."
+  },
+  "scriabin_lineage_policy": {
+    "status": "EXCLUDED_FROM_PF_DEVELOPMENT_BY_LINEAGE_POLICY",
+    "historical_status": "PREVIOUSLY_EXPOSED_IN_RC012",
+    "eligibility": "NOT_ELIGIBLE_AS_UNTOUCHED_EXTERNAL_DATA"
+  },
+  "future_corpus_expansion_candidates": [
+    {
+      "composer_name": "Mily Balakirev",
+      "status": "FUTURE_CORPUS_EXPANSION_CANDIDATE",
+      "verified_physical_scores_count": 0
+    },
+    {
+      "composer_name": "Reinhold Gliere",
+      "status": "FUTURE_CORPUS_EXPANSION_CANDIDATE",
+      "verified_physical_scores_count": 0
+    }
+  ],
+  "pieces": [
+    {
+      "piece_id": "lyadov_op40_no02",
+      "work_id": "lyadov_op40_no02",
+      "composer_id": "CMP-LIADOV",
+      "composer_name": "Anatoly Lyadov",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "0fc25451fa355a46b04598ae80c48f79acc33af5b06e6f60f7b12f1d6e481adb",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "lyadov_op40_no03",
+      "work_id": "lyadov_op40_no03",
+      "composer_id": "CMP-LIADOV",
+      "composer_name": "Anatoly Lyadov",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "5784b8f95bf897e828a6a9b0918f1f2118d37c5198db93184c81f1a43e5582cd",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "lyadov_op46_no04",
+      "work_id": "lyadov_op46_no04",
+      "composer_id": "CMP-LIADOV",
+      "composer_name": "Anatoly Lyadov",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "1d7fe5a91edcb402449d0067fcfecbf156f38da9f710c515c7c1783b55daa748",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "arensky_op36_no01",
+      "work_id": "arensky_op36_no01",
+      "composer_id": "CMP-ARENSKY",
+      "composer_name": "Anton Arensky",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "50f37ea7d2e5327f07bfd518ab0950c25130bc485ee9ddedc032cb26b697376e",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "arensky_op36_no02",
+      "work_id": "arensky_op36_no02",
+      "composer_id": "CMP-ARENSKY",
+      "composer_name": "Anton Arensky",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "35295deba75f46a684fad0ffb3ab43656715a2e8aa55bdfaf11ebed1a3e2acee",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "arensky_op36_no13",
+      "work_id": "arensky_op36_no13",
+      "composer_id": "CMP-ARENSKY",
+      "composer_name": "Anton Arensky",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "13ad3cec6158415cebb2bb15a59f8437dcdbcd2993a8a1a268ffb4ad3e6e92c8",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "lyapunov_op11_no01",
+      "work_id": "lyapunov_op11_no01",
+      "composer_id": "CMP-LYAPUNOV",
+      "composer_name": "Sergei Lyapunov",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "37e92865e95c04747d537c8d80ecc5d09340c818ee3a135d97536221255b1b9a",
+      "role": "BENCHMARK_PILOT_ONLY"
+    },
+    {
+      "piece_id": "lyapunov_op11_no02",
+      "work_id": "lyapunov_op11_no02",
+      "composer_id": "CMP-LYAPUNOV",
+      "composer_name": "Sergei Lyapunov",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "1c8e3688cc4410253235116509fe40333a853424944b1e443447baab2abec44b",
+      "role": "BENCHMARK_PILOT_ONLY"
+    },
+    {
+      "piece_id": "lyapunov_op11_no03",
+      "work_id": "lyapunov_op11_no03",
+      "composer_id": "CMP-LYAPUNOV",
+      "composer_name": "Sergei Lyapunov",
+      "source_family": "team-muel/Russian-Piano-Composer (RC-013 Canonical Digitization)",
+      "canonical_materialized_sha256": "fc10d4d7d1006d1a5888fb7eb83d9ce6f05b392ce3834d1bb0a02d30c18a683a",
+      "role": "BENCHMARK_PILOT_ONLY"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_01",
+      "work_id": "tchaikovsky_op37a_01",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "faf79464f912792ba35851491d63b7f476b1032d3971a23ae4d348abb2df4736",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_02",
+      "work_id": "tchaikovsky_op37a_02",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "950993514ec903c0e255050dd9a14c76c136c3ad2aa53a2177a4d5eaa6ff1e0d",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_03",
+      "work_id": "tchaikovsky_op37a_03",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "2d263bb6c99bcc847caa1d192d5017900342d050742d696f3decd4a22a50abdc",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_04",
+      "work_id": "tchaikovsky_op37a_04",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "178f58d22af771dfaa6dec0a4772d6a69e74fcf9af42ac0de1ebd9f572d09acd",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_05",
+      "work_id": "tchaikovsky_op37a_05",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "b84d470ca8024efab266a6932e853a8b96dd37f290ef1dc6ddb8e42b14215e26",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_06",
+      "work_id": "tchaikovsky_op37a_06",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "d76acbf37b7791a0b40045c4bb64c28482de0e8d22802dd4ee3884b4ed3e3329",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_07",
+      "work_id": "tchaikovsky_op37a_07",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "280f38868a67294960b19157fc85f1055f38da0ce842e1e88aafd83a269c0d0d",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_08",
+      "work_id": "tchaikovsky_op37a_08",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "2804c7e9c00b0d6ee035df2a68221c7e7d7a8c8769096b7c2fa880b5e6b078fc",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_09",
+      "work_id": "tchaikovsky_op37a_09",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "6fbcbb75e187e5b5d12010ad0aceb835e87cf1e1736003b77733ecedfbbb02eb",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_10",
+      "work_id": "tchaikovsky_op37a_10",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "c7a07a18f45dd839a78249279f7112da660424496b39cc181ed8699743ae75cf",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_11",
+      "work_id": "tchaikovsky_op37a_11",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "cc945a0322fdb125b9bb22b2a490c3203da62f96b7e45bbbc4747642177ff377",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "tchaikovsky_op37a_12",
+      "work_id": "tchaikovsky_op37a_12",
+      "composer_id": "CMP-TCHAIKOVSKY",
+      "composer_name": "Pyotr Ilyich Tchaikovsky",
+      "source_family": "https://github.com/DCMLab/tchaikovsky_seasons",
+      "canonical_materialized_sha256": "911337929dc90d7b3953daf4d9b297cf06a7dc6bbcb34ab61ba9cac933e81ad4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_01a",
+      "work_id": "rachmaninoff_op42_01a",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "e6b6eb30557a6d700baec77e8f2fe437b74a39964fd2ce88781aeb5146aeeed7",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_01b",
+      "work_id": "rachmaninoff_op42_01b",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "053cc83e7009e3135de7d03d848e9acdf8ccf9321066159a0ef10e2f8c9a7c38",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_02",
+      "work_id": "rachmaninoff_op42_02",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "5970a43d7499e30f1d93fcbc98e1bff158e278b9142ccccafd51e41a09475964",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_03",
+      "work_id": "rachmaninoff_op42_03",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "4fe5633d78738b2e1b3f1a6b320c7fb073dc77cb08fb57eccf49f347f674d478",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_04",
+      "work_id": "rachmaninoff_op42_04",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "dfbd32724b70d27efd01d8974ff0661d2e8f0a413e834d4140c9cba12879827f",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_05",
+      "work_id": "rachmaninoff_op42_05",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "e232caf1ed9a6960827da5f5783a8b9846513a1d7a589e3edbe7b5c1a33a3f4b",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_06",
+      "work_id": "rachmaninoff_op42_06",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "ddaf609693c0b22f447e0a9044f0d78ee5c369186808ab4a8e990909f63d0c71",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_07",
+      "work_id": "rachmaninoff_op42_07",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "f4a64d6e993cb3726970d2c13bbf137cc1ba9ed007e9ff0070466dc4786e5621",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_08",
+      "work_id": "rachmaninoff_op42_08",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "2279c566107aaa1403d60d01d8189c6c63d69e3b2a43164adcad4312f6ae9bc9",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_09",
+      "work_id": "rachmaninoff_op42_09",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "1e42fb9551b9e3b7da758689a801c6b2ae8a27a5734f2eb78493f1a9ed7e4da6",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_10",
+      "work_id": "rachmaninoff_op42_10",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "a4d66881f44485ed9fa4a942eff5c3efb0e10db69bb56e027cd162ed88032f5c",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_11",
+      "work_id": "rachmaninoff_op42_11",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "d7281cc7304fc85b702d4ed52a8d54dcd3f11f97286971aa8ea7541fc1563559",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_12",
+      "work_id": "rachmaninoff_op42_12",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "1e4805b8f946e4fe64ddcc63569b5e3b2fe0c50b4d66f3b91a5a113276f4c860",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_13a",
+      "work_id": "rachmaninoff_op42_13a",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "694e91c8dec8c23d509b8dd7dfb212b825565af4f4c13320f68be8ea150a8617",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_13b",
+      "work_id": "rachmaninoff_op42_13b",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "befdf859235b996b8b631fdd344063f9280f4c91599032656f83184c2e0559aa",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_14",
+      "work_id": "rachmaninoff_op42_14",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "6896bb7ba19d181ad77ea50e4c285397a834557515e46665f67043268c3f367b",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_15",
+      "work_id": "rachmaninoff_op42_15",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "9dc334f4d1109f1e13943f74a066da77dec1338a282dadf961a45fddf975aee4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_16",
+      "work_id": "rachmaninoff_op42_16",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "b86c65bc575dba78f943de3f812bf4b86eb480aa49cee0a05d21be15ff72703e",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_17",
+      "work_id": "rachmaninoff_op42_17",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "21559365aa55d123aa0168382b07af4a61983823b4bcb7feedf988fc54b462b4",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_18",
+      "work_id": "rachmaninoff_op42_18",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "f1d5547f844c032873af0b7b16c84558152ccb23f26554aae08f047a01b1e8ec",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_19",
+      "work_id": "rachmaninoff_op42_19",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "6381583ed31e25dfa46de8e2ebca396f6c088611c388618368fcd5fc9168499c",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "rachmaninoff_op42_20",
+      "work_id": "rachmaninoff_op42_20",
+      "composer_id": "CMP-RACHMANINOFF",
+      "composer_name": "Sergei Rachmaninoff",
+      "source_family": "https://github.com/DCMLab/rachmaninoff_piano",
+      "canonical_materialized_sha256": "7cf8b90c64c1475fa7134dcdcbda80280293431c6fa4f34aa2435f577a9c6412",
+      "role": "DEVELOPMENT"
+    },
+    {
+      "piece_id": "medtner_op08n01",
+      "work_id": "medtner_op08n01",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "d9231efa8e23447c96484304674c42cce874692e6ca2441124c891df3ae868a6",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op14n01",
+      "work_id": "medtner_op14n01",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "e9928944da1d981ef8757725c5ef2a851bff8ff7515c014787573972b4163725",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op26n01",
+      "work_id": "medtner_op26n01",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "2ef6583635c85926c40f9742c91e22049140532befaca2f00dec5b71ae75e824",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op26n02",
+      "work_id": "medtner_op26n02",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "e8afc54ab0e532b4be2a79dc24a230e829c8caae8be85d1f8210fbd494497796",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op26n03",
+      "work_id": "medtner_op26n03",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "9fd6fd8485002e1cd049e73f2116b0c1bf233286b3e94f8aa5f240bcf1f95cc4",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op26n04",
+      "work_id": "medtner_op26n04",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "7effccf1a34d30ec17c77dbf94f09a7c1c3fc64446b19be787c6342daadf47c1",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op34n01",
+      "work_id": "medtner_op34n01",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "9df3b8efe49d75247b400bf1c442efca39d681d3bd147a5361f82954e01a7285",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op34n02",
+      "work_id": "medtner_op34n02",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "1b1f601c59f21f4c49e5c3ea8f269ace2d9f0319842c67a89a9e44ba56c57219",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op34n03",
+      "work_id": "medtner_op34n03",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "ed566a83929c651aa8f53e639572a725a9ac239701342b380ca3e3f6ddf34bd4",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op34n04",
+      "work_id": "medtner_op34n04",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "3b03c180bd951e3ac642d557045677f00046b2d722da1857de3d73191cebb22d",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op35n01",
+      "work_id": "medtner_op35n01",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "66dc608435738c33bf0329d7c9d198b9be5f52c756f80566b7ce73fd16329a6b",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op35n02",
+      "work_id": "medtner_op35n02",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "2bae037429ab8ffb4ef51f26f430f9b4c081ef4fe847982cb204cf2e5f1d85ed",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op35n03",
+      "work_id": "medtner_op35n03",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "ee4fbdcc186cf7e3d72a0f78aec03998976a8491ae52896e05aa72012452b8ec",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op35n04",
+      "work_id": "medtner_op35n04",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "0edb81c14319aaaf06456e4befddec28b9d64eea227a3b086f918b2a5c49942e",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op42n01",
+      "work_id": "medtner_op42n01",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "cee888c79083ef175970523fb3249d88ad55cdb4107107de827b781c45a0e3ef",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op42n02",
+      "work_id": "medtner_op42n02",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "deef25bd88c879a417edd473d35e2d598f2735c387de41e1807a83c14b14b436",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op42n03",
+      "work_id": "medtner_op42n03",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "1588b75f8b48b80413f0372c9933e281b3a6c4de2f27ea4d0ad3861a86256180",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op48n01",
+      "work_id": "medtner_op48n01",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "3386995a613dc748b7a34993c49eba17416aa7bf0fa039257d2b7794d50609d8",
+      "role": "VALIDATION"
+    },
+    {
+      "piece_id": "medtner_op48n02",
+      "work_id": "medtner_op48n02",
+      "composer_id": "CMP-MEDTNER",
+      "composer_name": "Nikolai Medtner",
+      "source_family": "https://github.com/DCMLab/medtner_tales",
+      "canonical_materialized_sha256": "65ce5edbef7c60ae043b775ea9d78cda387e344f5eeacabb9437c6386d3f2cc5",
+      "role": "VALIDATION"
+    }
+  ]
+}

@@ -35,6 +35,9 @@ jobs:
       - name: Validate PF-001C1 metric contract
         run: python scripts/validate_pf001c1_metric_contract.py
 
+      - name: Validate PF-001C1.2 Stage-0 split manifest
+        run: python scripts/validate_pf001c1_stage0_split.py
+
       - name: Lint with ruff
         run: ruff check src/ tests/ scripts/
 
