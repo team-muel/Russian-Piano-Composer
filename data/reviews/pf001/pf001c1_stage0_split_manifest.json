@@ -1,11 +1,11 @@
 {
-  "": "https://json-schema.org/draft/2020-12/schema",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
   "manifest_name": "PF001C1_STAGE0_SPLIT_MANIFEST",
   "version": "1.0.0",
   "milestone": "PF-001C1.2",
   "ratification_date": "2026-10-01",
   "status": "STAGE0_SPLIT_MANIFEST_FROZEN",
-  "physical_inventory_hash": "1416c387704067717406c365399ec64c6ce0463ecc16b3453ed061bda368daba",
+  "physical_inventory_hash": "3154c2967ee8201d5df65eb3f866fb81e495ac1878e8a60349687888018c9d8e",
   "materialization_receipt_hash": "db2370c0fdc6010e0d917be4c953d48a1d37d59d680a5d76d8f8a63e474c689d",
   "PF001C1_METRIC_CONTRACT_HASH": "5b681c6b02ecb2c573b06d463705ab8b4fd17b9aec9b5c4e56f6a7e5830e214a",
   "composer_role": {
