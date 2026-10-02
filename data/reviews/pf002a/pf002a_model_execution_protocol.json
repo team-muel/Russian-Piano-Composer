@@ -1,0 +1,154 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "protocol_name": "PF002A_PROSPECTIVE_MODEL_AND_EXECUTION_PROTOCOL",
+  "version": "1.0.0",
+  "milestone": "PF-002A.0",
+  "ratification_date": "2026-10-02",
+  "status": "PROSPECTIVE_PROTOCOL_FROZEN_NO_MODEL_FIT_YET",
+  "upstream_invariant_hashes": {
+    "physical_inventory_hash": "3154c2967ee8201d5df65eb3f866fb81e495ac1878e8a60349687888018c9d8e",
+    "materialization_receipt_hash": "db2370c0fdc6010e0d917be4c953d48a1d37d59d680a5d76d8f8a63e474c689d",
+    "PF001C1_METRIC_CONTRACT_HASH": "5b681c6b02ecb2c573b06d463705ab8b4fd17b9aec9b5c4e56f6a7e5830e214a",
+    "PF001C1_STAGE0_SPLIT_HASH": "2ab696689645ed4420ed021bdfae6b545ce4c4eb15c39e8097c05ef1d31464ab"
+  },
+  "dataset_roles": {
+    "counts": {
+      "DEVELOPMENT": 37,
+      "VALIDATION": 22,
+      "BENCHMARK_PILOT_ONLY": 3,
+      "TOTAL": 62
+    },
+    "composer_partition": {
+      "DEVELOPMENT": ["Pyotr Ilyich Tchaikovsky", "Sergei Rachmaninoff", "Anton Arensky"],
+      "VALIDATION": ["Nikolai Medtner", "Anatoly Lyadov"],
+      "BENCHMARK_PILOT_ONLY": ["Sergei Lyapunov"]
+    }
+  },
+  "external_test_firewall": {
+    "status": "ENFORCED_BLINDED",
+    "cohort": [
+      "Taneyev",
+      "Bortkiewicz",
+      "Blumenfeld",
+      "Catoire"
+    ],
+    "prohibition": "External test cohort scores, audio, metadata, and features MUST NOT be loaded, inspected, or processed."
+  },
+  "lineage_exclusions": {
+    "Scriabin": "EXCLUDED_FROM_PF_DEVELOPMENT_BY_LINEAGE_POLICY"
+  },
+  "neural_framework": {
+    "framework": "PyTorch",
+    "version_constraint": ">=2.2,<2.4",
+    "determinism_settings": {
+      "torch_use_deterministic_algorithms": true,
+      "cudnn_deterministic": true,
+      "cudnn_benchmark": false
+    },
+    "serialization_format": "state_dict_pt"
+  },
+  "input_representation": {
+    "source_domain_class": "russian_piano_composer.domain.score.CanonicalScore",
+    "event_ordering": ["global_onset ASC", "staff ASC", "voice ASC", "pitch DESC"],
+    "token_tuple": ["kind", "pitch", "duration", "metric_pos", "bar_flag"],
+    "max_context_window": 1024,
+    "stride_length": 512,
+    "boundary_tokens": ["<BOS>", "<EOS>", "<BAR>", "<UNK>"],
+    "vocabulary_scope": "DEVELOPMENT_CORPUS_ONLY"
+  },
+  "candidate_models": [
+    {
+      "model_id": "AL-GRU-01",
+      "architecture_type": "causal_gated_recurrent",
+      "embedding_dim": 128,
+      "hidden_dim": 256,
+      "num_layers": 2,
+      "dropout": 0.1,
+      "max_trainable_parameters": 250000,
+      "latent_state_source": "final_layer_hidden_norm"
+    },
+    {
+      "model_id": "AL-TRF-01",
+      "architecture_type": "causal_transformer_decoder",
+      "embedding_dim": 128,
+      "num_layers": 4,
+      "num_heads": 4,
+      "head_dim": 32,
+      "feedforward_dim": 512,
+      "activation": "GELU",
+      "dropout": 0.1,
+      "max_trainable_parameters": 350000,
+      "latent_state_source": "final_layer_norm"
+    }
+  ],
+  "training_objective": {
+    "formula": "L_total = lambda_pred * L_pred + lambda_repr * L_repr",
+    "lambda_pred": 1.0,
+    "lambda_repr": 0.5,
+    "losses": {
+      "L_pred": {
+        "type": "autoregressive_cross_entropy",
+        "vocabulary_scope": "DEVELOPMENT_CORPUS_ONLY"
+      },
+      "L_repr": {
+        "type": "infonce_contrastive",
+        "temperature": 0.07,
+        "positive_transforms": "T_ID_PITCH_TRANSPOSITION, T_ID_OCTAVE_DISPLACEMENT, T_ID_RHYTHMIC_AUGMENTATION, T_ID_RHYTHMIC_DIMINUTION, T_ID_LIMITED_ORNAMENT_INSERTION, T_ID_LIMITED_ORNAMENT_DELETION, T_ID_ACCOMPANIMENT_TEXTURE_VARIATION",
+        "foil_scope": "DEVELOPMENT_CORPUS_ONLY"
+      }
+    },
+    "non_contamination_prohibition": "Counterfactuals, memory probes, and anti-copy checks are evaluation only and MUST NOT enter training loss."
+  },
+  "training_budget_and_optimization": {
+    "replicates_per_candidate": 3,
+    "max_epochs": 50,
+    "batch_size": 16,
+    "optimizer": "AdamW",
+    "learning_rate": 0.0005,
+    "min_learning_rate": 0.00001,
+    "weight_decay": 0.01,
+    "warmup_epochs": 5,
+    "lr_schedule": "cosine_annealing",
+    "gradient_clip_norm": 1.0
+  },
+  "random_context_hierarchy": {
+    "framework": "russian_piano_composer.runtime.random_context.RandomContext",
+    "root_seed": 20260930,
+    "namespace_paths": {
+      "weights": "pf002a/weights",
+      "dataloader": "pf002a/dataloader",
+      "augmentation": "pf002a/augmentation",
+      "evaluation_bootstrap": "pf002a/evaluation/bootstrap"
+    }
+  },
+  "checkpoint_selection_rule": {
+    "criterion": "minimum_validation_cross_entropy_bits_per_token",
+    "metric": "H_val(W)",
+    "evaluation_frequency": "epoch_boundary",
+    "allowed_checkpoints_per_candidate": 1
+  },
+  "execution_ordering": [
+    "1. Fit AL-GRU-01 and AL-TRF-01 on DEVELOPMENT across R=3 replicates within 50 epoch budget.",
+    "2. Select single best checkpoint per architecture minimizing VALIDATION H(W).",
+    "3. Apply Grouped K-Fold (K=5) Youden's J on DEVELOPMENT to prospectively calibrate operating thresholds (tau).",
+    "4. Evaluate 6 active Stage-0 gates on VALIDATION (22 pieces) using calibrated tau.",
+    "5. Apply prospective architecture selection rule to select winning Artificial Listener.",
+    "6. Evaluate winning frozen Listener on BENCHMARK_PILOT_ONLY (3 pieces) exactly once."
+  ],
+  "gate_readiness_status": {
+    "PREDICTIVE_GATE": "ACTIVE_STAGE0_GATE",
+    "INVARIANCE_GATE": "ACTIVE_STAGE0_GATE",
+    "DISCRIMINATION_GATE": "ACTIVE_STAGE0_GATE",
+    "COUNTERFACTUAL_GATE": "ACTIVE_STAGE0_GATE",
+    "SOURCE_SEGMENT_STRUCTURAL_MEMORY_GATE": "ACTIVE_STAGE0_GATE",
+    "ANTI_COPY_GATE": "ACTIVE_STAGE0_GATE",
+    "COMPOSER_GENERALIZATION_GATE": "NOT_READY_FOR_CALIBRATION",
+    "THEMATIC_MEMORY_GATE": "THEME_IDENTITY_DEPENDENT_NOT_READY"
+  },
+  "architecture_selection_rule": {
+    "requirement": "Candidate must pass all 6 active Stage-0 gates on VALIDATION.",
+    "primary_tie_breaker": "lower_validation_bits_per_token",
+    "secondary_tie_breaker": "lower_trainable_parameters",
+    "fail_closed_verdict": "STAGE0_LISTENER_REPRESENTATION_FAILED"
+  }
+}
