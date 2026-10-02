@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "protocol_name": "PF002A_PROSPECTIVE_MODEL_AND_EXECUTION_PROTOCOL",
-  "version": "1.0.0",
-  "milestone": "PF-002A.0",
+  "version": "1.1.0",
+  "milestone": "PF-002A.0a",
   "ratification_date": "2026-10-02",
   "status": "PROSPECTIVE_PROTOCOL_FROZEN_NO_MODEL_FIT_YET",
   "upstream_invariant_hashes": {
@@ -54,31 +54,42 @@
     "max_context_window": 1024,
     "stride_length": 512,
     "boundary_tokens": ["<BOS>", "<EOS>", "<BAR>", "<UNK>"],
-    "vocabulary_scope": "DEVELOPMENT_CORPUS_ONLY"
+    "vocabulary_scope": "DEVELOPMENT_CORPUS_ONLY",
+    "max_vocabulary_size": 512
   },
   "candidate_models": [
     {
       "model_id": "AL-GRU-01",
       "architecture_type": "causal_gated_recurrent",
-      "embedding_dim": 128,
-      "hidden_dim": 256,
+      "embedding_dim": 64,
+      "hidden_dim": 96,
       "num_layers": 2,
       "dropout": 0.1,
-      "max_trainable_parameters": 250000,
-      "latent_state_source": "final_layer_hidden_norm"
+      "parameter_formula": "P_core + P_vocab(V) = 108864 + (161 * |V| + 0)",
+      "core_parameters": 108864,
+      "max_trainable_parameters": 200000,
+      "nominal_parameters_at_v512": 191296,
+      "latent_state_source": "final_layer_hidden_projected_norm",
+      "latent_dim": 64
     },
     {
       "model_id": "AL-TRF-01",
       "architecture_type": "causal_transformer_decoder",
-      "embedding_dim": 128,
-      "num_layers": 4,
+      "embedding_dim": 64,
+      "num_layers": 3,
       "num_heads": 4,
-      "head_dim": 32,
-      "feedforward_dim": 512,
+      "head_dim": 16,
+      "feedforward_dim": 128,
+      "positional_encoding": "LEARNED_ABSOLUTE_POSITIONAL_EMBEDDING",
+      "max_sequence_length": 1024,
       "activation": "GELU",
       "dropout": 0.1,
-      "max_trainable_parameters": 350000,
-      "latent_state_source": "final_layer_norm"
+      "parameter_formula": "P_core + P_vocab(V) = 170240 + (129 * |V| + 0)",
+      "core_parameters": 170240,
+      "max_trainable_parameters": 250000,
+      "nominal_parameters_at_v512": 236288,
+      "latent_state_source": "final_layer_norm",
+      "latent_dim": 64
     }
   ],
   "training_objective": {
@@ -93,7 +104,15 @@
       "L_repr": {
         "type": "infonce_contrastive",
         "temperature": 0.07,
-        "positive_transforms": "T_ID_PITCH_TRANSPOSITION, T_ID_OCTAVE_DISPLACEMENT, T_ID_RHYTHMIC_AUGMENTATION, T_ID_RHYTHMIC_DIMINUTION, T_ID_LIMITED_ORNAMENT_INSERTION, T_ID_LIMITED_ORNAMENT_DELETION, T_ID_ACCOMPANIMENT_TEXTURE_VARIATION",
+        "positive_transforms": [
+          "T_ID_PITCH_TRANSPOSITION",
+          "T_ID_OCTAVE_DISPLACEMENT",
+          "T_ID_RHYTHMIC_AUGMENTATION",
+          "T_ID_RHYTHMIC_DIMINUTION",
+          "T_ID_LIMITED_ORNAMENT_INSERTION",
+          "T_ID_LIMITED_ORNAMENT_DELETION",
+          "T_ID_ACCOMPANIMENT_TEXTURE_VARIATION"
+        ],
         "foil_scope": "DEVELOPMENT_CORPUS_ONLY"
       }
     },
@@ -111,30 +130,216 @@
     "lr_schedule": "cosine_annealing",
     "gradient_clip_norm": 1.0
   },
+  "negative_sampling_policy": {
+    "num_foils_per_anchor": 5,
+    "sampling_scope": "DEVELOPMENT_CORPUS_ONLY",
+    "foil_allocation": {
+      "within_piece_distant": 3,
+      "cross_piece_same_composer": 2
+    },
+    "sampling_method": "WITHOUT_REPLACEMENT_PER_ANCHOR",
+    "matching_constraints": {
+      "duration_measure_tolerance": 0,
+      "event_density_tolerance_percent": 15,
+      "pitch_register_mean_midi_tolerance": 6.0
+    }
+  },
+  "identity_transform_sampling_policy": {
+    "num_transforms_per_anchor": 1,
+    "transform_registry_reference": "data/reviews/pf001/pf001c1_transformation_registry.json",
+    "transforms": [
+      {
+        "transformation_id": "T_ID_PITCH_TRANSPOSITION",
+        "probability_weight": 0.14285714285714285,
+        "parameter_domain": {
+          "interval_semitones": [-7, -5, -4, -3, -2, -1, 1, 2, 3, 4, 5, 7]
+        }
+      },
+      {
+        "transformation_id": "T_ID_OCTAVE_DISPLACEMENT",
+        "probability_weight": 0.14285714285714285,
+        "parameter_domain": {
+          "octave_shift": [-2, -1, 1, 2],
+          "target_voice": ["all", "top_voice", "bottom_voice"]
+        }
+      },
+      {
+        "transformation_id": "T_ID_RHYTHMIC_AUGMENTATION",
+        "probability_weight": 0.14285714285714285,
+        "parameter_domain": {
+          "scaling_factor": [2, 3]
+        }
+      },
+      {
+        "transformation_id": "T_ID_RHYTHMIC_DIMINUTION",
+        "probability_weight": 0.14285714285714285,
+        "parameter_domain": {
+          "scaling_factor": [2, 3]
+        }
+      },
+      {
+        "transformation_id": "T_ID_LIMITED_ORNAMENT_INSERTION",
+        "probability_weight": 0.14285714285714285,
+        "parameter_domain": {
+          "ornament_type": ["mordent", "turn", "grace_note"],
+          "density_fraction": 0.1
+        }
+      },
+      {
+        "transformation_id": "T_ID_LIMITED_ORNAMENT_DELETION",
+        "probability_weight": 0.14285714285714285,
+        "parameter_domain": {
+          "max_deletion_fraction": 0.1
+        }
+      },
+      {
+        "transformation_id": "T_ID_ACCOMPANIMENT_TEXTURE_VARIATION",
+        "probability_weight": 0.14285714285714285,
+        "parameter_domain": {
+          "pattern_types": ["arpeggiation_expansion", "block_chord_consolidation"]
+        }
+      }
+    ]
+  },
   "random_context_hierarchy": {
     "framework": "russian_piano_composer.runtime.random_context.RandomContext",
     "root_seed": 20260930,
-    "namespace_paths": {
-      "weights": "pf002a/weights",
-      "dataloader": "pf002a/dataloader",
-      "augmentation": "pf002a/augmentation",
-      "evaluation_bootstrap": "pf002a/evaluation/bootstrap"
+    "namespace_paths": [
+      "pf002a/model/AL-GRU-01/rep0/init",
+      "pf002a/model/AL-GRU-01/rep0/dataloader",
+      "pf002a/model/AL-GRU-01/rep0/augmentation",
+      "pf002a/model/AL-GRU-01/rep0/negative_sampling",
+      "pf002a/model/AL-GRU-01/rep1/init",
+      "pf002a/model/AL-GRU-01/rep1/dataloader",
+      "pf002a/model/AL-GRU-01/rep1/augmentation",
+      "pf002a/model/AL-GRU-01/rep1/negative_sampling",
+      "pf002a/model/AL-GRU-01/rep2/init",
+      "pf002a/model/AL-GRU-01/rep2/dataloader",
+      "pf002a/model/AL-GRU-01/rep2/augmentation",
+      "pf002a/model/AL-GRU-01/rep2/negative_sampling",
+      "pf002a/model/AL-TRF-01/rep0/init",
+      "pf002a/model/AL-TRF-01/rep0/dataloader",
+      "pf002a/model/AL-TRF-01/rep0/augmentation",
+      "pf002a/model/AL-TRF-01/rep0/negative_sampling",
+      "pf002a/model/AL-TRF-01/rep1/init",
+      "pf002a/model/AL-TRF-01/rep1/dataloader",
+      "pf002a/model/AL-TRF-01/rep1/augmentation",
+      "pf002a/model/AL-TRF-01/rep1/negative_sampling",
+      "pf002a/model/AL-TRF-01/rep2/init",
+      "pf002a/model/AL-TRF-01/rep2/dataloader",
+      "pf002a/model/AL-TRF-01/rep2/augmentation",
+      "pf002a/model/AL-TRF-01/rep2/negative_sampling",
+      "pf002a/evaluation/resampling",
+      "pf002a/evaluation/bootstrap"
+    ]
+  },
+  "replicate_and_checkpoint_selection": {
+    "level_a_replicate_checkpoint": {
+      "criterion": "minimum_validation_cross_entropy_bits_per_token",
+      "metric": "H_val(W)",
+      "evaluation_frequency": "epoch_boundary",
+      "formula": "e_r^* = argmin_{e in {1..50}} H_val(W; theta_{e, r})",
+      "allowed_checkpoints_per_replicate": 1
+    },
+    "level_b_replicate_aggregation": {
+      "method": "MEDIAN_REPLICATE_VALIDATION_METRIC",
+      "formula": "H_cand = median(H_val(e_0^*), H_val(e_1^*), H_val(e_2^*))",
+      "cherry_picking_prohibition": "Cherry-picking the single best-performing random seed or lowest validation loss among replicates is strictly prohibited.",
+      "robustness_requirement": "All R=3 replicates must individually pass all 6 active Stage-0 gates on VALIDATION.",
+      "canonical_checkpoint_selection": "The physical checkpoint corresponding to the median validation score replicate is selected as the canonical representation for downstream evaluation."
     }
   },
-  "checkpoint_selection_rule": {
-    "criterion": "minimum_validation_cross_entropy_bits_per_token",
-    "metric": "H_val(W)",
-    "evaluation_frequency": "epoch_boundary",
-    "allowed_checkpoints_per_candidate": 1
+  "gate_specific_calibration_and_authority": {
+    "PREDICTIVE_GATE": {
+      "metric_identifier": "H_val(W)",
+      "unit": "bits/token",
+      "threshold_symbol": "tau_perplexity",
+      "calibration_method": "NON_NEURAL_BASELINES_COMPARISON",
+      "calibrated_on_development": false,
+      "calibration_status": "NOT_INDEPENDENTLY_CALIBRATABLE",
+      "required_baselines": [
+        "BASE_EMPIRICAL_MARGINAL",
+        "BASE_MARKOV_ORDER_1",
+        "BASE_NGRAM_4"
+      ],
+      "decision_rule": "H_val(W) < min(H_marginal, H_Markov, H_ngram4) with piece-clustered 95% bootstrap CI upper bound"
+    },
+    "INVARIANCE_GATE": {
+      "metric_identifier": "cos_sim(z(A), z(T_ID(A)))",
+      "unit": "dimensionless correlation [-1.0, 1.0]",
+      "threshold_symbol": "tau_identity",
+      "calibration_method": "GROUPED_KFOLD_YOUDENS_J",
+      "calibrated_on_development": true,
+      "group_key": "piece_id",
+      "n_splits": 5,
+      "grid_range": [-1.0, 1.0],
+      "grid_step": 0.005,
+      "decision_rule": "median(cos_sim(z(A), z(T_ID(A)))) >= tau_identity on VALIDATION"
+    },
+    "DISCRIMINATION_GATE": {
+      "metric_identifier": "foil_separation_margin_and_auroc",
+      "unit": "dimensionless correlation / AUROC",
+      "threshold_symbol": "tau_discrimination",
+      "calibration_method": "GROUPED_KFOLD_YOUDENS_J",
+      "calibrated_on_development": true,
+      "group_key": "piece_id",
+      "n_splits": 5,
+      "decision_rule": "Separation margin against matched negative foils satisfies tau_discrimination and AUROC >= 0.95 with piece-clustered 95% bootstrap CI"
+    },
+    "COUNTERFACTUAL_GATE": {
+      "metric_identifier": "directional_contrast_responses",
+      "families": ["CF-CLOSURE", "CF-SURPRISE"],
+      "threshold_symbol": "tau_counterfactual",
+      "calibration_method": "DIRECTIONAL_HYPOTHESIS_BOOTSTRAP_LOWER_BOUND",
+      "calibrated_on_development": false,
+      "calibration_status": "NOT_APPLICABLE_ROC_YOUDEN",
+      "decision_rule": "Lower bound of piece-clustered percentile bootstrap 95% CI > 0 for ClosureContrast and SurpriseContrast; no arbitrary ROC threshold grid"
+    },
+    "SOURCE_SEGMENT_STRUCTURAL_MEMORY_GATE": {
+      "metric_identifier": "m_A(t) = sim(z(A), h_t) and MemoryContrast",
+      "unit": "dimensionless correlation",
+      "threshold_symbol": "tau_memory",
+      "calibration_method": "RETRIEVAL_SEPARATION_AND_DIRECTIONAL_BOOTSTRAP",
+      "calibrated_on_development": false,
+      "calibration_status": "NOT_APPLICABLE_ROC_YOUDEN",
+      "decision_rule": "Retrieval similarity for recurrence exceeds matched foil (p < 0.05) and lower bound of piece-clustered percentile bootstrap 95% CI > 0 for MemoryContrast"
+    },
+    "ANTI_COPY_GATE": {
+      "metric_identifier": "three_tier_anti_copy_evaluation",
+      "threshold_symbol": "tau_copy",
+      "calibration_method": "THREE_TIER_CONJUNCTIVE_EVALUATION",
+      "calibrated_on_development": false,
+      "calibration_status": "EXPLICIT_SPECIFICATION",
+      "tiers": {
+        "tier_1_symbolic_ngram": {
+          "metric": "L_max",
+          "description": "Max contiguous matched token length",
+          "condition": "L_max <= 12"
+        },
+        "tier_2_weighted_interval_ngram": {
+          "metric": "W_ngram(G)",
+          "description": "Information-weighted interval n-gram using ADD_ALPHA estimator",
+          "alpha": 0.1,
+          "corpus_scope": "DEVELOPMENT_CORPUS_ONLY",
+          "condition": "W_ngram(G) <= tau_infocopy"
+        },
+        "tier_3_latent_retrieval": {
+          "metric": "D_min",
+          "description": "Minimum latent cosine distance to any development training segment",
+          "condition": "D_min >= 0.05"
+        }
+      },
+      "decision_rule": "PASS if and only if Tier 1, Tier 2, and Tier 3 pass simultaneously"
+    },
+    "COMPOSER_GENERALIZATION_GATE": {
+      "status": "NOT_READY_FOR_CALIBRATION",
+      "reason": "Insufficient verified composer-disjoint physical corpus coverage."
+    },
+    "THEMATIC_MEMORY_GATE": {
+      "status": "THEME_IDENTITY_DEPENDENT_NOT_READY",
+      "reason": "Requires operational THEME_MOTIF_IDENTITY annotations."
+    }
   },
-  "execution_ordering": [
-    "1. Fit AL-GRU-01 and AL-TRF-01 on DEVELOPMENT across R=3 replicates within 50 epoch budget.",
-    "2. Select single best checkpoint per architecture minimizing VALIDATION H(W).",
-    "3. Apply Grouped K-Fold (K=5) Youden's J on DEVELOPMENT to prospectively calibrate operating thresholds (tau).",
-    "4. Evaluate 6 active Stage-0 gates on VALIDATION (22 pieces) using calibrated tau.",
-    "5. Apply prospective architecture selection rule to select winning Artificial Listener.",
-    "6. Evaluate winning frozen Listener on BENCHMARK_PILOT_ONLY (3 pieces) exactly once."
-  ],
   "gate_readiness_status": {
     "PREDICTIVE_GATE": "ACTIVE_STAGE0_GATE",
     "INVARIANCE_GATE": "ACTIVE_STAGE0_GATE",
@@ -145,9 +350,17 @@
     "COMPOSER_GENERALIZATION_GATE": "NOT_READY_FOR_CALIBRATION",
     "THEMATIC_MEMORY_GATE": "THEME_IDENTITY_DEPENDENT_NOT_READY"
   },
+  "execution_ordering": [
+    "1. Fit AL-GRU-01 and AL-TRF-01 on DEVELOPMENT across R=3 replicates within 50 epoch budget.",
+    "2. Select epoch checkpoint per replicate minimizing VALIDATION H(W); aggregate across replicates using median validation metric (never cherry-pick best seed).",
+    "3. Apply Grouped K-Fold (K=5) Youden's J on DEVELOPMENT to prospectively calibrate gate operating thresholds (tau_identity, tau_discrimination).",
+    "4. Evaluate 6 active Stage-0 gates on VALIDATION (22 pieces) using calibrated tau, non-neural baselines, directional bootstrap bounds, and 3-tier anti-copy.",
+    "5. Apply prospective architecture selection rule to select winning Artificial Listener.",
+    "6. Evaluate winning frozen Listener on BENCHMARK_PILOT_ONLY (3 pieces) exactly once."
+  ],
   "architecture_selection_rule": {
-    "requirement": "Candidate must pass all 6 active Stage-0 gates on VALIDATION.",
-    "primary_tie_breaker": "lower_validation_bits_per_token",
+    "requirement": "Candidate must pass all 6 active Stage-0 gates on VALIDATION across all 3 replicates.",
+    "primary_tie_breaker": "lower_replicate_median_validation_bits_per_token",
     "secondary_tie_breaker": "lower_trainable_parameters",
     "fail_closed_verdict": "STAGE0_LISTENER_REPRESENTATION_FAILED"
   }
