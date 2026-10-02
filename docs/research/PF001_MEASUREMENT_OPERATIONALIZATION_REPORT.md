@@ -193,13 +193,20 @@ These constructs may only be evaluated as emergent properties of validated lower
 
 ### 6. The Primary Observation Unit & Hierarchical Dependency Structure
 
-In traditional machine learning, the observation unit is typically the `piece` or the `token`. In human perceptual science, this creates severe aggregation bias.
+#### 6.1 Stage-0 Autonomous Structural Observation Unit
+In Stage-0 autonomous structural learning and evaluation, the primary unit of statistical independence is:
+$$\text{Cluster Unit} \equiv \text{piece\_id}$$
+Every measure, segment, transformed derivative, and counterfactual pair originating from a score inherits that score's `piece_id`. Entire pieces are sampled or assigned during cross-validation fold splitting and bootstrap resampling ($B = 2000$). Segment counts must never be treated as independent degrees of freedom. Evaluation windows are stratified across:
+- `segment_4m`: Contiguous 4-measure window (invariance, hard-negative discrimination, baseline n-grams).
+- `segment_8m`: Contiguous 8-measure window (closure contrast, surprise contrast, formal boundaries).
+- `section_window`: Formal structural section (long-range source-segment structural memory reactivation).
 
-The primary observation unit in PF-001 is formally defined as:
-$$\mathbf{Unit} = \text{listener} \times \text{musical context} \times \text{time}$$
+#### 6.2 Optional Human Study Observation Unit
+In optional external human behavioral listening experiments (EXP-001 - EXP-005), the primary empirical observation unit is defined as:
+$$\mathbf{Unit}_{\text{human}} = \text{listener} \times \text{musical context} \times \text{time}$$
 
-#### Hierarchical Dependency Structure
-Every empirical observation contains structured random and fixed variance across nested hierarchical strata:
+##### Hierarchical Dependency Structure (Human Studies)
+Every empirical human observation contains structured random and fixed variance across nested hierarchical strata:
 $$\mathbf{y}_{ijkl} = \mu + \alpha_i (\text{Composer}) + \beta_{ij} (\text{Work} \mid \text{Composer}) + \gamma_{ijk} (\text{Context} \mid \text{Work}) + \zeta_l (\text{Listener}) + \epsilon_{ijkl}$$
 
 ```mermaid
@@ -216,7 +223,7 @@ graph TD
     LST --> OBS
 ```
 
-To account for these dependencies without leakage:
+To account for these dependencies in human studies without leakage:
 1. Multi-level mixed-effects models must be specified for all behavioral analyses.
 2. Cross-validation splits must isolate composers and listeners disjointly.
 3. Pseudo-replication (e.g. treating multiple trials from the same participant as independent identically distributed samples) is strictly prohibited.
@@ -225,33 +232,51 @@ To account for these dependencies without leakage:
 
 ### 7. Prospective Validation Categories & Gating Criteria
 
-To achieve certification as an authentic Artificial Listener, a candidate model must pass four independent validation gates:
+To achieve certification as an authentic Autonomous Artificial Listener in Stage-0, a candidate model must pass four independent structural validation gates grounded in corpus observables:
 
 ```mermaid
 flowchart TD
-    V1["1. PREDICTIVE VALIDITY<br/>Distributional alignment (JSD, Wasserstein)<br/>with empirical human choice"]
-    V2["2. TEMPORAL VALIDITY<br/>Causal time-ordering invariance;<br/>alignment with human cognitive lag"]
-    V3["3. INTERVENTION VALIDITY<br/>Directional fidelity under controlled<br/>stimulus perturbations"]
-    V4["4. GENERALIZATION VALIDITY<br/>Invariance across unseen listeners,<br/>performers, and disjoint composers"]
+    V1["1. PREDICTIVE VALIDITY<br/>Predictive agreement with held-out symbolic<br/>corpus targets and non-neural baselines"]
+    V2["2. STRUCTURAL TEMPORAL VALIDITY<br/>Multi-scale temporal structural modeling<br/>(event, segment, phrase, section)"]
+    V3["3. INTERVENTION VALIDITY<br/>Directional fidelity under controlled<br/>structural counterfactual perturbations"]
+    V4["4. GENERALIZATION VALIDITY<br/>Invariance across held-out human pieces;<br/>composer gate NOT_READY_FOR_CALIBRATION"]
 
-    V1 --> GATE{"Stage-0 Validation<br/>Passed?"}
+    V1 --> GATE{"Stage-0 Autonomous<br/>Validation Passed?"}
     V2 --> GATE
     V3 --> GATE
     V4 --> GATE
-    GATE -- No --> FAIL["FAIL-CLOSED:<br/>Return to Protocol Design"]
-    GATE -- Yes --> PASS["FROZEN FOR PILOT"]
+    GATE -- No --> FAIL["FAIL-CLOSED:<br/>Return to Architecture / Training Design"]
+    GATE -- Yes --> PASS["FROZEN FOR STAGE-0 PILOT"]
 ```
 
-1. **Predictive Validity:**
-   - Distributional distance between $P_{\text{AI}}(x \mid c)$ and $P_{\text{human}}(x \mid c)$ must meet or exceed the human noise ceiling benchmark.
-   - Rank-order correlation of continuation likelihoods must achieve Spearman's $\rho \ge 0.70$ ($p < 0.001$).
-2. **Temporal Validity:**
-   - Preservation of strict causal time-ordering ($t \le t_{\text{probe}}$).
-   - Dynamic trajectory of model predictions must track human response latency with biologically plausible cognitive lag ($200 \le \Delta t_{\text{lag}} \le 1200\text{ ms}$).
-3. **Intervention Validity:**
-   - Directional change under perturbation (e.g., cadence displacement, chromatic violation) must match human shift sign in $\ge 90\%$ of benchmark cases.
-4. **Generalization Validity:**
-   - Model must demonstrate predictive stability across held-out listeners and disjoint external composers without parameter recalibration.
+1. **`PREDICTIVE_VALIDITY`:**
+   - Predictive agreement with held-out symbolic corpus targets (`PPL`, bits/token) evaluated on the `validation` pool.
+   - Outperformance over predeclared non-neural baselines (`BASE_EMPIRICAL_MARGINAL`, `BASE_MARKOV_ORDER_1`, `BASE_NGRAM_4`).
+   - No human behavioral distribution is required for PF-002A Stage-0 training, checkpoint selection, threshold calibration, or pass/fail gating.
+2. **`STRUCTURAL_TEMPORAL_VALIDITY`:**
+   - Strict causal time-ordering ($t \le t_{\text{probe}}$) in sequential autoregressive evaluation.
+   - Multi-scale temporal structural modeling spanning event, segment (`segment_4m`), phrase/section-proxy (`segment_8m`), and long-range source-segment timescales (`section_window`).
+   - Stage-0 does not claim biological real-time auditory cognition or neural lag replication.
+3. **`INTERVENTION_VALIDITY`:**
+   - Directionally correct response to frozen structural counterfactuals:
+     - Cadential disruption: $\text{ClosureContrast} = C_c - C_t > 0$ (`CF-CLOSURE`).
+     - Controlled surprise perturbation: $\text{SurpriseContrast} = S_{\text{target}} - S_{\text{control}} > 0$ (`CF-SURPRISE`).
+     - Source-segment recurrence-cue disruption: $\text{MemoryContrast} = M_{\text{control}} - M_{\text{target}} > 0$ (`CF-SOURCE-SEGMENT-MEMORY`).
+4. **`GENERALIZATION_VALIDITY`:**
+   - Stable performance across held-out human-composed pieces within the frozen `validation` split (22 pieces across Medtner and Lyadov) without parameter recalibration.
+   - Note on composer generalization: `COMPOSER_GENERALIZATION_GATE = NOT_READY_FOR_CALIBRATION`. The Stage-0 split is an exploratory pilot and does not constitute a final external generalization claim. Candidate external composers (Taneyev, Bortkiewicz, Blumenfeld, Catoire) remain strictly firewalled (`EXTERNAL_TEST_CANDIDATE_FIREWALLED`).
+
+#### 7.1 Optional External Human Validation Benchmarks (EXP-001 - EXP-005)
+
+Human listening experiments are formally classified as **`OPTIONAL_EXTERNAL_HUMAN_VALIDATION_ONLY`**:
+- **Non-Interference Invariant:** Human studies are **not** used for Stage-0 model fitting, checkpoint selection, threshold selection, or PF-002A pass/fail criteria.
+- **Subjective Scope:** Human participant evaluation becomes relevant only when testing correspondence between structural proxies and subjective human perception (e.g., explicit empirical claims asserting that human listeners perceive a specific passage as tense, closing, or surprising).
+- **Prospective Human Protocol Standards (for optional future reference):**
+  - *Distributional Alignment (EXP-001):* Distributional distance between $P_{\text{AI}}(x \mid c)$ and $P_{\text{human}}(x \mid c)$ compared against empirical human noise ceiling benchmark; rank-order correlation of continuation likelihoods.
+  - *Cognitive Latency Alignment (EXP-002):* Dynamic tracking of human response latency with biologically plausible cognitive lag ($200 \le \Delta t_{\text{lag}} \le 1200\text{ ms}$).
+  - *Human Directional Agreement (EXP-003):* Directional change under perturbation matching human shift sign in benchmark listening cohorts.
+  - *Human Listener Generalization (EXP-004 / EXP-005):* Generalization across unseen human listening cohorts and performance interpretations.
+- **Lineage Rule:** Human validation must not retroactively redefine autonomous metrics or control Stage-0 training gates.
 
 ---
 

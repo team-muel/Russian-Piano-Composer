@@ -1,8 +1,8 @@
-"""Regression tests for PF-001C1.3 Autonomous Stage-0 Policy Synchronization.
+"""Regression tests for PF-001C1.3a Cross-Document Autonomous Stage-0 Semantic Closure.
 
 Verifies:
 1. scripts/validate_pf001c1_autonomous_policy.py succeeds and confirms AUTONOMOUS_STAGE0_POLICY_SYNCHRONIZED.
-2. Human validation is strictly defined as OPTIONAL_EXTERNAL_HUMAN_VALIDATION.
+2. Human validation is strictly defined as OPTIONAL_EXTERNAL_HUMAN_VALIDATION across all documents.
 3. No mandatory held-out human listener requirement remains in active Stage-0 policy.
 4. Stage-0 predictive validity is corpus-based with non-neural baselines (no human behavioral distributions).
 5. Temporal validity is multi-scale temporal structural modeling, not biological real-time auditory cognition.
@@ -11,6 +11,8 @@ Verifies:
 8. Stage-0 split manifest hash remains exactly 2ab696689645ed4420ed021bdfae6b545ce4c4eb15c39e8097c05ef1d31464ab.
 9. External test candidate firewall (Taneyev, Bortkiewicz, Blumenfeld, Catoire) remains strictly firewalled.
 10. Lineage immutability for RC-012, PF-001B, and PF-001C1 is strictly preserved.
+11. Report Section 7 active Stage-0 gates contain no mandatory human noise ceiling or biological lag.
+12. Fail-closed negative tests: validator fails when active Stage-0 text introduces mandatory human gates.
 """
 
 from __future__ import annotations
@@ -24,6 +26,9 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 
 POLICY_PATH = REPO_ROOT / "docs" / "research" / "PF001_GENERALIZATION_AND_SPLIT_POLICY.md"
+REPORT_PATH = REPO_ROOT / "docs" / "research" / "PF001_MEASUREMENT_OPERATIONALIZATION_REPORT.md"
+GRAPH_PATH = REPO_ROOT / "docs" / "research" / "PF001_MEASUREMENT_DEPENDENCY_GRAPH.md"
+CONTRACT_DOC_PATH = REPO_ROOT / "docs" / "research" / "PF001A_AUTONOMOUS_LISTENER_CONTRACT.md"
 SPLIT_MANIFEST_PATH = REPO_ROOT / "data" / "reviews" / "pf001" / "pf001c1_stage0_split_manifest.json"
 VALIDATOR_PATH = REPO_ROOT / "scripts" / "validate_pf001c1_autonomous_policy.py"
 
@@ -39,7 +44,7 @@ def test_autonomous_policy_validator_script_succeeds():
         check=False,
     )
     assert result.returncode == 0, f"Validator failed:\n{result.stderr}\n{result.stdout}"
-    assert "Autonomous policy validation SUCCESSFUL." in result.stdout
+    assert "Cross-document autonomous policy validation SUCCESSFUL." in result.stdout
     assert "STATUS: AUTONOMOUS_STAGE0_POLICY_SYNCHRONIZED" in result.stdout
 
 
@@ -105,3 +110,76 @@ def test_split_manifest_hash_and_roles_immutable():
         "BENCHMARK_PILOT_ONLY": 3,
         "TOTAL": 62,
     }
+
+
+def test_report_autonomous_stage0_gating_consistency():
+    """Verifies PF001_MEASUREMENT_OPERATIONALIZATION_REPORT Section 7 active gates are autonomous."""
+    report_text = REPORT_PATH.read_text(encoding="utf-8")
+    m = re.search(r"### 7\. Prospective Validation Categories & Gating Criteria(.*?)(?=#### 7\.1|\Z)", report_text, re.DOTALL)
+    assert m is not None, "Could not extract Section 7 active gating from report"
+    active_sec7 = m.group(1)
+
+    # Active Section 7 must NOT mandate human noise ceilings or biological lag
+    assert not re.search(r"human noise ceiling benchmark", active_sec7, re.IGNORECASE)
+    assert not re.search(r"biologically plausible cognitive lag", active_sec7, re.IGNORECASE)
+    assert not re.search(r"match human shift sign in", active_sec7, re.IGNORECASE)
+    assert not re.search(r"stability across held-out listeners", active_sec7, re.IGNORECASE)
+
+    # Must specify autonomous gates
+    assert "PREDICTIVE_VALIDITY" in active_sec7
+    assert "STRUCTURAL_TEMPORAL_VALIDITY" in active_sec7
+    assert "INTERVENTION_VALIDITY" in active_sec7
+    assert "GENERALIZATION_VALIDITY" in active_sec7
+    assert "COMPOSER_GENERALIZATION_GATE = NOT_READY_FOR_CALIBRATION" in active_sec7
+
+    # Optional section must be present and marked OPTIONAL_EXTERNAL_HUMAN_VALIDATION_ONLY
+    assert "#### 7.1 Optional External Human Validation Benchmarks" in report_text
+    assert "OPTIONAL_EXTERNAL_HUMAN_VALIDATION_ONLY" in report_text
+
+
+def test_dependency_graph_consistency():
+    """Verifies PF001_MEASUREMENT_DEPENDENCY_GRAPH.md does not mandate human noise ceiling for Stage 0->1."""
+    graph_text = GRAPH_PATH.read_text(encoding="utf-8")
+    assert "OPTIONAL_EXTERNAL_VALIDATION" in graph_text or "OPTIONAL_EXTERNAL_HUMAN_VALIDATION" in graph_text
+
+    sec4_match = re.search(r"### 4\. Stage Progression Rules.*?(?=\Z)", graph_text, re.DOTALL)
+    assert sec4_match is not None
+    sec4_text = sec4_match.group(0)
+    assert not re.search(r"EXP-001 through EXP-005 protocols pass noise ceiling checks on `development` cohort", sec4_text)
+
+
+def test_fail_closed_negative_mutations(monkeypatch, tmp_path):
+    """Negative tests: mutating active Stage-0 definitions to inject mandatory human requirements fails validation."""
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location("val_module", str(VALIDATOR_PATH))
+    assert spec is not None and spec.loader is not None
+    val_mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(val_mod)
+
+    # 1. Mutate report active Section 7 to re-inject biological lag
+    orig_report = REPORT_PATH.read_text(encoding="utf-8")
+    bad_report = orig_report.replace(
+        "Stage-0 does not claim biological real-time auditory cognition or neural lag replication.",
+        "Dynamic trajectory of model predictions must track human response latency with biologically plausible cognitive lag (200 <= lag <= 1200 ms).",
+    )
+    bad_report_file = tmp_path / "bad_report.md"
+    bad_report_file.write_text(bad_report, encoding="utf-8")
+
+    monkeypatch.setattr(val_mod, "REPORT_PATH", bad_report_file)
+    assert val_mod.validate_autonomous_policy() != 0, "Validator failed to reject biological cognitive lag in active Section 7"
+
+    # 2. Mutate report active Section 7 to re-inject human noise ceiling
+    bad_report2 = orig_report.replace(
+        "No human behavioral distribution is required for PF-002A Stage-0 training",
+        "Distributional distance must meet or exceed the human noise ceiling benchmark",
+    )
+    bad_report2_file = tmp_path / "bad_report2.md"
+    bad_report2_file.write_text(bad_report2, encoding="utf-8")
+
+    monkeypatch.setattr(val_mod, "REPORT_PATH", bad_report2_file)
+    assert val_mod.validate_autonomous_policy() != 0, "Validator failed to reject human noise ceiling in active Section 7"
+
+    # 3. Clean report passes
+    monkeypatch.setattr(val_mod, "REPORT_PATH", REPORT_PATH)
+    assert val_mod.validate_autonomous_policy() == 0

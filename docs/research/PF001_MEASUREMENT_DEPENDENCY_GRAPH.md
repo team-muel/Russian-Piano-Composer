@@ -169,7 +169,7 @@ T(t)
 
 | Source Stage | Target Stage | Prerequisites for Gate Transition | Fail-Closed Block Condition |
 | :--- | :--- | :--- | :--- |
-| **Stage 0** (Primitives) | **Stage 1** (Intermediate) | EXP-001 through EXP-005 protocols pass noise ceiling checks on `development` cohort. | If JSD of expectation exceeds noise ceiling, all Stage-1 models are blocked. |
+| **Stage 0** (Primitives) | **Stage 1** (Intermediate) | Autonomous Stage-0 structural gates passed (`PREDICTIVE_VALIDITY`, `STRUCTURAL_TEMPORAL_VALIDITY`, `INTERVENTION_VALIDITY`, `GENERALIZATION_VALIDITY`). (Optional EXP-001 - EXP-005 protocols reserved for external human validation). | If corpus predictive perplexity fails non-neural baseline checks or intervention contrast fails, all Stage-1 models are blocked. |
 | **Stage 1** (Intermediate) | **Stage 2** (Macro-Form) | Tension dial, Fertility manifold, and 6D Counterfactual vector achieve validated status. | If Theme Fertility cannot be separated from stylistic familiarity, macro-narrative is blocked. |
 | **Stage 2** (Syntheses) | **LET Apex** | All component trajectories replicate on `external_test_held_out` with zero leakage. | If external composer transfer fails, LET optimization in Composer is prohibited. |
 
