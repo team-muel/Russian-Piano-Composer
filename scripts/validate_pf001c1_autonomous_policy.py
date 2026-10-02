@@ -73,8 +73,16 @@ def extract_active_stage0_gating_section(report_text: str) -> str:
     return m.group(1)
 
 
+def extract_active_contract_gates(contract_text: str) -> str:
+    """Extracts active Section 4 and Section 5 from PF001A up to Section 5.1 (historical archive)."""
+    m = re.search(r"### 4\. Autonomous Scientific Validation Gates.*?(?=### 5\.1|\Z)", contract_text, re.DOTALL)
+    if not m:
+        return ""
+    return m.group(0)
+
+
 def validate_autonomous_policy() -> int:
-    print("[PF-001C1.3a] Starting Cross-Document Autonomous Stage-0 Semantic validation...")
+    print("[PF-001C1.3b] Starting Cross-Document Autonomous Stage-0 Semantic & Threshold Authority validation...")
     errors: list[str] = []
 
     # 1. Verify existence of required files
@@ -178,6 +186,7 @@ def validate_autonomous_policy() -> int:
         "CF-CLOSURE",
         "CF-SURPRISE",
         "CF-SOURCE-SEGMENT-MEMORY",
+        "two-layer fail-closed decision rule",
     ]
     for snip in required_report_snippets:
         if snip not in report_text:
@@ -210,7 +219,72 @@ def validate_autonomous_policy() -> int:
             if re.search(pat, active_sec7, re.IGNORECASE):
                 errors.append(desc)
 
-    # 7. Check GRAPH_PATH (PF001_MEASUREMENT_DEPENDENCY_GRAPH.md)
+    # Check active Section 2 of report: MUST NOT mandate human recognition decay or retention data for autonomous target
+    # Extract Section 2 active text
+    sec2_match = re.search(r"### 2\. Rigorous Operationalization of Core Constructs.*?(?=### 3\.|\Z)", report_text, re.DOTALL)
+    if sec2_match:
+        sec2_text = sec2_match.group(0)
+        # Check that AI similarity does not require empirical human recognition decay in active autonomous requirements
+        if re.search(r"AI similarity metric must be explicitly validated against empirical human recognition decay", sec2_text, re.IGNORECASE):
+            errors.append("Mandatory empirical human recognition decay required for AI similarity metric in Section 2")
+        if re.search(r"functional decay form .*? must be empirically determined from human retention data", sec2_text, re.IGNORECASE):
+            errors.append("Mandatory human retention data required for memory in Section 2")
+
+    # Check Section 8 of report: MUST NOT mandate human observables for ALL constructs
+    sec8_match = re.search(r"### 8\. Scientific Fail-Closed Decision Rule.*?(?=\Z)", report_text, re.DOTALL)
+    if sec8_match:
+        sec8_text = sec8_match.group(0)
+        if re.search(r"If any conceptual construct cannot be connected to an independent, reproducible human observable", sec8_text, re.IGNORECASE):
+            errors.append("Legacy single-layer fail-closed rule mandating human observables for all constructs found in Section 8")
+
+    # 7. Check CONTRACT_DOC_PATH (PF001A_AUTONOMOUS_LISTENER_CONTRACT.md)
+    contract_doc_text = CONTRACT_DOC_PATH.read_text(encoding="utf-8")
+    if "OPTIONAL_EXTERNAL_VALIDATION" not in contract_doc_text:
+        errors.append("Autonomous contract doc missing OPTIONAL_EXTERNAL_VALIDATION classification")
+
+    active_contract_gates = extract_active_contract_gates(contract_doc_text)
+    if not active_contract_gates:
+        errors.append("Could not extract active Stage-0 gates section from PF001A contract")
+    else:
+        # Check for stale provisional numerical thresholds in active gate definitions
+        stale_threshold_patterns = [
+            (r">= 0\.85", "Stale numerical threshold '>= 0.85' found in active PF001A gates"),
+            (r"<= 0\.30", "Stale numerical threshold '<= 0.30' found in active PF001A gates"),
+            (r">= 0\.95", "Stale numerical threshold '>= 0.95' found in active PF001A gates"),
+            (r">= 0\.40", "Stale numerical threshold '>= 0.40' found in active PF001A gates"),
+            (r">= 0\.50", "Stale numerical threshold '>= 0.50' found in active PF001A gates"),
+            (r"2\.5\s*bits", "Stale numerical threshold '2.5 bits' found in active PF001A gates"),
+            (r">= 1\.80", "Stale numerical threshold '>= 1.80' found in active PF001A gates"),
+            (r"> 15%", "Stale numerical threshold '> 15%' found in active PF001A gates"),
+            (r"L_\{?\\text\{max\}\}?\\s*=\\s*12", "Stale numerical cutoff 'Lmax = 12' found in active PF001A gates"),
+            (r"<\s*0\.05", "Stale numerical cutoff '< 0.05' found in active PF001A gates"),
+        ]
+        for pat, desc in stale_threshold_patterns:
+            if re.search(pat, active_contract_gates):
+                errors.append(desc)
+
+        # Check for false 'All 7 Gates Passed?' logic when composer generalization is NOT_READY
+        if re.search(r"All 7 Gates Passed\?", active_contract_gates, re.IGNORECASE):
+            errors.append("False 'All 7 Gates Passed?' gate requirement found in active PF001A contract")
+
+        # Must have symbolic thresholds
+        required_contract_symbols = [
+            "tau_perplexity",
+            "tau_identity",
+            "tau_discrimination",
+            "tau_counterfactual",
+            "tau_memory",
+            "tau_copy",
+        ]
+        for sym in required_contract_symbols:
+            if sym not in active_contract_gates:
+                errors.append(f"Active PF001A gates missing required symbolic threshold: '{sym}'")
+
+        # Historical section must exist and be clearly marked
+        if "HISTORICAL_PROVISIONAL_NONAUTHORITATIVE" not in contract_doc_text:
+            errors.append("PF001A contract missing HISTORICAL_PROVISIONAL_NONAUTHORITATIVE archive marker")
+
+    # 8. Check GRAPH_PATH (PF001_MEASUREMENT_DEPENDENCY_GRAPH.md)
     graph_text = GRAPH_PATH.read_text(encoding="utf-8")
     if "OPTIONAL_EXTERNAL_VALIDATION" not in graph_text and "OPTIONAL_EXTERNAL_HUMAN_VALIDATION" not in graph_text:
         errors.append("Dependency graph missing classification of human validation as optional external")
@@ -221,11 +295,6 @@ def validate_autonomous_policy() -> int:
         sec4_text = sec4_match.group(0)
         if re.search(r"EXP-001 through EXP-005 protocols pass noise ceiling checks on `development` cohort", sec4_text):
             errors.append("Dependency graph Stage 0->1 prerequisite still mandates human noise ceiling checks")
-
-    # 8. Check CONTRACT_DOC_PATH (PF001A_AUTONOMOUS_LISTENER_CONTRACT.md)
-    contract_doc_text = CONTRACT_DOC_PATH.read_text(encoding="utf-8")
-    if "OPTIONAL_EXTERNAL_VALIDATION" not in contract_doc_text:
-        errors.append("Autonomous contract doc missing OPTIONAL_EXTERNAL_VALIDATION classification")
 
     # 9. Ensure COMPOSER_GENERALIZATION_GATE is not prematurely promoted in any document
     for doc_name, doc_content in [
@@ -250,15 +319,16 @@ def validate_autonomous_policy() -> int:
         errors.append(f"Total piece count is {counts.get('TOTAL')}, expected 62")
 
     if errors:
-        print("[PF-001C1.3a] Cross-document autonomous policy validation FAILED with errors:", file=sys.stderr)
+        print("[PF-001C1.3b] Cross-document autonomous policy validation FAILED with errors:", file=sys.stderr)
         for e in errors:
             print(f"  - {e}", file=sys.stderr)
         return 1
 
-    print("[PF-001C1.3a] Cross-document autonomous policy validation SUCCESSFUL.")
+    print("[PF-001C1.3b] Cross-document autonomous policy validation SUCCESSFUL.")
     print("STATUS: AUTONOMOUS_STAGE0_POLICY_SYNCHRONIZED")
     return 0
 
 
 if __name__ == "__main__":
     sys.exit(validate_autonomous_policy())
+

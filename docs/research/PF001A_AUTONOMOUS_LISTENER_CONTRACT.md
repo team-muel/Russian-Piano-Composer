@@ -78,12 +78,12 @@ The motif encoder $z(\cdot)$ must satisfy a formal **Invariance-to-Discriminatio
    This dual requirement guarantees that the representation space does not collapse into a degenerate trivial constant.
 
 #### 1.5 Long-Range Structural Memory Trace ($M_s(t)$)
-Memory is defined structurally as the explicit reactivation trace $m_k(t) = \text{sim}(z(M_k), h_t)$.
-The model must pass four prospective persistence tests:
-- *Disappearance:* $m_k(t)$ decays toward baseline during unexposed development episodes.
-- *Partial Hint:* A 2-note thematic incipit produces an intermediate activation spike.
-- *Transformed Recurrence:* Recurrence of $M_k$ under diminution or transposition reactivates $m_k(t) \ge 0.70$ (`PROVISIONAL_UNCALIBRATED_TARGET`).
-- *Full Recurrence:* Full literal recurrence at recapitulation restores $m_k(t) \ge 0.90$ (`PROVISIONAL_UNCALIBRATED_TARGET`).
+Under PF-001C1, Stage-0 evaluates **`SOURCE_SEGMENT_STRUCTURAL_MEMORY`** ($m_A(t) = \text{sim}(z(A), h_t)$ across literal and $T_{\text{ID}}$ recurrences of source segment $A$), while full human `THEMATIC_MEMORY_GATE` remains `THEME_IDENTITY_DEPENDENT_NOT_READY`.
+The model must pass prospective persistence tests:
+- *Disappearance:* $m_A(t)$ decays toward baseline during unexposed development episodes.
+- *Partial Hint:* An incipit cue produces an intermediate activation spike.
+- *Transformed Recurrence:* Recurrence of $A$ under diminution or transposition reactivates $m_A(t) \ge \tau_{\text{memory}}$ (calibrated prospectively via Youden's $J$).
+- *Full Recurrence:* Full literal recurrence restores $m_A(t) \ge \tau_{\text{memory}}$.
 
 ---
 
@@ -112,53 +112,78 @@ Compressing all temporal hierarchies into an unstratified single latent vector w
 
 ---
 
-### 4. Autonomous Scientific Validation Gates
+### 4. Autonomous Scientific Validation Gates & Readiness
 
-Candidate Artificial Listener models must pass seven machine-readable autonomous gates before being approved as composer critics:
+Candidate Artificial Listener models are evaluated across the authoritative scientific gates established in PF-001C1:
 
 ```mermaid
 graph TD
-    G1["1. PREDICTIVE GATE<br/>Held-out perplexity / NLL on unseen classical works"]
-    G2["2. INVARIANCE GATE<br/>sim(z(M), z(T(M))) >= 0.85 (PROVISIONAL) across T_id"]
-    G3["3. DISCRIMINATION GATE<br/>sim(z(M), z(M_neg)) <= 0.30 (PROVISIONAL) across negative foils"]
-    G4["4. COUNTERFACTUAL GATE<br/>Directional state shifts under controlled perturbations"]
-    G5["5. LONG-RANGE MEMORY GATE<br/>Reactivation spike >= 1.80 (PROVISIONAL) at recapitulation"]
-    G6["6. COMPOSER GENERALIZATION GATE<br/>Transfer to held-out composers without degradation > 15% (PROVISIONAL)"]
-    G7["7. ANTI-COPY GATE<br/>Zero direct n-gram memorization / training retrieval"]
+    subgraph S0_ACTIVE["Active Stage-0 Autonomous Gates (Calibrated Prospectively via Youden's J)"]
+        G1["1. PREDICTIVE_GATE<br/>tau_perplexity vs non-neural baselines"]
+        G2["2. INVARIANCE_GATE<br/>tau_identity across T_id transforms"]
+        G3["3. DISCRIMINATION_GATE<br/>tau_discrimination AUROC & margin vs foils"]
+        G4["4. COUNTERFACTUAL_GATE<br/>tau_counterfactual directional contrasts > 0"]
+        G5["5. SOURCE_SEGMENT_STRUCTURAL_MEMORY_GATE<br/>tau_memory & MemoryContrast > 0"]
+        G6["6. ANTI_COPY_GATE<br/>tau_copy 3-tier de-plagiarism checks"]
+    end
 
-    G1 & G2 & G3 & G4 & G5 & G6 & G7 --> ALL_PASS{"All 7 Gates Passed?"}
-    ALL_PASS -- Yes --> APPROVED["Stage-0 Autonomous Listener Certified"]
-    ALL_PASS -- No --> BLOCKED["Fail-Closed: Retrain / Refine Architecture"]
+    subgraph UNREADY["Gating Excluded From Stage-0 Pass/Fail"]
+        G7["7. COMPOSER_GENERALIZATION_GATE<br/>(NOT_READY_FOR_CALIBRATION)"]
+        G8["THEMATIC_MEMORY_GATE<br/>(THEME_IDENTITY_DEPENDENT_NOT_READY)"]
+    end
+
+    G1 & G2 & G3 & G4 & G5 & G6 --> ALL_ACTIVE_PASS{"All 6 Active Stage-0<br/>Gates Passed?"}
+    ALL_ACTIVE_PASS -- Yes --> APPROVED["Stage-0 Autonomous Listener Certified"]
+    ALL_ACTIVE_PASS -- No --> BLOCKED["Fail-Closed: Retrain / Refine Architecture"]
 ```
 
 > [!NOTE]
-> **Threshold De-Provisionalization Protocol (PF-001B / PF-001C):**
-> All numerical thresholds enumerated below were initially proposed prior to empirical dataset calibration. Under PF-001B, every specific numerical cutoff is classified as `PROVISIONAL_UNCALIBRATED_TARGET`. Final operational cutoffs will be empirically de-provisionalized in milestone **PF-001C** using:
-> 1. Information-weighted melodic n-gram background frequency distributions;
-> 2. Rare-pattern vs. common-formula weighting (cadential formulas, scale runs);
-> 3. Empirical nearest-neighbor cosine distance percentiles observed on held-out human classical control sets.
+> **Threshold Authority & Calibration Protocol (PF-001C1):**
+> Active gate descriptions use **symbolic threshold identifiers** ($\tau_{\text{perplexity}}, \tau_{\text{identity}}, \tau_{\text{discrimination}}, \tau_{\text{counterfactual}}, \tau_{\text{memory}}, \tau_{\text{copy}}$). Numerical operational cutoffs are **NOT** predefined authoritative constants; they are prospectively calibrated in **PF-002A** using grouped $K=5$-fold Youden's $J$ optimization clustered at `piece_id` with 2,000 bootstrap resamples on the `development` corpus.
 
-1. **`PREDICTIVE_GATE`:** Negative log-likelihood and calibration error on held-out compositions within the `validation` pool.
-2. **`INVARIANCE_GATE`:** Mean cosine similarity across identity-preserving transformations must satisfy $\mathbb{E}[\text{sim}(z(M), z(T_{\text{id}}(M)))] \ge 0.85$ (`PROVISIONAL_UNCALIBRATED_TARGET`, pending PF-001C empirical distribution calibration).
-3. **`DISCRIMINATION_GATE`:** Mean cosine similarity against negative foils must satisfy $\mathbb{E}[\text{sim}(z(M), z(M_{\text{foil}}))] \le 0.30$ (`PROVISIONAL_UNCALIBRATED_TARGET`), with separation $\text{AUROC} \ge 0.95$ (`PROVISIONAL_UNCALIBRATED_TARGET`).
-4. **`COUNTERFACTUAL_GATE`:**
-   - Cadence disruption: Shifting a cadential resolution note decreases $C_s(t)$ by $\ge 0.40$ (`PROVISIONAL_UNCALIBRATED_TARGET`).
-   - Motif-cue deletion: Removing thematic incipit at recapitulation decreases $m_k(t)$ by $\ge 0.50$ (`PROVISIONAL_UNCALIBRATED_TARGET`).
-   - Chromatic corruption: Injecting out-of-key foreign pitches surges $S_s(t)$ by $\ge 2.5\text{ bits}$ (`PROVISIONAL_UNCALIBRATED_TARGET`).
-5. **`LONG_RANGE_MEMORY_GATE`:** Recapitulation reactivation spike $\frac{m_k(t_{\text{recap}})}{m_k(t_{\text{dev\_end}})} \ge 1.80$ (`PROVISIONAL_UNCALIBRATED_TARGET`).
-6. **`COMPOSER_GENERALIZATION_GATE`:** Perplexity degradation on disjoint validation composers must not exceed $15\%$ relative to development composers (`PROVISIONAL_UNCALIBRATED_TARGET`).
-7. **`ANTI_COPY_GATE`:** Must distinguish deep structural syntax from superficial verbatim sequence memorization.
+1. **`PREDICTIVE_GATE`:** Negative log-likelihood, bits/token, and perplexity on held-out compositions within the `validation` pool exceeding frozen non-neural baselines (`BASE_EMPIRICAL_MARGINAL`, `BASE_MARKOV_ORDER_1`, `BASE_NGRAM_4`) by threshold $\tau_{\text{perplexity}}$.
+2. **`INVARIANCE_GATE`:** Mean cosine similarity across identity-preserving transformations satisfying $\mathbb{E}[\text{sim}(z(A), z(T_{\text{id}}(A)))] \ge \tau_{\text{identity}}$.
+3. **`DISCRIMINATION_GATE`:** Separation against negative foils evaluated via $\text{AUROC} \ge \tau_{\text{discrimination}}$ and cosine margin separation.
+4. **`COUNTERFACTUAL_GATE`:** Directional contrast statistics satisfying $\tau_{\text{counterfactual}}$:
+   - Cadence disruption: $\text{ClosureContrast} = C_c - C_t > 0$ (`CF-CLOSURE`).
+   - Controlled surprise perturbation: $\text{SurpriseContrast} = S_{\text{target}} - S_{\text{control}} > 0$ (`CF-SURPRISE`).
+   - Source-segment recurrence-cue disruption: $\text{MemoryContrast} = M_{\text{control}} - M_{\text{target}} > 0$ (`CF-SOURCE-SEGMENT-MEMORY`).
+5. **`SOURCE_SEGMENT_STRUCTURAL_MEMORY_GATE` (formerly `LONG_RANGE_MEMORY_GATE`):** Reactivation of source-segment representation across intervening musical context satisfying $m_A(t) \ge \tau_{\text{memory}}$ and directional cue-disruption contrast.
+6. **`ANTI_COPY_GATE`:** Multi-tier de-plagiarism filter satisfying threshold $\tau_{\text{copy}}$ across:
+   - Tier 1: Symbolic contiguous n-gram overlap ($L_{\max} \le \tau_{\text{ngram}}$).
+   - Tier 2: Information-weighted melodic interval n-gram score under single `ADD_ALPHA` ($\alpha=0.1$) estimator ($W(G) \le \tau_{\text{infocopy}}$).
+   - Tier 3: Latent space nearest-neighbor cosine distance ($D_{\min} \ge \tau_{\text{latent\_dist}}$).
+7. **`COMPOSER_GENERALIZATION_GATE`:** Governed strictly as **`NOT_READY_FOR_CALIBRATION`**. Degradation on disjoint validation composers is monitored for exploratory analysis but is **not** an operational gating requirement for Stage-0 listener certification.
 
 ---
 
 ### 5. Anti-Copying & De-Plagiarism Policy
 
-A model that reproduces classical structures must not operate as an associative lookup table of memorized human pieces. The system must implement programmatic anti-copy tests:
-1. **Melodic N-Gram Overlap:** Longest common contiguous pitch-interval subsequence between model generation/prediction and training corpus must not exceed $L_{\text{max}} = 12$ notes (`PROVISIONAL_UNCALIBRATED_TARGET`, subject to PF-001C information-weighted n-gram refinement discounting standard cadential formulas and diatonic scales).
-2. **Nearest-Neighbor Training Retrieval:** Generative probes matching nearest training corpus excerpts with cosine distance $< 0.05$ (`PROVISIONAL_UNCALIBRATED_TARGET`, pending empirical nearest-neighbor distribution calibration) in latent space are flagged and rejected.
-3. **Thematic Plagiarism Metric:**
-   $$\text{CopyScore}(X_{\text{cand}}, \mathcal{D}_{\text{train}}) = \max_{Y \in \mathcal{D}_{\text{train}}} \text{Alignment}(X_{\text{cand}}, Y) \le \tau_{\text{novelty}}$$
-   where $\tau_{\text{novelty}}$ is a `PROVISIONAL_UNCALIBRATED_TARGET` to be calibrated on known independent human compositions in PF-001C.
+A model that reproduces classical structures must not operate as an associative lookup table of memorized human pieces. The system implements a three-tier programmatic anti-copy battery:
+1. **Tier 1 (Melodic N-Gram Overlap):** Longest common contiguous pitch-interval subsequence between model generation/prediction and training corpus must not exceed symbolic threshold $\tau_{\text{ngram}}$ (calibrated against human baseline corpora).
+2. **Tier 2 (Information-Weighted Melodic N-Gram):** Information-weighted interval n-gram metric evaluated using the single frozen `ADD_ALPHA` estimator ($\alpha = 0.1$) on development data must not exceed $\tau_{\text{infocopy}}$.
+3. **Tier 3 (Nearest-Neighbor Training Retrieval):** Latent space nearest-neighbor distance $D_{\min}(G, \mathcal{D}_{\text{dev}}) \ge \tau_{\text{latent\_dist}}$ ensuring generated/predicted excerpts do not retrieve training examples with degenerate proximity.
+
+---
+
+### 5.1 Historical Provisional Targets (Non-Authoritative Archive)
+
+> [!WARNING]
+> **Status: `HISTORICAL_PROVISIONAL_NONAUTHORITATIVE` (`PROVISIONAL_UNCALIBRATED_TARGET`)**
+> The numerical quantities below represent historical planning estimates from initial PF-001 conceptual drafts prior to physical corpus materialization (PF-001B) and metric contract formalization (PF-001C / PF-001C1).
+> - They are **NOT** valid PF-002A operational thresholds.
+> - They are **NOT** model-selection or checkpoint-selection criteria.
+> - They are **NOT** Stage-0 pass/fail criteria.
+> - They are **NOT** calibration outputs.
+> Active PF-002A validation strictly uses the prospective Youden's $J$ calibration procedure on frozen symbolic parameters (calibrated in PF-001C / PF-002A).
+>
+> *Historical Reference Values:*
+> - Historical Invariance target: $\text{sim} \ge 0.85$.
+> - Historical Discrimination target: $\text{sim} \le 0.30$, $\text{AUROC} \ge 0.95$.
+> - Historical Counterfactual shifts: closure shift $\ge 0.40$, memory reduction $\ge 0.50$, surprise surge $\ge 2.5\text{ bits}$.
+> - Historical Long-Range Memory ratio: $\ge 1.80$.
+> - Historical Composer Degradation: $\le 15\%$.
+> - Historical Anti-Copy heuristic cutoffs: $L_{\max} = 12\text{ notes}$, latent distance $< 0.05$.
 
 ---
 

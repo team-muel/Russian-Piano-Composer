@@ -49,16 +49,16 @@ flowchart LR
 
 ### 1. Stage-0 Artificial Listener Scope Freeze
 
-To prevent premature architectural overreach, Stage-0 is strictly restricted to five foundational perceptual primitives and their direct mathematical derivatives:
+To prevent premature architectural overreach, Stage-0 is strictly restricted to foundational structural primitives and their direct mathematical derivatives:
 
-| Primitive | Mathematical Notation | Implementation Namespace | Stage-0 Model Output Target | Empirical Human Benchmark |
+| Primitive | Mathematical Notation | Implementation Namespace | Stage-0 Autonomous Structural Target | Optional Human Correspondence Benchmark |
 | :--- | :--- | :--- | :--- | :--- |
-| **Expectation** | $E(t) = P(x_{t+1} \mid x_{\le t})$ | `expectation` | `model_prediction_distribution` | `human_continuation_distribution` |
-| **Uncertainty** | $U(t) = H(P(x_{t+1} \mid x_{\le t}))$ | `uncertainty` | `model_uncertainty` | Response Entropy & Inverted Confidence ($1 - \text{conf}$) |
-| **Surprise** | $S(t) = -\log_2 P(x_t \mid x_{<t})$ | `expectation.derived_surprise` | `model_surprise` | Graded Unexpectedness Likert & Latency Peak |
-| **Closure** | $C(t) = P(\text{term} \mid x_{\le t})$ | `closure` | `model_closure_probability` | `human_closure_rating` (Completeness Probe) |
-| **Recognition** | $R(t) = P(\text{same theme} \mid M, M_i)$ | `recognition` | `model_recognition_score` | Graded Theme Discrimination, RT, Confidence |
-| **Memory** | $M(t) = [M_{\text{rec}}, M_{\text{rcl}}, M_{\text{fam}}]$ | `memory` | Activation & Token Generation | Signal Detection $d'$, Recall Edit Distance, Familiarity |
+| **Expectation** | $E(t) = P(x_{t+1} \mid x_{\le t})$ | `expectation` | Held-out symbolic token distribution & perplexity vs non-neural baselines | `human_continuation_distribution` (EXP-001) |
+| **Uncertainty** | $U(t) = H(P(x_{t+1} \mid x_{\le t}))$ | `uncertainty` | Derived model predictive entropy $H_{\text{AI}}(x_{\le t})$ | Response Entropy & Inverted Confidence ($1 - \text{conf}$) (EXP-002) |
+| **Surprise** | $S(t) = -\log_2 P(x_t \mid x_{<t})$ | `expectation.derived_surprise` | Derived negative log-likelihood & $\text{SurpriseContrast} > 0$ | Graded Unexpectedness Likert & Latency Peak |
+| **Closure** | $C(t) = P(\text{boundary} \mid x_{\le t})$ | `closure` | Corpus boundary detection & $\text{ClosureContrast} = C_c - C_t > 0$ | `human_closure_rating` (Completeness Probe) (EXP-003) |
+| **Representation Invariance** | $R(t) = \text{sim}(z(A), z(T_{\text{ID}}(A)))$ | `recognition` / `invariance` | Contrastive cosine similarity $\ge \tau_{\text{identity}}$ under $T_{\text{ID}}$ transforms | Graded Theme Discrimination, RT, Confidence (EXP-004) |
+| **Structural Memory** | $m_A(t) = \text{sim}(z(A), h_t)$ | `memory` | Source-segment recurrence trace & $\text{MemoryContrast} > 0$ | Signal Detection $d'$, Recall Edit Distance, Familiarity (EXP-005) |
 
 **Strict Exclusion Rule:** Stage-0 explicitly prohibits modeling or computing narrative coherence, global musical quality, emotional causality, retrospective meaning, or semantic reinterpretation. These higher-order constructs are classified as `LATENT_NEEDS_VALIDATION` or `HIGH_LEVEL_NOT_OPERATIONAL`.
 
@@ -67,47 +67,52 @@ To prevent premature architectural overreach, Stage-0 is strictly restricted to 
 ### 2. Rigorous Operationalization of Core Constructs
 
 #### 2.1 Expectation ($E(t)$)
-* **Conceptual Definition:** The listener's conditional predictive probability distribution over immediate subsequent musical events (pitches, onsets, durations, harmonies) given the accumulated musical context.
-* **Human Target:** $P_{\text{human}}(x_{t+1} \mid x_{\le t})$.
-* **Human Observable:** Empirical choice probability distribution over candidate continuations elicited via K-alternative forced choice continuation tasks or multi-point probability distribution allocation, combined with subjective continuation confidence.
-* **Model Target:** $P_{\text{AI}}(x_{t+1} \mid x_{\le t})$.
-* **Prospective Validation Metrics:**
-  - Distributional divergence: Jensen-Shannon Divergence:
-    $$\text{JSD}(P_{\text{human}} \parallel P_{\text{AI}}) = \frac{1}{2} D_{\text{KL}}\left(P_{\text{human}} \parallel \frac{P_{\text{human}} + P_{\text{AI}}}{2}\right) + \frac{1}{2} D_{\text{KL}}\left(P_{\text{AI}} \parallel \frac{P_{\text{human}} + P_{\text{AI}}}{2}\right)$$
-  - Pitch-space Earth Mover's Distance (Wasserstein metric accounting for tonal circle-of-fifths distance).
-  - Multi-class Brier Score and candidate rank-order correlation (Spearman's $\rho$).
-* **Methodological Invariant:** Top-1 prediction accuracy is **insufficient**. An Artificial Listener that assigns 99% probability to the correct note when human listeners are equally split across three plausible continuations is systematically miscalibrated.
+* **Autonomous Structural Target (PF-002A):**
+  - Conceptual Definition: The model's conditional predictive probability distribution over immediate subsequent musical events (pitches, onsets, durations, harmonies) given accumulated symbolic context:
+    $$P_{\text{AI}}(x_{t+1} \mid x_{\le t})$$
+  - Validation Standard: Evaluated against held-out human-composed symbolic piece sequences on the `validation` split (PPL, bits/token) and tested for outperformance against predeclared non-neural baselines (`BASE_EMPIRICAL_MARGINAL`, `BASE_MARKOV_ORDER_1`, `BASE_NGRAM_4`).
+  - No human behavioral choice distribution ($P_{\text{human}}$) is required for Stage-0 training, checkpoint selection, or pass/fail gating.
+* **Optional Human Correspondence Target (EXP-001):**
+  - Elicited empirical human choice probability distribution $P_{\text{human}}(x_{t+1} \mid x_{\le t})$ via K-alternative forced choice tasks or continuation allocation.
+  - Prospective Validation Metrics: $\text{JSD}(P_{\text{human}} \parallel P_{\text{AI}})$, circle-of-fifths Wasserstein distance, rank-order correlation (Spearman's $\rho$).
 
 #### 2.2 Uncertainty ($U(t)$)
-* **Conceptual Definition:** The informational entropy or dispersion of the listener's expectation distribution over future musical states, reflecting subjective doubt and structural ambiguity.
-* **Human Observable:** Empirical Shannon entropy of aggregate human continuation choices:
-  $$H_{\text{human}}(x_{\le t}) = -\sum_{k} P_{\text{human}}(x_{k} \mid x_{\le t}) \log_2 P_{\text{human}}(x_{k} \mid x_{\le t})$$
-  paired with individual subjective uncertainty ($1 - \text{confidence}$) and response latency (hesitation time).
-* **Model Target:**
-  $$H_{\text{AI}}(x_{\le t}) = -\sum_{x} P_{\text{AI}}(x \mid x_{\le t}) \log_2 P_{\text{AI}}(x \mid x_{\le t})$$
-* **Methodological Invariant:** Expectation and Uncertainty must remain separate constructs. Expectation represents the specific probability vector over continuation states; Uncertainty represents the dispersion across that vector.
+* **Autonomous Structural Target (PF-002A):**
+  - Conceptual Definition: The informational Shannon entropy across the model's conditional predictive distribution:
+    $$H_{\text{AI}}(x_{\le t}) = -\sum_{x} P_{\text{AI}}(x \mid x_{\le t}) \log_2 P_{\text{AI}}(x \mid x_{\le t})$$
+  - Structural Role: Tracks dispersion and structural ambiguity in corpus transition space. High uncertainty reflects multiple viable syntactic paths (e.g., developmental modulations).
+* **Optional Human Correspondence Target (EXP-002):**
+  - Aggregate Shannon entropy of human continuation choices $H_{\text{human}}(x_{\le t})$ combined with subjective confidence ratings and hesitation latency.
+  - Optional validation only; human uncertainty reports do not determine PF-002A pass/fail.
 
 #### 2.3 Closure Expectation ($C(t)$)
-* **Conceptual Definition:** The subjective probability that the musical context can terminate naturally, stably, and syntactically at time $t$, versus demanding immediate structural continuation.
-* **Human Observable:** Proportion of listeners judging that a phrase can terminate naturally at probe point $t$:
-  $$C_{\text{human}}(t) = P(\text{listener judges context can terminate naturally at } t)$$
-  elicited via probe truncation trials ("Could this phrase naturally end here?").
-* **Model Target:** $C_{\text{AI}}(t) = P_{\text{AI}}(\text{termination} \mid x_{\le t}) \in [0, 1]$.
-* **Methodological Invariant:** Closure is **not** equal to low tension. A peaceful, harmonically open modal transition may have low tension but zero closure; an authentic cadence preceding an unresolved pause has maximal closure. Equating closure with inverted tension is scientifically invalid.
+* **Autonomous Structural Target (PF-002A):**
+  - Conceptual Definition: The structural boundary resolution probability $C_{\text{AI}}(t) = P_{\text{AI}}(\text{boundary} \mid x_{\le t}) \in [0, 1]$ learned from corpus-observable syntactic markers (cadential signatures PAC/IAC/HC/DC, hypermetric phrase boundaries, formal sectional terminations).
+  - Validation Standard: Directional counterfactual contrast $\text{ClosureContrast} = C_c - C_t > 0$ (`CF-CLOSURE`).
+  - Methodological Invariant: Closure is **not** equal to low tension. A peaceful open modal transition has zero closure; an authentic cadence preceding an urgent fermata has maximal closure.
+* **Optional Human Correspondence Target (EXP-003):**
+  - Proportion of human listeners judging context can terminate naturally at probe point $t$: $C_{\text{human}}(t) \in [0, 1]$.
+  - Optional external validation only; human completion ratings are not required to train or calibrate Stage-0 structural closure.
 
-#### 2.4 Theme Recognition ($R(M, M_i)$)
-* **Conceptual Definition:** The cognitive mapping process whereby a transformed phrase $M_i$ is recognized as an instance of an underlying theme $M$.
-* **Human Observable:** Proportion of listeners identifying $M_i$ as identical or derived from $M$ in a 2AFC or graded 6-point discrimination task, recorded alongside response latency (ms) and decision confidence.
-* **Model Target:** $R_{\text{AI}}(M, M_i) \in [0, 1]$.
-* **Methodological Invariant:** AI similarity metric must be explicitly validated against empirical human recognition decay under controlled transformations (rhythmic diminution, inversion, retrograde, harmonic recontextualization), rather than relying on uncalibrated cosine distances in embedding space.
+#### 2.4 Representation Invariance & Discriminability ($R(A, A_i)$)
+* **Autonomous Structural Target (PF-002A):**
+  - Conceptual Definition: Invariance-to-discrimination contrastive latent representation over musical segments:
+    $$\text{sim}(z(A), z(T_{\text{ID}}(A))) \ge \tau_{\text{identity}}, \quad \text{sim}(z(A), z(A_{\text{foil}})) \le \tau_{\text{discrimination}}$$
+  - Calibration Procedure: Thresholds $\tau_{\text{identity}}$ and $\tau_{\text{discrimination}}$ are prospectively calibrated via grouped $K=5$-fold Youden's $J$ optimization clustered at `piece_id` with 2,000 bootstrap resamples on `development` data.
+  - Methodological Distinction: Stage-0 evaluates **source-segment structural invariance** (`SOURCE_SEGMENT_INVARIANCE`). Human thematic identity (`THEME_MOTIF_IDENTITY`) is formally isolated as `THEME_MOTIF_IDENTITY_NOT_READY` pending Route A / Route B evidence.
+* **Optional Human Correspondence Target (EXP-004):**
+  - Human theme discrimination proportion, decision confidence, and response latency under controlled transformations.
+  - Empirical human recognition decay curves are preserved for optional external human correspondence studies only, and do not control Stage-0 autonomous representation learning.
 
-#### 2.5 Tripartite Musical Memory ($M(t)$)
-Memory must not be treated as a single monolithic decay variable. It is decomposed into three independent empirical constructs:
-1. **Recognition Memory ($M_{\text{rec}}$):** Signal detection sensitivity ($d'$) discriminating previously heard motifs from unexposed foils across retention delays $\Delta t$:
-   $$d' = \Phi^{-1}(\text{Hit Rate}) - \Phi^{-1}(\text{False Alarm Rate})$$
-2. **Recall Memory ($M_{\text{recall}}$):** Active symbolic reconstruction fidelity. Probed by providing a 1-measure retrieval cue and recording hummed, sung, or MIDI-transcribed continuation. Evaluated via normalized Levenshtein pitch distance and contour alignment.
-3. **Familiarity ($M_{\text{fam}}$):** Graded subjective feeling of knowing (1-7 Likert) without episodic recollection of original context.
-* **Methodological Invariant:** An exponential memory decay law ($e^{-\lambda t}$) must **not** be assumed a priori. The functional decay form (power-law, hyperbolic, exponential, or interference-based) must be empirically determined from human retention data.
+#### 2.5 Structural Memory ($M_s(t)$)
+* **Autonomous Structural Target (PF-002A):**
+  - Conceptual Definition: **`SOURCE_SEGMENT_STRUCTURAL_MEMORY`** evaluated as the explicit latent reactivation trace:
+    $$m_A(t) = \text{sim}(z(A), h_t)$$
+  - Validation Standard: Reactivation under literal and transformed recurrence ($A \to \text{context} \to T_{\text{ID}}(A)$) satisfying $\tau_{\text{memory}}$, and directional cue-disruption contrast $\text{MemoryContrast} = M_{\text{control}} - M_{\text{target}} > 0$ (`CF-SOURCE-SEGMENT-MEMORY`).
+  - Full thematic memory gating is segregated as `THEMATIC_MEMORY_GATE = THEME_IDENTITY_DEPENDENT_NOT_READY`.
+* **Optional Human Correspondence Target (EXP-005):**
+  - Tripartite behavioral memory decomposition: Recognition sensitivity ($d'$), Recall symbolic reconstruction fidelity (Levenshtein distance), and Familiarity (Likert).
+  - Human retention curves and decay parameters are evaluated only when testing psychological memory models, not for Stage-0 autonomous listener gating.
 
 ---
 
@@ -282,7 +287,12 @@ Human listening experiments are formally classified as **`OPTIONAL_EXTERNAL_HUMA
 
 ### 8. Scientific Fail-Closed Decision Rule
 
-In accordance with repository charter and preregistration standards:
-> If any conceptual construct cannot be connected to an independent, reproducible human observable through an approved protocol, the construct shall **not** be assigned a surrogate metric, synthetic heuristic, or LLM-generated score. It must immediately be assigned the state `MEASUREMENT_DEFINITION_OPEN` or `LATENT_NEEDS_VALIDATION`.
+In accordance with repository charter and preregistration standards, the project enforces a **two-layer fail-closed decision rule**:
 
-This rule ensures that the Russian Piano Composer research trajectory remains firmly grounded in verifiable cognitive and musical science.
+1. **For Autonomous Structural Claims (Stage-0):**
+   > If any autonomous structural construct cannot be connected to a formally defined mathematical quantity, a reproducible corpus observable or intervention, a frozen metric, and a reproducible evaluation protocol, the construct shall **not** be assigned a surrogate metric, synthetic heuristic, or LLM-generated score. It must immediately be assigned the state `MEASUREMENT_DEFINITION_OPEN` or `LATENT_NEEDS_VALIDATION`. Human observability is **not** required for autonomous structural constructs.
+
+2. **For Subjective-Human Claims:**
+   > If an explicit scientific claim asserts equivalence to human subjective experience (e.g. *"human listeners perceive this passage as tense"*), the construct **must** be connected to an independent, reproducible human observable through an approved protocol (EXP-001 - EXP-005). In the absence of validated human behavioral data, subjective human equivalence claims are strictly prohibited.
+
+This two-layer rule ensures that the Russian Piano Composer research trajectory remains firmly grounded in verifiable cognitive and musical science without creating false dependencies on uncollected human data for autonomous representation learning.

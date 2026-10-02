@@ -171,6 +171,6 @@ T(t)
 | :--- | :--- | :--- | :--- |
 | **Stage 0** (Primitives) | **Stage 1** (Intermediate) | Autonomous Stage-0 structural gates passed (`PREDICTIVE_VALIDITY`, `STRUCTURAL_TEMPORAL_VALIDITY`, `INTERVENTION_VALIDITY`, `GENERALIZATION_VALIDITY`). (Optional EXP-001 - EXP-005 protocols reserved for external human validation). | If corpus predictive perplexity fails non-neural baseline checks or intervention contrast fails, all Stage-1 models are blocked. |
 | **Stage 1** (Intermediate) | **Stage 2** (Macro-Form) | Tension dial, Fertility manifold, and 6D Counterfactual vector achieve validated status. | If Theme Fertility cannot be separated from stylistic familiarity, macro-narrative is blocked. |
-| **Stage 2** (Syntheses) | **LET Apex** | All component trajectories replicate on `external_test_held_out` with zero leakage. | If external composer transfer fails, LET optimization in Composer is prohibited. |
+| **Stage 2** (Syntheses) | **LET Apex** | All component trajectories replicate on `FUTURE_EXTERNAL_TEST_PENDING_CORPUS_ACQUISITION_AND_AUDIT` (candidate external cohort Taneyev, Bortkiewicz, Blumenfeld, Catoire remains firewalled and unmaterialized) with zero leakage. | If external composer transfer fails, LET optimization in Composer is prohibited. |
 
 By enforcing this dependency graph, the project prevents any premature construction of a "Composer Critic" before its perceptual foundation has been empirically verified.

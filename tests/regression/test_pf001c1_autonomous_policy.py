@@ -179,7 +179,99 @@ def test_fail_closed_negative_mutations(monkeypatch, tmp_path):
 
     monkeypatch.setattr(val_mod, "REPORT_PATH", bad_report2_file)
     assert val_mod.validate_autonomous_policy() != 0, "Validator failed to reject human noise ceiling in active Section 7"
-
-    # 3. Clean report passes
     monkeypatch.setattr(val_mod, "REPORT_PATH", REPORT_PATH)
-    assert val_mod.validate_autonomous_policy() == 0
+
+    # 3. Mutate PF001A active gates to re-inject 'sim >= 0.85'
+    orig_contract = CONTRACT_DOC_PATH.read_text(encoding="utf-8")
+    assert r"\ge \tau_{\text{identity}}" in orig_contract
+    bad_contract = orig_contract.replace(
+        r"\ge \tau_{\text{identity}}",
+        ">= 0.85",
+    )
+    bad_contract_file = tmp_path / "bad_contract.md"
+    bad_contract_file.write_text(bad_contract, encoding="utf-8")
+
+    monkeypatch.setattr(val_mod, "CONTRACT_DOC_PATH", bad_contract_file)
+    assert val_mod.validate_autonomous_policy() != 0, "Validator failed to reject stale numerical threshold '>= 0.85' in active PF001A gates"
+    monkeypatch.setattr(val_mod, "CONTRACT_DOC_PATH", CONTRACT_DOC_PATH)
+
+    # 4. Mutate PF001A active gates to re-inject 'All 7 Gates Passed?'
+    bad_contract2 = orig_contract.replace(
+        "ALL_ACTIVE_PASS{\"All 6 Active Stage-0<br/>Gates Passed?\"}",
+        "ALL_PASS{\"All 7 Gates Passed?\"}",
+    )
+    bad_contract2_file = tmp_path / "bad_contract2.md"
+    bad_contract2_file.write_text(bad_contract2, encoding="utf-8")
+
+    monkeypatch.setattr(val_mod, "CONTRACT_DOC_PATH", bad_contract2_file)
+    assert val_mod.validate_autonomous_policy() != 0, "Validator failed to reject 'All 7 Gates Passed?' when composer gate is not ready"
+    monkeypatch.setattr(val_mod, "CONTRACT_DOC_PATH", CONTRACT_DOC_PATH)
+
+    # 5. Mutate Section 8 to require human observable for all constructs
+    bad_report3 = orig_report.replace(
+        "Human observability is **not** required for autonomous structural constructs.",
+        "If any conceptual construct cannot be connected to an independent, reproducible human observable through an approved protocol, the construct shall not be assigned a metric.",
+    )
+    bad_report3_file = tmp_path / "bad_report3.md"
+    bad_report3_file.write_text(bad_report3, encoding="utf-8")
+
+    monkeypatch.setattr(val_mod, "REPORT_PATH", bad_report3_file)
+    assert val_mod.validate_autonomous_policy() != 0, "Validator failed to reject universal human observable mandate in Section 8"
+    monkeypatch.setattr(val_mod, "REPORT_PATH", REPORT_PATH)
+
+    # 6. Prove that historical provisional numbers in the marked historical archive pass
+    assert "HISTORICAL_PROVISIONAL_NONAUTHORITATIVE" in orig_contract
+    assert "0.85" in orig_contract  # Present in historical archive
+    assert val_mod.validate_autonomous_policy() == 0, "Validator failed on valid historical archive"
+
+
+def test_pf001a_active_gates_symbolic_and_historical_archive():
+    """Confirms PF001A active gates use symbolic thresholds and quarantine provisional numbers in archive."""
+    contract_text = CONTRACT_DOC_PATH.read_text(encoding="utf-8")
+    assert "HISTORICAL_PROVISIONAL_NONAUTHORITATIVE" in contract_text
+    assert "tau_perplexity" in contract_text
+    assert "tau_identity" in contract_text
+    assert "tau_discrimination" in contract_text
+    assert "tau_counterfactual" in contract_text
+    assert "tau_memory" in contract_text
+    assert "tau_copy" in contract_text
+    assert "COMPOSER_GENERALIZATION_GATE" in contract_text
+    assert "NOT_READY_FOR_CALIBRATION" in contract_text
+
+    # Extract active section
+    m = re.search(r"### 4\. Autonomous Scientific Validation Gates.*?(?=### 5\.1|\Z)", contract_text, re.DOTALL)
+    assert m is not None
+    active_gates = m.group(0)
+
+    # Active section must not contain provisional numerical values
+    assert not re.search(r">= 0\.85", active_gates)
+    assert not re.search(r"<= 0\.30", active_gates)
+    assert not re.search(r">= 0\.95", active_gates)
+    assert not re.search(r">= 0\.40", active_gates)
+    assert not re.search(r">= 0\.50", active_gates)
+    assert not re.search(r"2\.5\s*bits", active_gates)
+    assert not re.search(r">= 1\.80", active_gates)
+    assert not re.search(r"> 15%", active_gates)
+    assert not re.search(r"All 7 Gates Passed\?", active_gates)
+
+
+def test_report_section_8_two_layer_fail_closed_rule():
+    """Confirms Section 8 distinguishes autonomous structural constructs from subjective-human claims."""
+    report_text = REPORT_PATH.read_text(encoding="utf-8")
+    assert "two-layer fail-closed decision rule" in report_text
+    assert "For Autonomous Structural Claims (Stage-0):" in report_text
+    assert "Human observability is **not** required for autonomous structural constructs" in report_text
+    assert "For Subjective-Human Claims:" in report_text
+    assert "must** be connected to an independent, reproducible human observable through an approved protocol" in report_text
+
+
+def test_source_segment_structural_memory_separation():
+    """Confirms source-segment structural memory is evaluated and thematic memory is isolated as NOT_READY."""
+    contract_text = CONTRACT_DOC_PATH.read_text(encoding="utf-8")
+    assert "SOURCE_SEGMENT_STRUCTURAL_MEMORY" in contract_text
+    assert "THEME_IDENTITY_DEPENDENT_NOT_READY" in contract_text
+
+    report_text = REPORT_PATH.read_text(encoding="utf-8")
+    assert "SOURCE_SEGMENT_STRUCTURAL_MEMORY" in report_text
+    assert "THEME_IDENTITY_DEPENDENT_NOT_READY" in report_text
+
